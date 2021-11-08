@@ -7,7 +7,7 @@ public class Planet: SpaceObject
 
     public enum GroundType { Gas, Stone};
     public enum AtmosphereType { None, NotDense, Dense, ExtraDense };
-    public enum FluidsType { Yes, No};
+    public enum FluidsType { No, Yes };
     public enum OceansType { No, Small, Large, All};
 
     public GroundType ground;
@@ -24,5 +24,22 @@ public class Planet: SpaceObject
     public Planet()
     {
 
+    }
+
+    public Planet(System.Random rnd, Star star, DVector postion)
+    {
+        this.ground = (GroundType)rnd.Next(0, 2);
+        this.atmosphere = (AtmosphereType)rnd.Next(0, 4);
+        this.position = postion;
+        mass = GalaxyGenerator.NextDecimal(rnd, 0.05m, 0.25m);
+        radius = GalaxyGenerator.NextDecimal(rnd, 0.05m, 0.5m);
+        if (postion.Dist(star.position) < 10 && atmosphere != AtmosphereType.None)
+        {
+            this.fluids = (FluidsType)rnd.Next(0, 2);
+            if (fluids == FluidsType.Yes)
+            {
+                this.oceans = (OceansType)rnd.Next(0, 4);
+            }
+        }
     }
 }

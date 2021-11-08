@@ -51,7 +51,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e7e4665818da9844a3018eb944bb62f, type: 2}
+  - {fileID: 2100000, guid: 5309f653b00e6994487f07f2473ed548, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 2}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -179,4 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d012ae60ad8c5d44f83ad6039a301dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p1: {fileID: 0}
+  p2: {fileID: 0}
   lineRenderer: {fileID: 3232799268366411416}

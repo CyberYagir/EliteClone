@@ -7,14 +7,12 @@ using System.IO;
 
 public class GalaxyGenerator : MonoBehaviour
 {
-    List<SolarSystem> systems = new List<SolarSystem>();
-    public decimal maxY = 5000, minY = -5000;
+    public static List<SolarSystem> systems = new List<SolarSystem>();
+    public static decimal maxY = 5000, minY = -5000;
     public static decimal maxRadius = 100000, minRadius = 30000;
-    public int maxSystemsCount, minSystemsCount;
-    public float minBetweenGalaxiesDistance;
+    public static int maxSystemsCount = 4000, minSystemsCount = 2000;
+    public static float minBetweenGalaxiesDistance = 2;
     [Space]
-
-    public float maxPlanetRadius;
 
     public GameObject prefab, holder;
 
@@ -27,22 +25,26 @@ public class GalaxyGenerator : MonoBehaviour
         Init();
         DrawsSystems();
     }
-    public void Init()
+
+    public static void GetWords()
     {
         TextAsset mytxtData = (TextAsset)Resources.Load("words");
         var wrds = mytxtData.text;
         words = wrds.Split('/');
+    }
 
-        var path = Application.persistentDataPath + "/galaxy.json";
-        if (File.Exists(path))
+    public void Init()
+    {
+        GetWords();
+        if (File.Exists(PlayerDataManager.galaxyFile))
         {
-            systems = JsonConvert.DeserializeObject<List<SolarSystem>>(File.ReadAllText(path));
+            systems = JsonConvert.DeserializeObject<List<SolarSystem>>(File.ReadAllText(PlayerDataManager.galaxyFile));
         }
         else
         {
-            GenerateGalaxy(seed);
-            File.WriteAllText(path, JsonConvert.SerializeObject(systems, Formatting.None));
+            Application.LoadLevel("Init");
         }
+
     }
 
     public void DrawsSystems()
@@ -55,8 +57,18 @@ public class GalaxyGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateGalaxy(int seed)
+    public static IEnumerator GenerateGalaxy(int seed)
     {
+        if (words == null)
+        {
+            GetWords();
+        }
+
+
+        PlayerDataManager.generateProgress = 0;
+
+        systems = new List<SolarSystem>();
+
         var rnd = new System.Random(seed);
 
         var systemsCount = rnd.Next(minSystemsCount, maxSystemsCount);
@@ -85,8 +97,6 @@ public class GalaxyGenerator : MonoBehaviour
                     break;
                 }
             }
-
-
             var rot = new DVector(NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360));
             system.rotation = rot;
             system.position = pos;
@@ -108,7 +118,17 @@ public class GalaxyGenerator : MonoBehaviour
             system.stars.Add(newStar);
             system.name = system.stars[0].name;
             systems.Add(system);
+
+            if (i % 5 == 0)
+            {
+                PlayerDataManager.generateProgress = i / (float)systemsCount;
+                yield return null;
+            }
         }
+        File.WriteAllText(PlayerDataManager.galaxyFile, JsonConvert.SerializeObject(systems, Formatting.None));
+        PlayerDataManager.generateProgress = 1f;
+
+        yield break;
     }
 
     public static decimal NextDecimal(System.Random rnd, decimal min, decimal max)

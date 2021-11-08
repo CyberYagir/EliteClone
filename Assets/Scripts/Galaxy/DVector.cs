@@ -17,6 +17,10 @@ public struct DVector
         return new DVector(b.x + c.x, b.y + c.y, b.z + c.z);
     }
 
+    public static DVector operator *(DVector b, int c)
+    {
+        return new DVector(b.x * c, b.y * c, b.z * c);
+    }
 
     public Vector3 toVector()
     {

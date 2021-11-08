@@ -22,13 +22,15 @@ public class GalaxyPoint : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GalaxyManager.Select(this);
-        if (LineDrawer.instance.stars.Contains(this))
+        if (GalaxyManager.Select(this))
         {
-            LineDrawer.instance.stars.Remove(this);
-        }
+            if (LineDrawer.instance.stars.Contains(this))
+            {
+                LineDrawer.instance.stars.Remove(this);
+            }
 
-        LineDrawer.instance.stars.Insert(0, this);
-        LineDrawer.instance.UpdateLines();
+            LineDrawer.instance.stars.Insert(0, this);
+            LineDrawer.instance.UpdateLines();
+        }
     }
 }
