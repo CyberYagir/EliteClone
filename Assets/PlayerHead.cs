@@ -6,9 +6,16 @@ public class PlayerHead : MonoBehaviour
 {
     [SerializeField] float sence;
     [SerializeField] Transform camera;
+    Player player;
+
+    private void Start()
+    {
+        player = Player.inst;
+    }
+
     void Update()
     {
-        if (ShipController.instance.headView)
+        if (player.control.headView)
         {
             transform.localRotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * sence * Time.deltaTime, 0);
             transform.localRotation = new Quaternion(transform.localRotation.x, Mathf.Clamp(transform.localRotation.y, -0.5f, 0.5f), transform.localRotation.z, transform.localRotation.w);

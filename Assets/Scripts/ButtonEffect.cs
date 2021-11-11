@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    bool over;
+    public bool over;
     public void OnPointerEnter(PointerEventData eventData)
     {
         over = true;

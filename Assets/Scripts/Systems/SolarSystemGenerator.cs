@@ -5,10 +5,19 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+
+public static class World
+{
+    public static readonly float unitSize = 100;
+}
+
 public class SolarSystemGenerator : MonoBehaviour
 {
     public GameObject sunPrefab, planetPrefab;
-    private void Start()
+
+    public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
+
+    private void Awake()
     {
         if (PlayerDataManager.currentSolarSystem != null)
         {
@@ -123,13 +132,13 @@ public class SolarSystemGenerator : MonoBehaviour
             var planet = new Planet(rnd, PlayerDataManager.currentSolarSystem.stars[PlayerDataManager.currentSolarSystem.stars.Count - 1], pPos);
 
             planet.name = system.name.Split(' ')[0] + " O" + (i+1);
-
             system.planets.Add(planet);
         }
 
     }
     public void DrawAll()
     {
+        objects = new List<WorldSpaceObject>();
         var pos = PlayerDataManager.currentSolarSystem.position;
         var rnd = new System.Random((int)(pos.x + pos.y + pos.z));
         Vector3 center = new Vector3(0,0,0);
@@ -167,6 +176,8 @@ public class SolarSystemGenerator : MonoBehaviour
 
             sun.GetComponentInChildren<Light>().intensity = (99999999f * Mathf.Clamp01(((float)item.mass / (120f / scale))));
             sun.GetComponentInChildren<Light>().color = item.GetColor();
+            sun.GetComponent<RotateAround>().orbitID = objects.Count;
+            objects.Add(sun.GetComponent<WorldSpaceObject>());
             id++;
         }
 
@@ -179,8 +190,12 @@ public class SolarSystemGenerator : MonoBehaviour
             planet.transform.localScale *= (float)item.radius * scale;
 
             planet.GetComponent<RotateAround>().point = attractor.transform;
-
+            planet.GetComponent<RotateAround>().orbitID = objects.Count;
             planet.GetComponent<RotateAround>().speed = (float)rnd.NextDouble() * 0.001f;
+            objects.Add(planet.GetComponent<WorldSpaceObject>());
         }
+
+        FindObjectOfType<Player>().transform.position = new Vector3(0, (float)(masses[0].radius * rnd.Next(2, 6)) * scale, (float)(masses[0].radius * 5) * scale);
+        FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
     }
 }

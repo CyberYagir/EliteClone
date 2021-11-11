@@ -16,7 +16,7 @@ public class InputArrowUI : MonoBehaviour
 
     private void Update()
     {
-        rect.anchoredPosition = new Vector2(ShipController.instance.horizontal, ShipController.instance.vertical) * 100;
+        rect.anchoredPosition = new Vector2(Player.inst.control.horizontal, Player.inst.control.vertical) * 100;
 
         Vector3 diff = rect.anchoredPosition - Vector2.zero;
         diff.Normalize();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class RotateAround : MonoBehaviour
 {
     public Transform point;
+
+    public int orbitID;
 
     public float speed;
     public float width;
@@ -15,6 +18,9 @@ public class RotateAround : MonoBehaviour
         DrawCircle(Vector3.Distance(transform.position, point.position));
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
         camera = Camera.main;
+        var rnd = new System.Random(orbitID + DateTime.Today.Day);
+
+        transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
     }
 
     void Update()

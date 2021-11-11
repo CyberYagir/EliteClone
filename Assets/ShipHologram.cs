@@ -5,16 +5,18 @@ using UnityEngine;
 public class ShipHologram : MonoBehaviour
 {
     Quaternion startRotation;
-
+    Player player;
 
     private void Start()
     {
         startRotation = transform.localRotation;
+        player = Player.inst;
+        GetComponent<MeshFilter>().sharedMesh = player.Ship().shipModel;
     }
 
     private void Update()
     {
-        var ship = ShipController.instance;
-        transform.localRotation = Quaternion.Lerp(transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * ship.player.spaceShip.shipVariables.XRotSpeed, ship.yaw * ship.player.spaceShip.shipVariables.YRotSpeed * ship.player.spaceShip.shipVariables.YRotSpeed, -ship.horizontal * ship.player.spaceShip.shipVariables.ZRotSpeed), 10 * Time.deltaTime);
+        var ship = player.control;
+        transform.localRotation = Quaternion.Lerp(transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * player.Ship().data.XRotSpeed, ship.yaw * ship.player.Ship().data.YRotSpeed * player.Ship().data.YRotSpeed, -ship.horizontal * player.Ship().data.ZRotSpeed), 10 * Time.deltaTime);
     }
 }
