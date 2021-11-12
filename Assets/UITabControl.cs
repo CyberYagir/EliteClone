@@ -11,35 +11,41 @@ public class Tab
 
 public class UITabControl : MonoBehaviour
 {
-    public Tab[] tabs;
+    [SerializeField] Tab[] tabs;
     public int tabIndex;
 
     float time = 60;
     RectTransform rectTransform;
-    public Vector2 sizeOpen, sizeClose;
-    public Vector3 openY, closeY;
-
+    [SerializeField] Vector2 sizeOpen, sizeClose;
+    [SerializeField] Vector3 openY, closeY;
+    public bool active;
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
     }
     private void Update()
     {
+        active = time < 25;
         time += Time.deltaTime;
-        rectTransform.sizeDelta = Vector2.Lerp(rectTransform.sizeDelta, time > 25 ? sizeClose : sizeOpen, 10 * Time.deltaTime);
-
-        rectTransform.localPosition = Vector3.Lerp(rectTransform.localPosition, time > 25 ? closeY : openY, 10 * Time.deltaTime);
-
+        rectTransform.sizeDelta = Vector2.Lerp(rectTransform.sizeDelta, !active ? sizeClose : sizeOpen, 10 * Time.deltaTime);
+        rectTransform.localPosition = Vector3.Lerp(rectTransform.localPosition, !active ? closeY : openY, 10 * Time.deltaTime);
+        
         if (tabs.Length == 0) return;
         if (Input.GetKeyDown(KeyCode.Q))
         {
             time = 0;
-            tabIndex--;
+            if (active)
+            {
+                tabIndex--;
+            }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             time = 0;
-            tabIndex++;
+            if (active)
+            {
+                tabIndex++;
+            }
         }
 
         if (tabIndex >= tabs.Length)
@@ -55,7 +61,13 @@ public class UITabControl : MonoBehaviour
 
         for (int i = 0; i < tabs.Length; i++)
         {
-            tabs[i].buttonEffect.over = i == tabIndex;
+            if (i == tabIndex) {
+                tabs[i].buttonEffect.over =  ButtonEffect.ActionType.Over;
+            }
+            else
+            {
+                tabs[i].buttonEffect.over = ButtonEffect.ActionType.None;
+            }
             tabs[i].content.SetActive(i == tabIndex);
         }
     }

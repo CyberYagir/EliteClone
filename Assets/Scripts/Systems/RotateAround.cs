@@ -26,6 +26,14 @@ public class RotateAround : MonoBehaviour
     void Update()
     {
         transform.RotateAround(point.position, Vector3.up, speed * Time.deltaTime);
+        
+    }
+    public void LateUpdate()
+    {
+        UpdateLine();
+    }
+    public void UpdateLine()
+    {
         var curve = new AnimationCurve();
 
         for (int i = 0; i < lineRenderer.positionCount; i++)
@@ -37,7 +45,7 @@ public class RotateAround : MonoBehaviour
 
             if (dist < 200)
             {
-                curve.AddKey(time, wdh/2f);
+                curve.AddKey(time, wdh / 2f);
             }
             else
             {
@@ -50,7 +58,7 @@ public class RotateAround : MonoBehaviour
     public void DrawCircle(float radius)
     {
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
-        var segments = 180  ;
+        var segments = 90;
         var line = lineRenderer;
         line.positionCount = segments + 1;
 

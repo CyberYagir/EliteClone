@@ -134,8 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e109b31864b8b5d4981cfd402248513f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: {r: 0, g: 0.65170383, b: 1, a: 1}
-  notActive: {r: 1, g: 0.57254905, b: 0, a: 1}
+  over: 0
+  overColor: {r: 0, g: 0.6032343, b: 1, a: 1}
+  noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
+  selectedColor: {r: 1, g: 0.18039216, b: 0, a: 1}
 --- !u!1 &5185739837850665177
 GameObject:
   m_ObjectHideFlags: 0

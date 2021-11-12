@@ -4,22 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public bool over;
+    public enum ActionType { None, Over, Selected}
+    public ActionType over;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        over = true;
+        over = ActionType.Over;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        over = false;
+        over = ActionType.None;
     }
 
     float startPPU;
     Image image;
-    [SerializeField] Color active, notActive;
+    [SerializeField] Color overColor, noneColor, selectedColor;
     private void Start()
     {
         image = GetComponent<Image>();
@@ -27,7 +29,7 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     private void Update()
     {
-        image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over ? 0 : startPPU, 10 * Time.deltaTime);
-        image.color = Color.Lerp(image.color, over ? active : notActive, 10 * Time.deltaTime);
+        image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over == ActionType.Over || over == ActionType.Selected ? 0 : startPPU, 10 * Time.deltaTime);
+        image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), 10 * Time.deltaTime);
     }
 }

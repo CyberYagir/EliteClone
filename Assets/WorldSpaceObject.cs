@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldSpaceObject : MonoBehaviour
 {
     public bool isVisible;
-
+    public string dist;
     Transform camera;
 
     private void Start()
