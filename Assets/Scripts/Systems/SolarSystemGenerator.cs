@@ -126,16 +126,37 @@ public class SolarSystemGenerator : MonoBehaviour
             }
             else
             {
-                pPos = system.planets[i - 1].position + new DVector(0, 0, rnd.Next(5, 100));
+                pPos = system.planets[i - 1].position + new DVector(0, 0, rnd.Next(20, 200));
             }
 
             var planet = new Planet(rnd, PlayerDataManager.currentSolarSystem.stars[PlayerDataManager.currentSolarSystem.stars.Count - 1], pPos);
 
             planet.name = system.name.Split(' ')[0] + " O" + (i+1);
+            var sattelites = rnd.Next(0, 3);
+
+            DVector sPos = pPos;
+            for (int j = 0; j < sattelites; j++)
+            {
+                var isBase = rnd.Next(0, 4);
+                if (isBase <= 2)
+                {
+                    sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
+
+                    var sattelite = new Planet(rnd, planet, sPos);
+                    sattelite.position = sPos;
+                    sattelite.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
+                    sattelite.mass *= 0.1m;
+                    sattelite.radius *= 0.1m;
+                    sattelite.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1);
+
+                    planet.sattelites.Add(sattelite);
+                }
+            }
             system.planets.Add(planet);
         }
 
     }
+
     public void DrawAll()
     {
         objects = new List<WorldSpaceObject>();
@@ -193,6 +214,20 @@ public class SolarSystemGenerator : MonoBehaviour
             planet.GetComponent<RotateAround>().orbitID = objects.Count;
             planet.GetComponent<RotateAround>().speed = (float)rnd.NextDouble() * 0.001f;
             objects.Add(planet.GetComponent<WorldSpaceObject>());
+
+            for (int i = 0; i < item.sattelites.Count; i++)
+            {
+
+                var sattelite = Instantiate(planetPrefab);
+                sattelite.transform.name = item.sattelites[i].name;
+                sattelite.transform.position = item.sattelites[i].position.toVector() * scale;
+                sattelite.transform.localScale *= (float)item.sattelites[i].radius * scale;
+                sattelite.transform.LookAt(planet.transform);
+                sattelite.GetComponent<RotateAround>().point = planet.transform;
+                sattelite.GetComponent<RotateAround>().orbitRotation = item.sattelites[i].rotation.toVector();
+                sattelite.transform.parent = planet.transform;
+                objects.Add(sattelite.GetComponent<WorldSpaceObject>());
+            }
         }
 
         FindObjectOfType<Player>().transform.position = new Vector3(0, (float)(masses[0].radius * rnd.Next(2, 6)) * scale, (float)(masses[0].radius * 5) * scale);

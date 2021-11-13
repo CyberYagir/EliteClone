@@ -15,12 +15,15 @@ public class PlayerDataManager : MonoBehaviour
     public static bool saveSystems = true;
     private void Update()
     {
-        if (loading)
+        if (Application.loadedLevelName == "Init")
         {
-            if (generateProgress == 1)
+            if (loading)
             {
-                Application.LoadLevel("Galaxy");
-                enabled = false;
+                if (generateProgress == 1)
+                {
+                    Application.LoadLevelAsync("Galaxy");
+                    enabled = false;
+                }
             }
         }
     }
@@ -64,13 +67,14 @@ public class PlayerDataManager : MonoBehaviour
 
             if (File.Exists(currentSystemFile))
             {
-                Application.LoadLevel("System");
+                Application.LoadLevelAsync("System");
             }
             else
             {
                 if (File.Exists(galaxyFile))
                 {
-                    Application.LoadLevel("Galaxy");
+                    loading = true;
+                    generateProgress = 1;
                 }
                 else
                 {

@@ -8,18 +8,23 @@ public class RotateAround : MonoBehaviour
     public Transform point;
 
     public int orbitID;
-
+    public Vector3 orbitRotation;
     public float speed;
     public float width;
     LineRenderer lineRenderer;
     Camera camera;
+    bool drawed;
     private void Start()
     {
-        DrawCircle(Vector3.Distance(transform.position, point.position));
+        if (!drawed)
+            DrawCircle(Vector3.Distance(transform.position, point.position));
+
+
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
         camera = Camera.main;
         var rnd = new System.Random(orbitID + DateTime.Today.Day);
 
+        transform.RotateAround(point.position, orbitRotation, rnd.Next(0, 360));
         transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
     }
 
@@ -70,6 +75,7 @@ public class RotateAround : MonoBehaviour
             var rad = Mathf.Deg2Rad * (i * 360f / segments);
             points[i] = transform.InverseTransformPoint(point.position + new Vector3(Mathf.Sin(rad) * radius, 0, Mathf.Cos(rad) * radius));
         }
+        drawed = true;
 
         line.SetPositions(points);
     }

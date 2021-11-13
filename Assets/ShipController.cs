@@ -29,7 +29,7 @@ public class ShipController : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        headView = Input.GetKey(KeyCode.Mouse2);
+        headView = InputM.GetButton(KAction.HeadView);
         RotationControl();
         ForwardBackward();
     }
@@ -60,23 +60,28 @@ public class ShipController : MonoBehaviour
         if (moveMode == MoveMode.S)
         {
             speed = 0;
-            if (Input.GetAxisRaw("Vertical") > 0)
+            if (InputM.GetAxis(KAction.Vertical) > 0)
             {
                 moveMode = MoveMode.F;
             }
-            if (Input.GetAxisRaw("Vertical") < 0)
+            if (InputM.GetAxis(KAction.Vertical) < 0)
             {
                 moveMode = MoveMode.B;
             }
         }
 
-        speed += Input.GetAxis("Vertical") * Time.deltaTime * player.Ship().data.speedUpMultiplier;
+        Player.inst.Ship().fuel.value -= speed * Time.deltaTime;
+
+        if (Player.inst.Ship().fuel.value <= 0) { speed -= Time.deltaTime; return; }
+
+        speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
+
         if (moveMode == MoveMode.F)
             speed = Mathf.Clamp(speed, 0, player.Ship().data.maxSpeedUnits);
         else if (moveMode == MoveMode.B)
             speed = Mathf.Clamp(speed, -player.Ship().data.maxSpeedUnits / 2f, 0);
 
-        if (speed == 0 && Input.GetAxisRaw("Vertical") == 0)
+        if (speed == 0 && InputM.GetAxisRaw(KAction.Vertical) == 0)
         {
             moveMode = MoveMode.S;
         }

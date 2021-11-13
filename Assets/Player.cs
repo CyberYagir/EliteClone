@@ -9,9 +9,15 @@ public class ShipVariables
     public float maxSpeedUnits, speedUpMultiplier;
 }
 [System.Serializable]
+public class ShipClaped
+{
+    public float value, max;
+}
+[System.Serializable]
 public class SpaceShip
 {
     public Mesh shipModel;
+    public ShipClaped fuel, hp, shields;
     public ShipVariables data;
 }
 
@@ -19,8 +25,8 @@ public class Player : MonoBehaviour
 {
     public static Player inst { get; private set; }
     [SerializeField] SpaceShip spaceShip;
-    [SerializeField] Cargo cargo;
-    [SerializeField] TargetManager targets;
+    Cargo cargo;
+    TargetManager targets;
     public ShipController control { get; private set; }
 
     private void Awake()

@@ -15,8 +15,6 @@ public class Planet: SpaceObject
     public FluidsType fluids;
     public OceansType oceans;
 
-    public SpaceObject parent;
-
     public float temperature;
 
     
@@ -26,7 +24,7 @@ public class Planet: SpaceObject
 
     }
 
-    public Planet(System.Random rnd, Star star, DVector postion)
+    public Planet(System.Random rnd, SpaceObject star, DVector postion)
     {
         this.ground = (GroundType)rnd.Next(0, 2);
         this.atmosphere = (AtmosphereType)rnd.Next(0, 4);

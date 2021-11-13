@@ -19,14 +19,12 @@ public class FreeCam : MonoBehaviour
 
     public float MaximumMovementSpeed = 1f;
 
-    [Header("Controls")]
-
-    public KeyCode Forwards = KeyCode.W;
-    public KeyCode Backwards = KeyCode.S;
-    public KeyCode Left = KeyCode.A;
-    public KeyCode Right = KeyCode.D;
-    public KeyCode Up = KeyCode.Q;
-    public KeyCode Down = KeyCode.E;
+    KeyCode Forwards = KeyCode.W;
+    KeyCode Backwards = KeyCode.S;
+    KeyCode Left = KeyCode.A;
+    KeyCode Right = KeyCode.D;
+    KeyCode Up = KeyCode.Q;
+    KeyCode Down = KeyCode.E;
 
     private Vector3 _moveSpeed;
 
@@ -34,6 +32,7 @@ public class FreeCam : MonoBehaviour
     private void Start()
     {
         _moveSpeed = Vector3.zero;
+
     }
 
     // Update is called once per frame
@@ -61,34 +60,19 @@ public class FreeCam : MonoBehaviour
         var acceleration = Vector3.zero;
 
         //key input detection
-        if (Input.GetKey(Forwards))
+        if (InputM.GetAxisChange(KAction.Vertical))
         {
-            acceleration.z += 1;
+            acceleration.z += InputM.GetAxisRaw(KAction.Vertical);
         }
 
-        if (Input.GetKey(Backwards))
+        if (InputM.GetAxisChange(KAction.Horizontal))
         {
-            acceleration.z -= 1;
+            acceleration.x += InputM.GetAxisRaw(KAction.Horizontal);
         }
 
-        if (Input.GetKey(Left))
+        if (InputM.GetAxisChange(KAction.GalaxyVertical))
         {
-            acceleration.x -= 1;
-        }
-
-        if (Input.GetKey(Right))
-        {
-            acceleration.x += 1;
-        }
-
-        if (Input.GetKey(Up))
-        {
-            acceleration.y += 1;
-        }
-
-        if (Input.GetKey(Down))
-        {
-            acceleration.y -= 1;
+            acceleration.y -= InputM.GetAxisRaw(KAction.GalaxyVertical);
         }
 
         return acceleration.normalized * AccelerationMod;

@@ -39,20 +39,23 @@ public class DrawNavigation : MonoBehaviour
     {
         if (tabControl.active)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (InputM.GetAxisDown(KAction.TabsVertical))
             {
-                selectedIndex--;
+                selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
                 if (selectedIndex <= 0) selectedIndex = items.Count - 1;
-            }
-
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                selectedIndex++;
                 if (selectedIndex >= items.Count) selectedIndex = 0;
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+
+            if (InputM.GetAxisDown(KAction.Select))
             {
-                Player.inst.SetTarget(items[selectedIndex].spaceObject);
+                if (items[selectedIndex].spaceObject != Player.inst.GetTarget())
+                {
+                    Player.inst.SetTarget(items[selectedIndex].spaceObject);
+                }
+                else
+                {
+                    Player.inst.SetTarget(null);
+                }
             }
 
             for (int i = 0; i < items.Count; i++)
