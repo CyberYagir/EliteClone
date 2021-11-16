@@ -1,5 +1,5 @@
 ﻿[System.Serializable]
-public class OrbitStation
+public class OrbitStation : SpaceObject
 {
 
 }

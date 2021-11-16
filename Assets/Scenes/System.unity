@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -327,7 +327,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -1079,7 +1079,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -1193,7 +1193,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -1295,7 +1295,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -1323,6 +1323,7 @@ GameObject:
   - component: {fileID: 337636949}
   - component: {fileID: 337636950}
   - component: {fileID: 337636951}
+  - component: {fileID: 337636952}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1464,6 +1465,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bf62fb01dc948e418334331572b22d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &337636952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337636943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7789cca418af738488d04da84bb6376f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &337741359
@@ -2369,6 +2382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sunPrefab: {fileID: 8814524701996779434, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
   planetPrefab: {fileID: 3415297183641261298, guid: 2d775a0ac84faeb4c9714b9523b9268d, type: 3}
+  stationPrefab: {fileID: 3261247910759072195, guid: 4428076103e2d534680325bb915d934e, type: 3}
 --- !u!114 &540574894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8465,7 +8479,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900163659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 27.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1621916331}
@@ -8473,8 +8487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -238.8, y: 3.6}
-  m_SizeDelta: {x: 477.7, y: 42.1}
+  m_AnchoredPosition: {x: -148.7, y: 3.6}
+  m_SizeDelta: {x: 674.6, y: 42.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &900163661
 MonoBehaviour:
@@ -8809,7 +8823,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -8911,7 +8925,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -9163,7 +9177,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -9265,7 +9279,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -10359,7 +10373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0.07749939}
+  m_AnchoredPosition: {x: -8, y: 0.061538696}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1223283930
@@ -11271,7 +11285,7 @@ MonoBehaviour:
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
   m_EvsmBlurPasses: 0
-  m_LightlayersMask: 18
+  m_LightlayersMask: 2
   m_LinkShadowLayers: 1
   m_ShadowNearPlane: 0.1
   m_BlockerSampleCount: 24
@@ -11373,7 +11387,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 18
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
@@ -11893,7 +11907,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 502.05, y: -21.05}
-  m_SizeDelta: {x: 1004.1, y: 42.1}
+  m_SizeDelta: {x: 1004.1, y: 42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621916332
 MonoBehaviour:
@@ -13604,6 +13618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 1621916330}
   holder: {fileID: 1223283928}
+  content: {fileID: 1223283929}
   selectedIndex: 0
 --- !u!114 &1934050272
 MonoBehaviour:

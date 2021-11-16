@@ -4,6 +4,7 @@
 public class Planet: SpaceObject
 {
     public List<SpaceObject> sattelites = new List<SpaceObject>();
+    public List<OrbitStation> stations = new List<OrbitStation>();
 
     public enum GroundType { Gas, Stone};
     public enum AtmosphereType { None, NotDense, Dense, ExtraDense };

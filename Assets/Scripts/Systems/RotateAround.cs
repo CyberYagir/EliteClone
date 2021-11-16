@@ -16,8 +16,7 @@ public class RotateAround : MonoBehaviour
     bool drawed;
     private void Start()
     {
-        if (!drawed)
-            DrawCircle(Vector3.Distance(transform.position, point.position));
+        DrawCircle(Vector3.Distance(transform.position, point.position));
 
 
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();

@@ -39,12 +39,17 @@ public class InputM : MonoBehaviour
             {
                 ax.rawvalue += Input.GetKey(ax.plus) ? 1 : 0;
                 ax.down = Input.GetKeyDown(ax.plus);
+                ax.up = Input.GetKeyUp(ax.plus);
             }
             if (ax.minus != KeyCode.None)
             {
                 if (!ax.down)
                 {
                     ax.down = Input.GetKeyDown(ax.minus);
+                }
+                if (!ax.up)
+                {
+                    ax.up = Input.GetKeyUp(ax.minus);
                 }
                 ax.rawvalue -= Input.GetKey(ax.minus) ? 1 : 0;
             }
@@ -71,6 +76,10 @@ public class InputM : MonoBehaviour
     public static bool GetAxisDown(KAction action)
     {
         return keys[action].down;
+    }
+    public static bool GetAxisUp(KAction action)
+    {
+        return keys[action].up;
     }
     public static Axis GetAxisData(KAction action)
     {

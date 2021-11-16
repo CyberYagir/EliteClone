@@ -74,6 +74,8 @@ public class ShipController : MonoBehaviour
 
         if (Player.inst.Ship().fuel.value <= 0) { speed -= Time.deltaTime; return; }
 
+        if (InputM.GetAxisUp(KAction.Vertical)) return;
+
         speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
 
         if (moveMode == MoveMode.F)

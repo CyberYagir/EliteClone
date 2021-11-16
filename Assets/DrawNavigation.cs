@@ -14,6 +14,7 @@ public class DrawNavigation : MonoBehaviour
 {
     public List<NavItem> items = new List<NavItem>();
     public GameObject item, holder;
+    public RectTransform content;
     public int selectedIndex;
     UITabControl tabControl;
     private void Start()
@@ -39,6 +40,7 @@ public class DrawNavigation : MonoBehaviour
     {
         if (tabControl.active)
         {
+            content.localPosition = new Vector3(content.localPosition.x, selectedIndex * 42, content.localPosition.z);
             if (InputM.GetAxisDown(KAction.TabsVertical))
             {
                 selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);

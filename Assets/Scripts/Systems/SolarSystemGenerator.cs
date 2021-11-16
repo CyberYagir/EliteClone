@@ -13,7 +13,7 @@ public static class World
 
 public class SolarSystemGenerator : MonoBehaviour
 {
-    public GameObject sunPrefab, planetPrefab;
+    public GameObject sunPrefab, planetPrefab, stationPrefab;
 
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
 
@@ -135,6 +135,7 @@ public class SolarSystemGenerator : MonoBehaviour
             var sattelites = rnd.Next(0, 3);
 
             DVector sPos = pPos;
+            bool haveBase = false;
             for (int j = 0; j < sattelites; j++)
             {
                 var isBase = rnd.Next(0, 4);
@@ -150,6 +151,22 @@ public class SolarSystemGenerator : MonoBehaviour
                     sattelite.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1);
 
                     planet.sattelites.Add(sattelite);
+                }
+                else
+                {
+                    if (!haveBase)
+                    {
+                        sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
+
+                        var station = new OrbitStation();
+                        station.position = sPos;
+                        station.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
+                        station.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1) + " Orbital";
+                        station.radius = 1m / (decimal)scale;
+                        planet.stations.Add(station);
+
+                        haveBase = true;
+                    }
                 }
             }
             system.planets.Add(planet);
@@ -217,20 +234,32 @@ public class SolarSystemGenerator : MonoBehaviour
 
             for (int i = 0; i < item.sattelites.Count; i++)
             {
+                var n = SpawnSattelite(planetPrefab, item.sattelites[i], planet.transform);
+                objects.Add(n);
+                var t = n.GetComponent<PlanetTexture>();
+                t.SetTexture(rnd);
+            }
 
-                var sattelite = Instantiate(planetPrefab);
-                sattelite.transform.name = item.sattelites[i].name;
-                sattelite.transform.position = item.sattelites[i].position.toVector() * scale;
-                sattelite.transform.localScale *= (float)item.sattelites[i].radius * scale;
-                sattelite.transform.LookAt(planet.transform);
-                sattelite.GetComponent<RotateAround>().point = planet.transform;
-                sattelite.GetComponent<RotateAround>().orbitRotation = item.sattelites[i].rotation.toVector();
-                sattelite.transform.parent = planet.transform;
-                objects.Add(sattelite.GetComponent<WorldSpaceObject>());
+            for (int i = 0; i < item.stations.Count; i++)
+            {
+                objects.Add(SpawnSattelite(stationPrefab, item.stations[i], planet.transform));
             }
         }
 
         FindObjectOfType<Player>().transform.position = new Vector3(0, (float)(masses[0].radius * rnd.Next(2, 6)) * scale, (float)(masses[0].radius * 5) * scale);
         FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
+    }
+
+    public WorldSpaceObject SpawnSattelite(GameObject prefab, SpaceObject item, Transform planet)
+    {
+        var orbital = Instantiate(prefab);
+        orbital.transform.name = item.name;
+        orbital.transform.position = item.position.toVector() * scale;
+        orbital.transform.localScale *= (float)item.radius * scale;
+        orbital.transform.LookAt(planet.transform);
+        orbital.GetComponent<RotateAround>().point = planet.transform;
+        orbital.GetComponent<RotateAround>().orbitRotation = item.rotation.toVector();
+        orbital.transform.parent = planet.transform;
+        return orbital.GetComponent<WorldSpaceObject>();
     }
 }
