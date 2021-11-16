@@ -6,14 +6,24 @@ public class LocationPoint : MonoBehaviour
 {
     Camera camera;
     [SerializeField] float size;
+    public GameObject root;
+    public float minDist;
     private void Start()
     {
         camera = Camera.main;
-        transform.parent.localScale = Vector3.one;
     }
     void Update()
     {
         transform.LookAt(camera.transform);
         transform.localScale = Vector3.one * Vector3.Distance(transform.position, camera.transform.position) * size;
+
+        if (Vector3.Distance(transform.position, camera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
+        {
+            Player.inst.warp.SetActiveLocation(this);
+        }
+        else
+        {
+            Player.inst.warp.RemoveActiveLocation(this);
+        }
     }
 }

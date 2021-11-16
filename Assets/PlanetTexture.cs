@@ -6,8 +6,12 @@ public class PlanetTexture : MonoBehaviour
 {
     [SerializeField] Material[] textures;
 
-    public void SetTexture(System.Random rnd)
+    public void SetTexture(int id)
     {
-        GetComponent<Renderer>().material = textures[rnd.Next(0, textures.Length)];
+        GetComponent<Renderer>().material = textures[id];
+    }
+    public int GetLen()
+    {
+        return textures.Length;
     }
 }

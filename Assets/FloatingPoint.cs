@@ -10,12 +10,15 @@ public class FloatingPoint : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 cameraPos = Player.inst.transform.position;
-        if (cameraPos.magnitude > threshold)
+        if (Player.inst)
         {
-            foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
+            Vector3 cameraPos = Player.inst.transform.position;
+            if (cameraPos.magnitude > threshold)
             {
-                go.transform.position -= cameraPos;
+                foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
+                {
+                    go.transform.position -= cameraPos;
+                }
             }
         }
     }

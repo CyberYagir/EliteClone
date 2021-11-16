@@ -34,6 +34,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     {
         foreach (var wsp in spaceObjects)
         {
+            if (wsp.obj == null) { spaceObjects.Remove(wsp); return; }
             if (wsp.obj.isVisible)
             {
                 Physics.Raycast(camera.transform.position, wsp.obj.transform.position - camera.transform.position, out RaycastHit hit);

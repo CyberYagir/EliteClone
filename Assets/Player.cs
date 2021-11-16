@@ -24,17 +24,26 @@ public class SpaceShip
 public class Player : MonoBehaviour
 {
     public static Player inst { get; private set; }
+    public ShipController control { get; private set; }
+    public WarpManager warp { get; private set; }
+
     [SerializeField] SpaceShip spaceShip;
+
     Cargo cargo;
     TargetManager targets;
-    public ShipController control { get; private set; }
 
     private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
     {
         inst = this;
         control = GetComponent<ShipController>();
         cargo = GetComponent<Cargo>();
         targets = GetComponent<TargetManager>();
+        warp = GetComponent<WarpManager>();
     }
 
     public SpaceShip Ship()
