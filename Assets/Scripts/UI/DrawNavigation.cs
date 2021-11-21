@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 public class NavItem
 {
@@ -12,25 +14,46 @@ public class NavItem
 }
 public class DrawNavigation : MonoBehaviour
 {
-    public List<NavItem> items = new List<NavItem>();
-    public GameObject item, holder;
-    public RectTransform content;
-    public int selectedIndex;
+    [SerializeField] List<NavItem> items = new List<NavItem>();
+    [SerializeField] GameObject item;
+    [SerializeField] RectTransform holder;
+    [SerializeField] int selectedIndex;
     UITabControl tabControl;
-    private void Start()
+
+    private void Awake()
+    {
+        Player.OnSceneChanged += UpdateList;
+    }
+
+    private void OnDestroy()
+    {
+        Player.OnSceneChanged -= UpdateList;
+    }
+
+    private void UpdateList()
     {
         tabControl = GetComponentInParent<UITabControl>();
-        for (int i = 0; i < SolarSystemGenerator.objects.Count; i++)
+        foreach (Transform navitem in holder.transform)
+        {
+            if (navitem.gameObject.activeSelf)
+            {
+                Destroy(navitem.gameObject);
+            }
+        }
+
+        items = new List<NavItem>();
+        var objects = FindObjectsOfType<WorldSpaceObject>();
+        for (int i = 0; i < objects.Length; i++)
         {
             var b = Instantiate(item, holder.transform);
             var navI = new NavItem();
             navI.button = b.GetComponent<ButtonEffect>();
-            navI.spaceObject = SolarSystemGenerator.objects[i];
-            navI.image = SolarSystemGenerator.objects[i].GetComponent<Image>();
+            navI.spaceObject = objects[i];
+            navI.image = objects[i].GetComponent<Image>();
             navI.name = b.transform.GetChild(0).GetComponent<TMP_Text>();
             navI.dist = b.transform.GetChild(1).GetComponent<TMP_Text>();
-            navI.name.text = SolarSystemGenerator.objects[i].transform.name;
-            navI.dist.text = SolarSystemGenerator.objects[i].dist;
+            navI.name.text = objects[i].transform.name;
+            navI.dist.text = objects[i].dist;
             b.SetActive(true);
             items.Add(navI);
         }
@@ -40,7 +63,7 @@ public class DrawNavigation : MonoBehaviour
     {
         if (tabControl.active)
         {
-            content.localPosition = new Vector3(content.localPosition.x, selectedIndex * 42, content.localPosition.z);
+            holder.localPosition = new Vector3(holder.localPosition.x, selectedIndex * 42, holder.localPosition.z);
             if (InputM.GetAxisDown(KAction.TabsVertical))
             {
                 selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);

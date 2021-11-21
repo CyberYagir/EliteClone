@@ -79,6 +79,10 @@ public class Star: SpaceObject
 
     public static string GenerateName(System.Random rnd)
     {
+        if (GalaxyGenerator.words == null)
+        {
+            GalaxyGenerator.GetWords();
+        }
         var nameID = rnd.Next(0, GalaxyGenerator.words.Length);
         var str = GalaxyGenerator.words[nameID];
 

@@ -16,15 +16,31 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     }
 
 
-    private void Start()
+    private void Awake()
     {
         camera = Camera.main;
-        foreach (var wsp in SolarSystemGenerator.objects)
+        Player.OnSceneChanged += UpdateList;
+    }
+    private void OnDestroy()
+    {
+        Player.OnSceneChanged -= UpdateList;
+    }
+    public void UpdateList()
+    {
+        print("World Object Canvas");
+        spaceObjects = new List<DisplaySpaceObject>();
+        foreach (Transform tr in transform)
+        {
+            if (tr.gameObject.active)
+            {
+                Destroy(tr.gameObject);
+            }
+        }
+        foreach (var wsp in FindObjectsOfType<WorldSpaceObject>())
         {
             spaceObjects.Add(new DisplaySpaceObject() { obj = wsp, canvasPoint = Instantiate(pointPrefab, transform).transform });
         }
     }
-
     private void LateUpdate()
     {
         UpdatePoints();

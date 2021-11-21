@@ -22,6 +22,12 @@ public class ShipController : MonoBehaviour
         player = Player.inst;
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        speed *= -1;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))

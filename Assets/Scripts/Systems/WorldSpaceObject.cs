@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WorldSpaceObject : MonoBehaviour
 {
-    public bool isVisible;
+    [HideInInspector]
+    public bool isVisible;    
+    [HideInInspector]
     public string dist;
     Transform camera;
 

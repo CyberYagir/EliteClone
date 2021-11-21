@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,8 +27,11 @@ public class Player : MonoBehaviour
     public static Player inst { get; private set; }
     public ShipController control { get; private set; }
     public WarpManager warp { get; private set; }
+    public SaveLoadData saves { get; private set; }
 
     [SerializeField] SpaceShip spaceShip;
+
+    public static event System.Action OnSceneChanged = delegate {  };
 
     Cargo cargo;
     TargetManager targets;
@@ -37,6 +41,15 @@ public class Player : MonoBehaviour
         Init();
     }
 
+    private void Start()
+    {
+        ChangeScene();
+    }
+
+    public static void ChangeScene()
+    {
+        OnSceneChanged(); 
+    }
     public void Init()
     {
         inst = this;
@@ -44,6 +57,7 @@ public class Player : MonoBehaviour
         cargo = GetComponent<Cargo>();
         targets = GetComponent<TargetManager>();
         warp = GetComponent<WarpManager>();
+        saves = GetComponent<SaveLoadData>();
     }
 
     public SpaceShip Ship()

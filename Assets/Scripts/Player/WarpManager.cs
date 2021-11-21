@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class WarpManager : MonoBehaviour
 {
     [SerializeField] LocationPoint activeLocationPoint;
+    [SerializeField] ParticleSystem warpParticle;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
@@ -16,7 +18,10 @@ public class WarpManager : MonoBehaviour
         {
             if (activeLocationPoint)
             {
+                warpParticle.Play();
                 SolarSystemGenerator.SaveSystem(true);
+                LocationGenerator.SaveLocationFile(new Location() { systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()), locationName = activeLocationPoint.root.name });
+                Player.inst.saves.SetKey("loc_start", true);
                 DontDestroyOnLoad(Player.inst);
                 Application.LoadLevel("Location");
             }

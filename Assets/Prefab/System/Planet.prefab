@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2197813106997241728}
   - component: {fileID: 181226350130355873}
   - component: {fileID: 4412391149446394969}
-  - component: {fileID: 7973457848296466815}
   - component: {fileID: -4156890057476958792}
   - component: {fileID: 4528986415802004121}
   m_Layer: 0
@@ -117,25 +116,6 @@ MonoBehaviour:
   orbitRotation: {x: 0, y: 0, z: 0}
   speed: 0
   width: 0.002
---- !u!205 &7973457848296466815
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3415297183641261298}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.00000023841858, y: 0, z: -0.00000023841858}
-  m_Size: 1
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.00406234
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2197813106997241728}
-  m_Enabled: 1
 --- !u!114 &-4156890057476958792
 MonoBehaviour:
   m_ObjectHideFlags: 0

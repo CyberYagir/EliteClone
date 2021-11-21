@@ -9,7 +9,7 @@ public class PlayerDataManager : MonoBehaviour
     public static SolarSystem currentSolarSystem;
     public static int galaxySeed = -1;
     public static string playerFolder, globalFolder, cacheSystemsFolder, root;
-    public static string galaxyFile, currentSystemFile, currentLocationFile;
+    public static string galaxyFile, currentSystemFile, currentLocationFile, playerDataFile;
     public static float generateProgress;
     bool loading = false;
     public static bool saveSystems = true;
@@ -65,8 +65,15 @@ public class PlayerDataManager : MonoBehaviour
             galaxyFile = globalFolder + "galaxy.json";
             currentSystemFile = globalFolder + "system.json";
             currentLocationFile = globalFolder + "location.json";
+            playerDataFile = globalFolder + "player.json";
 
-            if (File.Exists(currentSystemFile))
+
+            if (File.Exists(currentLocationFile))
+            {
+                Application.LoadLevel("Location");
+            }
+            else
+                if (File.Exists(currentSystemFile))
             {
                 Application.LoadLevel("System");
             }
