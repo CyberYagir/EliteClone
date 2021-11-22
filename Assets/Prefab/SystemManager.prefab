@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8043877574019024801}
   - component: {fileID: 8043877574019024800}
   - component: {fileID: 8043877574019024803}
+  - component: {fileID: 527262622}
   m_Layer: 0
   m_Name: SystemManager
-  m_TagString: Untagged
+  m_TagString: WorldHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,8 +48,8 @@ MonoBehaviour:
   sunPrefab: {fileID: 8814524701996779434, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
   planetPrefab: {fileID: 3415297183641261298, guid: 2d775a0ac84faeb4c9714b9523b9268d, type: 3}
   stationPointPrefab: {fileID: 3415297183641261298, guid: 77fb72f18822ac34f88827321ee0dbfb, type: 3}
-  stationPrefab: {fileID: 2617981788508908819, guid: 79b0a36e84df4164cb269812dd14af20, type: 3}
   player: {fileID: 594618446116798275, guid: 64649fe7cad36b743ba4245f11b26686, type: 3}
+  systemPoint: {fileID: 7498844651477290654, guid: 5df1560796ec5c640ad421b7e4135e48, type: 3}
 --- !u!114 &8043877574019024803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,4 +62,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9803e9206bff18c41831928890342ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 2000
+  threshold: 999
+--- !u!114 &527262622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043877574019024806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a292df3348487c4c8330437951db4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

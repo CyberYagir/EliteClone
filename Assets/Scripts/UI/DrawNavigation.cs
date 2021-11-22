@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 public class NavItem
 {
     public ButtonEffect button;
-    public Image image;
+    public Image image, icon;
     public TMP_Text name, dist;
     public WorldSpaceObject spaceObject;
 }
@@ -20,8 +21,10 @@ public class DrawNavigation : MonoBehaviour
     [SerializeField] int selectedIndex;
     UITabControl tabControl;
 
+    private float height;
     private void Awake()
     {
+        height = item.GetComponent<RectTransform>().sizeDelta.y;
         Player.OnSceneChanged += UpdateList;
     }
 
@@ -43,15 +46,28 @@ public class DrawNavigation : MonoBehaviour
 
         items = new List<NavItem>();
         var objects = FindObjectsOfType<WorldSpaceObject>();
+        objects = objects.Reverse().ToArray();
         for (int i = 0; i < objects.Length; i++)
         {
             var b = Instantiate(item, holder.transform);
+
+            if (objects[i].transform.parent != null)
+            {
+                if (objects[i].transform.parent.GetComponent<WorldSpaceObject>())
+                {
+                    var rect = b.GetComponent<RectTransform>();
+                    rect.sizeDelta = new Vector2(rect.sizeDelta.x * 0.95f, rect.sizeDelta.y);
+                }
+            }
+
             var navI = new NavItem();
             navI.button = b.GetComponent<ButtonEffect>();
             navI.spaceObject = objects[i];
             navI.image = objects[i].GetComponent<Image>();
             navI.name = b.transform.GetChild(0).GetComponent<TMP_Text>();
             navI.dist = b.transform.GetChild(1).GetComponent<TMP_Text>();
+            navI.icon = b.transform.GetChild(2).GetComponent<Image>();
+            navI.icon.sprite = objects[i].icon;
             navI.name.text = objects[i].transform.name;
             navI.dist.text = objects[i].dist;
             b.SetActive(true);
@@ -63,7 +79,7 @@ public class DrawNavigation : MonoBehaviour
     {
         if (tabControl.active)
         {
-            holder.localPosition = new Vector3(holder.localPosition.x, selectedIndex * 42, holder.localPosition.z);
+            holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
             if (InputM.GetAxisDown(KAction.TabsVertical))
             {
                 selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);

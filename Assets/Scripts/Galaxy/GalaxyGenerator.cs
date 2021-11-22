@@ -19,6 +19,9 @@ public class GalaxyGenerator : MonoBehaviour
     public static string[] words;
 
     public int seed;
+    
+    public static float siblingDist = 6000;
+    public static float scale = 100;
 
     private void Start()
     {
@@ -52,8 +55,9 @@ public class GalaxyGenerator : MonoBehaviour
         for (int i = 0; i < systems.Count; i++)
         {
             var point = Instantiate(prefab, holder.transform);
-            point.transform.position = systems[i].position.toVector() / 100f;
-            point.GetComponent<GalaxyPoint>().solarSystem = systems[i];
+            point.transform.position = systems[i].position.toVector() / scale;
+            var gpoint = point.GetComponent<GalaxyPoint>();
+            gpoint.solarSystem = systems[i];
         }
     }
 
@@ -117,6 +121,23 @@ public class GalaxyGenerator : MonoBehaviour
 
             system.stars.Add(newStar);
             system.name = system.stars[0].name;
+
+            for (int j = 0; j < systems.Count; j++)
+            {
+                if (systems[j].position.Dist(system.position) < (decimal) siblingDist)
+                {
+                    var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
+                    if (!systems[j].sibligs.Contains(curr))
+                    {
+                        systems[j].sibligs.Add(curr);
+                    }
+
+                    system.sibligs.Add(new NeighbourSolarSytem()
+                        {position = systems[j].position, solarName = systems[j].name});
+                }
+            }
+            
+            
             systems.Add(system);
 
             if (i % 5 == 0)

@@ -12,7 +12,7 @@ public class Location
 
 public class LocationGenerator : MonoBehaviour
 {
-    public GameObject player, planet, sunPrefab, station;
+    public GameObject player, planet, sunPrefab, station, systemPoint;
     public Location current;
     bool init;
 
@@ -37,7 +37,7 @@ public class LocationGenerator : MonoBehaviour
         PlayerDataManager.currentSolarSystem = system;
         
         
-        SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, 100,
+        SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, systemPoint, 100,
             false);
         foreach (var item in FindObjectsOfType<LineRenderer>())
         {

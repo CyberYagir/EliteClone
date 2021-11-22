@@ -44,8 +44,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0, g: 0.3670323, b: 1, a: 1}
-  m_Intensity: 795774.6
-  m_Range: 10000
+  m_Intensity: 39788736
+  m_Range: 30000
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 9999999
+  m_Intensity: 500000000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -255,7 +255,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4092726579014208155}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
@@ -442,7 +442,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3787059946326775558
 MonoBehaviour:
@@ -457,6 +457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 0}
+  orbitID: 0
+  orbitRotation: {x: 0, y: 0, z: 0}
   speed: 0
   width: 0.002
 --- !u!114 &-4040611177752285905
@@ -471,3 +473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37cc951035632c4d8e316760c62dad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isVisible: 0
+  dist: 
+  icon: {fileID: 21300000, guid: 2dc771e95bf3e2b4eb34459ccceeb8b1, type: 3}

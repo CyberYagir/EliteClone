@@ -16,7 +16,7 @@ public class LineDrawer : MonoBehaviour
     public bool updateRequire;
 
     public float time = 0;
-    public float dist = 2500;
+    
     Vector3 oldPos;
     private void Awake()
     {
@@ -76,7 +76,6 @@ public class LineDrawer : MonoBehaviour
     public void UpdateLines()
     {
         time = 0;
-        List<Paths> paths = new List<Paths>();
         foreach (var item in activeLines)
         {
             lines.Add(item);
@@ -86,25 +85,16 @@ public class LineDrawer : MonoBehaviour
         activeLines = new List<GalaxyLine>();
         foreach (var s1 in stars)
         {
-            foreach (var s2 in stars)
+            foreach (var sibling in s1.solarSystem.sibligs)
             {
-                if (s1 != s2 && paths.Find(x=>x.p1 == s1 && x.p2 == s2) == null)
+                if (lines.Count != 0)
                 {
-                    if (s1.solarSystem.position.Dist(s2.solarSystem.position) < (decimal)dist)
-                    {
-                        if (lines.Count > 0)
-                        {
-                            var line = lines[0];
-                            activeLines.Add(line);
-                            lines.RemoveAt(0);
-                            line.p1 = s1;
-                            line.p2 = s2;
-                            line.Init(s1.transform.position, Vector3.Lerp(s1.transform.position, s2.transform.position, 0.5f), s2.transform.position);
-                            line.gameObject.SetActive(true);
-
-                            paths.Add(new Paths() { p1 = s1, p2 = s2 });
-                        }
-                    }
+                    var mainpos = s1.solarSystem.position.toVector() / GalaxyGenerator.scale;
+                    var secondpos = sibling.position.toVector() / GalaxyGenerator.scale;
+                    lines[0].Init(mainpos , Vector3.Lerp(mainpos, secondpos, 0.5f), secondpos, s1);
+                    
+                    activeLines.Add(lines[0]);
+                    lines.RemoveAt(0);
                 }
             }
         }

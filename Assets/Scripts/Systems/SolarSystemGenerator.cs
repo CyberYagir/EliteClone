@@ -28,7 +28,7 @@ public class SavedSolarSystemLocation
 
 public class SolarSystemGenerator : MonoBehaviour
 {
-    public GameObject sunPrefab, planetPrefab, stationPointPrefab, player;
+    public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint;
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
     static SavedSolarSystem savedSolarSystem;
 
@@ -91,7 +91,7 @@ public class SolarSystemGenerator : MonoBehaviour
         if (PlayerDataManager.currentSolarSystem != null)
         {
             if(FindObjectOfType<Player>() == null) { Instantiate(player.gameObject).GetComponent<Player>().Init(); }
-            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, scale);
+            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, systemPoint, scale);
             SaveSystem();
 
             if (savedSolarSystem != null)
@@ -214,7 +214,7 @@ public class SolarSystemGenerator : MonoBehaviour
         return system;
     }
 
-    public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab, GameObject stationPointPrefab, float _scale, bool setPos = true)
+    public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab, GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
     {
         objects = new List<WorldSpaceObject>();
         var pos = system.position;
@@ -291,6 +291,14 @@ public class SolarSystemGenerator : MonoBehaviour
         {
             FindObjectOfType<Player>().transform.position = new Vector3(0, (float)(masses[0].radius * rnd.Next(2, 6)) * _scale, (float)(masses[0].radius * 5) * _scale);
             FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
+        }
+
+        var systemsParent = new GameObject("SystemsHolder");
+        systemsParent.AddComponent<PosToPlayerPos>();
+        foreach (var sibling in system.sibligs)
+        {
+            var syspoint = Instantiate(systemPoint, system.position.toVector() - sibling.position.toVector(), Quaternion.identity, systemsParent.transform);
+            syspoint.transform.name = sibling.solarName + " S";
         }
     }
 

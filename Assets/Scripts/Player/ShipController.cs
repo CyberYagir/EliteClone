@@ -25,6 +25,7 @@ public class ShipController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        player.warp.WarpStop();
         speed *= -1;
     }
 
@@ -76,14 +77,26 @@ public class ShipController : MonoBehaviour
             }
         }
 
-        Player.inst.Ship().fuel.value -= speed * Time.deltaTime;
 
         if (Player.inst.Ship().fuel.value <= 0) { speed -= Time.deltaTime; return; }
 
         if (InputM.GetAxisUp(KAction.Vertical)) return;
 
-        speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
-
+        Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed)/1000f) * Time.deltaTime;
+        if (!player.warp.isWarp)
+        {
+            speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier; 
+        }
+        else
+        {
+            CameraShake.Shake();
+            player.warp.warpSpeed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.warp.warpSpeedUp;
+            if (player.warp.warpSpeed < 0)
+            {
+                player.warp.WarpStop();
+            }
+        }
+        
         if (moveMode == MoveMode.F)
             speed = Mathf.Clamp(speed, 0, player.Ship().data.maxSpeedUnits);
         else if (moveMode == MoveMode.B)
@@ -93,6 +106,6 @@ public class ShipController : MonoBehaviour
         {
             moveMode = MoveMode.S;
         }
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * (speed + player.warp.warpSpeed);
     }
 }

@@ -7,14 +7,33 @@ public class WarpManager : MonoBehaviour
 {
     [SerializeField] LocationPoint activeLocationPoint;
     [SerializeField] ParticleSystem warpParticle;
+    public bool isWarp;
+    public float warpSpeed, maxWarpSpeed, warpSpeedUp;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (warpSpeed > maxWarpSpeed)
         {
-            if (Player.inst.GetTarget())
-                transform.position = Player.inst.GetTarget().transform.position;
+            warpSpeed = maxWarpSpeed;
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (InputM.GetAxisDown(KAction.StartWarp))
+        {
+            if (!isWarp)
+            {
+                if (Player.inst.control.speed > 1f)
+                {
+                    warpParticle.Play();
+                    isWarp = true;
+                }
+            }
+            else
+            {
+                if (warpSpeed <= maxWarpSpeed / 3f)
+                {
+                    WarpStop();
+                }
+            }
+        }
+        if (InputM.GetAxisDown(KAction.JumpIn))
         {
             if (activeLocationPoint)
             {
@@ -26,6 +45,14 @@ public class WarpManager : MonoBehaviour
                 Application.LoadLevel("Location");
             }
         }
+    }
+
+    public void WarpStop()
+    {
+        if (isWarp)
+            warpParticle.Play();
+        warpSpeed = 0;
+        isWarp = false;
     }
 
     public void SetActiveLocation(LocationPoint locationPoint)

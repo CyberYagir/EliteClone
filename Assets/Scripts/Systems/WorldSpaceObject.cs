@@ -9,7 +9,7 @@ public class WorldSpaceObject : MonoBehaviour
     [HideInInspector]
     public string dist;
     Transform camera;
-
+    public Sprite icon;
     private void Start()
     {
         camera = Camera.main.transform;
