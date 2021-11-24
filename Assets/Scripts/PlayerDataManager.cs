@@ -72,8 +72,7 @@ public class PlayerDataManager : MonoBehaviour
             {
                 Application.LoadLevel("Location");
             }
-            else
-                if (File.Exists(currentSystemFile))
+            else if (File.Exists(currentSystemFile))
             {
                 Application.LoadLevel("System");
             }

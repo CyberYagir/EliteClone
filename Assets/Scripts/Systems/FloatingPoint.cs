@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +10,13 @@ public class FloatingPoint : MonoBehaviour
 
     public float threshold = 10000.0f;
 
+    private float cooldown = 2;
+    private float time = 0;
+
     void Update()
     {
-        if (Player.inst)
+        time += Time.deltaTime;
+        if (Player.inst && time > cooldown)
         {
             Vector3 cameraPos = Player.inst.transform.position;
             if (cameraPos.magnitude > threshold)
@@ -22,6 +28,8 @@ public class FloatingPoint : MonoBehaviour
                 }
                 WorldSpaceObjectCanvas.canvas.UpdatePoints(true);
             }
+
+            time = 0;
         }
     }
 }

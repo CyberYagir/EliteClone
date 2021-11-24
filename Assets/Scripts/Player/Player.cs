@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     public void Init()
     {
         inst = this;
+        GalaxyGenerator.LoadSystems();
         control = GetComponent<ShipController>();
         cargo = GetComponent<Cargo>();
         targets = GetComponent<TargetManager>();

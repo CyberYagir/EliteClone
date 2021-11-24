@@ -46,19 +46,25 @@ public class SolarSystemGenerator : MonoBehaviour
         File.WriteAllText(PlayerDataManager.currentSystemFile, JsonConvert.SerializeObject(system, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
     }
 
+    public void Load()
+    {
+        savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.currentSystemFile));
+    }
+    
     private void Awake()
     {
-        savedSolarSystem = null;
         if (PlayerDataManager.currentSolarSystem != null) //Generate And Save
         {
             if (PlayerDataManager.saveSystems)
             {
                 if (!File.Exists(GetSystemFileName()))
                 {
+                    print("Generate");
                     PlayerDataManager.currentSolarSystem = Generate(PlayerDataManager.currentSolarSystem, planetPrefab);
                 }
                 else //Load Eternal
                 {
+                    print("Load Chache");
                     PlayerDataManager.currentSolarSystem = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(GetSystemFileName()));
                 }
             }
@@ -71,8 +77,7 @@ public class SolarSystemGenerator : MonoBehaviour
         {
             if (File.Exists(PlayerDataManager.currentSystemFile))
             {
-                savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.currentSystemFile));
-                
+                Load();
                 var file = PlayerDataManager.cacheSystemsFolder + "/" + savedSolarSystem.systemName + ".solar";
                 if (File.Exists(file))
                 {
@@ -88,17 +93,19 @@ public class SolarSystemGenerator : MonoBehaviour
                 Application.LoadLevel("Init");
             }
         }
+        
+        
         if (PlayerDataManager.currentSolarSystem != null)
         {
             if(FindObjectOfType<Player>() == null) { Instantiate(player.gameObject).GetComponent<Player>().Init(); }
-            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, systemPoint, scale);
-            SaveSystem();
+            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, systemPoint, scale, savedSolarSystem == null);
 
             if (savedSolarSystem != null)
             {
                 transform.position = savedSolarSystem.worldPos;
                 Player.inst.transform.position = savedSolarSystem.playerPos;
             }
+            SaveSystem();
         }
     }
 
@@ -252,9 +259,8 @@ public class SolarSystemGenerator : MonoBehaviour
             sun.GetComponent<RotateAround>().point = attractor.transform;
 
             sun.GetComponent<RotateAround>().speed = (float)rnd.NextDouble() * 0.01f;
+            
 
-
-            sun.GetComponentInChildren<Light>().intensity = (99999999f * Mathf.Clamp01(((float)item.mass / (120f / _scale))));
             sun.GetComponentInChildren<Light>().color = item.GetColor();
             sun.GetComponent<RotateAround>().orbitID = objects.Count;
             objects.Add(sun.GetComponent<WorldSpaceObject>());
@@ -299,6 +305,7 @@ public class SolarSystemGenerator : MonoBehaviour
         {
             var syspoint = Instantiate(systemPoint, system.position.toVector() - sibling.position.toVector(), Quaternion.identity, systemsParent.transform);
             syspoint.transform.name = sibling.solarName + " S";
+            syspoint.GetComponent<SolarSystemPoint>().systemName = sibling.solarName;
         }
     }
 
@@ -319,5 +326,12 @@ public class SolarSystemGenerator : MonoBehaviour
         orbital.GetComponent<RotateAround>().orbitRotation = item.rotation.toVector();
         orbital.transform.parent = planet.transform;
         return orbital.GetComponent<WorldSpaceObject>();
+    }
+
+
+    public static void DeleteSystemFile()
+    {
+        File.Delete(PlayerDataManager.currentSystemFile);
+        PlayerDataManager.currentSolarSystem = null;
     }
 }

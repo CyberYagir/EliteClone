@@ -8,7 +8,7 @@ public class WarpManager : MonoBehaviour
     [SerializeField] LocationPoint activeLocationPoint;
     [SerializeField] ParticleSystem warpParticle;
     public bool isWarp;
-    public float warpSpeed, maxWarpSpeed, warpSpeedUp;
+    public float warpSpeed, maxWarpSpeed, warpSpeedUp, warpSpeedAdd;
     private void Update()
     {
         if (warpSpeed > maxWarpSpeed)
@@ -37,12 +37,64 @@ public class WarpManager : MonoBehaviour
         {
             if (activeLocationPoint)
             {
-                warpParticle.Play();
-                SolarSystemGenerator.SaveSystem(true);
-                LocationGenerator.SaveLocationFile(new Location() { systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()), locationName = activeLocationPoint.root.name });
-                Player.inst.saves.SetKey("loc_start", true);
-                DontDestroyOnLoad(Player.inst);
-                Application.LoadLevel("Location");
+                if (Application.loadedLevelName == "System")
+                {
+                    warpParticle.Play();
+                    SolarSystemGenerator.SaveSystem(true);
+                    LocationGenerator.SaveLocationFile(new Location()
+                    {
+                        systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
+                        locationName = activeLocationPoint.root.name
+                    });
+                    Player.inst.saves.SetKey("loc_start", true);
+                    DontDestroyOnLoad(Player.inst);
+                    Application.LoadLevel("Location");
+                }
+            }
+        }
+
+        if (Application.loadedLevelName == "Location")
+        {
+            if (isWarp)
+            {
+                if (warpSpeed >= 50)
+                {
+                    warpParticle.Play();
+                    DontDestroyOnLoad(Player.inst);
+                    PlayerDataManager.currentSolarSystem = null;
+                    LocationGenerator.RemoveLocationFile();
+                    Application.LoadLevel("System");
+                }
+            }
+        }
+        if (Player.inst.GetTarget() != null)
+        {
+            if (Player.inst.GetTarget().transform.tag == "System")
+            {
+                if (isWarp)
+                {
+                    if (Vector3.Angle(transform.forward,
+                        Player.inst.GetTarget().transform.position - transform.position) < 10)
+                    {
+                        if (warpSpeed >= maxWarpSpeed / 2f)
+                        {
+
+                            isWarp = false;
+                            warpSpeed = 0;
+                            warpParticle.Play();
+                            Player.inst.control.speed = 0;
+                            Player.inst.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                            DontDestroyOnLoad(Player.inst);
+                            SolarSystemGenerator.DeleteSystemFile();
+                            PlayerDataManager.currentSolarSystem =
+                                GalaxyGenerator.systems[
+                                    Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
+                            Application.LoadLevel("System");
+                        }
+
+                        warpSpeed += warpSpeedUp * 10 * Time.deltaTime;
+                    }
+                }
             }
         }
     }

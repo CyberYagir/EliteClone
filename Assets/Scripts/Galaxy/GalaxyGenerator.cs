@@ -7,7 +7,7 @@ using System.IO;
 
 public class GalaxyGenerator : MonoBehaviour
 {
-    public static List<SolarSystem> systems = new List<SolarSystem>();
+    public static Dictionary<string,SolarSystem> systems;
     public static decimal maxY = 5000, minY = -5000;
     public static decimal maxRadius = 100000, minRadius = 30000;
     public static int maxSystemsCount = 4000, minSystemsCount = 2000;
@@ -25,6 +25,7 @@ public class GalaxyGenerator : MonoBehaviour
 
     private void Start()
     {
+        systems = null;
         Init();
         DrawsSystems();
     }
@@ -39,25 +40,34 @@ public class GalaxyGenerator : MonoBehaviour
     public void Init()
     {
         GetWords();
-        if (File.Exists(PlayerDataManager.galaxyFile))
+        LoadSystems();
+    }
+
+    public static void LoadSystems()
+    {
+        if (systems == null)
         {
-            systems = JsonConvert.DeserializeObject<List<SolarSystem>>(File.ReadAllText(PlayerDataManager.galaxyFile));
-        }
-        else
-        {
-            Application.LoadLevel("Init");
+            if (File.Exists(PlayerDataManager.galaxyFile))
+            {
+                systems = JsonConvert.DeserializeObject<Dictionary<string,SolarSystem>>(
+                    File.ReadAllText(PlayerDataManager.galaxyFile));
+
+                return;
+            }
         }
 
+        if (Application.loadedLevelName == "Galaxy")
+            Application.LoadLevel("Init");
     }
 
     public void DrawsSystems()
     {
-        for (int i = 0; i < systems.Count; i++)
+        foreach (var sys in systems)
         {
             var point = Instantiate(prefab, holder.transform);
-            point.transform.position = systems[i].position.toVector() / scale;
+            point.transform.position = sys.Value.position.toVector() / scale;
             var gpoint = point.GetComponent<GalaxyPoint>();
-            gpoint.solarSystem = systems[i];
+            gpoint.solarSystem = sys.Value;
         }
     }
 
@@ -71,8 +81,8 @@ public class GalaxyGenerator : MonoBehaviour
 
         PlayerDataManager.generateProgress = 0;
 
-        systems = new List<SolarSystem>();
-
+        systems = new Dictionary<string, SolarSystem>();
+        
         var rnd = new System.Random(seed);
 
         var systemsCount = rnd.Next(minSystemsCount, maxSystemsCount);
@@ -80,7 +90,6 @@ public class GalaxyGenerator : MonoBehaviour
         for (int i = 0; i < systemsCount; i++)
         {
             var system = new SolarSystem();
-
             bool canSpawn = false;
             var pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
             while (!canSpawn)
@@ -89,7 +98,7 @@ public class GalaxyGenerator : MonoBehaviour
                 bool allOK = true;
                 foreach (var item in systems)
                 {
-                    if (pos.Dist(item.position) < minSystemsCount || pos.Dist(new DVector(0,0,0)) > maxRadius || pos.Dist(new DVector(0, 0, 0)) < minRadius )
+                    if (pos.Dist(item.Value.position) < minSystemsCount || pos.Dist(new DVector(0,0,0)) > maxRadius || pos.Dist(new DVector(0, 0, 0)) < minRadius )
                     {
                         allOK = false;
                         break;
@@ -122,23 +131,25 @@ public class GalaxyGenerator : MonoBehaviour
             system.stars.Add(newStar);
             system.name = system.stars[0].name;
 
-            for (int j = 0; j < systems.Count; j++)
+            foreach (var sys in systems)
             {
-                if (systems[j].position.Dist(system.position) < (decimal) siblingDist)
+                if (sys.Value.position.Dist(system.position) < (decimal) siblingDist)
                 {
                     var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
-                    if (!systems[j].sibligs.Contains(curr))
+                    if (!sys.Value.sibligs.Contains(curr))
                     {
-                        systems[j].sibligs.Add(curr);
+                        sys.Value.sibligs.Add(curr);
                     }
 
                     system.sibligs.Add(new NeighbourSolarSytem()
-                        {position = systems[j].position, solarName = systems[j].name});
+                        {position = sys.Value.position, solarName = sys.Value.name});
                 }
             }
-            
-            
-            systems.Add(system);
+
+            if (!systems.ContainsKey(system.name))
+            {
+                systems.Add(system.name, system);
+            }
 
             if (i % 5 == 0)
             {
