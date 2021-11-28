@@ -119,8 +119,11 @@ public class PlayerDataManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
-                loading = true;
+                if (!loading)
+                {
+                    StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
+                    loading = true;
+                }
             }
         }
     }

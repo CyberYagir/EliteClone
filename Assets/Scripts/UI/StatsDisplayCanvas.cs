@@ -29,6 +29,7 @@ public class StatsDisplayCanvas : MonoBehaviour
     [SerializeField] StatsDisplayCanvasRow speedValue;
     [SerializeField] StatsDisplayCanvasRow fuelValue;
     [SerializeField] StatsDisplayCanvasRow warpValue;
+    [SerializeField] StatsDisplayCanvasRow heatValue;
     [SerializeField] WarpDisplayCanvasRow warpDisplayRow;
     Player player;
     
@@ -43,6 +44,7 @@ public class StatsDisplayCanvas : MonoBehaviour
         var ship = player.control;
         speedValue.SetValue(ship.speed, player.Ship().data.maxSpeedUnits, $"{ship.moveMode.ToString()} {(ship.speed * World.unitSize).ToString("F0")} u/s");
         fuelValue.SetValue(player.Ship().fuel.value, player.Ship().fuel.max);
+        heatValue.SetValue(player.Ship().heat.value, player.Ship().heat.max);
         warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
         warpDisplayRow.UpdateColor();
         

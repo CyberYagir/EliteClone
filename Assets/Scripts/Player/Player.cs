@@ -12,13 +12,14 @@ public class ShipVariables
 [System.Serializable]
 public class ShipClaped
 {
-    public float value, max;
+    public float value;
+    public float max;
 }
 [System.Serializable]
 public class SpaceShip
 {
     public Mesh shipModel;
-    public ShipClaped fuel, hp, shields;
+    public ShipClaped fuel, hp, shields, heat;
     public ShipVariables data;
 }
 
@@ -35,10 +36,39 @@ public class Player : MonoBehaviour
 
     Cargo cargo;
     TargetManager targets;
-
+    
+    private float heatTime;
     private void Awake()
     {
         Init();
+    }
+
+    public void AddHeat(float heat)
+    {
+        spaceShip.heat.value += heat * Time.deltaTime;
+        if (spaceShip.heat.value > spaceShip.heat.max)
+        {
+            spaceShip.heat.value = spaceShip.heat.max;
+            spaceShip.hp.value -= Time.deltaTime;
+            WarningManager.AddWarning("Heat level critical!", WarningTypes.Damage);
+            
+        }
+
+        if (heat > 0)
+            heatTime = 0;
+        if (spaceShip.heat.value < 0)
+        {
+            spaceShip.heat.value = 0;
+        }
+    }
+
+    private void Update()
+    {
+        heatTime += Time.deltaTime;
+        if (heatTime > 2)
+        {
+            AddHeat(-10);
+        }
     }
 
     private void Start()

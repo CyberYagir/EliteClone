@@ -27,6 +27,7 @@ public class SolarSystemGenerator : MonoBehaviour
 {
     public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint;
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
+    public static List<WorldSpaceObject> suns = new List<WorldSpaceObject>();
     static SavedSolarSystem savedSolarSystem;
 
     public static Vector3 startPoint = Vector3.zero;
@@ -245,6 +246,7 @@ public class SolarSystemGenerator : MonoBehaviour
     public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab,
         GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
     {
+        suns = new List<WorldSpaceObject>();
         objects = new List<WorldSpaceObject>();
         var pos = system.position;
         var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
@@ -277,7 +279,7 @@ public class SolarSystemGenerator : MonoBehaviour
             sun.transform.name = item.name;
             sun.transform.position = item.position.toVector() * _scale;
             sun.transform.localScale *= (float) item.radius * _scale;
-
+        
             var renderer = sun.GetComponent<Renderer>();
             renderer.material.color = item.GetColor();
             renderer.material.SetColor("_MainColor", item.GetColor());
@@ -287,7 +289,7 @@ public class SolarSystemGenerator : MonoBehaviour
             rotate.speed = (float) rnd.NextDouble() * 0.01f;
             rotate.orbitID = objects.Count;
 
-
+            suns.Add(sun.GetComponent<WorldSpaceObject>());
             sun.GetComponentInChildren<Light>().color = item.GetColor();
             objects.Add(sun.GetComponent<WorldSpaceObject>());
             id++;

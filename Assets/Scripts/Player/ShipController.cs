@@ -26,7 +26,9 @@ public class ShipController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         player.warp.WarpStop();
+        player.Ship().hp.value -= ((speed + player.warp.warpSpeed));
         speed *= -1;
+        WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
     }
 
     private void Update()
@@ -91,24 +93,35 @@ public class ShipController : MonoBehaviour
             }
         }
 
-        if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) != 0 ? InputM.GetAxisRaw(KAction.Vertical) : 1), out RaycastHit hit))
+        if (SolarSystemGenerator.objects != null)
         {
-            if (hit.transform.tag != "Obstacle")
+            foreach (var obj in SolarSystemGenerator.objects)
             {
-                if (hit.distance < 2)
+                if (Vector3.Distance(obj.transform.position, transform.position) <
+                    obj.transform.localScale.magnitude * 0.9f)
                 {
-                    StopPlayer();
-                }
-
-                if (hit.transform.tag == "Sun")
-                {
-                    if (hit.distance < hit.transform.localScale.magnitude * 1.1f)
+                    print(Vector3.Distance(obj.transform.position, transform.position) + " / " + obj.transform.localScale.magnitude * 0.9f);
+                    
+                    if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical)), out RaycastHit hit))
                     {
-                        StopPlayer();
+                        player.HardStop();
+                    }
+                    
+                    if (obj.transform.tag == "Sun")
+                    {
+                        WarningManager.AddWarning("The cosmic body in front of you is too hot. Don't get any closer.", WarningTypes.Heat);
+                        player.AddHeat(10);
+                    }
+                    else
+                    {
+                        WarningManager.AddWarning("Too close to the planet's atmosphere.", WarningTypes.Heat);
+                        
                     }
                 }
             }
         }
+
+        
         
         if (Player.inst.Ship().fuel.value <= 0) { return; }
 
@@ -117,7 +130,7 @@ public class ShipController : MonoBehaviour
         
         
         
-        Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed)/1000f) * Time.deltaTime;
+        Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed)/100f) * Time.deltaTime;
         if (InputM.GetPressButton(KAction.Stop))
         {
             StopPlayer();
