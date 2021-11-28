@@ -50,6 +50,12 @@ public class Player : MonoBehaviour
     {
         OnSceneChanged(); 
     }
+
+    public void HardStop()
+    {
+        control.speed = 0;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
     public void Init()
     {
         inst = this;

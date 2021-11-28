@@ -443,8 +443,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f99bdf09f5510c4d8aa2b793219d829, type: 2}
   beforeTransparentCustomPostProcesses: []
   beforeTAACustomPostProcesses: []
-  beforePostProcessCustomPostProcesses: []
-  afterPostProcessCustomPostProcesses: []
+  beforePostProcessCustomPostProcesses:
+  - Kino.PostProcessing.Streak, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  afterPostProcessCustomPostProcesses:
+  - Kino.PostProcessing.Recolor, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.Overlay, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.Glitch, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.Sharpen, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.Slice, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.TestCard, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  - Kino.PostProcessing.Utility, Kino.Postprocessing, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
   virtualTexturingSettings:
     streamingCpuCacheSizeInMegaBytes: 256
     streamingGpuCacheSettings:

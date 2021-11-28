@@ -37,7 +37,7 @@ public class LocationGenerator : MonoBehaviour
         PlayerDataManager.currentSolarSystem = system;
         
         
-        SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, systemPoint, 100,
+        SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, systemPoint, 40,
             false);
         foreach (var item in FindObjectsOfType<LineRenderer>())
         {

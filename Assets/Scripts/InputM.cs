@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp}
+public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop}
 [System.Serializable]
 public class Axis
 {
@@ -69,10 +69,20 @@ public class InputM : MonoBehaviour
     {
         return keys[action].rawvalue;
     }
-    public static bool GetButton(KAction action)
+    /// <summary>
+    /// Hold button
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    public static bool GetPressButton(KAction action)
     {
         return keys[action].rawvalue != 0;
     }
+    /// <summary>
+    /// One frame down
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns></returns>
     public static bool GetAxisDown(KAction action)
     {
         return keys[action].down;

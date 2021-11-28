@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ public class WarpManager : MonoBehaviour
         if (warpSpeed > maxWarpSpeed)
         {
             warpSpeed = maxWarpSpeed;
+        }
+
+        if (Player.inst.control.speed < Player.inst.Ship().data.maxSpeedUnits / 2f)
+        {
+            WarpStop();
         }
         if (InputM.GetAxisDown(KAction.StartWarp))
         {
@@ -82,14 +88,14 @@ public class WarpManager : MonoBehaviour
                             isWarp = false;
                             warpSpeed = 0;
                             warpParticle.Play();
-                            Player.inst.control.speed = 0;
-                            Player.inst.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                            Player.inst.HardStop();
                             DontDestroyOnLoad(Player.inst);
                             SolarSystemGenerator.DeleteSystemFile();
                             PlayerDataManager.currentSolarSystem =
                                 GalaxyGenerator.systems[
                                     Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
                             Application.LoadLevel("System");
+                            return;
                         }
 
                         warpSpeed += warpSpeedUp * 10 * Time.deltaTime;

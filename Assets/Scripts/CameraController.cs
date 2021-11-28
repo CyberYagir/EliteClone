@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] FreeCam freeCam;
     private void Update()
     {
-        freeCam.enabled = InputM.GetButton(KAction.Click);
+        freeCam.enabled = InputM.GetPressButton(KAction.Click);
         Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
         Cursor.visible = !freeCam.enabled;
     }

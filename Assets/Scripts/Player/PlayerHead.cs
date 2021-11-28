@@ -24,8 +24,10 @@ public class PlayerHead : MonoBehaviour
         }
         else
         {
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 10 * Time.deltaTime);
-            camera.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 10 * Time.deltaTime);
+            var localRotation = transform.localRotation;
+            localRotation = Quaternion.Lerp(localRotation, Quaternion.identity, 10 * Time.deltaTime);
+            transform.localRotation = localRotation;
+            camera.localRotation = Quaternion.Lerp(localRotation, Quaternion.identity, 10 * Time.deltaTime);
         }
     }
 }

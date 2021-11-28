@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +7,6 @@ using System.Linq;
 using UnityEngine;
 
 
-public static class World
-{
-    public static readonly float unitSize = 100;
-}
 [System.Serializable]
 public class SavedSolarSystem
 {
@@ -32,6 +29,7 @@ public class SolarSystemGenerator : MonoBehaviour
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
     static SavedSolarSystem savedSolarSystem;
 
+    public static Vector3 startPoint = Vector3.zero;
 
     public static void SaveSystem(bool isFirstInLocation = true)
     {
@@ -43,16 +41,20 @@ public class SolarSystemGenerator : MonoBehaviour
         system.playerPos = Player.inst.transform.position;
         system.worldPos = objects[0].transform.parent.transform.position;
 
-        File.WriteAllText(PlayerDataManager.currentSystemFile, JsonConvert.SerializeObject(system, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+        File.WriteAllText(PlayerDataManager.currentSystemFile,
+            JsonConvert.SerializeObject(system,
+                new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
     }
 
     public void Load()
     {
-        savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.currentSystemFile));
+        savedSolarSystem =
+            JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.currentSystemFile));
     }
-    
+
     private void Awake()
     {
+        savedSolarSystem = null;
         if (PlayerDataManager.currentSolarSystem != null) //Generate And Save
         {
             if (PlayerDataManager.saveSystems)
@@ -65,7 +67,8 @@ public class SolarSystemGenerator : MonoBehaviour
                 else //Load Eternal
                 {
                     print("Load Chache");
-                    PlayerDataManager.currentSolarSystem = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(GetSystemFileName()));
+                    PlayerDataManager.currentSolarSystem =
+                        JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(GetSystemFileName()));
                 }
             }
             else
@@ -81,7 +84,8 @@ public class SolarSystemGenerator : MonoBehaviour
                 var file = PlayerDataManager.cacheSystemsFolder + "/" + savedSolarSystem.systemName + ".solar";
                 if (File.Exists(file))
                 {
-                    PlayerDataManager.currentSolarSystem = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(file));
+                    PlayerDataManager.currentSolarSystem =
+                        JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(file));
                 }
                 else
                 {
@@ -93,25 +97,38 @@ public class SolarSystemGenerator : MonoBehaviour
                 Application.LoadLevel("Init");
             }
         }
-        
-        
+
+
         if (PlayerDataManager.currentSolarSystem != null)
         {
-            if(FindObjectOfType<Player>() == null) { Instantiate(player.gameObject).GetComponent<Player>().Init(); }
-            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, systemPoint, scale, savedSolarSystem == null);
+            if (FindObjectOfType<Player>() == null)
+            {
+                Instantiate(player.gameObject).GetComponent<Player>().Init();
+            }
 
+            Player.inst.transform.parent = transform;
+            Player.inst.transform.parent = null;
+            Player.inst.transform.position = Vector3.zero;
+            DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab,
+                systemPoint, scale, savedSolarSystem == null);
             if (savedSolarSystem != null)
             {
                 transform.position = savedSolarSystem.worldPos;
                 Player.inst.transform.position = savedSolarSystem.playerPos;
             }
+            else
+            {
+                startPoint = Player.inst.transform.position;
+            }
+
             SaveSystem();
         }
     }
 
     public static string GetSystemFileName()
     {
-        return PlayerDataManager.cacheSystemsFolder + "/" + PlayerDataManager.currentSolarSystem.name + "." + PlayerDataManager.currentSolarSystem.position.Log() + ".solar";
+        return PlayerDataManager.cacheSystemsFolder + "/" + PlayerDataManager.currentSolarSystem.name + "." +
+               PlayerDataManager.currentSolarSystem.position.Log() + ".solar";
     }
 
     public static float scale = 15;
@@ -120,7 +137,7 @@ public class SolarSystemGenerator : MonoBehaviour
     {
         var system = solarSystem;
         var pos = solarSystem.position;
-        var rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+        var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
 
         system.stars = new List<Star>();
         var starsCount = rnd.Next(1, 4);
@@ -134,18 +151,19 @@ public class SolarSystemGenerator : MonoBehaviour
 
             if (i == 0)
             {
-                float xCoord = (float)pos.x / (float)GalaxyGenerator.maxRadius * 20f;
-                float yCoord = (float)pos.y / (float)GalaxyGenerator.maxRadius * 20f;
+                float xCoord = (float) pos.x / (float) GalaxyGenerator.maxRadius * 20f;
+                float yCoord = (float) pos.y / (float) GalaxyGenerator.maxRadius * 20f;
                 float sample = Mathf.PerlinNoise(xCoord, yCoord);
-                type = (Star.StarType)System.Math.Round(starTypes * sample);
+                type = (Star.StarType) System.Math.Round(starTypes * sample);
 
             }
             else
             {
-                type = (Star.StarType)rnd.Next(1, starTypes);
+                type = (Star.StarType) rnd.Next(1, starTypes);
             }
+
             var star = new Star(type, rnd);
-            
+
             star.position = spos;
             star.name = system.name.Split(' ')[0] + " " + (i != 0 ? i.ToString() : "");
             system.stars.Add(star);
@@ -156,7 +174,9 @@ public class SolarSystemGenerator : MonoBehaviour
         for (int i = 1; i < starsCount; i++)
         {
 
-            var spos = (masses[i - 1].position + new DVector(0, 0, (masses[i - 1].radius * masses[i - 1].radius) + masses[i].radius) + new DVector(0, 0, rnd.Next(15, 40) * i));
+            var spos = (masses[i - 1].position +
+                        new DVector(0, 0, (masses[i - 1].radius * masses[i - 1].radius) + masses[i].radius) +
+                        new DVector(0, 0, rnd.Next(15, 40) * i));
             masses[i].position = spos;
         }
 
@@ -178,7 +198,7 @@ public class SolarSystemGenerator : MonoBehaviour
 
             var planet = new Planet(rnd, system.stars[system.stars.Count - 1], pPos);
 
-            planet.name = system.name.Split(' ')[0] + " O" + (i+1);
+            planet.name = system.name.Split(' ')[0] + " O" + (i + 1);
             var sattelites = rnd.Next(0, 3);
 
             DVector sPos = pPos;
@@ -215,22 +235,25 @@ public class SolarSystemGenerator : MonoBehaviour
                     }
                 }
             }
+
             system.planets.Add(planet);
         }
 
         return system;
     }
 
-    public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab, GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
+    public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab,
+        GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
     {
         objects = new List<WorldSpaceObject>();
         var pos = system.position;
-        var rnd = new System.Random((int)(pos.x + pos.y + pos.z));
-        Vector3 center = new Vector3(0,0,0);
+        var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+        Vector3 center = new Vector3(0, 0, 0);
         foreach (var star in PlayerDataManager.currentSolarSystem.stars)
         {
             center += star.position.toVector() * _scale;
         }
+
         center /= PlayerDataManager.currentSolarSystem.stars.Count;
 
         var masses = PlayerDataManager.currentSolarSystem.stars.OrderBy(x => x.mass).ToList();
@@ -238,7 +261,8 @@ public class SolarSystemGenerator : MonoBehaviour
 
         for (int i = 0; i < masses.Count; i++)
         {
-            center = Vector3.Lerp(center, masses[i].position.toVector() * _scale, (float)masses[i].mass / (float)masses[0].mass);
+            center = Vector3.Lerp(center, masses[i].position.toVector() * _scale,
+                (float) masses[i].mass / (float) masses[0].mass);
         }
 
         GameObject attractor = new GameObject("Attractor");
@@ -252,17 +276,19 @@ public class SolarSystemGenerator : MonoBehaviour
 
             sun.transform.name = item.name;
             sun.transform.position = item.position.toVector() * _scale;
-            sun.transform.localScale *= (float)item.radius * _scale;
+            sun.transform.localScale *= (float) item.radius * _scale;
 
-            sun.GetComponent<Renderer>().material.color = item.GetColor();
-            sun.GetComponent<Renderer>().material.SetColor("_EmissiveColor", item.GetColor());
-            sun.GetComponent<RotateAround>().point = attractor.transform;
+            var renderer = sun.GetComponent<Renderer>();
+            renderer.material.color = item.GetColor();
+            renderer.material.SetColor("_MainColor", item.GetColor());
+            renderer.material.SetFloat("_MainEmission", ((int)item.starType+1) * 50);
+            var rotate = sun.GetComponent<RotateAround>();
+            rotate.point = attractor.transform;
+            rotate.speed = (float) rnd.NextDouble() * 0.01f;
+            rotate.orbitID = objects.Count;
 
-            sun.GetComponent<RotateAround>().speed = (float)rnd.NextDouble() * 0.01f;
-            
 
             sun.GetComponentInChildren<Light>().color = item.GetColor();
-            sun.GetComponent<RotateAround>().orbitID = objects.Count;
             objects.Add(sun.GetComponent<WorldSpaceObject>());
             id++;
         }
@@ -273,11 +299,11 @@ public class SolarSystemGenerator : MonoBehaviour
             var planet = Instantiate(planetPrefab, transform);
             planet.transform.name = item.name;
             planet.transform.position = item.position.toVector() * _scale;
-            planet.transform.localScale *= (float)item.radius * _scale;
+            planet.transform.localScale *= (float) item.radius * _scale;
 
             planet.GetComponent<RotateAround>().point = attractor.transform;
             planet.GetComponent<RotateAround>().orbitID = objects.Count;
-            planet.GetComponent<RotateAround>().speed = (float)rnd.NextDouble() * 0.001f;
+            planet.GetComponent<RotateAround>().speed = (float) rnd.NextDouble() * 0.001f;
             objects.Add(planet.GetComponent<WorldSpaceObject>());
 
             for (int i = 0; i < item.sattelites.Count; i++)
@@ -293,17 +319,25 @@ public class SolarSystemGenerator : MonoBehaviour
                 objects.Add(SpawnSattelite(stationPointPrefab, item.stations[i], planet.transform, _scale));
             }
         }
+
         if (setPos)
         {
-            FindObjectOfType<Player>().transform.position = new Vector3(0, (float)(masses[0].radius * rnd.Next(2, 6)) * _scale, (float)(masses[0].radius * 5) * _scale);
+            FindObjectOfType<Player>().transform.position = new Vector3(0,
+                (float) (masses[0].radius * rnd.Next(2, 6)) * _scale, (float) (masses[0].radius * 5) * _scale);
             FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
+        }
+        else
+        {
+            startPoint = new Vector3(0, (float) (masses[0].radius * rnd.Next(2, 6)) * _scale,
+                (float) (masses[0].radius * 5) * _scale);
         }
 
         var systemsParent = new GameObject("SystemsHolder");
         systemsParent.AddComponent<PosToPlayerPos>();
         foreach (var sibling in system.sibligs)
         {
-            var syspoint = Instantiate(systemPoint, system.position.toVector() - sibling.position.toVector(), Quaternion.identity, systemsParent.transform);
+            var syspoint = Instantiate(systemPoint, system.position.toVector() - sibling.position.toVector(),
+                Quaternion.identity, systemsParent.transform);
             syspoint.transform.name = sibling.solarName + " S";
             syspoint.GetComponent<SolarSystemPoint>().systemName = sibling.solarName;
         }
@@ -314,7 +348,7 @@ public class SolarSystemGenerator : MonoBehaviour
         var orbital = Instantiate(prefab);
         orbital.transform.name = item.name;
         orbital.transform.position = item.position.toVector() * _scale;
-        orbital.transform.localScale *= (float)item.radius * _scale;
+        orbital.transform.localScale *= (float) item.radius * _scale;
 
         if (orbital.transform.localScale == Vector3.zero)
         {

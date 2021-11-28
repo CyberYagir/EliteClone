@@ -36,8 +36,12 @@ public class ShipController : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        headView = InputM.GetButton(KAction.HeadView);
+        headView = InputM.GetPressButton(KAction.HeadView);
+        
         RotationControl();
+        
+        
+        
         ForwardBackward();
     }
 
@@ -62,6 +66,16 @@ public class ShipController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(player.Ship().data.XRotSpeed * -vertical * Time.deltaTime, player.Ship().data.YRotSpeed * yaw, player.Ship().data.ZRotSpeed * -horizontal * Time.deltaTime);
     }
 
+    public void StopPlayer()
+    {
+        speed = Mathf.Lerp(speed, 0, 20 * Time.deltaTime);
+        player.warp.warpSpeed = Mathf.Lerp(player.warp.warpSpeed, 0, 20 * Time.deltaTime);
+        if (speed < 0.001f) speed = 0;
+        if (player.warp.warpSpeed < 0.001f) player.warp.warpSpeed = 0;
+        
+        rb.velocity = transform.forward * (speed + player.warp.warpSpeed);
+    }
+    
     public void ForwardBackward()
     {
         if (moveMode == MoveMode.S)
@@ -77,12 +91,39 @@ public class ShipController : MonoBehaviour
             }
         }
 
+        if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) != 0 ? InputM.GetAxisRaw(KAction.Vertical) : 1), out RaycastHit hit))
+        {
+            if (hit.transform.tag != "Obstacle")
+            {
+                if (hit.distance < 2)
+                {
+                    StopPlayer();
+                }
 
-        if (Player.inst.Ship().fuel.value <= 0) { speed -= Time.deltaTime; return; }
+                if (hit.transform.tag == "Sun")
+                {
+                    if (hit.distance < hit.transform.localScale.magnitude * 1.1f)
+                    {
+                        StopPlayer();
+                    }
+                }
+            }
+        }
+        
+        if (Player.inst.Ship().fuel.value <= 0) { return; }
 
         if (InputM.GetAxisUp(KAction.Vertical)) return;
 
+        
+        
+        
         Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed)/1000f) * Time.deltaTime;
+        if (InputM.GetPressButton(KAction.Stop))
+        {
+            StopPlayer();
+            return;
+        }
+        
         if (!player.warp.isWarp)
         {
             speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier; 

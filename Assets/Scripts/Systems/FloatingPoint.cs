@@ -16,7 +16,7 @@ public class FloatingPoint : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if (Player.inst && time > cooldown)
+        if (Player.inst)
         {
             Vector3 cameraPos = Player.inst.transform.position;
             if (cameraPos.magnitude > threshold)
@@ -28,6 +28,10 @@ public class FloatingPoint : MonoBehaviour
                 }
                 WorldSpaceObjectCanvas.canvas.UpdatePoints(true);
             }
+
+            //print(cameraPos.magnitude);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -100000, 100000),
+                Mathf.Clamp(transform.position.y, -100000, 100000), Mathf.Clamp(transform.position.z, -100000, 100000));
 
             time = 0;
         }

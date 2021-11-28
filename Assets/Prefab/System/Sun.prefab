@@ -359,9 +359,10 @@ GameObject:
   - component: {fileID: 8814524701996779445}
   - component: {fileID: 3787059946326775558}
   - component: {fileID: -4040611177752285905}
+  - component: {fileID: 5128775309406388064}
   m_Layer: 0
   m_Name: Sun
-  m_TagString: Untagged
+  m_TagString: Sun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -409,7 +410,7 @@ MeshRenderer:
   m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a39dd8e15611b984fb0dfb8215614f8b, type: 2}
+  - {fileID: 2100000, guid: 05185b9455da91d4384e921a706c2398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -476,3 +477,15 @@ MonoBehaviour:
   isVisible: 0
   dist: 
   icon: {fileID: 21300000, guid: 2dc771e95bf3e2b4eb34459ccceeb8b1, type: 3}
+--- !u!114 &5128775309406388064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814524701996779434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b09be24cecd98458eb8282fe52768a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

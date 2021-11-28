@@ -66,7 +66,7 @@ public class Star: SpaceObject
             case Star.StarType.B:
                 return new Color32(110, 235, 255, 255);
             case Star.StarType.O:
-                return Color.blue;
+                return new Color32(0, 182, 255, 255);
             default:
                 return Color.white;
         }
