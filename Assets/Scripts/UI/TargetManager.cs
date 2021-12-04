@@ -8,7 +8,7 @@ public class TargetManager : MonoBehaviour
     public WorldSpaceObject target { get; private set; }
     public List<ContactObject> contacts { get; private set; }
 
-    Camera camera;
+    private Camera camera;
 
     private void Start()
     {

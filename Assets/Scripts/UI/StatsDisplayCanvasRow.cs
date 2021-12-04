@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class StatsDisplayCanvasRow : MonoBehaviour
 {
-    [SerializeField] TMP_Text text;
-    [SerializeField] Transform value;
+    [SerializeField] private TMP_Text text;
+    [SerializeField] private Transform value;
 
 
-    public void SetValue(float value, float maxValue, string text = "_")
+    public void SetValue(float _value, float maxValue, string _text = "_")
     {
-        this.value.localScale = new Vector3(value / maxValue, 1, 1);
-        if (text != "_")
+        value.localScale = new Vector3(_value / maxValue, 1, 1);
+        if (_text != "_")
         {
-            this.text.text = text;
+            this.text.text = _text;
         }
     }
 }

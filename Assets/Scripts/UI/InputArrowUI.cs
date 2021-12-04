@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class InputArrowUI : MonoBehaviour
 {
-    RectTransform rect;
-    Image arrow, center;
+    private RectTransform rect;
+    private Image arrow, center;
     private void Start()
     {
         rect = GetComponent<RectTransform>();
@@ -21,11 +21,10 @@ public class InputArrowUI : MonoBehaviour
         Vector3 diff = rect.anchoredPosition - Vector2.zero;
         diff.Normalize();
 
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        rect.localRotation = Quaternion.Euler(0f, 0f, rot_z);
+        float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        rect.localRotation = Quaternion.Euler(0f, 0f, rotZ);
 
-        var arrowC = new Color();
-        var centerC = new Color();
+        Color arrowC, centerC;
 
         if (Vector2.Distance(arrow.rectTransform.anchoredPosition, Vector2.zero) > 40)
         {

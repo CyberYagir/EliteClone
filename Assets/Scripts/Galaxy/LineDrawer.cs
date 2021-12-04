@@ -18,21 +18,21 @@ public class LineDrawer : MonoBehaviour
     public float time = 0;
 
     public List<GalaxyPoint> stars = new List<GalaxyPoint>();
-    private List<GalaxyPoint> old = new List<GalaxyPoint>();
-    private List<GalaxyLine> lines = new List<GalaxyLine>(), activeLines = new List<GalaxyLine>();
+    private List<GalaxyPoint> oldStars = new List<GalaxyPoint>();
+    private List<GalaxyLine> linesPool = new List<GalaxyLine>(), activeLines = new List<GalaxyLine>();
 
     private const float updateTime = 0.05f;
 
-    private Vector3 oldPos;
+    private Vector3 oldCameraPos;
     private void Awake()
     {
         instance = this;
-        oldPos = transform.position;
+        oldCameraPos = transform.position;
 
         for (int i = 0; i < 300; i++)
         {
             var line = Instantiate(linePrefab, holder.transform).GetComponent<GalaxyLine>();
-            lines.Add(line);
+            linesPool.Add(line);
             line.gameObject.SetActive(false);
         }
     }
@@ -50,7 +50,7 @@ public class LineDrawer : MonoBehaviour
 
     public void CollectLines()
     {
-        if (Vector3.Distance(oldPos, transform.position) > 5)
+        if (Vector3.Distance(oldCameraPos, transform.position) > 5)
         {
             var cast = Physics.SphereCastAll(transform.position + transform.forward * 50, 100, Vector3.down, 100f);
             if (cast.Length > 1)
@@ -59,7 +59,7 @@ public class LineDrawer : MonoBehaviour
                 for (int i = 0; i < cast.Length; i++)
                 {
                     var g = cast[i].transform.GetComponent<GalaxyPoint>();
-                    old.Remove(g);
+                    oldStars.Remove(g);
                     stars.Add(g);
                     stars[stars.Count - 1].particles.Play();
                 }
@@ -68,13 +68,13 @@ public class LineDrawer : MonoBehaviour
             {
                 stars = new List<GalaxyPoint>();
             }
-            oldPos = transform.position;
-            foreach (var item in old)
+            oldCameraPos = transform.position;
+            foreach (var item in oldStars)
             {
                 if (GalaxyManager.selectedPoint != item)
                     item.particles.Stop();
             }
-            old = stars;
+            oldStars = stars;
             UpdateLines();
         }
     }
@@ -84,23 +84,23 @@ public class LineDrawer : MonoBehaviour
         time = 0;
         foreach (var item in activeLines)
         {
-            lines.Add(item);
+            linesPool.Add(item);
             item.gameObject.SetActive(false);
         }
-        lines = lines.OrderBy(x => x.transform.name).ToList();
+        linesPool = linesPool.OrderBy(x => x.transform.name).ToList();
         activeLines = new List<GalaxyLine>();
         foreach (var s1 in stars)
         {
             foreach (var sibling in s1.solarSystem.sibligs)
             {
-                if (lines.Count != 0)
+                if (linesPool.Count != 0)
                 {
-                    var mainpos = s1.solarSystem.position.toVector() / GalaxyGenerator.scale;
-                    var secondpos = sibling.position.toVector() / GalaxyGenerator.scale;
-                    lines[0].Init(mainpos , Vector3.Lerp(mainpos, secondpos, 0.5f), secondpos, s1);
+                    var mainpos = s1.solarSystem.position.ToVector() / GalaxyGenerator.scale;
+                    var secondpos = sibling.position.ToVector() / GalaxyGenerator.scale;
+                    linesPool[0].Init(mainpos , Vector3.Lerp(mainpos, secondpos, 0.5f), secondpos, s1);
                     
-                    activeLines.Add(lines[0]);
-                    lines.RemoveAt(0);
+                    activeLines.Add(linesPool[0]);
+                    linesPool.RemoveAt(0);
                 }
             }
         }

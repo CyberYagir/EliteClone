@@ -54,22 +54,11 @@ public class LandManager : MonoBehaviour
     private void Update()
     {
         Player.inst.control.enabled = !isLanded;
-        if (Application.loadedLevelName == "Location")
+        if (World.Scene == Scenes.Location)
         {
             if (!isLanded)
             {
-                if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
-                {
-                    var land = hit.transform.GetComponent<LandPoint>();
-                    if (land)
-                    {
-                        WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
-                        if (InputM.GetAxisDown(KAction.JumpIn))
-                        {
-                            SetLand(true, land.point.position, land.point.rotation);
-                        }
-                    }
-                }
+                CheckLand();
             }
             else
             {
@@ -77,8 +66,29 @@ public class LandManager : MonoBehaviour
                 {
                     SetLand(false);
                 }
-                transform.position = Vector3.Lerp(transform.position, landPoint, Time.deltaTime);
-                transform.rotation = Quaternion.Lerp(transform.rotation, landRot, Time.deltaTime);
+
+                LandAnimation();
+            }
+        }
+    }
+
+    public void LandAnimation()
+    {
+        transform.position = Vector3.Lerp(transform.position, landPoint, Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, landRot, Time.deltaTime);
+    }
+    public void CheckLand()
+    {
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
+        {
+            var land = hit.transform.GetComponent<LandPoint>();
+            if (land)
+            {
+                WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
+                if (InputM.GetAxisDown(KAction.JumpIn))
+                {
+                    SetLand(true, land.point.position, land.point.rotation);
+                }
             }
         }
     }

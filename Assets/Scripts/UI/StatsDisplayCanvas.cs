@@ -9,6 +9,7 @@ public class WarpDisplayCanvasRow
 {
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text warpText, warpSpeedText;
+    
     private Color warpActiveColor;
     public Color active = new Color(1f, 0.51f, 0, 1f);
     public Color desactive = new Color(1f, 0.51f, 0, 0.14f);
@@ -26,13 +27,13 @@ public class WarpDisplayCanvasRow
 
 public class StatsDisplayCanvas : MonoBehaviour
 {
-    [SerializeField] StatsDisplayCanvasRow speedValue;
-    [SerializeField] StatsDisplayCanvasRow fuelValue;
-    [SerializeField] StatsDisplayCanvasRow warpValue;
-    [SerializeField] StatsDisplayCanvasRow heatValue;
-    [SerializeField] WarpDisplayCanvasRow warpDisplayRow;
-    Player player;
+    [SerializeField] private StatsDisplayCanvasRow speedValue;
+    [SerializeField] private StatsDisplayCanvasRow fuelValue;
+    [SerializeField] private StatsDisplayCanvasRow warpValue;
+    [SerializeField] private StatsDisplayCanvasRow heatValue;
+    [SerializeField] private WarpDisplayCanvasRow warpDisplayRow;
     
+    private Player player;
     private Color warpActiveColor;
     private void Start()
     {
@@ -47,6 +48,5 @@ public class StatsDisplayCanvas : MonoBehaviour
         heatValue.SetValue(player.Ship().heat.value, player.Ship().heat.max);
         warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
         warpDisplayRow.UpdateColor();
-        
     }
 }

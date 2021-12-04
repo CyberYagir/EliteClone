@@ -9,7 +9,7 @@ public class WorldSpaceObject : MonoBehaviour
     public bool isVisible;    
     [HideInInspector]
     public string dist;
-    Transform camera;
+    private Transform camera;
     public Sprite icon;
     private void Start()
     {

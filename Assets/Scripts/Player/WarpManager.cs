@@ -10,7 +10,19 @@ public class WarpManager : MonoBehaviour
     [SerializeField] ParticleSystem warpParticle;
     public bool isWarp;
     public float warpSpeed, maxWarpSpeed, warpSpeedUp, warpSpeedAdd;
+
     private void Update()
+    {
+        if (activeLocationPoint)
+            WarningManager.AddWarning("Press 'Jump' to enter the station.", WarningTypes.GoLocation);
+        
+        WarpCheck();
+        JumpToLocation();
+        JumpFromLocation();
+        JumpToSystem();
+    }
+
+    public void WarpCheck()
     {
         if (warpSpeed > maxWarpSpeed)
         {
@@ -21,6 +33,7 @@ public class WarpManager : MonoBehaviour
         {
             WarpStop();
         }
+
         if (InputM.GetAxisDown(KAction.StartWarp))
         {
             if (!isWarp)
@@ -39,30 +52,32 @@ public class WarpManager : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (activeLocationPoint)
-        {
-            WarningManager.AddWarning("Press 'Jump' to enter the station.", WarningTypes.GoLocation);
-        }
+    public void JumpToLocation()
+    {
         if (InputM.GetAxisDown(KAction.JumpIn))
         {
             if (activeLocationPoint)
             {
-                if (Application.loadedLevelName == "System")
+                if (World.Scene == Scenes.System)
                 {
                     warpParticle.Play();
                     SolarSystemGenerator.SaveSystem(true);
-                    
+
                     LocationGenerator.SaveLocationFile(activeLocationPoint.root.name);
-                    
+
                     Player.inst.saves.SetKey("loc_start", true);
                     DontDestroyOnLoad(Player.inst);
-                    Application.LoadLevel("Location");
+                    World.LoadLevel(Scenes.Location);
                 }
             }
         }
+    }
 
-        if (Application.loadedLevelName == "Location")
+    public void JumpFromLocation()
+    {
+        if (World.Scene == Scenes.Location)
         {
             if (isWarp)
             {
@@ -70,12 +85,15 @@ public class WarpManager : MonoBehaviour
                 {
                     warpParticle.Play();
                     DontDestroyOnLoad(Player.inst);
-                    PlayerDataManager.currentSolarSystem = null;
+                    PlayerDataManager.CurrentSolarSystem = null;
                     LocationGenerator.RemoveLocationFile();
-                    Application.LoadLevel("System");
+                    World.LoadLevel(Scenes.System);
                 }
             }
         }
+    }
+    public void JumpToSystem()
+    {
         if (Player.inst.GetTarget() != null)
         {
             if (Player.inst.GetTarget().transform.CompareTag("System"))
@@ -94,10 +112,10 @@ public class WarpManager : MonoBehaviour
                             Player.inst.HardStop();
                             DontDestroyOnLoad(Player.inst);
                             SolarSystemGenerator.DeleteSystemFile();
-                            PlayerDataManager.currentSolarSystem =
+                            PlayerDataManager.CurrentSolarSystem =
                                 GalaxyGenerator.systems[
                                     Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
-                            Application.LoadLevel("System");
+                            World.LoadLevel(Scenes.System);
                             return;
                         }
 
@@ -107,7 +125,7 @@ public class WarpManager : MonoBehaviour
             }
         }
     }
-
+    
     public void WarpStop()
     {
         if (isWarp)
@@ -135,9 +153,5 @@ public class WarpManager : MonoBehaviour
         {
             activeLocationPoint = null;
         }
-    }
-    public LocationPoint GetActiveLocation()
-    {
-        return activeLocationPoint;
     }
 }

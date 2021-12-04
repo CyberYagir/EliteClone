@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] FreeCam freeCam;
+    [SerializeField] private FreeCam freeCam;
     private void Update()
     {
         freeCam.enabled = InputM.GetPressButton(KAction.Click);

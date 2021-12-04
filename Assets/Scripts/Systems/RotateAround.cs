@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class RotateAround : MonoBehaviour
 {
-    public Transform point;
+    [SerializeField] private Transform point;
 
-    public int orbitID;
-    public Vector3 orbitRotation;
-    public float speed;
-    public float width;
-    LineRenderer lineRenderer;
-    Camera camera;
-    bool drawed;
+    [SerializeField] private int orbitID;
+    [SerializeField] private Vector3 orbitRotation;
+    [SerializeField] private float speed;
+    [SerializeField] private float width;
+    private LineRenderer lineRenderer;
+    private Camera camera;
+    private bool drawed;
     private void Start()
     {
         DrawCircle(Vector3.Distance(transform.position, point.position));
@@ -27,6 +27,14 @@ public class RotateAround : MonoBehaviour
         transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
     }
 
+    public void InitOrbit(Transform target, float orbitSpeed, int orbit, Vector3 orbitRot = default)
+    {
+        point = target;
+        orbitID = orbit;
+        speed = orbitSpeed;
+        orbitRotation = orbitRot;
+    }
+    
     void Update()
     {
         transform.RotateAround(point.position, Vector3.up, speed * Time.deltaTime);

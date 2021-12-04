@@ -19,17 +19,17 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         over = ActionType.None;
     }
 
-    float startPPU;
-    Image image;
+    private float startPixelsPerUnit;
+    private Image image;
     [SerializeField] Color overColor, noneColor, selectedColor;
     private void Start()
     {
         image = GetComponent<Image>();
-        startPPU = image.pixelsPerUnitMultiplier;
+        startPixelsPerUnit = image.pixelsPerUnitMultiplier;
     }
     private void Update()
     {
-        image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over == ActionType.Over || over == ActionType.Selected ? 0 : startPPU, 10 * Time.deltaTime);
+        image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over == ActionType.Over || over == ActionType.Selected ? 0 : startPixelsPerUnit, 10 * Time.deltaTime);
         image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), 10 * Time.deltaTime);
     }
 }

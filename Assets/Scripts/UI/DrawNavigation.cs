@@ -8,18 +8,18 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 public class NavItem
 {
-    public ButtonEffect button;
-    public Image image, icon;
-    public TMP_Text name, dist;
-    public WorldSpaceObject spaceObject;
+    public ButtonEffect Button;
+    public Image Image, Icon;
+    public TMP_Text Name, Dist;
+    public WorldSpaceObject SpaceObject;
 }
 public class DrawNavigation : MonoBehaviour
 {
-    [SerializeField] List<NavItem> items = new List<NavItem>();
-    [SerializeField] GameObject item;
-    [SerializeField] RectTransform holder;
-    [SerializeField] int selectedIndex;
-    UITabControl tabControl;
+    [SerializeField] private List<NavItem> items = new List<NavItem>();
+    [SerializeField] private GameObject item;
+    [SerializeField] private RectTransform holder;
+    [SerializeField] private int selectedIndex;
+    private UITabControl tabControl;
 
     private float height;
     private void Awake()
@@ -61,15 +61,15 @@ public class DrawNavigation : MonoBehaviour
             }
 
             var navI = new NavItem();
-            navI.button = b.GetComponent<ButtonEffect>();
-            navI.spaceObject = objects[i];
-            navI.image = objects[i].GetComponent<Image>();
-            navI.name = b.transform.GetChild(0).GetComponent<TMP_Text>();
-            navI.dist = b.transform.GetChild(1).GetComponent<TMP_Text>();
-            navI.icon = b.transform.GetChild(2).GetComponent<Image>();
-            navI.icon.sprite = objects[i].icon;
-            navI.name.text = objects[i].transform.name;
-            navI.dist.text = objects[i].dist;
+            navI.Button = b.GetComponent<ButtonEffect>();
+            navI.SpaceObject = objects[i];
+            navI.Image = objects[i].GetComponent<Image>();
+            navI.Name = b.transform.GetChild(0).GetComponent<TMP_Text>();
+            navI.Dist = b.transform.GetChild(1).GetComponent<TMP_Text>();
+            navI.Icon = b.transform.GetChild(2).GetComponent<Image>();
+            navI.Icon.sprite = objects[i].icon;
+            navI.Name.text = objects[i].transform.name;
+            navI.Dist.text = objects[i].dist;
             b.SetActive(true);
             items.Add(navI);
         }
@@ -77,7 +77,7 @@ public class DrawNavigation : MonoBehaviour
 
     private void Update()
     {
-        if (tabControl.active)
+        if (tabControl.Active)
         {
             holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
             if (InputM.GetAxisDown(KAction.TabsVertical))
@@ -89,9 +89,9 @@ public class DrawNavigation : MonoBehaviour
 
             if (InputM.GetAxisDown(KAction.Select))
             {
-                if (items[selectedIndex].spaceObject != Player.inst.GetTarget())
+                if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
                 {
-                    Player.inst.SetTarget(items[selectedIndex].spaceObject);
+                    Player.inst.SetTarget(items[selectedIndex].SpaceObject);
                 }
                 else
                 {
@@ -103,18 +103,18 @@ public class DrawNavigation : MonoBehaviour
             {
                 if (i == selectedIndex)
                 {
-                    items[i].button.over = ButtonEffect.ActionType.Over;
+                    items[i].Button.over = ButtonEffect.ActionType.Over;
                 }
-                else if (items[i].spaceObject == Player.inst.GetTarget())
+                else if (items[i].SpaceObject == Player.inst.GetTarget())
                 {
-                    items[i].button.over = ButtonEffect.ActionType.Selected;
+                    items[i].Button.over = ButtonEffect.ActionType.Selected;
                 }
                 else
                 {
-                    items[i].button.over = ButtonEffect.ActionType.None;
+                    items[i].Button.over = ButtonEffect.ActionType.None;
                 }
-                items[i].dist.gameObject.SetActive(items[i].spaceObject.isVisible);
-                items[i].dist.text = items[i].spaceObject.dist;
+                items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
+                items[i].Dist.text = items[i].SpaceObject.dist;
             }
         }
     }

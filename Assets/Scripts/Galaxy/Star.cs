@@ -86,7 +86,6 @@ public class Star: SpaceObject
         var nameID = rnd.Next(0, GalaxyGenerator.words.Length);
         var str = GalaxyGenerator.words[nameID];
 
-        //Debug.Log(str);
         if (str.Length == 1)
             str = char.ToUpper(str[0]).ToString();
         else

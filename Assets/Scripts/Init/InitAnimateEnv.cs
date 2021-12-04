@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InitAnimateEnv : MonoBehaviour
 {
-    public float rotateSpeed;
+    [SerializeField] private float rotateSpeed;
     void Update()
     {
         transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime, Space.Self);

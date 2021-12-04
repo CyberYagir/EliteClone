@@ -5,17 +5,15 @@ using UnityEngine.Events;
 
 public class ActiveWindow : MonoBehaviour
 {
-    [SerializeField] bool open;
-    public Vector2 show, hide;
-    RectTransform rect;
+    [SerializeField] private bool open;
+    [SerializeField] private Vector2 show, hide;
+    private RectTransform rect;
 
     public UnityEvent onOpen;
     public UnityEvent onClose;
     private void Start()
     {
         rect = GetComponent<RectTransform>();
-
-
         rect.anchoredPosition = open ? show : hide;
     }
 
@@ -26,11 +24,11 @@ public class ActiveWindow : MonoBehaviour
 
     public void SetOpenClose(bool state)
     {
-        if (state == false && open == true)
+        if (!state && open)
         {
             onClose.Invoke();
-        }
-        if (state == true && open == false)
+        }else
+        if (state && !open)
         {
             onOpen.Invoke();
         }

@@ -15,12 +15,16 @@ public class Location
 public class LocationGenerator : MonoBehaviour
 {
     public GameObject player, planet, sunPrefab, station, systemPoint;
-    public static Location current;
-    private bool init;
+    public static Location CurrentSave;
+    private bool initFirstFrame;
 
     private void Awake()
     {
-        current = null;
+        World.SetScene(Scenes.Location);
+    }
+    private void OnEnable()
+    {
+        CurrentSave = null;
         
         if (FindObjectOfType<Player>() == null)
         {
@@ -28,23 +32,27 @@ public class LocationGenerator : MonoBehaviour
         }
 
 
-        if (!File.Exists(PlayerDataManager.currentLocationFile))
+        if (!File.Exists(PlayerDataManager.CurrentLocationFile))
         {
-            Application.LoadLevel("System");
+            World.LoadLevel(Scenes.System);
             return;
         }
 
-        current = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.currentLocationFile));
-        
-        
-        var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.cacheSystemsFolder + current.systemName + ".solar"));
-        
-        
-        PlayerDataManager.currentSolarSystem = system;
-        SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, systemPoint, 40,
-            false);
 
+        LoadLocation();
         SetSystemToLocation();
+    }
+
+    public void LoadLocation()
+    {
+        CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
+        var system =
+            JsonConvert.DeserializeObject<SolarSystem>(
+                File.ReadAllText(PlayerDataManager.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
+        PlayerDataManager.CurrentSolarSystem = system;
+        SolarSystemGenerator.DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planet, station,
+            systemPoint, 40,
+            false);
     }
 
     public void SetSystemToLocation()
@@ -56,7 +64,7 @@ public class LocationGenerator : MonoBehaviour
 
         foreach (var item in FindObjectsOfType<WorldOrbitalStation>())
         {
-            if (item.name != current.locationName)
+            if (item.name != CurrentSave.locationName)
             {
                 Destroy(item.gameObject);
             }
@@ -77,7 +85,7 @@ public class LocationGenerator : MonoBehaviour
 
     public void InitFirstFrame()
     {
-        if (!init)
+        if (!initFirstFrame)
         {
             var location = MoveWorld();
             
@@ -90,13 +98,13 @@ public class LocationGenerator : MonoBehaviour
                 Player.inst.saves.DelKey("loc_start");
             }
             
-            init = true;
+            initFirstFrame = true;
         }
     }
 
     public GameObject MoveWorld()
     {
-        var location = GameObject.Find(current.locationName);
+        var location = GameObject.Find(CurrentSave.locationName);
         foreach (Transform item in transform)
         {
             item.position -= location.transform.position;
@@ -117,11 +125,11 @@ public class LocationGenerator : MonoBehaviour
             systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
             locationName = locName,
         };
-        File.WriteAllText(PlayerDataManager.currentLocationFile, JsonConvert.SerializeObject(n));
+        File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n));
     }
 
     public static void RemoveLocationFile()
     {
-        File.Delete(PlayerDataManager.currentLocationFile);
+        File.Delete(PlayerDataManager.CurrentLocationFile);
     }
 }

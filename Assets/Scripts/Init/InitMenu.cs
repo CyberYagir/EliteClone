@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class InitMenu : MonoBehaviour
 {
-    public DOTweenAnimation menuback;
-    public DOTweenAnimation loading;
+    [SerializeField] private DOTweenAnimation menuback;
+    [SerializeField] private DOTweenAnimation loading;
     
     public void Play()
     {
         menuback.DOPlayForward();
         loading.DOPlayForward();
-        PlayerDataManager.instance.LoadScene();
+        PlayerDataManager.Instance.LoadScene();
     }
 }

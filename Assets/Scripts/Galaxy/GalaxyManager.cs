@@ -53,8 +53,8 @@ public class GalaxyManager : MonoBehaviour
 
     public static void JumpToSolarSystem()
     {
-        PlayerDataManager.currentSolarSystem = selectedPoint.solarSystem;
-        Application.LoadLevel("System");
+        PlayerDataManager.CurrentSolarSystem = selectedPoint.solarSystem;
+        World.LoadLevel(Scenes.System);
     }
 
 

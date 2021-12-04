@@ -5,20 +5,23 @@ using UnityEngine;
 
 public class WorldSpaceObjectCanvas : MonoBehaviour
 {
-    List<DisplaySpaceObject> spaceObjects = new List<DisplaySpaceObject>();
-    [SerializeField] GameObject pointPrefab;
-    public static WorldSpaceObjectCanvas canvas;
-    Camera camera;
+    [SerializeField] private GameObject pointPrefab;
+    private List<DisplaySpaceObject> spaceObjects = new List<DisplaySpaceObject>();
+    
+    public static WorldSpaceObjectCanvas Instance;
+
+    private Camera camera;
+    
     public class DisplaySpaceObject
     {
-        public WorldSpaceObject obj;
-        public Transform canvasPoint;
+        public WorldSpaceObject Obj;
+        public Transform CanvasPoint;
     }
 
 
     private void Awake()
     {
-        canvas = this;
+        Instance = this;
         camera = Camera.main;
         Player.OnSceneChanged += UpdateList;
     }
@@ -38,7 +41,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         }
         foreach (var wsp in FindObjectsOfType<WorldSpaceObject>())
         {
-            spaceObjects.Add(new DisplaySpaceObject() { obj = wsp, canvasPoint = Instantiate(pointPrefab, transform).transform });
+            spaceObjects.Add(new DisplaySpaceObject() { Obj = wsp, CanvasPoint = Instantiate(pointPrefab, transform).transform });
         }
 
         UpdatePoints(true);
@@ -52,71 +55,71 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     {
         foreach (var wsp in spaceObjects)
         {
-            if (wsp.obj == null)
+            if (wsp.Obj == null)
             {
                 spaceObjects.Remove(wsp);
                 return;
             }
 
-            if (wsp.obj.isVisible)
+            if (wsp.Obj.isVisible)
             {
-                Physics.Raycast(camera.transform.position, wsp.obj.transform.position - camera.transform.position,
+                Physics.Raycast(camera.transform.position, wsp.Obj.transform.position - camera.transform.position,
                     out RaycastHit hit);
                 var old = withoutLerp;
-                if (wsp.obj.isVisible == true && wsp.canvasPoint.gameObject.active == false)
+                if (wsp.Obj.isVisible == true && wsp.CanvasPoint.gameObject.active == false)
                 {
                     withoutLerp = true;
                 }
 
                 if (withoutLerp)
                 {
-                    wsp.canvasPoint.transform.position =
-                        camera.WorldToScreenPoint(wsp.obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                    wsp.CanvasPoint.transform.position =
+                        camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
                 }
                 else
                 {
-                    var point = camera.WorldToScreenPoint(wsp.obj.transform.position,
+                    var point = camera.WorldToScreenPoint(wsp.Obj.transform.position,
                         Camera.MonoOrStereoscopicEye.Mono);
                     point = new Vector3(point.x, point.y, 0);
-                    if (!Dist(wsp.canvasPoint.transform, wsp.obj.transform))
+                    if (!Dist(wsp.CanvasPoint.transform, wsp.Obj.transform))
                     { 
-                        wsp.canvasPoint.transform.position =
+                        wsp.CanvasPoint.transform.position =
                             point;
-                        wsp.canvasPoint.gameObject.SetActive(false);
+                        wsp.CanvasPoint.gameObject.SetActive(false);
                     }
                     else
                     {
                         
-                        wsp.canvasPoint.transform.position =
-                            Vector3.Lerp(wsp.canvasPoint.transform.position,
+                        wsp.CanvasPoint.transform.position =
+                            Vector3.Lerp(wsp.CanvasPoint.transform.position,
                                 point, Screen.width * 0.5f * Time.deltaTime);
                     }
                 }
 
                 withoutLerp = old;
 
-                wsp.canvasPoint.GetChild(0).gameObject.SetActive(Player.inst.GetTarget() == wsp.obj);
-                wsp.canvasPoint.transform.localPosition = new Vector3(wsp.canvasPoint.transform.localPosition.x,
-                    wsp.canvasPoint.transform.localPosition.y, 0);
-                var texts = wsp.canvasPoint.GetComponentsInChildren<TMP_Text>();
-                texts[0].text = wsp.obj.transform.name;
+                wsp.CanvasPoint.GetChild(0).gameObject.SetActive(Player.inst.GetTarget() == wsp.Obj);
+                wsp.CanvasPoint.transform.localPosition = new Vector3(wsp.CanvasPoint.transform.localPosition.x,
+                    wsp.CanvasPoint.transform.localPosition.y, 0);
+                var texts = wsp.CanvasPoint.GetComponentsInChildren<TMP_Text>();
+                texts[0].text = wsp.Obj.transform.name;
                 if (Player.inst.control.speed != 0)
                 {
-                    wsp.obj.dist =
+                    wsp.Obj.dist =
                         ((Vector2.Distance(camera.transform.position, hit.point) /
                           Mathf.Abs(Player.inst.control.speed + Player.inst.warp.warpSpeed)) / 60f).ToString("F2") +
                         " ~min";
                 }
                 else
                 {
-                    wsp.obj.dist = ">100y";
+                    wsp.Obj.dist = ">100y";
                 }
 
-                texts[1].text = wsp.obj.dist;
+                texts[1].text = wsp.Obj.dist;
             }
 
-            if (Dist(wsp.canvasPoint.transform, wsp.obj.transform))
-                wsp.canvasPoint.gameObject.SetActive(wsp.obj.isVisible);
+            if (Dist(wsp.CanvasPoint.transform, wsp.Obj.transform))
+                wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
         }
     }
 

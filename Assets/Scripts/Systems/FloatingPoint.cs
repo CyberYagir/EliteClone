@@ -21,15 +21,14 @@ public class FloatingPoint : MonoBehaviour
             Vector3 cameraPos = Player.inst.transform.position;
             if (cameraPos.magnitude > threshold)
             {
-                WorldSpaceObjectCanvas.canvas.UpdatePoints(true);
+                WorldSpaceObjectCanvas.Instance.UpdatePoints(true);
                 foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
                     go.transform.position -= cameraPos;
                 }
-                WorldSpaceObjectCanvas.canvas.UpdatePoints(true);
+                WorldSpaceObjectCanvas.Instance.UpdatePoints(true);
             }
 
-            //print(cameraPos.magnitude);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -100000, 100000),
                 Mathf.Clamp(transform.position.y, -100000, 100000), Mathf.Clamp(transform.position.z, -100000, 100000));
 

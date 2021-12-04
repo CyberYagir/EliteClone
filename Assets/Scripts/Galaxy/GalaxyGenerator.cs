@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,11 @@ public class GalaxyGenerator : MonoBehaviour
     public static float siblingDist = 6000;
     public static float scale = 100;
 
+    private void Awake()
+    {
+        World.SetScene(Scenes.Galaxy);
+    }
+
     private void Start()
     {
         systems = null;
@@ -39,6 +45,7 @@ public class GalaxyGenerator : MonoBehaviour
 
     public void Init()
     {
+        World.SetScene(Scenes.Galaxy);
         GetWords();
         LoadSystems();
     }
@@ -47,17 +54,17 @@ public class GalaxyGenerator : MonoBehaviour
     {
         if (systems == null)
         {
-            if (File.Exists(PlayerDataManager.galaxyFile))
+            if (File.Exists(PlayerDataManager.GalaxyFile))
             {
                 systems = JsonConvert.DeserializeObject<Dictionary<string,SolarSystem>>(
-                    File.ReadAllText(PlayerDataManager.galaxyFile));
+                    File.ReadAllText(PlayerDataManager.GalaxyFile));
 
                 return;
             }
         }
 
-        if (Application.loadedLevelName == "Galaxy")
-            Application.LoadLevel("Init");
+        if (World.Scene == Scenes.Galaxy)
+            World.LoadLevel(Scenes.Init);
     }
 
     public void DrawsSystems()
@@ -65,7 +72,7 @@ public class GalaxyGenerator : MonoBehaviour
         foreach (var sys in systems)
         {
             var point = Instantiate(prefab, holder.transform);
-            point.transform.position = sys.Value.position.toVector() / scale;
+            point.transform.position = sys.Value.position.ToVector() / scale;
             var gpoint = point.GetComponent<GalaxyPoint>();
             gpoint.solarSystem = sys.Value;
         }
@@ -158,7 +165,7 @@ public class GalaxyGenerator : MonoBehaviour
         {
             GetWords();
         }
-        PlayerDataManager.generateProgress = 0;
+        PlayerDataManager.GenerateProgress = 0;
 
         systems = new Dictionary<string, SolarSystem>();
         
@@ -176,7 +183,7 @@ public class GalaxyGenerator : MonoBehaviour
             
             if (i % 5 == 0)
             {
-                PlayerDataManager.generateProgress = i / (float)systemsCount;
+                PlayerDataManager.GenerateProgress = i / (float)systemsCount;
                 yield return null;
             }
         }
@@ -187,8 +194,8 @@ public class GalaxyGenerator : MonoBehaviour
 
     public static void SaveGalaxy()
     {
-        File.WriteAllText(PlayerDataManager.galaxyFile, JsonConvert.SerializeObject(systems, Formatting.None));
-        PlayerDataManager.generateProgress = 1f;
+        File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(systems, Formatting.None));
+        PlayerDataManager.GenerateProgress = 1f;
     }
 
     public static decimal NextDecimal(System.Random rnd, decimal min, decimal max)

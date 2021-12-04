@@ -22,13 +22,13 @@ public struct DVector
         return new DVector(b.x * c, b.y * c, b.z * c);
     }
 
-    public Vector3 toVector()
+    public Vector3 ToVector()
     {
         return new Vector3((float)x, (float)y, (float)z);
     }
     public string Log()
     {
-        return $"[{x.ToString("F2")},{y.ToString("F2")},{z.ToString("F2")}]";
+        return $"[{x:F2},{y:F2},{z:F2}]";
     }
 
     public decimal Dist(DVector second)

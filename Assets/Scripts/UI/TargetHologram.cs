@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TargetHologram : MonoBehaviour
 {
-    [SerializeField] List<Renderer> meshes;
-    float alpha;
+    [SerializeField] private List<Renderer> meshes;
+    private float alpha;
     private void Update()
     {
         if (Player.inst.GetTarget() == null)

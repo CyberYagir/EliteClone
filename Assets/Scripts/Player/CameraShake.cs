@@ -3,21 +3,18 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
-	public static CameraShake instance;
-	public Transform camTransform;
+	public static CameraShake Instance;
 	
-	// How long the object should shake for.
-	public float shakeDuration = 0f;
-	
-	// Amplitude of the shake. A larger value shakes the camera harder.
-	public float shakeAmount = 0.7f;
-	public float decreaseFactor = 1.0f;
-	
-	Vector3 originalPos;
+	[SerializeField] private Transform camTransform;
+	[SerializeField] private float shakeDuration = 0f;
+	[SerializeField] private float shakeAmount = 0.7f;
+	[SerializeField] private float decreaseFactor = 1.0f;
+
+	private Vector3 originalPos;
 	
 	void Awake()
 	{
-		instance = this;
+		Instance = this;
 		if (camTransform == null)
 		{
 			camTransform = GetComponent(typeof(Transform)) as Transform;
@@ -25,7 +22,7 @@ public class CameraShake : MonoBehaviour
 	}
 	public static void Shake(float time = 0.1f)
     {
-		instance.shakeDuration = time;
+		Instance.shakeDuration = time;
     }
 	void OnEnable()
 	{

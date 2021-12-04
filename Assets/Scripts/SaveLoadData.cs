@@ -5,14 +5,14 @@ using System.IO;
 using UnityEngine;
 public class PlayerData
 {
-    public Vector3 worldPos;
-    public Vector3 pos;
-    public Vector3 rot;
-    public float fuel, health, shields, speed;
+    public Vector3 WorldPos;
+    public Vector3 Pos;
+    public Vector3 Rot;
+    public float Fuel, Health, Shields, Speed;
 
-    public Dictionary<string, object> keys;
+    public Dictionary<string, object> Keys;
 
-    public LandLocation isLanded;
+    public LandLocation IsLanded;
 }
 
 
@@ -62,24 +62,28 @@ public class SaveLoadData : MonoBehaviour
     
     public void Load()
     {
-        if (File.Exists(PlayerDataManager.playerDataFile))
+        if (File.Exists(PlayerDataManager.PlayerDataFile))
         {
-            var json = File.ReadAllText(PlayerDataManager.playerDataFile);
+            var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
             PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(json);
 
             var world = GameObject.FindGameObjectWithTag("WorldHolder");
             var p = Player.inst;
 
-            world.transform.position = playerData.worldPos;
+            if (playerData != null)
+            {
+                world.transform.position = playerData.WorldPos;
 
-            p.transform.position = playerData.pos;
-            p.transform.eulerAngles = playerData.rot;
-            p.Ship().fuel.value = playerData.fuel;
-            p.Ship().hp.value = playerData.health;
-            p.Ship().shields.value = playerData.shields;
-            p.control.speed = playerData.speed;
-            keys = playerData.keys;
-            p.land.SetLand(playerData.isLanded);
+                p.transform.position = playerData.Pos;
+                p.transform.eulerAngles = playerData.Rot;
+                
+                p.Ship().fuel.value = playerData.Fuel;
+                p.Ship().hp.value = playerData.Health;
+                p.Ship().shields.value = playerData.Shields;
+                p.control.speed = playerData.Speed;
+                keys = playerData.Keys;
+                p.land.SetLand(playerData.IsLanded);
+            }
         }
         else
         {
@@ -93,19 +97,19 @@ public class SaveLoadData : MonoBehaviour
         var p = Player.inst;
         var playerData = new PlayerData()
         {
-            fuel = p.Ship().fuel.value,
-            health = p.Ship().hp.value,
-            shields = p.Ship().shields.value,
-            speed = p.control.speed,
-            pos = p.transform.position,
-            rot = p.transform.eulerAngles,
-            worldPos = world.transform.position,
-            keys = keys,
-            isLanded = p.land.GetLand()
+            Fuel = p.Ship().fuel.value,
+            Health = p.Ship().hp.value,
+            Shields = p.Ship().shields.value,
+            Speed = p.control.speed,
+            Pos = p.transform.position,
+            Rot = p.transform.eulerAngles,
+            WorldPos = world.transform.position,
+            Keys = keys,
+            IsLanded = p.land.GetLand()
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-        File.WriteAllText(PlayerDataManager.playerDataFile, data);
+        File.WriteAllText(PlayerDataManager.PlayerDataFile, data);
     }
 
     private void OnApplicationQuit()

@@ -35,8 +35,8 @@ public class Player : MonoBehaviour
 
     public static event System.Action OnSceneChanged = delegate {  };
 
-    Cargo cargo;
-    TargetManager targets;
+    private Cargo cargo;
+    private TargetManager targets;
     
     private float heatTime;
     private void Awake()
@@ -73,13 +73,18 @@ public class Player : MonoBehaviour
     
     private void Update()
     {
+        DownHeat();
+    }
+
+    public void DownHeat()
+    {
         heatTime += Time.deltaTime;
         if (heatTime > 2)
         {
             AddHeat(-10);
         }
     }
-
+    
     private void Start()
     {
         ChangeScene();

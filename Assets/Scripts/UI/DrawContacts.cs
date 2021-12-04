@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class DrawContacts : MonoBehaviour
 {
-    [SerializeField] List<NavItem> items = new List<NavItem>();
-    [SerializeField] GameObject item;
-    [SerializeField] RectTransform holder;
-    [SerializeField] int selectedIndex;
-    UITabControl tabControl;
+    [SerializeField] private List<NavItem> items = new List<NavItem>();
+    [SerializeField] private GameObject item;
+    [SerializeField] private RectTransform holder;
+    [SerializeField] private int selectedIndex;
+    private UITabControl tabControl;
     private float height;
 
     private void Awake()
@@ -38,13 +38,13 @@ public class DrawContacts : MonoBehaviour
             {
                 var b = Instantiate(item, holder.transform);
                 var navI = new NavItem();
-                navI.button = b.GetComponent<ButtonEffect>();
-                navI.spaceObject = objects[i].GetComponent<WorldSpaceObject>();
-                navI.image = objects[i].GetComponent<Image>();
-                navI.name = b.transform.GetComponentInChildren<TMP_Text>();
-                navI.icon = b.transform.GetChild(1).GetComponent<Image>();
-                navI.icon.sprite = objects[i].icon;
-                navI.name.text = objects[i].transform.name;
+                navI.Button = b.GetComponent<ButtonEffect>();
+                navI.SpaceObject = objects[i].GetComponent<WorldSpaceObject>();
+                navI.Image = objects[i].GetComponent<Image>();
+                navI.Name = b.transform.GetComponentInChildren<TMP_Text>();
+                navI.Icon = b.transform.GetChild(1).GetComponent<Image>();
+                navI.Icon.sprite = objects[i].icon;
+                navI.Name.text = objects[i].transform.name;
                 b.SetActive(true);
                 items.Add(navI);
             }
@@ -57,7 +57,7 @@ public class DrawContacts : MonoBehaviour
     }
     private void Update()
     {
-        if (tabControl.active)
+        if (tabControl.Active)
         {
             holder.localPosition = new Vector3(holder.localPosition.x, selectedIndex * height, holder.localPosition.z);
             if (InputM.GetAxisDown(KAction.TabsVertical))
@@ -73,7 +73,7 @@ public class DrawContacts : MonoBehaviour
 
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].spaceObject == null)
+                if (items[i].SpaceObject == null)
                 {
                     items.RemoveAt(i);
                     UpdateList();
@@ -81,15 +81,15 @@ public class DrawContacts : MonoBehaviour
                 }
                 if (i == selectedIndex)
                 {
-                    items[i].button.over = ButtonEffect.ActionType.Over;
+                    items[i].Button.over = ButtonEffect.ActionType.Over;
                 }
-                else if (items[i].spaceObject == Player.inst.GetTarget())
+                else if (items[i].SpaceObject == Player.inst.GetTarget())
                 {
-                    items[i].button.over = ButtonEffect.ActionType.Selected;
+                    items[i].Button.over = ButtonEffect.ActionType.Selected;
                 }
                 else
                 {
-                    items[i].button.over = ButtonEffect.ActionType.None;
+                    items[i].Button.over = ButtonEffect.ActionType.None;
                 }
             }
         }

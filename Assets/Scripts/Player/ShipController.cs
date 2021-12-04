@@ -12,13 +12,13 @@ public class ShipController : MonoBehaviour
     public enum MoveMode { S, F, B }
     public MoveMode moveMode = MoveMode.S;
 
-    Rigidbody rb;
+    private Rigidbody rigidbody;
 
     public float speed;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
         player = Player.inst;
     }
 
@@ -39,11 +39,7 @@ public class ShipController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         headView = InputM.GetPressButton(KAction.HeadView);
-        
         RotationControl();
-        
-        
-        
         ForwardBackward();
     }
 
@@ -75,10 +71,41 @@ public class ShipController : MonoBehaviour
         if (speed < 0.001f) speed = 0;
         if (player.warp.warpSpeed < 0.001f) player.warp.warpSpeed = 0;
         
-        rb.velocity = transform.forward * (speed + player.warp.warpSpeed);
+        rigidbody.velocity = transform.forward * (speed + player.warp.warpSpeed);
     }
     
-    public void ForwardBackward()
+    public void CheckMinDistanceToObjects()
+    {
+        if (World.Scene == Scenes.System)
+        {
+            if (SolarSystemGenerator.objects != null)
+            {
+                foreach (var obj in SolarSystemGenerator.objects)
+                {
+                    if (Vector3.Distance(obj.transform.position, transform.position) <
+                        obj.transform.localScale.magnitude * 0.9f)
+                    {
+                        if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical)), out RaycastHit hit))
+                        {
+                            player.HardStop();
+                        }
+
+                        if (obj.transform.tag == "Sun")
+                        {
+                            WarningManager.AddWarning("The cosmic body in front of you is too hot. Don't get any closer.", WarningTypes.Heat);
+                            player.AddHeat(10);
+                        }
+                        else
+                        {
+                            WarningManager.AddWarning("Too close to the planet's atmosphere.", WarningTypes.Heat);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void ForwardBackwardMove()
     {
         if (moveMode == MoveMode.S)
         {
@@ -92,54 +119,12 @@ public class ShipController : MonoBehaviour
                 moveMode = MoveMode.B;
             }
         }
-
-        if (SolarSystemGenerator.objects != null)
-        {
-            foreach (var obj in SolarSystemGenerator.objects)
-            {
-                if (Vector3.Distance(obj.transform.position, transform.position) <
-                    obj.transform.localScale.magnitude * 0.9f)
-                {
-                    print(Vector3.Distance(obj.transform.position, transform.position) + " / " + obj.transform.localScale.magnitude * 0.9f);
-                    
-                    if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical)), out RaycastHit hit))
-                    {
-                        player.HardStop();
-                    }
-                    
-                    if (obj.transform.tag == "Sun")
-                    {
-                        WarningManager.AddWarning("The cosmic body in front of you is too hot. Don't get any closer.", WarningTypes.Heat);
-                        player.AddHeat(10);
-                    }
-                    else
-                    {
-                        WarningManager.AddWarning("Too close to the planet's atmosphere.", WarningTypes.Heat);
-                        
-                    }
-                }
-            }
-        }
-
-        
-        
-        if (Player.inst.Ship().fuel.value <= 0) { return; }
-
-        if (InputM.GetAxisUp(KAction.Vertical)) return;
-
-        
-        
-        
-        Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed)/100f) * Time.deltaTime;
-        if (InputM.GetPressButton(KAction.Stop))
-        {
-            StopPlayer();
-            return;
-        }
-        
+    }
+    public void ForceAndWarpControl()
+    {
         if (!player.warp.isWarp)
         {
-            speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier; 
+            speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
         }
         else
         {
@@ -150,7 +135,10 @@ public class ShipController : MonoBehaviour
                 player.warp.WarpStop();
             }
         }
-        
+    }
+
+    public void Moving()
+    {
         if (moveMode == MoveMode.F)
             speed = Mathf.Clamp(speed, 0, player.Ship().data.maxSpeedUnits);
         else if (moveMode == MoveMode.B)
@@ -160,6 +148,44 @@ public class ShipController : MonoBehaviour
         {
             moveMode = MoveMode.S;
         }
-        rb.velocity = transform.forward * (speed + player.warp.warpSpeed);
+    }
+
+    public bool IsStoping()
+    {
+        if (InputM.GetPressButton(KAction.Stop))
+        {
+            StopPlayer();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckFuel()
+    {
+        if (Player.inst.Ship().fuel.value <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void ForwardBackward()
+    {
+        ForwardBackwardMove();
+        CheckMinDistanceToObjects();
+        ForceAndWarpControl();
+        if (CheckFuel())
+        {
+            Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
+
+            if (!IsStoping())
+            {
+                Moving();
+                rigidbody.velocity = transform.forward * (speed + player.warp.warpSpeed);
+            }
+        }
     }
 }

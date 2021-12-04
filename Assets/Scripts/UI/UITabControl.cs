@@ -11,26 +11,56 @@ public class Tab
 
 public class UITabControl : MonoBehaviour
 {
-    [SerializeField] Tab[] tabs;
-    public int tabIndex;
-
-    float time = 60;
-    RectTransform rectTransform;
     [SerializeField] Vector2 sizeOpen, sizeClose;
     [SerializeField] Vector3 openY, closeY;
-    public bool active;
+    [SerializeField] Tab[] tabs;
+    [SerializeField] int tabIndex;
+    [SerializeField] bool active;
+
+    public bool Active => active;
+    
+    private float time = 60;
+    private RectTransform rectTransform;
+    
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
     }
     private void Update()
     {
-        active = time < 25;
         time += Time.deltaTime;
+        active = time < 25;
+        
+        Scroll();
+        if (tabs.Length > 0)
+        {
+            ChangeSelect();
+            if (SelectLoop())
+            {
+                for (int i = 0; i < tabs.Length; i++)
+                {
+                    if (i == tabIndex)
+                    {
+                        tabs[i].buttonEffect.over = ButtonEffect.ActionType.Over;
+                    }
+                    else
+                    {
+                        tabs[i].buttonEffect.over = ButtonEffect.ActionType.None;
+                    }
+
+                    tabs[i].content.SetActive(i == tabIndex);
+                }
+            }
+        }
+    }
+
+    public void Scroll()
+    {
         rectTransform.sizeDelta = Vector2.Lerp(rectTransform.sizeDelta, !active ? sizeClose : sizeOpen, 10 * Time.deltaTime);
         rectTransform.localPosition = Vector3.Lerp(rectTransform.localPosition, !active ? closeY : openY, 10 * Time.deltaTime);
-        
-        if (tabs.Length == 0) return;
+    }
+    public void ChangeSelect()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             time = 0;
@@ -47,7 +77,9 @@ public class UITabControl : MonoBehaviour
                 tabIndex++;
             }
         }
-
+    }
+    bool SelectLoop()
+    {
         if (tabIndex >= tabs.Length)
         {
             tabIndex = 0;
@@ -56,19 +88,8 @@ public class UITabControl : MonoBehaviour
         {
             tabIndex = tabs.Length-1;
         }
+        if (tabIndex == -1) return false;
 
-        if (tabIndex == -1) return;
-
-        for (int i = 0; i < tabs.Length; i++)
-        {
-            if (i == tabIndex) {
-                tabs[i].buttonEffect.over =  ButtonEffect.ActionType.Over;
-            }
-            else
-            {
-                tabs[i].buttonEffect.over = ButtonEffect.ActionType.None;
-            }
-            tabs[i].content.SetActive(i == tabIndex);
-        }
+        return true;
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShipHologram : MonoBehaviour
 {
-    Quaternion startRotation;
-    Player player;
+    private Quaternion startRotation;
+    private Player player;
 
     [SerializeField] private Transform floor;
     [SerializeField] private MeshFilter shipModel;
@@ -21,8 +21,12 @@ public class ShipHologram : MonoBehaviour
     {
         var ship = player.control;
         shipModel.transform.localRotation = Quaternion.Lerp(shipModel.transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * player.Ship().data.XRotSpeed, ship.yaw * ship.player.Ship().data.YRotSpeed * player.Ship().data.YRotSpeed, -ship.horizontal * player.Ship().data.ZRotSpeed), 10 * Time.deltaTime);
+        LandHologram();
+    }
 
-        if (Application.loadedLevelName == "Location")
+    public void LandHologram()
+    {
+        if (World.Scene == Scenes.Location)
         {
             if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
             {
