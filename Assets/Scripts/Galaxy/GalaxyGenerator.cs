@@ -71,14 +71,93 @@ public class GalaxyGenerator : MonoBehaviour
         }
     }
 
+    public static DVector GetSpawnPos(System.Random rnd)
+    {
+        bool canSpawn = false;
+        var pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
+        while (!canSpawn)
+        {
+            pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
+            bool allOK = true;
+            foreach (var item in systems)
+            {
+                if (pos.Dist(item.Value.position) < minSystemsCount || pos.Dist(new DVector(0,0,0)) > maxRadius || pos.Dist(new DVector(0, 0, 0)) < minRadius )
+                {
+                    allOK = false;
+                    break;
+                }
+            }
+            if (allOK)
+            {
+                canSpawn = true;
+                break;
+            }
+        }
+
+        return pos;
+    }
+
+    public static SolarSystem GetBaseSystem(System.Random rnd)
+    {
+        var system = new SolarSystem();
+
+        var pos = GetSpawnPos(rnd);
+        var rot = new DVector(NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360));
+
+
+        system.rotation = rot;
+        system.position = pos;
+
+        return system;
+    }
+
+    public static Star GetFirstStar(DVector pos, System.Random rnd)
+    {
+        var rnd1 = new System.Random((int)(pos.x + pos.y + pos.z));
+
+        var starTypes = System.Enum.GetNames(typeof(Star.StarType)).Length;
+
+        float xCoord = (float)pos.x / (float)GalaxyGenerator.maxRadius * 20f;
+        float yCoord = (float)pos.y / (float)GalaxyGenerator.maxRadius * 20f;
+        float sample = Mathf.PerlinNoise(xCoord, yCoord);
+
+        Star.StarType type = (Star.StarType)System.Math.Round(starTypes * sample);
+
+        return new Star(type, rnd1);
+    }
+
+    public static void GetSiblings(SolarSystem system)
+    {
+        foreach (var sys in systems)
+        {
+            if (sys.Value.position.Dist(system.position) < (decimal) siblingDist)
+            {
+                var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
+                if (!sys.Value.sibligs.Contains(curr))
+                {
+                    sys.Value.sibligs.Add(curr);
+                }
+
+                system.sibligs.Add(new NeighbourSolarSytem()
+                    {position = sys.Value.position, solarName = sys.Value.name});
+            }
+        }
+    }
+
+    public static void AddToGalaxy(SolarSystem system)
+    {
+        if (!systems.ContainsKey(system.name))
+        {
+            systems.Add(system.name, system);
+        }
+    }
+
     public static IEnumerator GenerateGalaxy(int seed)
     {
         if (words == null)
         {
             GetWords();
         }
-
-
         PlayerDataManager.generateProgress = 0;
 
         systems = new Dictionary<string, SolarSystem>();
@@ -89,78 +168,27 @@ public class GalaxyGenerator : MonoBehaviour
 
         for (int i = 0; i < systemsCount; i++)
         {
-            var system = new SolarSystem();
-            bool canSpawn = false;
-            var pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
-            while (!canSpawn)
-            {
-                pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
-                bool allOK = true;
-                foreach (var item in systems)
-                {
-                    if (pos.Dist(item.Value.position) < minSystemsCount || pos.Dist(new DVector(0,0,0)) > maxRadius || pos.Dist(new DVector(0, 0, 0)) < minRadius )
-                    {
-                        allOK = false;
-                        break;
-                    }
-                }
-                if (allOK == true)
-                {
-                    canSpawn = true;
-                    break;
-                }
-            }
-            var rot = new DVector(NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360), NextDecimal(rnd, 0, 360));
-            system.rotation = rot;
-            system.position = pos;
-
-            var rnd1 = new System.Random((int)(pos.x + pos.y + pos.z));
-
-            var starsCount = rnd1.Next(1, 3);
-
-            var starTypes = System.Enum.GetNames(typeof(Star.StarType)).Length;
-
-            float xCoord = (float)pos.x / (float)GalaxyGenerator.maxRadius * 20f;
-            float yCoord = (float)pos.y / (float)GalaxyGenerator.maxRadius * 20f;
-            float sample = Mathf.PerlinNoise(xCoord, yCoord);
-
-            Star.StarType type = (Star.StarType)System.Math.Round(starTypes * sample);
-
-            var newStar = new Star(type, rnd1);
-
-            system.stars.Add(newStar);
-            system.name = system.stars[0].name;
-
-            foreach (var sys in systems)
-            {
-                if (sys.Value.position.Dist(system.position) < (decimal) siblingDist)
-                {
-                    var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
-                    if (!sys.Value.sibligs.Contains(curr))
-                    {
-                        sys.Value.sibligs.Add(curr);
-                    }
-
-                    system.sibligs.Add(new NeighbourSolarSytem()
-                        {position = sys.Value.position, solarName = sys.Value.name});
-                }
-            }
-
-            if (!systems.ContainsKey(system.name))
-            {
-                systems.Add(system.name, system);
-            }
-
+            var system = GetBaseSystem(rnd);
+            system.stars.Add(GetFirstStar(system.position, rnd));
+            system.SetName();
+            GetSiblings(system);
+            AddToGalaxy(system);
+            
             if (i % 5 == 0)
             {
                 PlayerDataManager.generateProgress = i / (float)systemsCount;
                 yield return null;
             }
         }
+        SaveGalaxy();
+        
+        yield break;
+    }
+
+    public static void SaveGalaxy()
+    {
         File.WriteAllText(PlayerDataManager.galaxyFile, JsonConvert.SerializeObject(systems, Formatting.None));
         PlayerDataManager.generateProgress = 1f;
-
-        yield break;
     }
 
     public static decimal NextDecimal(System.Random rnd, decimal min, decimal max)

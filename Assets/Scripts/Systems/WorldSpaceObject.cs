@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,5 +19,13 @@ public class WorldSpaceObject : MonoBehaviour
     private void Update()
     {
         isVisible = Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
+    }
+
+    private void OnDestroy()
+    {
+        if (SolarSystemGenerator.objects != null)
+        {
+            SolarSystemGenerator.objects.Remove(this);
+        }
     }
 }

@@ -16,8 +16,14 @@ public class LineDrawer : MonoBehaviour
     public bool updateRequire;
 
     public float time = 0;
-    
-    Vector3 oldPos;
+
+    public List<GalaxyPoint> stars = new List<GalaxyPoint>();
+    private List<GalaxyPoint> old = new List<GalaxyPoint>();
+    private List<GalaxyLine> lines = new List<GalaxyLine>(), activeLines = new List<GalaxyLine>();
+
+    private const float updateTime = 0.05f;
+
+    private Vector3 oldPos;
     private void Awake()
     {
         instance = this;
@@ -28,48 +34,48 @@ public class LineDrawer : MonoBehaviour
             var line = Instantiate(linePrefab, holder.transform).GetComponent<GalaxyLine>();
             lines.Add(line);
             line.gameObject.SetActive(false);
-
         }
     }
 
-    public List<GalaxyPoint> stars = new List<GalaxyPoint>();
-    List<GalaxyPoint> old = new List<GalaxyPoint>();
-    List<GalaxyLine> lines = new List<GalaxyLine>(), activeLines = new List<GalaxyLine>();
-
-    const float updateTime = 0.05f;
+   
 
     private void Update()
     {
         time += Time.deltaTime;
         if (time > updateTime)
         {
-            if (Vector3.Distance(oldPos, transform.position) > 5)
+            CollectLines();
+        }
+    }
+
+    public void CollectLines()
+    {
+        if (Vector3.Distance(oldPos, transform.position) > 5)
+        {
+            var cast = Physics.SphereCastAll(transform.position + transform.forward * 50, 100, Vector3.down, 100f);
+            if (cast.Length > 1)
             {
-                var cast = Physics.SphereCastAll(transform.position + transform.forward * 50, 100, Vector3.down, 100f);
-                if (cast.Length > 1)
+                stars = new List<GalaxyPoint>();
+                for (int i = 0; i < cast.Length; i++)
                 {
-                    stars = new List<GalaxyPoint>();
-                    for (int i = 0; i < cast.Length; i++)
-                    {
-                        var g = cast[i].transform.GetComponent<GalaxyPoint>();
-                        old.Remove(g);
-                        stars.Add(g);
-                        stars[stars.Count - 1].particles.Play();
-                    }
+                    var g = cast[i].transform.GetComponent<GalaxyPoint>();
+                    old.Remove(g);
+                    stars.Add(g);
+                    stars[stars.Count - 1].particles.Play();
                 }
-                else
-                {
-                    stars = new List<GalaxyPoint>();
-                }
-                oldPos = transform.position;
-                foreach (var item in old)
-                {
-                    if (GalaxyManager.selectedPoint != item)
-                        item.particles.Stop();
-                }
-                old = stars;
-                UpdateLines();
             }
+            else
+            {
+                stars = new List<GalaxyPoint>();
+            }
+            oldPos = transform.position;
+            foreach (var item in old)
+            {
+                if (GalaxyManager.selectedPoint != item)
+                    item.particles.Stop();
+            }
+            old = stars;
+            UpdateLines();
         }
     }
 

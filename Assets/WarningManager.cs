@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum WarningTypes
 {
-    Damage, Heat, Fuel
+    Damage, Heat, Fuel, GoLocation
 }
 
 public class WarningManager : MonoBehaviour

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
+
 [System.Serializable]
 public class Location
 {
@@ -13,11 +15,13 @@ public class Location
 public class LocationGenerator : MonoBehaviour
 {
     public GameObject player, planet, sunPrefab, station, systemPoint;
-    public Location current;
-    bool init;
+    public static Location current;
+    private bool init;
 
     private void Awake()
     {
+        current = null;
+        
         if (FindObjectOfType<Player>() == null)
         {
             Instantiate(player.gameObject).GetComponent<Player>().Init();
@@ -31,14 +35,20 @@ public class LocationGenerator : MonoBehaviour
         }
 
         current = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.currentLocationFile));
-        var system = JsonConvert.DeserializeObject<SolarSystem>(
-            File.ReadAllText(PlayerDataManager.cacheSystemsFolder + current.systemName + ".solar"));
+        
+        
+        var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.cacheSystemsFolder + current.systemName + ".solar"));
+        
         
         PlayerDataManager.currentSolarSystem = system;
-        
-        
         SolarSystemGenerator.DrawAll(PlayerDataManager.currentSolarSystem, transform, sunPrefab, planet, station, systemPoint, 40,
             false);
+
+        SetSystemToLocation();
+    }
+
+    public void SetSystemToLocation()
+    {
         foreach (var item in FindObjectsOfType<LineRenderer>())
         {
             item.enabled = false;
@@ -51,40 +61,63 @@ public class LocationGenerator : MonoBehaviour
                 Destroy(item.gameObject);
             }
         }
+        foreach (var item in FindObjectsOfType<RotateAround>())
+        {
+            Destroy(item);
+        }
     }
+
 
     private void Update()
     {
-        if (!init)
-        {
-            var location = GameObject.Find(current.locationName);
-            foreach (Transform item in transform)
-            {
-                item.position -= location.transform.position;
-            }
-
-            location.transform.parent = null;
-            if (Player.inst.saves.ExKey("loc_start"))
-            {
-                Player.inst.transform.position = location.GetComponent<WorldOrbitalStation>().spawnPoint.position;
-                Player.inst.transform.rotation = location.GetComponent<WorldOrbitalStation>().spawnPoint.rotation;
-                Player.inst.saves.DelKey("loc_start");
-            }
-
-            foreach (var item in FindObjectsOfType<RotateAround>())
-            {
-                item.enabled = false;
-            }
-
-            init = true;
-        }
+        InitFirstFrame();
 
         transform.position = Player.inst.transform.position;
     }
 
-    public static void SaveLocationFile(Location loc)
+    public void InitFirstFrame()
     {
-        File.WriteAllText(PlayerDataManager.currentLocationFile, JsonConvert.SerializeObject(loc));
+        if (!init)
+        {
+            var location = MoveWorld();
+            
+            
+            if (Player.inst.saves.ExKey("loc_start"))
+            {
+                var station = location.GetComponent<WorldOrbitalStation>();
+                Player.inst.transform.position = station.spawnPoint.position;
+                Player.inst.transform.rotation = station.spawnPoint.rotation;
+                Player.inst.saves.DelKey("loc_start");
+            }
+            
+            init = true;
+        }
+    }
+
+    public GameObject MoveWorld()
+    {
+        var location = GameObject.Find(current.locationName);
+        foreach (Transform item in transform)
+        {
+            item.position -= location.transform.position;
+        }
+
+        location.transform.parent = null;
+
+        return location;
+    }
+
+    
+    
+    
+    public static void SaveLocationFile(string locName)
+    {
+        var n = new Location()
+        {
+            systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
+            locationName = locName,
+        };
+        File.WriteAllText(PlayerDataManager.currentLocationFile, JsonConvert.SerializeObject(n));
     }
 
     public static void RemoveLocationFile()

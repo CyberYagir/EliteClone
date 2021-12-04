@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public ShipController control { get; private set; }
     public WarpManager warp { get; private set; }
     public SaveLoadData saves { get; private set; }
+    public LandManager land { get; private set; }
 
     [SerializeField] SpaceShip spaceShip;
 
@@ -62,6 +63,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StopAxis()
+    {
+        control.horizontal = 0;
+        control.vertical = 0;
+        control.speed = 0;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+    
     private void Update()
     {
         heatTime += Time.deltaTime;
@@ -95,6 +104,7 @@ public class Player : MonoBehaviour
         targets = GetComponent<TargetManager>();
         warp = GetComponent<WarpManager>();
         saves = GetComponent<SaveLoadData>();
+        land = GetComponent<LandManager>();
     }
 
     public SpaceShip Ship()

@@ -39,6 +39,11 @@ public class WarpManager : MonoBehaviour
                 }
             }
         }
+
+        if (activeLocationPoint)
+        {
+            WarningManager.AddWarning("Press 'Jump' to enter the station.", WarningTypes.GoLocation);
+        }
         if (InputM.GetAxisDown(KAction.JumpIn))
         {
             if (activeLocationPoint)
@@ -47,11 +52,9 @@ public class WarpManager : MonoBehaviour
                 {
                     warpParticle.Play();
                     SolarSystemGenerator.SaveSystem(true);
-                    LocationGenerator.SaveLocationFile(new Location()
-                    {
-                        systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
-                        locationName = activeLocationPoint.root.name
-                    });
+                    
+                    LocationGenerator.SaveLocationFile(activeLocationPoint.root.name);
+                    
                     Player.inst.saves.SetKey("loc_start", true);
                     DontDestroyOnLoad(Player.inst);
                     Application.LoadLevel("Location");
@@ -75,7 +78,7 @@ public class WarpManager : MonoBehaviour
         }
         if (Player.inst.GetTarget() != null)
         {
-            if (Player.inst.GetTarget().transform.tag == "System")
+            if (Player.inst.GetTarget().transform.CompareTag("System"))
             {
                 if (isWarp)
                 {

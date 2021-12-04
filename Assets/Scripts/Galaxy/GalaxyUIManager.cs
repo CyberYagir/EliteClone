@@ -9,6 +9,11 @@ public class GalaxyUIManager : MonoBehaviour
 
     private void Update()
     {
+        SelectSystemIcon();
+    }
+
+    public void SelectSystemIcon()
+    {
         selectGalaxyCursor.gameObject.SetActive(GalaxyManager.selectedPoint != null);
         if (GalaxyManager.selectedPoint)
         {

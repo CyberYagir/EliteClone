@@ -11,9 +11,17 @@ public class PlayerData
     public float fuel, health, shields, speed;
 
     public Dictionary<string, object> keys;
+
+    public LandLocation isLanded;
 }
 
 
+[System.Serializable]
+public class LandLocation
+{
+    public Vector3 pos;
+    public Quaternion rot;
+}
 
 public class SaveLoadData : MonoBehaviour
 {
@@ -71,6 +79,7 @@ public class SaveLoadData : MonoBehaviour
             p.Ship().shields.value = playerData.shields;
             p.control.speed = playerData.speed;
             keys = playerData.keys;
+            p.land.SetLand(playerData.isLanded);
         }
         else
         {
@@ -91,7 +100,8 @@ public class SaveLoadData : MonoBehaviour
             pos = p.transform.position,
             rot = p.transform.eulerAngles,
             worldPos = world.transform.position,
-            keys = keys
+            keys = keys,
+            isLanded = p.land.GetLand()
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
