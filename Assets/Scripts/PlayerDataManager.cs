@@ -39,7 +39,14 @@ public class PlayerDataManager : MonoBehaviour
     
     private void Awake()
     {
+        LoadStatic();
         InitDataManager();
+    }
+
+    public void LoadStatic()
+    {
+        GalaxyGenerator.GetWords();
+        WorldOrbitalStation.InitNames();
     }
 
     private void Start()

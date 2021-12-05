@@ -38,9 +38,12 @@ public class GalaxyGenerator : MonoBehaviour
 
     public static void GetWords()
     {
-        TextAsset mytxtData = (TextAsset)Resources.Load("words");
-        var wrds = mytxtData.text;
-        words = wrds.Split('/');
+        if (words == null)
+        {
+            TextAsset mytxtData = (TextAsset) Resources.Load("words");
+            var wrds = mytxtData.text;
+            words = wrds.Split('/');
+        }
     }
 
     public void Init()
@@ -161,10 +164,7 @@ public class GalaxyGenerator : MonoBehaviour
 
     public static IEnumerator GenerateGalaxy(int seed)
     {
-        if (words == null)
-        {
-            GetWords();
-        }
+        GetWords();
         PlayerDataManager.GenerateProgress = 0;
 
         systems = new Dictionary<string, SolarSystem>();
