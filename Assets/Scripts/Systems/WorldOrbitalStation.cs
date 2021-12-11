@@ -12,7 +12,7 @@ namespace Quests
     {
         public enum QuestType
         {
-            Kill, Harvest, Transfer
+            Kill, Mine, Transfer
         }
         public Character quester;
         public QuestType questType;
@@ -69,7 +69,7 @@ public class WorldOrbitalStation : MonoBehaviour
     public Transform spawnPoint;
     public List<Quest> quests;
     public List<Character> characters;
-
+    public static event Action OnInit = delegate {  };
     public static void InitNames()
     {
         if (FirstNames == null)
@@ -79,6 +79,20 @@ public class WorldOrbitalStation : MonoBehaviour
         }
     }
 
+    public static void ClearEvent()
+    {
+        OnInit = delegate {  };
+        Instance = null;
+    }
+    public void Init()
+    {
+        Instance = this;
+        InitNames();
+        CalcSeed();
+        characters = InitCharacters(uniqSeed);
+        quests = InitQuests(uniqSeed, characters);
+    }
+    
     private static string[] LoadFromFile(string nm)
     {
         TextAsset mytxtData = (TextAsset) Resources.Load(nm);
@@ -89,10 +103,7 @@ public class WorldOrbitalStation : MonoBehaviour
 
     private void Start()
     {
-        InitNames();
-        CalcSeed();
-        characters = InitCharacters(uniqSeed);
-        quests = InitQuests(uniqSeed, characters);
+        OnInit();
     }
 
     public void CalcSeed()
@@ -110,8 +121,8 @@ public class WorldOrbitalStation : MonoBehaviour
     {
         var list = new List<Character>();
         Random rnd = new Random(seed);
-        int characters = rnd.Next(1, 5);
-        for (int i = 0; i < characters; i++)
+        int _characters = rnd.Next(1, 5);
+        for (int i = 0; i < _characters; i++)
         {
             var ch = new Character(rnd);
             list.Add(ch);
@@ -120,14 +131,14 @@ public class WorldOrbitalStation : MonoBehaviour
         return list;
     }
 
-    public List<Quest> InitQuests(int seed, List<Character> characters)
+    public List<Quest> InitQuests(int seed, List<Character> _characters)
     {
         var list = new List<Quest>();
         Random rnd = new Random(seed);
         int quests = rnd.Next(1, 20);
         for (int i = 0; i < quests; i++)
         {
-            var q = new Quest(rnd, characters[rnd.Next(0, characters.Count)]);
+            var q = new Quest(rnd, _characters[rnd.Next(0, _characters.Count)]);
             list.Add(q);
         }
 

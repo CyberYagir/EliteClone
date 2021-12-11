@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrawContacts : MonoBehaviour
+public class DrawContacts : MonoBehaviour  
 {
     [SerializeField] private List<NavItem> items = new List<NavItem>();
     [SerializeField] private GameObject item;
@@ -51,6 +51,8 @@ public class DrawContacts : MonoBehaviour
         }
     }
 
+    //ЛЕГАСИ ПЕРЕПИСАТЬ ПОД UPDOWNUI, чтобы было как в DrawNavigation
+    
     private void OnEnable()
     {
         UpdateList();

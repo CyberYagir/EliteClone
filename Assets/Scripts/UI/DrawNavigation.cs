@@ -18,7 +18,9 @@ public class DrawNavigation : MonoBehaviour
     [SerializeField] private List<NavItem> items = new List<NavItem>();
     [SerializeField] private GameObject item;
     [SerializeField] private RectTransform holder;
-    [SerializeField] private int selectedIndex;
+    [SerializeField] private UpDownUI updown;
+    
+    
     private UITabControl tabControl;
 
     private float height;
@@ -26,6 +28,9 @@ public class DrawNavigation : MonoBehaviour
     {
         height = item.GetComponent<RectTransform>().sizeDelta.y;
         Player.OnSceneChanged += UpdateList;
+
+        updown.OnChangeSelected += ChangeSelect;
+        updown.OnNavigateChange += UpdateColors;
     }
 
     private void OnDestroy()
@@ -73,49 +78,53 @@ public class DrawNavigation : MonoBehaviour
             b.SetActive(true);
             items.Add(navI);
         }
+
+        updown.itemsCount = items.Count;
     }
 
+
+    public void ChangeSelect()
+    {
+        int selectedIndex = updown.selectedIndex;
+        if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
+        {
+            Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+        }
+        else
+        {
+            Player.inst.SetTarget(null);
+        }
+        UpdateColors();
+    }
+
+    public void UpdateColors()
+    {
+        int selectedIndex = updown.selectedIndex;
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (i == selectedIndex)
+            {
+                items[i].Button.over = ButtonEffect.ActionType.Over;
+            }
+            else if (items[i].SpaceObject == Player.inst.GetTarget())
+            {
+                items[i].Button.over = ButtonEffect.ActionType.Selected;
+            }
+            else
+            {
+                items[i].Button.over = ButtonEffect.ActionType.None;
+            }
+            items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
+            items[i].Dist.text = items[i].SpaceObject.dist;
+        }
+    }
+    
     private void Update()
     {
+        updown.enabled = tabControl.Active;
         if (tabControl.Active)
         {
-            holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
-            if (InputM.GetAxisDown(KAction.TabsVertical))
-            {
-                selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
-                if (selectedIndex <= 0) selectedIndex = items.Count - 1;
-                if (selectedIndex >= items.Count) selectedIndex = 0;
-            }
-
-            if (InputM.GetAxisDown(KAction.Select))
-            {
-                if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
-                {
-                    Player.inst.SetTarget(items[selectedIndex].SpaceObject);
-                }
-                else
-                {
-                    Player.inst.SetTarget(null);
-                }
-            }
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (i == selectedIndex)
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.Over;
-                }
-                else if (items[i].SpaceObject == Player.inst.GetTarget())
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.Selected;
-                }
-                else
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.None;
-                }
-                items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
-                items[i].Dist.text = items[i].SpaceObject.dist;
-            }
+            holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (updown.selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
         }
     }
 }

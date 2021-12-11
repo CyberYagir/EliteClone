@@ -81,13 +81,11 @@ public class SolarSystemGenerator : MonoBehaviour
                 }
                 else
                 {
-                    print(1);
                     World.LoadLevel(Scenes.Init);
                 }
             }
             else
             {                   
-                print(2);
                 World.LoadLevel(Scenes.Init);
             }
         }

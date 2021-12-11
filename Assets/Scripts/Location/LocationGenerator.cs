@@ -16,8 +16,6 @@ public class LocationGenerator : MonoBehaviour
 {
     public GameObject player, planet, sunPrefab, station, systemPoint;
     public static Location CurrentSave;
-    private bool initFirstFrame;
-
     private void Awake()
     {
         World.SetScene(Scenes.Location);
@@ -25,7 +23,7 @@ public class LocationGenerator : MonoBehaviour
     private void OnEnable()
     {
         CurrentSave = null;
-        
+        WorldOrbitalStation.ClearEvent();
         if (FindObjectOfType<Player>() == null)
         {
             Instantiate(player.gameObject).GetComponent<Player>().Init();
@@ -41,6 +39,7 @@ public class LocationGenerator : MonoBehaviour
 
         LoadLocation();
         SetSystemToLocation();
+        InitFirstFrame();
     }
 
     public void LoadLocation()
@@ -78,28 +77,20 @@ public class LocationGenerator : MonoBehaviour
 
     private void Update()
     {
-        InitFirstFrame();
-
         transform.position = Player.inst.transform.position;
     }
 
     public void InitFirstFrame()
     {
-        if (!initFirstFrame)
+        var location = MoveWorld();
+        var station = location.GetComponent<WorldOrbitalStation>();
+        if (Player.inst.saves.ExKey("loc_start"))
         {
-            var location = MoveWorld();
-            
-            
-            if (Player.inst.saves.ExKey("loc_start"))
-            {
-                var station = location.GetComponent<WorldOrbitalStation>();
-                Player.inst.transform.position = station.spawnPoint.position;
-                Player.inst.transform.rotation = station.spawnPoint.rotation;
-                Player.inst.saves.DelKey("loc_start");
-            }
-            
-            initFirstFrame = true;
+            Player.inst.transform.position = station.spawnPoint.position;
+            Player.inst.transform.rotation = station.spawnPoint.rotation;
+            Player.inst.saves.DelKey("loc_start");
         }
+        station.Init();
     }
 
     public GameObject MoveWorld()
