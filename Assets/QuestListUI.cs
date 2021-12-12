@@ -1,26 +1,63 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Quests;
 using UnityEngine;
 
-public class QuestListUI : MonoBehaviour
+public class QuestListUI : BaseTab
 {
-    [SerializeField] private UpDownUI updown;
-
-
-
-    public void UpdateQuests()
+    [SerializeField] private Transform item, holder;
+    [SerializeField] private List<MineTypes> mineType;
+    [SerializeField] private List<ButtonEffect> items = new List<ButtonEffect>();
+    [SerializeField] private BaseTab characterList;
+    [System.Serializable]
+    public class MineTypes
     {
-        
+        public Quest.QuestType type;
+        public Sprite icon;
     }
-    
-    public void Enable()
+
+    private void Start()
     {
-        this.enabled = true;
-        updown.enabled = true;
+        upDownUI.OnChangeSelected += ChangeSelected;
+        upDownUI.OnNavigateChange += ChangeSelected;
     }
-    public void Disable()
+
+
+    public void ChangeSelected()
     {
-        this.enabled = false;
-        updown.enabled = false;
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+        }
+    }
+
+    private void Update()
+    {
+        if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+        {
+            characterList.Enable();
+            Disable();
+        }
+    }
+
+    public void UpdateQuests(List<Quest> quests)
+    {
+        foreach (Transform items in holder)
+        {
+            if (items.gameObject.active)
+                Destroy(items.gameObject);
+        }
+        items = new List<ButtonEffect>();
+        for (int i = 0; i < quests.Count; i++)
+        {
+            var questItem =  Instantiate(item, holder);
+            questItem.GetComponent<QuestItemUI>().Init(mineType.Find(x=>x.type == quests[i].questType).icon, quests[i].questType.ToString());
+            questItem.gameObject.SetActive(true);
+            items.Add(questItem.GetComponent<ButtonEffect>());
+        }
+
+        upDownUI.selectedIndex = 0;
+        upDownUI.itemsCount = items.Count;
     }
 }

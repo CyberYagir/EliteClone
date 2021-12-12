@@ -13,7 +13,7 @@ public class UpDownUI : MonoBehaviour
         if (InputM.GetAxisDown(KAction.TabsVertical))
         {
             selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
-            if (selectedIndex <= 0) selectedIndex = itemsCount - 1;
+            if (selectedIndex < 0) selectedIndex = itemsCount - 1;
             if (selectedIndex >= itemsCount) selectedIndex = 0;
             OnNavigateChange();
         }

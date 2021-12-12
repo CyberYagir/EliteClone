@@ -17,11 +17,13 @@ public class BaseWindow : MonoBehaviour
     [SerializeField] private float height = 1400;
     [SerializeField] private TMP_Text infoText, nameText;
     [SerializeField] private List<IconType> icons;
+    [SerializeField] private CharacterList characters;
     private void Start()
     {
         rect = GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         nameText.text = WorldOrbitalStation.Instance.transform.name;
+        Player.inst.GetComponent<LandManager>().OnLand += RedrawAll;
     }
 
     private void Update()
@@ -36,16 +38,16 @@ public class BaseWindow : MonoBehaviour
         }
     }
 
-    public void ClearUI()
+    public void RedrawAll()
     {
-        
+        characters.UpdateList();
     }
-
+    
+    
     public IconType GetIcon(Fraction fraction)
     {
         return icons.Find(x => x.fraction == fraction);
     }
-    
     public void Animation()
     {
         rect.sizeDelta = Vector2.Lerp(rect.sizeDelta,  new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);

@@ -3,16 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterList : MonoBehaviour
+public class BaseTab: MonoBehaviour
 {
-    [SerializeField] private QuesterItemUI item;
+    [SerializeField] public GameObject enableOverlay;
+    [SerializeField] public UpDownUI upDownUI;
+    
+    public void Enable()
+    {
+        this.enabled = true;
+        upDownUI.enabled = true;
+    }
+    public void Disable()
+    {
+        this.enabled = false;
+        upDownUI.enabled = false;
+    }
+}
+
+public class CharacterList : BaseTab
+{
     [SerializeField] private Transform holder;
-    [SerializeField] private UpDownUI upDownUI;
     [SerializeField] private QuestListUI questList;
+    [SerializeField] private QuesterItemUI item;
     private List<ButtonEffect> items = new List<ButtonEffect>();
     private BaseWindow baseWindow;
 
     public event Action ChangeSelect = delegate {  };
+
+
+
+ 
+
+    public void RedrawQuests()
+    {
+        var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
+        var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
+        questList.UpdateQuests(quests);
+    }
 
 
     private void Start()
@@ -21,6 +48,7 @@ public class CharacterList : MonoBehaviour
         WorldOrbitalStation.OnInit += UpdateList;
         upDownUI.OnChangeSelected += ChangeSelected;
         upDownUI.OnNavigateChange += ChangeSelected;
+        ChangeSelect += RedrawQuests;
     }
 
     public void ChangeSelected()
@@ -36,7 +64,9 @@ public class CharacterList : MonoBehaviour
     {
         if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
         {
+            questList.ChangeSelected();
             questList.Enable();
+            Disable();
         }
     }
 
@@ -57,5 +87,6 @@ public class CharacterList : MonoBehaviour
             items.Add(it.GetComponent<ButtonEffect>());
         }
         upDownUI.itemsCount = WorldOrbitalStation.Instance.characters.Count;
+        ChangeSelected();
     }
 }
