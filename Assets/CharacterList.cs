@@ -62,11 +62,14 @@ public class CharacterList : BaseTab
 
     private void Update()
     {
-        if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+        if (InputM.GetAxisDown(KAction.TabsHorizontal))
         {
-            questList.ChangeSelected();
-            questList.Enable();
-            Disable();
+            if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+            {
+                questList.ChangeSelected();
+                questList.Enable();
+                Disable();
+            }
         }
     }
 

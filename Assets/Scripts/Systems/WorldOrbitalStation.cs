@@ -16,6 +16,7 @@ namespace Quests
         }
         public Character quester;
         public QuestType questType;
+        public int questID;
 
         public Quest(System.Random rnd, Character character)
         {
@@ -26,6 +27,7 @@ namespace Quests
         {
             quester = character;
             questType = (QuestType)rnd.Next(0, Enum.GetNames(typeof(QuestType)).Length);
+            questID = rnd.Next(-9999999, 9999999);
         }
     }
 
@@ -35,7 +37,7 @@ namespace Quests
         Libertarians,
         Communists,
         Anarchists,
-        Organized_Crime_Group
+        OCG
     }
     [System.Serializable]
     public class Character

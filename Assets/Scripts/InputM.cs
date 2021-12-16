@@ -69,6 +69,7 @@ public class InputM : MonoBehaviour
     {
         return keys[action].rawvalue;
     }
+    
     /// <summary>
     /// Hold button
     /// </summary>

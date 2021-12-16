@@ -9,7 +9,7 @@ public class QuestListUI : BaseTab
     [SerializeField] private Transform item, holder;
     [SerializeField] private List<MineTypes> mineType;
     [SerializeField] private List<ButtonEffect> items = new List<ButtonEffect>();
-    [SerializeField] private BaseTab characterList;
+    [SerializeField] private BaseTab characterList, questInfo;
     [System.Serializable]
     public class MineTypes
     {
@@ -34,10 +34,18 @@ public class QuestListUI : BaseTab
 
     private void Update()
     {
-        if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+        if (InputM.GetAxisDown(KAction.TabsHorizontal))
         {
-            characterList.Enable();
-            Disable();
+            if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+            {
+                characterList.Enable();
+                Disable();
+            }
+            if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+            {
+                questInfo.Enable();
+                Disable();
+            }
         }
     }
 

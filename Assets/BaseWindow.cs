@@ -18,14 +18,29 @@ public class BaseWindow : MonoBehaviour
     [SerializeField] private TMP_Text infoText, nameText;
     [SerializeField] private List<IconType> icons;
     [SerializeField] private CharacterList characters;
+
     private void Start()
+    {
+        if (World.Scene == Scenes.Location)
+        {
+            Init();
+        }
+        else
+        {
+            Player.OnSceneChanged += Init;
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void Init()
     {
         rect = GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         nameText.text = WorldOrbitalStation.Instance.transform.name;
         Player.inst.GetComponent<LandManager>().OnLand += RedrawAll;
+        Player.OnSceneChanged -= Init;
     }
-
+    
     private void Update()
     {
         Animation();

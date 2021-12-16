@@ -162,6 +162,17 @@ public class GalaxyGenerator : MonoBehaviour
         }
     }
 
+    public static List<OrbitStation> GetStaions(SolarSystem system)
+    {
+        var pos = system.position;
+        var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+
+        var starsCount = rnd.Next(1, 4);
+        var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
+        var basesCount = rnd.Next(0, planetsCount);
+
+        return SolarSystemGenerator.GenerateOrbitStations(basesCount, system.name, pos);
+    }
     public static IEnumerator GenerateGalaxy(int seed)
     {
         GetWords();
@@ -170,7 +181,7 @@ public class GalaxyGenerator : MonoBehaviour
         systems = new Dictionary<string, SolarSystem>();
         
         var rnd = new System.Random(seed);
-
+        
         var systemsCount = rnd.Next(minSystemsCount, maxSystemsCount);
 
         for (int i = 0; i < systemsCount; i++)
@@ -178,6 +189,7 @@ public class GalaxyGenerator : MonoBehaviour
             var system = GetBaseSystem(rnd);
             system.stars.Add(GetFirstStar(system.position, rnd));
             system.SetName();
+            system.stations = GetStaions(system);
             GetSiblings(system);
             AddToGalaxy(system);
             

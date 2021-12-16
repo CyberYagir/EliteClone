@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class PlanetTexture : MonoBehaviour
 {
-    [SerializeField] Material[] textures;
-
     public void SetTexture(int id)
     {
-        GetComponent<Renderer>().material = textures[id];
+        if (SolarSystemGenerator.planetTextures == null)
+        {
+            SolarSystemGenerator.GetPlanetTextures();
+        }
+
+        GetComponent<Renderer>().material = SolarSystemGenerator.planetTextures.textures[id];
     }
     public int GetLen()
     {
-        return textures.Length;
+        return SolarSystemGenerator.planetTextures.textures.Count;
     }
 }

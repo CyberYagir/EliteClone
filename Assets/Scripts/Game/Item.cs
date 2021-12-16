@@ -33,7 +33,7 @@ public class ValueLimit
 [CreateAssetMenu(fileName = "", menuName = "Game/Item", order = 1)]
 public class Item : ScriptableObject
 {
-    [SerializeField] public int id;
+    [HideInInspector] public int id;
     [SerializeField] private string name;
     [SerializeField] private Sprite icon;
     [SerializeField] private ValueLimit amount;

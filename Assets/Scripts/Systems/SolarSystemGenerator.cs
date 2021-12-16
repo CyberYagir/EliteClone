@@ -29,7 +29,7 @@ public class SolarSystemGenerator : MonoBehaviour
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
     public static List<WorldSpaceObject> suns = new List<WorldSpaceObject>();
     static SavedSolarSystem savedSolarSystem;
-
+    public static PlanetTextures planetTextures;
     public static Vector3 startPoint = Vector3.zero;
 
     public static void SaveSystem(bool isFirstInLocation = true)
@@ -59,7 +59,7 @@ public class SolarSystemGenerator : MonoBehaviour
         {
             if (!File.Exists(GetSystemFileName()))
             {
-                PlayerDataManager.CurrentSolarSystem = Generate(PlayerDataManager.CurrentSolarSystem, planetPrefab);
+                PlayerDataManager.CurrentSolarSystem = Generate(PlayerDataManager.CurrentSolarSystem);
             }
             else
             {
@@ -141,17 +141,19 @@ public class SolarSystemGenerator : MonoBehaviour
 
     public static float scale = 15;
 
-    public static SolarSystem Generate(SolarSystem solarSystem, GameObject planetPrefab)
+    public static void GetPlanetTextures()
     {
-        var system = solarSystem;
-        var pos = solarSystem.position;
-        var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+        if (planetTextures == null)
+        {
+            planetTextures = Resources.Load<PlanetTextures>("PlanetTextures");
+        }
+    }
 
-        system.stars = new List<Star>();
-        var starsCount = rnd.Next(1, 4);
-
+    public static List<Star> GenStars(int starsCount, string systemName, DVector pos)
+    {
+        List<Star> stars = new List<Star>();
+        System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
         var starTypes = System.Enum.GetNames(typeof(Star.StarType)).Length;
-
         for (int i = 0; i < starsCount; i++)
         {
             Star.StarType type = Star.StarType.M;
@@ -173,11 +175,28 @@ public class SolarSystemGenerator : MonoBehaviour
             var star = new Star(type, rnd);
 
             star.position = spos;
-            star.name = system.name.Split(' ')[0] + " " + (i != 0 ? i.ToString() : "");
-            system.stars.Add(star);
+            star.name = systemName.Split(' ')[0] + " " + (i != 0 ? i.ToString() : "");
+            stars.Add(star);
         }
 
+        return stars;
+    }
+    public static SolarSystem Generate(SolarSystem solarSystem)
+    {
+        GetPlanetTextures();
+        var system = solarSystem;
+        var pos = solarSystem.position;
+        var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
 
+        var starsCount = rnd.Next(1, 4);
+        var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
+        var basesCount = rnd.Next(0, planetsCount);
+
+
+        system.stars = GenStars(starsCount, system.name, system.position);
+        system.stations = GenerateOrbitStations(basesCount, system.name, system.position);
+        
+        
         var masses = system.stars.OrderBy(x => x.mass).ToList();
         for (int i = 1; i < starsCount; i++)
         {
@@ -188,7 +207,8 @@ public class SolarSystemGenerator : MonoBehaviour
             masses[i].position = spos;
         }
 
-        var planetsCount = rnd.Next(1, 5 * starsCount);
+        int usesBases = 0;
+        
 
         for (int i = 0; i < planetsCount; i++)
         {
@@ -213,43 +233,50 @@ public class SolarSystemGenerator : MonoBehaviour
             bool haveBase = false;
             for (int j = 0; j < sattelites; j++)
             {
-                var isBase = rnd.Next(0, 4);
-                if (isBase <= 2)
+                if (haveBase || usesBases >= basesCount)
                 {
                     sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
-
                     var sattelite = new Planet(rnd, planet, sPos);
                     sattelite.position = sPos;
                     sattelite.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
                     sattelite.mass *= 0.1m;
                     sattelite.radius *= 0.1m;
                     sattelite.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1);
-                    sattelite.textureID = rnd.Next(0, planetPrefab.GetComponent<PlanetTexture>().GetLen());
+                    sattelite.textureID = rnd.Next(0, planetTextures.textures.Count);
                     planet.sattelites.Add(sattelite);
                 }
                 else
                 {
-                    if (!haveBase)
-                    {
-                        sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
-
-                        var station = new OrbitStation();
-                        station.position = sPos;
-                        station.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
-                        station.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1) + " Orbital";
-                        planet.stations.Add(station);
-
-                        haveBase = true;
-                    }
+                    
+                    sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
+                    system.stations[usesBases].position = sPos;
+                    planet.stations.Add(system.stations[usesBases]);
+                    usesBases++;
+                    haveBase = true;
                 }
             }
 
             system.planets.Add(planet);
         }
-
         return system;
     }
 
+    public static List<OrbitStation> GenerateOrbitStations(int stationsCount, string systemName, DVector pos)
+    {
+        List<OrbitStation> stations = new List<OrbitStation>();
+        System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+        for (int i = 0; i < stationsCount; i++)
+        {
+            var station = new OrbitStation();
+            station.name = systemName.Split(' ')[0] + "Orbital Station #" + i;
+            station.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
+            stations.Add(station);
+        }
+
+        return stations;
+    }
+    
+    
     public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab,
         GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
     {
