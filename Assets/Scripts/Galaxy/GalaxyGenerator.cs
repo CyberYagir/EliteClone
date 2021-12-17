@@ -11,8 +11,7 @@ public class GalaxyGenerator : MonoBehaviour
     public static Dictionary<string,SolarSystem> systems;
     public static decimal maxY = 5000, minY = -5000;
     public static decimal maxRadius = 100000, minRadius = 30000;
-    public static int maxSystemsCount = 4000, minSystemsCount = 2000;
-    public static float minBetweenGalaxiesDistance = 2;
+    public static int maxSystemsCount = 6000, minSystemsCount = 3000;
     [Space]
 
     public GameObject prefab, holder;
@@ -21,7 +20,7 @@ public class GalaxyGenerator : MonoBehaviour
 
     public int seed;
     
-    public static float siblingDist = 6000;
+    public static float siblingDist = 4500;
     public static float scale = 100;
 
     private void Awake()

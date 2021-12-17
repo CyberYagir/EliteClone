@@ -268,7 +268,7 @@ public class SolarSystemGenerator : MonoBehaviour
         for (int i = 0; i < stationsCount; i++)
         {
             var station = new OrbitStation();
-            station.name = systemName.Split(' ')[0] + "Orbital Station #" + i;
+            station.name = systemName.Split(' ')[0] + " Orbital #" + i;
             station.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
             stations.Add(station);
         }

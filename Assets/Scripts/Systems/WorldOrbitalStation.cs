@@ -8,6 +8,28 @@ using Random = System.Random;
 namespace Quests
 {
     [System.Serializable]
+    public class QuestPath
+    {
+        public string solarName;
+        public QuestPath prevPath, nextPath;
+        public bool isFirst
+        {
+            get
+            {
+                return prevPath == null;
+            }
+        }
+
+        public bool isLast
+        {
+            get
+            {
+                return nextPath == null;
+            }
+        }
+    }
+    
+    [System.Serializable]
     public class Quest
     {
         public enum QuestType
@@ -17,7 +39,8 @@ namespace Quests
         public Character quester;
         public QuestType questType;
         public int questID;
-
+        public QuestPath pathToTarget;
+        
         public Quest(System.Random rnd, Character character)
         {
             Init(rnd, character);
