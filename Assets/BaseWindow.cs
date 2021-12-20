@@ -27,9 +27,9 @@ public class BaseWindow : MonoBehaviour
         }
         else
         {
-            Player.OnSceneChanged += Init;
             gameObject.SetActive(false);
         }
+        Player.OnSceneChanged += Init;
     }
 
     public void Init()

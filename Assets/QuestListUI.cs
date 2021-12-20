@@ -10,6 +10,9 @@ public class QuestListUI : BaseTab
     [SerializeField] private List<MineTypes> mineType;
     [SerializeField] private List<ButtonEffect> items = new List<ButtonEffect>();
     [SerializeField] private BaseTab characterList, questInfo;
+
+    private List<Quest> questsList;
+    public event Action<Quest> OnChangeSelected = delegate {  };
     [System.Serializable]
     public class MineTypes
     {
@@ -21,6 +24,11 @@ public class QuestListUI : BaseTab
     {
         upDownUI.OnChangeSelected += ChangeSelected;
         upDownUI.OnNavigateChange += ChangeSelected;
+        Player.OnSceneChanged += () =>
+        {
+            characterList.Enable();
+            Disable();
+        };
     }
 
 
@@ -30,6 +38,8 @@ public class QuestListUI : BaseTab
         {
             items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
         }
+
+        OnChangeSelected(questsList[upDownUI.selectedIndex]);
     }
 
     private void Update()
@@ -51,6 +61,7 @@ public class QuestListUI : BaseTab
 
     public void UpdateQuests(List<Quest> quests)
     {
+        questsList = quests;
         foreach (Transform items in holder)
         {
             if (items.gameObject.active)

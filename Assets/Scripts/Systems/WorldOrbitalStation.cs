@@ -10,8 +10,9 @@ namespace Quests
     [System.Serializable]
     public class QuestPath
     {
-        public string solarName;
+        public string solarName, targetName;
         public QuestPath prevPath, nextPath;
+        
         public bool isFirst
         {
             get
@@ -39,18 +40,125 @@ namespace Quests
         public Character quester;
         public QuestType questType;
         public int questID;
-        public QuestPath pathToTarget;
-        
-        public Quest(System.Random rnd, Character character)
+        public QuestPath pathToTarget = new QuestPath();
+        public bool brokedQuest, isComplited;
+        public Quest(System.Random rnd, Character character, string stationName)
         {
-            Init(rnd, character);
+            Init(rnd, character, stationName);
         }
 
-        public void Init(System.Random rnd, Character character)
+        public QuestPath GetLastQuestPath()
+        {
+            var last = pathToTarget;
+            while (!last.isLast)
+            {
+                last = last.nextPath;
+            }
+
+            return last;
+        }
+
+        public List<string> ConvertToStrings()
+        {
+            List<string> names = new List<string>();
+            var last = pathToTarget;
+            names.Add(last.solarName);
+            while (!last.isLast)
+            {
+                last = last.nextPath;
+                names.Add(last.solarName);
+            }
+            return names;
+        }
+        public int JumpsCount()
+        {
+            int count = 0;
+            var last = pathToTarget;
+            while (!last.isLast)
+            {
+                last = last.nextPath;
+                count++;
+            }
+            return count;
+        }
+        public void Init(System.Random rnd, Character character, string stationName)
         {
             quester = character;
-            questType = (QuestType)rnd.Next(0, Enum.GetNames(typeof(QuestType)).Length);
+            questType = (QuestType) rnd.Next(0, Enum.GetNames(typeof(QuestType)).Length);
             questID = rnd.Next(-9999999, 9999999);
+            switch (questType)
+            {
+                case QuestType.Transfer:
+                    InitTransfer(stationName);
+                    break;
+            }        
+    
+        }
+
+
+        public void InitTransfer(string stationName)
+        {
+            System.Random rnd = new Random(questID);
+            int pathLength = rnd.Next(0, 7);
+            List<string> pathNames = new List<string>();
+            QuestPath last = new QuestPath() {solarName = PlayerDataManager.CurrentSolarSystem.name};
+            QuestPath first = last;
+            pathNames.Add(last.solarName);
+            pathToTarget = last;
+            int trys = 0;
+            bool stopPath = false;
+            for (int i = 0; i < pathLength; i++)
+            {
+                if (GalaxyGenerator.systems[last.solarName].sibligs.Count != 0)
+                {
+                    var sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
+                    trys = 0;
+                    while (pathNames.Contains(sibling.solarName) || GalaxyGenerator.systems[last.solarName].stations.Count == 0)
+                    {
+                        sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
+                        trys++;
+                        if (trys > 5)
+                        {
+                            stopPath = true;
+                            break;
+                        }
+                    }
+
+                    if (stopPath) break;
+
+                    pathNames.Add(sibling.solarName);
+                    var newPath = new QuestPath() {prevPath = last, solarName = sibling.solarName};
+                    last.nextPath = newPath;
+                    last = newPath;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            var lastSolar = GalaxyGenerator.systems[last.solarName];
+
+            if (lastSolar.stations.Count != 0)
+            {
+                last.targetName = lastSolar.stations[rnd.Next(0, lastSolar.stations.Count)].name;
+                trys = 0;
+                while (last.targetName == stationName)
+                {
+                    last.targetName = lastSolar.stations[rnd.Next(0, lastSolar.stations.Count)].name;
+                    trys++;
+                    if (trys > 5)
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                brokedQuest = true;
+            }
+
+            pathToTarget = first;
         }
     }
 
@@ -160,11 +268,14 @@ public class WorldOrbitalStation : MonoBehaviour
     {
         var list = new List<Quest>();
         Random rnd = new Random(seed);
-        int quests = rnd.Next(1, 20);
+        int quests = rnd.Next(6, 20);
         for (int i = 0; i < quests; i++)
         {
-            var q = new Quest(rnd, _characters[rnd.Next(0, _characters.Count)]);
-            list.Add(q);
+            var q = new Quest(rnd, _characters[rnd.Next(0, _characters.Count)], transform.name);
+            if (!q.brokedQuest)
+            {
+                list.Add(q);
+            }
         }
 
         return list;
