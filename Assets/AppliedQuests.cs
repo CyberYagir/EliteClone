@@ -7,13 +7,17 @@ using UnityEngine;
 public class AppliedQuests : MonoBehaviour
 {
     public static AppliedQuests Instance;
-    [SerializeField] private List<Quest> quests;
+    public List<Quest> quests { get; private set; } = new List<Quest>();
 
     private void Awake()
     {
         Instance = this;
     }
 
+    public void LoadList(List<Quest> qts)
+    {
+        quests = qts;
+    }
     public void ApplyQuest(Quest quest)
     {
         quests.Add(quest);

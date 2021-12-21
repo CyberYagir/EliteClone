@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public WarpManager warp { get; private set; }
     public SaveLoadData saves { get; private set; }
     public LandManager land { get; private set; }
+    public AppliedQuests quests { get; private set; }
 
     [SerializeField] SpaceShip spaceShip;
 
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
         warp = GetComponent<WarpManager>();
         saves = GetComponent<SaveLoadData>();
         land = GetComponent<LandManager>();
+        quests = GetComponent<AppliedQuests>();
     }
 
     public SpaceShip Ship()

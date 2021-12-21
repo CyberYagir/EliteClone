@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Quests;
 using UnityEngine;
 public class PlayerData
 {
@@ -9,10 +10,9 @@ public class PlayerData
     public Vector3 Pos;
     public Vector3 Rot;
     public float Fuel, Health, Shields, Speed;
-
     public Dictionary<string, object> Keys;
-
     public LandLocation IsLanded;
+    public List<Quest> quests = new List<Quest>();
 }
 
 
@@ -26,7 +26,7 @@ public class LandLocation
 public class SaveLoadData : MonoBehaviour
 {
     Dictionary<string, object> keys = new Dictionary<string, object>();
-    private void Start()
+    private void Awake()
     {
         Load();
     }
@@ -83,6 +83,7 @@ public class SaveLoadData : MonoBehaviour
                 p.control.speed = playerData.Speed;
                 keys = playerData.Keys;
                 p.land.SetLand(playerData.IsLanded);
+                p.quests.LoadList(playerData.quests);
             }
         }
         else
@@ -105,7 +106,8 @@ public class SaveLoadData : MonoBehaviour
             Rot = p.transform.eulerAngles,
             WorldPos = world.transform.position,
             Keys = keys,
-            IsLanded = p.land.GetLand()
+            IsLanded = p.land.GetLand(),
+            quests = p.quests.quests
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });

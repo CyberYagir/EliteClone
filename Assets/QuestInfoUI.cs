@@ -34,8 +34,15 @@ public class QuestInfoUI : BaseTab
         {
             if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
             {
-                AppliedQuests.Instance.ApplyQuest(currentQuest);
-                UpdateData(currentQuest);
+                if (!currentQuest.isComplited)
+                {
+                    AppliedQuests.Instance.ApplyQuest(currentQuest);
+                    UpdateData(currentQuest);
+                }
+                else
+                {
+                    //Get Reward
+                }
             }
             else
             {
@@ -83,7 +90,21 @@ public class QuestInfoUI : BaseTab
         jumpsCount.text = "Jumps count: " + quest.JumpsCount().ToString();
         if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
         {
-            buttonText.text = "Cancel";
+            if (!quest.isComplited)
+            {
+                buttonText.text = "Cancel";
+            }
+            else
+            {
+                if (!quest.isRewarded)
+                {
+                    buttonText.text = "Finish";
+                }
+                else
+                {
+                    buttonText.text = "Ended";
+                }
+            }
         }
         else
         {

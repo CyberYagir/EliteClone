@@ -12,6 +12,10 @@ namespace Quests
     {
         public string solarName, targetName;
         public QuestPath prevPath, nextPath;
+        public QuestPath()
+        {
+            
+        }
         
         public bool isFirst
         {
@@ -41,12 +45,16 @@ namespace Quests
         public QuestType questType;
         public int questID;
         public QuestPath pathToTarget = new QuestPath();
-        public bool brokedQuest, isComplited;
+        public bool brokedQuest, isComplited, isRewarded;
         public Quest(System.Random rnd, Character character, string stationName)
         {
             Init(rnd, character, stationName);
         }
 
+        public Quest()
+        {
+            
+        }
         public QuestPath GetLastQuestPath()
         {
             var last = pathToTarget;
@@ -175,6 +183,8 @@ namespace Quests
     {
         public string firstName;
         public string lastName;
+        public int characterID;
+        
         
         public Fraction fraction;
 
@@ -183,8 +193,14 @@ namespace Quests
             Init(rnd);
         }
 
+        public Character()
+        {
+            
+        }
+
         public void Init(System.Random rnd)
         {
+            characterID = rnd.Next(-9999999, 9999999);
             firstName = WorldOrbitalStation.ToUpperFist(WorldOrbitalStation.FirstNames[rnd.Next(0, WorldOrbitalStation.FirstNames.Length)]);
             lastName = WorldOrbitalStation.ToUpperFist(WorldOrbitalStation.LastNames[rnd.Next(0, WorldOrbitalStation.LastNames.Length)]);
             fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
@@ -224,6 +240,9 @@ public class WorldOrbitalStation : MonoBehaviour
         CalcSeed();
         characters = InitCharacters(uniqSeed);
         quests = InitQuests(uniqSeed, characters);
+        
+        characters.AddRange(SpawnQuestCharacters());
+        quests.AddRange(GetTargetStationQuests());
     }
     
     private static string[] LoadFromFile(string nm)
@@ -260,8 +279,41 @@ public class WorldOrbitalStation : MonoBehaviour
             var ch = new Character(rnd);
             list.Add(ch);
         }
+        return list;
+    }
+
+    public List<Character> SpawnQuestCharacters()
+    {
+        var list = new List<Character>();
+        List<Quest> questInStation = GetTargetStationQuests();
+        
+        for (int i = 0; i < questInStation.Count; i++)
+        {
+            questInStation[i].quester.firstName = questInStation[i].quester.firstName;
+            list.Add(questInStation[i].quester);
+        }
 
         return list;
+    }
+
+    public List<Quest> GetTargetStationQuests()
+    {
+        List<Quest> questInStation = new List<Quest>();
+        
+        foreach (var quest in AppliedQuests.Instance.quests)
+        {
+            if (quest.GetLastQuestPath().targetName == transform.name)
+            {
+                if (quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)
+                {
+                    if (questInStation.Find(x => x.quester.characterID == quest.quester.characterID) == null)
+                    {
+                        questInStation.Add(quest);
+                    }
+                }
+            }
+        }
+        return questInStation;
     }
 
     public List<Quest> InitQuests(int seed, List<Character> _characters)
