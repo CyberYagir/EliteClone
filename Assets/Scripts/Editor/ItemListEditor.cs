@@ -34,7 +34,7 @@ public class ItemListEditor : Editor
                 obj.id = null;
                 while (obj.id == null || idDir.Contains(obj.id.id) || nameDir.Contains(obj.id.idname))
                 {
-                    obj.id = new IDTruple(obj.itemName.Replace(" ", "_").ToLower().Trim() + ":" + trys);
+                    obj.id = new IDTruple(obj.itemName.Replace(" ", "_").ToLower().Trim() + (trys != 0 ? ":" + trys : ""));
                     trys++;
                 }
                 idDir.Add(obj.id.id);

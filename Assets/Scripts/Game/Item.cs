@@ -9,14 +9,13 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class ValueLimit
 {
-    [SerializeField] float value;
-    [SerializeField] float minValue, maxValue;
-
-    public float Value => value;
-    public float Min => minValue;
-    public float Max => maxValue;
-
-    public void SetClamp(float min, float max)
+    [SerializeField] int value;
+    [SerializeField] int minValue, maxValue;
+    public int Value => value;
+    public int Min => minValue;
+    public int Max => maxValue;
+    public int MaxCount = 10;
+    public void SetClamp(int min, int max)
     {
         minValue = min;
         maxValue = max;
@@ -25,12 +24,12 @@ public class ValueLimit
             maxValue = minValue;
         }
     }
-    public void SetValue(float val)
+    public void SetValue(int val)
     {
         value = val;
         Clamp();
     }
-    public void AddValue(float val)
+    public void AddValue(int val)
     {
         value += val;
         Clamp();
@@ -59,6 +58,23 @@ public class IDTruple
         id = int.Parse(new System.Random(uniqSeed).Next(-999999, 999999).ToString("0000000"));
     }
 }
+
+public enum KeyPairValue
+{
+    Damage, Cooldown, Regen, HeatAdd, Mass
+}
+public enum KeyPairType
+{
+    Int, String, Float
+}
+[System.Serializable]
+public class KeyPair
+{
+    public KeyPairValue KeyPairValue;
+    public KeyPairType  KeyPairType;
+    public object value = "";
+}
+
 [CreateAssetMenu(fileName = "", menuName = "Game/Item", order = 1)]
 public class Item : ScriptableObject
 {
@@ -66,7 +82,7 @@ public class Item : ScriptableObject
     public string itemName;
     public Sprite icon;
     public ValueLimit amount;
-
+    public List<KeyPair> keys = new List<KeyPair>();
     public Item Clone()
     {
         return Instantiate(this);
