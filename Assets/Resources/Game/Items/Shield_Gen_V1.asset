@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shield_Gen_V1
   m_EditorClassIdentifier: 
   id:
-    id: -206830
-    idname: warp_engine
+    id: 270016
+    idname: shield_generator_v2
   itemName: Shield Generator V1
   icon: {fileID: 21300000, guid: b213808f7732f0345af65c00ee1541fa, type: 3}
   amount:
@@ -22,6 +22,17 @@ MonoBehaviour:
     minValue: 1
     maxValue: 1
     MaxCount: 10
-  keys:
+  itemType: 2
+  keysData:
   - KeyPairValue: 2
-    KeyPairType: 2
+    KeyPairType: 0
+    num: 5
+    str: 
+  - KeyPairValue: 4
+    KeyPairType: 0
+    num: 1
+    str: 
+  - KeyPairValue: 5
+    KeyPairType: 0
+    num: 1
+    str: 

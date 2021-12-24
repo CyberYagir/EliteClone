@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: Shield_Gen_V2
+  m_Name: Cooler_V1
   m_EditorClassIdentifier: 
   id:
-    id: 270016
-    idname: shield_generator_v2
-  itemName: Shield Generator V2
-  icon: {fileID: 21300000, guid: b213808f7732f0345af65c00ee1541fa, type: 3}
+    id: 387901
+    idname: termal_laser_v1
+  itemName: Cooler V1
+  icon: {fileID: 21300000, guid: c0676ba85ab352c488da99ef73984631, type: 3}
   amount:
     value: 1
     minValue: 1
     maxValue: 1
     MaxCount: 10
-  itemType: 2
+  itemType: 4
   keysData:
+  - KeyPairValue: 4
+    KeyPairType: 0
+    num: 1
+    str: 
   - KeyPairValue: 2
     KeyPairType: 0
     num: 10
     str: 
-  - KeyPairValue: 4
-    KeyPairType: 0
-    num: 2
-    str: 
   - KeyPairValue: 5
     KeyPairType: 0
-    num: 2
+    num: 1
     str: 

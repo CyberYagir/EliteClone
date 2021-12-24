@@ -18,14 +18,7 @@ public class FreeCam : MonoBehaviour
     [Space]
 
     public float MaximumMovementSpeed = 1f;
-
-    KeyCode Forwards = KeyCode.W;
-    KeyCode Backwards = KeyCode.S;
-    KeyCode Left = KeyCode.A;
-    KeyCode Right = KeyCode.D;
-    KeyCode Up = KeyCode.Q;
-    KeyCode Down = KeyCode.E;
-
+    
     private Vector3 _moveSpeed;
 
 

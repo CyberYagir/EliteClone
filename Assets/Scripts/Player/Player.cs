@@ -1,26 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
-[System.Serializable]
-public class ShipVariables
-{
-    public float ZRotSpeed, XRotSpeed, YRotSpeed;
-    public float maxSpeedUnits, speedUpMultiplier;
-}
-[System.Serializable]
-public class ShipClaped
-{
-    public float value;
-    public float max;
-}
+
 [System.Serializable]
 public class SpaceShip
 {
-    public Mesh shipModel;
-    public ShipClaped fuel, hp, shields, heat;
-    public ShipVariables data;
+    
 }
 
 public class Player : MonoBehaviour
@@ -32,7 +20,7 @@ public class Player : MonoBehaviour
     public LandManager land { get; private set; }
     public AppliedQuests quests { get; private set; }
 
-    [SerializeField] SpaceShip spaceShip;
+    [SerializeField] ItemShip spaceShip;
 
     public static event System.Action OnSceneChanged = delegate {  };
 
@@ -104,6 +92,7 @@ public class Player : MonoBehaviour
     public void Init()
     {
         inst = this;
+        spaceShip = spaceShip.Clone();
         GalaxyGenerator.LoadSystems();
         control = GetComponent<ShipController>();
         cargo = GetComponent<Cargo>();
@@ -114,7 +103,7 @@ public class Player : MonoBehaviour
         quests = GetComponent<AppliedQuests>();
     }
 
-    public SpaceShip Ship()
+    public ItemShip Ship()
     {
         return spaceShip;
     }

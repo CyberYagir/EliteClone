@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class LocationPoint : MonoBehaviour
 {
-    private Camera camera;
+    private Camera mainCamera;
     [SerializeField] float size;
     public GameObject root;
     public float minDist;
     private void Start()
     {
-        camera = Camera.main;
+        mainCamera = Camera.main;
     }
     void Update()
     {
-        transform.LookAt(camera.transform);
-        transform.localScale = Vector3.one * Vector3.Distance(transform.position, camera.transform.position) * size;
+        transform.LookAt(mainCamera.transform);
+        transform.localScale = Vector3.one * Vector3.Distance(transform.position, mainCamera.transform.position) * size;
 
         SetActiveLocation();
     }
 
     public void SetActiveLocation()
     {
-        if (Vector3.Distance(transform.position, camera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
+        if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
         {
             Player.inst.warp.SetActiveLocation(this);
         }

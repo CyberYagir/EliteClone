@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerHead : MonoBehaviour
 {
-    [SerializeField] float sence;
-    [SerializeField] Transform camera;
-    Player player;
+    [SerializeField] private float sence;
+    private Transform headcamera;
+    private Player player;
 
     private void Start()
     {
         player = Player.inst;
+        headcamera = transform.GetChild(0);
     }
 
     void Update()
@@ -30,7 +31,7 @@ public class PlayerHead : MonoBehaviour
         var localRotation = transform.localRotation;
         localRotation = Quaternion.Lerp(localRotation, Quaternion.identity, 10 * Time.deltaTime);
         transform.localRotation = localRotation;
-        camera.localRotation = Quaternion.Lerp(localRotation, Quaternion.identity, 10 * Time.deltaTime);
+        headcamera.localRotation = Quaternion.Lerp(localRotation, Quaternion.identity, 10 * Time.deltaTime);
     }
     public void LookHead()
     {
@@ -39,9 +40,9 @@ public class PlayerHead : MonoBehaviour
         localRot = new Quaternion(localRot.x, Mathf.Clamp(localRot.y, -0.5f, 0.5f), localRot.z, localRot.w);
         transform.localRotation = localRot;
 
-        var camRot = camera.localRotation;
+        var camRot = headcamera.localRotation;
         camRot *= Quaternion.Euler(-Input.GetAxis("Mouse Y") * sence * Time.deltaTime, 0, 0);
         camRot = new Quaternion(Mathf.Clamp(camRot.x, -0.5f, 0.5f), camRot.y, camRot.z, camRot.w);
-        camera.localRotation = camRot;
+        headcamera.localRotation = camRot;
     }
 }

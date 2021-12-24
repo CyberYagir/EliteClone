@@ -61,7 +61,12 @@ public class IDTruple
 
 public enum KeyPairValue
 {
-    Damage, Cooldown, Regen, HeatAdd, Mass
+    Damage, Cooldown, Regen, HeatAdd, Mass, Level, Value
+}
+
+public enum ItemType
+{
+    None, Weapon, Shields, Armor, Cooler
 }
 public enum KeyPairType
 {
@@ -72,7 +77,21 @@ public class KeyPair
 {
     public KeyPairValue KeyPairValue;
     public KeyPairType  KeyPairType;
-    public object value = "";
+    public float num = 1 ;
+    public string str;
+
+    public object GetValue()
+    {
+        switch (KeyPairType)
+        {
+            case KeyPairType.Float:
+                return num;
+            case KeyPairType.Int:
+                return (int) num;
+            default:
+                return str;
+        }
+    }
 }
 
 [CreateAssetMenu(fileName = "", menuName = "Game/Item", order = 1)]
@@ -82,9 +101,10 @@ public class Item : ScriptableObject
     public string itemName;
     public Sprite icon;
     public ValueLimit amount;
-    public List<KeyPair> keys = new List<KeyPair>();
+    public ItemType itemType;
+    public List<KeyPair> keysData;
     public Item Clone()
     {
         return Instantiate(this);
-    }
+    } 
 }
