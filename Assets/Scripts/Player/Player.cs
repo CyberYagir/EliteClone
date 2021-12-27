@@ -19,13 +19,16 @@ public class Player : MonoBehaviour
     public SaveLoadData saves { get; private set; }
     public LandManager land { get; private set; }
     public AppliedQuests quests { get; private set; }
-
+    
+    
+    
     [SerializeField] ItemShip spaceShip;
 
     public static event System.Action OnSceneChanged = delegate {  };
 
     private Cargo cargo;
     private TargetManager targets;
+    private ShipModels models;
     
     private float heatTime;
     private void Awake()
@@ -101,6 +104,8 @@ public class Player : MonoBehaviour
         saves = GetComponent<SaveLoadData>();
         land = GetComponent<LandManager>();
         quests = GetComponent<AppliedQuests>();
+        models = GetComponent<ShipModels>();
+        models.InitShip(Ship());
     }
 
     public ItemShip Ship()

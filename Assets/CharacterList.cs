@@ -15,7 +15,7 @@ public class BaseTab: MonoBehaviour
     }
     public void Disable()
     {
-        this.enabled = false;
+        enabled = false;
         upDownUI.enabled = false;
     }
 }
@@ -27,12 +27,10 @@ public class CharacterList : BaseTab
     [SerializeField] private QuesterItemUI item;
     private List<ButtonEffect> items = new List<ButtonEffect>();
     private BaseWindow baseWindow;
-
+    
     public event Action ChangeSelect = delegate {  };
 
 
-
- 
 
     public void RedrawQuests()
     {
@@ -49,6 +47,11 @@ public class CharacterList : BaseTab
         upDownUI.OnChangeSelected += ChangeSelected;
         upDownUI.OnNavigateChange += ChangeSelected;
         ChangeSelect += RedrawQuests;
+    }
+
+    private void OnDestroy()
+    {
+        ChangeSelect -= RedrawQuests;
     }
 
     public void ChangeSelected()
@@ -77,8 +80,9 @@ public class CharacterList : BaseTab
     {
         foreach (Transform tr in holder)
         {
-            if (tr.gameObject.activeSelf)
-                Destroy(tr.gameObject);
+                if (tr.gameObject.activeSelf)
+                    Destroy(tr.gameObject);
+            
         }
 
         items = new List<ButtonEffect>();
@@ -90,6 +94,7 @@ public class CharacterList : BaseTab
             items.Add(it.GetComponent<ButtonEffect>());
         }
         upDownUI.itemsCount = WorldOrbitalStation.Instance.characters.Count;
+
         ChangeSelected();
     }
 }

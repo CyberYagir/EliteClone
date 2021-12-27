@@ -31,6 +31,7 @@ namespace Game
     {
         public string shipName;
         public Mesh shipModel;
+        public GameObject shipCabine;
         public ShipClaped fuel, hp, shields, heat;
         public ShipVariables data;
         public List<Slot> slots;

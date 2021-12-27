@@ -28,9 +28,13 @@ public class DrawNavigation : MonoBehaviour
     {
         height = item.GetComponent<RectTransform>().sizeDelta.y;
         Player.OnSceneChanged += UpdateList;
-
         updown.OnChangeSelected += ChangeSelect;
         updown.OnNavigateChange += UpdateColors;
+    }
+
+    private void Start()
+    {
+        UpdateList();
     }
 
     private void OnDestroy()
@@ -121,7 +125,9 @@ public class DrawNavigation : MonoBehaviour
     
     private void Update()
     {
+        print(tabControl);
         updown.enabled = tabControl.Active;
+        
         if (tabControl.Active)
         {
             holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (updown.selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);

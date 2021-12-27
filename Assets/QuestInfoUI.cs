@@ -20,12 +20,19 @@ public class QuestInfoUI : BaseTab
     {
         (questList as QuestListUI).OnChangeSelected += UpdateData;
         upDownUI.OnChangeSelected += SelectButton;
-        Player.OnSceneChanged += () =>
-        {
-            currentQuest = null;
-            Clear();
-            Disable();
-        };
+        Player.OnSceneChanged += UpdateQuestInfo;
+    }
+
+    private void OnDestroy()
+    {
+        Player.OnSceneChanged -= UpdateQuestInfo;
+    }
+
+    void UpdateQuestInfo()
+    {
+        currentQuest = null;
+        Clear();
+        Disable();
     }
 
     private void SelectButton()

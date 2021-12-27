@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipName: Pigeon
   shipModel: {fileID: -5495902117074765545, guid: 6b554e7afb37def4c8dcade61fe393e1, type: 3}
+  shipCabine: {fileID: 7392692521333874916, guid: df0f37d811d28194ba40d68aad4d57c3, type: 3}
   fuel:
     value: 1000
     max: 1000
@@ -32,3 +33,5 @@ MonoBehaviour:
     YRotSpeed: 30
     maxSpeedUnits: 2
     speedUpMultiplier: 0.5
+    maxCargoWeight: 0
+  slots: []

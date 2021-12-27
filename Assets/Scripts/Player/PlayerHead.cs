@@ -1,12 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHead : MonoBehaviour
 {
+    public static PlayerHead Instance;
     [SerializeField] private float sence;
     private Transform headcamera;
     private Player player;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

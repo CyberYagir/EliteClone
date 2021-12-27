@@ -34,13 +34,25 @@ public class BaseWindow : MonoBehaviour
 
     public void Init()
     {
-        rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
-        nameText.text = WorldOrbitalStation.Instance.transform.name;
+        ChangeUI();
         Player.inst.GetComponent<LandManager>().OnLand += RedrawAll;
         Player.OnSceneChanged -= Init;
     }
+
+    public void ChangeUI()
+    {
+        rect = GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
+        nameText.text = WorldOrbitalStation.Instance.transform.name;
+    }
     
+    
+    private void OnDestroy()
+    {
+        Player.OnSceneChanged -= Init;
+        Player.inst.land.OnLand -= RedrawAll;
+    }
+
     private void Update()
     {
         Animation();
@@ -55,6 +67,7 @@ public class BaseWindow : MonoBehaviour
 
     public void RedrawAll()
     {
+        ChangeUI();
         characters.UpdateList();
     }
     

@@ -34,7 +34,10 @@ namespace Game.Editor
         private void OnDisable()
         {
             DestroyImmediate(mesh.gameObject);
-        }
+            EditorUtility.SetDirty(ship);
+            AssetDatabase.SaveAssets();
+            //AssetDatabase.Refresh();
+        } 
 
         public override void OnInspectorGUI()
         {
@@ -47,6 +50,7 @@ namespace Game.Editor
                 {
                     ship.shipName = EditorGUILayout.TextField("Name:", ship.shipName);
                     ship.shipModel = (Mesh) EditorGUILayout.ObjectField("Mesh:", ship.shipModel, typeof(Mesh));
+                    ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
                 
                     ItemEditor.HorizontalLine(Color.gray);
                     EditorGUILayout.LabelField("Data: ", EditorStyles.boldLabel);

@@ -8,7 +8,8 @@ using System.IO;
 
 public class GalaxyGenerator : MonoBehaviour
 {
-    public static Dictionary<string,SolarSystem> systems;
+    public static Dictionary<string, SolarSystem> systems;
+    
     public static decimal maxY = 5000, minY = -5000;
     public static decimal maxRadius = 100000, minRadius = 30000;
     public static int maxSystemsCount = 6000, minSystemsCount = 3000;
