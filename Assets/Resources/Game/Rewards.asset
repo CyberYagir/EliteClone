@@ -9,18 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ae2a3caa0d14a4093ab08ac06292fa, type: 3}
-  m_Name: Item List
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: f47f412beb3aa0243b2f3c1f819e7084, type: 2}
+  m_Script: {fileID: 11500000, guid: 8dfec7205c330534f9bd6b542fb57a42, type: 3}
+  m_Name: Rewards
+  m_EditorClassIdentifier: Assembly-CSharp::QuestRewards
+  creditItem: {fileID: 11400000, guid: 17f911dc313b6ce4ab3ab3b2948ea42d, type: 2}
+  canBeRewarded:
   - {fileID: 11400000, guid: 9c1b9870f6c0fc54ea7df230bd0526bf, type: 2}
-  - {fileID: 11400000, guid: 17f911dc313b6ce4ab3ab3b2948ea42d, type: 2}
-  - {fileID: 11400000, guid: e04c3e99c98691b4a8ce4f1758ee9b1d, type: 2}
-  - {fileID: 11400000, guid: 9894e73519658e540be1d2c5302065ee, type: 2}
   - {fileID: 11400000, guid: 9f964decb16b12c47a4e4de89f544492, type: 2}
   - {fileID: 11400000, guid: eae2838a5832cd744b99c1eedff39fe9, type: 2}
-  - {fileID: 11400000, guid: de134a3090acec5499889ac854c62ef3, type: 2}
   - {fileID: 11400000, guid: 29dcbbc6e2349594c804b819f64a01f7, type: 2}
+  - {fileID: 11400000, guid: de134a3090acec5499889ac854c62ef3, type: 2}
   - {fileID: 11400000, guid: ecc3dd10c0cbc0e429a23ec18d7a86f9, type: 2}
+  - {fileID: 11400000, guid: e04c3e99c98691b4a8ce4f1758ee9b1d, type: 2}
+  - {fileID: 11400000, guid: 9894e73519658e540be1d2c5302065ee, type: 2}
+  canBeTransfered:
+  - {fileID: 11400000, guid: 17f911dc313b6ce4ab3ab3b2948ea42d, type: 2}
+  - {fileID: 11400000, guid: f47f412beb3aa0243b2f3c1f819e7084, type: 2}
   - {fileID: 11400000, guid: 37736d5bdd09817448a3217727d59c8d, type: 2}

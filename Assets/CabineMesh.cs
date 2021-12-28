@@ -14,7 +14,10 @@ public class CabineMesh : MonoBehaviour
     private void OnDrawGizmos()
     {
         var ph = transform.root.GetComponentInChildren<PlayerHead>();
-        var localPos = ph.transform.parent.InverseTransformPoint(point);
-        Gizmos.DrawWireSphere(ph.transform.parent.TransformPoint(localPos), 0.02f);
+        if (ph != null)
+        {
+            var localPos = ph.transform.parent.InverseTransformPoint(point);
+            Gizmos.DrawWireSphere(ph.transform.parent.TransformPoint(localPos), 0.02f);
+        }
     }
 }

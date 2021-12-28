@@ -25,9 +25,10 @@ public class CharacterList : BaseTab
     [SerializeField] private Transform holder;
     [SerializeField] private QuestListUI questList;
     [SerializeField] private QuesterItemUI item;
+    [SerializeField] private ButtonActiveControlUI buttonsUI;
+    
     private List<ButtonEffect> items = new List<ButtonEffect>();
     private BaseWindow baseWindow;
-    
     public event Action ChangeSelect = delegate {  };
 
 
@@ -71,6 +72,12 @@ public class CharacterList : BaseTab
             {
                 questList.ChangeSelected();
                 questList.Enable();
+                Disable();
+            }
+            if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+            {
+                buttonsUI.enabled = true;
+                buttonsUI.SkipFrame();
                 Disable();
             }
         }

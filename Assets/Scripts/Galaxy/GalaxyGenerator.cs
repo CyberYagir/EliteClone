@@ -214,4 +214,5 @@ public class GalaxyGenerator : MonoBehaviour
     {
         return min + (max - min) * (decimal)rnd.NextDouble();
     }
+    
 }

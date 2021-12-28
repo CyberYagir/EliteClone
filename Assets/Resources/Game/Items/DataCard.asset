@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: Credit
+  m_Name: DataCard
   m_EditorClassIdentifier: 
   id:
-    id: -67365
-    idname: credit
-  itemName: Credit
-  icon: {fileID: 21300000, guid: 5678640c8308e1b4980e8a1b273be6db, type: 3}
+    id: 490811
+    idname: data_card
+  itemName: Data Card
+  icon: {fileID: 21300000, guid: 16aba9da4e27bb84a9d86294c70a9f1c, type: 3}
   amount:
     value: 1
     minValue: 1
-    maxValue: 1e+9
-    MaxCount: 1e+9
+    maxValue: 1
+    MaxCount: 10
   itemType: 0
-  keysData: []
+  keysData:
+  - KeyPairValue: 4
+    KeyPairType: 0
+    num: 0
+    str: 

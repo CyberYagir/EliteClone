@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 2668834985363250068}
   - component: {fileID: 3101146828782972115}
   - component: {fileID: 7480830169613052181}
+  - component: {fileID: 6435990425029014538}
   m_Layer: 6
   m_Name: Base
   m_TagString: Obstacle
@@ -544,7 +545,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5f6bb1d44ff5347a7f2851267160fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqSeed: 0
+  refiller: {fileID: 6435990425029014538}
   spawnPoint: {fileID: 1108521677289577216}
+  quests: []
+  characters: []
 --- !u!114 &7480830169613052181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +563,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: a8b7352fbb221fe4f85f17bcbc4489c7, type: 3}
+--- !u!114 &6435990425029014538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617981788508908819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ca1a2e2727c674db3d3f873da44641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refillers:
+  - refillType: 0
+    valueLimit:
+      value: -1
+      minValue: 0.1
+      maxValue: 2
+      MaxCount: 0
+  - refillType: 1
+    valueLimit:
+      value: -1
+      minValue: 1
+      maxValue: 10
+      MaxCount: 0
 --- !u!64 &541904200903660405
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2708,14 +2738,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -7146521406498821007, guid: 61351650014c6c64eaaf1f323dd77942, type: 3}
   m_PrefabInstance: {fileID: 3198994597609309838}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2875969677721842922 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 61351650014c6c64eaaf1f323dd77942, type: 3}
-  m_PrefabInstance: {fileID: 3198994597609309838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3165931437213409637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61351650014c6c64eaaf1f323dd77942, type: 3}
+  m_PrefabInstance: {fileID: 3198994597609309838}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2875969677721842922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 61351650014c6c64eaaf1f323dd77942, type: 3}
   m_PrefabInstance: {fileID: 3198994597609309838}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3681346812144552196

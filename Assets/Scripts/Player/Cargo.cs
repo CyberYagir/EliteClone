@@ -10,6 +10,5 @@ public class Cargo : MonoBehaviour
 
     private void Awake()
     {
-        Resources.LoadAll<ItemList>("").ToList().First().Init();
     }
 }

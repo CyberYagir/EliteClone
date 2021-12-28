@@ -43,10 +43,10 @@ namespace Game.Editor
                 amountOpen = EditorGUILayout.Foldout(amountOpen, "Amount", true);
                 if (amountOpen)
                 {
-                    item.amount.SetValue(EditorGUILayout.IntSlider("Value: ", item.amount.Value, item.amount.Min, item.amount.Max));
-                    var min = EditorGUILayout.IntSlider("Min: ", item.amount.Min, 0, item.amount.Max);
-                    var max = EditorGUILayout.IntSlider("Max: ", item.amount.Max, item.amount.Min, item.amount.MaxCount);
-                    item.amount.MaxCount = EditorGUILayout.IntField("Max value: ", item.amount.MaxCount);
+                    item.amount.SetValue(EditorGUILayout.IntSlider("Value: ", (int)item.amount.Value, (int)item.amount.Min, (int)item.amount.Max));
+                    var min = EditorGUILayout.IntSlider("Min: ", (int)item.amount.Min, 0, (int)item.amount.Max);
+                    var max = EditorGUILayout.IntSlider("Max: ", (int)item.amount.Max, (int)item.amount.Min, (int)item.amount.MaxCount);
+                    item.amount.MaxCount = EditorGUILayout.IntField("Max value: ", (int)item.amount.MaxCount);
                     item.amount.SetClamp(min, max);
                 }
 

@@ -9,12 +9,13 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class ValueLimit
 {
-    [SerializeField] int value;
-    [SerializeField] int minValue, maxValue;
-    public int Value => value;
-    public int Min => minValue;
-    public int Max => maxValue;
-    public int MaxCount = 10;
+    [SerializeField] float value;
+    [SerializeField] float minValue, maxValue;
+    public float Value => value;
+    public float Min => minValue;
+    public float Max => maxValue;
+    [HideInInspector]
+    public float MaxCount = 10;
     public void SetClamp(int min, int max)
     {
         minValue = min;
@@ -25,6 +26,11 @@ public class ValueLimit
         }
     }
     public void SetValue(int val)
+    {
+        value = val;
+        Clamp();
+    }
+    public void SetValue(float val)
     {
         value = val;
         Clamp();

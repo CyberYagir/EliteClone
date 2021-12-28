@@ -18,7 +18,7 @@ public class BaseWindow : MonoBehaviour
     [SerializeField] private TMP_Text infoText, nameText;
     [SerializeField] private List<IconType> icons;
     [SerializeField] private CharacterList characters;
-
+    [SerializeField] private TMP_Text repairT, fuelT;
     private void Start()
     {
         if (World.Scene == Scenes.Location)
@@ -44,8 +44,14 @@ public class BaseWindow : MonoBehaviour
         rect = GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         nameText.text = WorldOrbitalStation.Instance.transform.name;
+        UpdateCosts();
     }
-    
+
+    public void UpdateCosts()
+    {
+        repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().hp.max - Player.inst.Ship().hp.value));
+        fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().fuel.max - Player.inst.Ship().fuel.value));
+    }
     
     private void OnDestroy()
     {
