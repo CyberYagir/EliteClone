@@ -29,7 +29,7 @@ public class ItemsManager : MonoBehaviour
 
     public static Item GetTransferedItem(Random rnd)
     {
-        return GetItem(itemRewards.canBeTransfered[rnd.Next(0, itemRewards.canBeRewarded.Count)]);
+        return GetItem(itemRewards.canBeTransfered[rnd.Next(0, itemRewards.canBeTransfered.Count)]);
     }
 
     public static Item GetItem(int id)

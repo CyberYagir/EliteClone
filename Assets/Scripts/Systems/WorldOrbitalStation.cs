@@ -123,7 +123,8 @@ public class WorldOrbitalStation : MonoBehaviour
         int quests = rnd.Next(6, 20);
         for (int i = 0; i < quests; i++)
         {
-            var q = new Quest(rnd, _characters[rnd.Next(0, _characters.Count)], transform.name);
+            var questid = rnd.Next(-9999999, 9999999);
+            var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name);
             if (!q.brokedQuest)
             {
                 list.Add(q);

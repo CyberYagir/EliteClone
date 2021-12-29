@@ -30,28 +30,40 @@ namespace Quests
             }
         }
     }
-    
+
     [System.Serializable]
     public class Quest
     {
         public enum QuestType
         {
-            Kill, Mine, Transfer
+            Kill,
+            Mine,
+            Transfer
         }
+
         public Character quester;
         public QuestType questType;
         public int questID;
         public QuestPath pathToTarget = new QuestPath();
         public bool brokedQuest, isComplited, isRewarded;
-        public Quest(System.Random rnd, Character character, string stationName)
+
+        public Reward reward = new Reward();
+        public string appliedStation, appliedSolar;
+        public List<Item> toTransfer = new List<Item>();
+
+        public Quest(int questSeed , Character character, string stationName, string appliedSolar)
         {
-            Init(rnd, character, stationName);
+            appliedStation = stationName;
+            this.appliedSolar = appliedSolar;
+            
+            Init(questSeed, character, stationName, appliedSolar);
         }
 
         public Quest()
         {
-            
+
         }
+
         public QuestPath GetLastQuestPath()
         {
             var last = pathToTarget;
@@ -73,8 +85,10 @@ namespace Quests
                 last = last.nextPath;
                 names.Add(last.solarName);
             }
+
             return names;
         }
+
         public int JumpsCount()
         {
             int count = 0;
@@ -84,28 +98,32 @@ namespace Quests
                 last = last.nextPath;
                 count++;
             }
+
             return count;
         }
-        public void Init(System.Random rnd, Character character, string stationName)
+
+        public void Init(int questSeed, Character character, string stationName, string solarName)
         {
+            var rnd = new Random(questSeed);
             quester = character;
             questType = (QuestType) rnd.Next(0, Enum.GetNames(typeof(QuestType)).Length);
-            questID = rnd.Next(-9999999, 9999999);
+            questID = questSeed; 
             switch (questType)
             {
                 case QuestType.Transfer:
-                    InitTransfer(stationName);
+                    InitTransfer(stationName, solarName);
                     break;
             }
+
+            reward.Init(questID);
         }
 
 
-        public void InitTransfer(string stationName)
+        public QuestPath GetPath(Random rnd, string stationName, string solarName)
         {
-            System.Random rnd = new Random(questID);
             int pathLength = rnd.Next(0, 7);
             List<string> pathNames = new List<string>();
-            QuestPath last = new QuestPath() {solarName = PlayerDataManager.CurrentSolarSystem.name};
+            QuestPath last = new QuestPath() {solarName = solarName};
             QuestPath first = last;
             pathNames.Add(last.solarName);
             pathToTarget = last;
@@ -162,7 +180,21 @@ namespace Quests
                 brokedQuest = true;
             }
 
-            pathToTarget = first;
+            return first;
+        }
+
+        public void InitTransfer(string stationName, string solarName)
+        {
+            System.Random rnd = new Random(questID);
+
+
+            int transfersCount = rnd.Next(1, 3);
+            for (int i = 0; i < transfersCount; i++)
+            {
+                toTransfer.Add(ItemsManager.GetTransferedItem(rnd));
+            }
+
+            pathToTarget = GetPath(rnd, stationName, solarName);
         }
     }
 
@@ -175,9 +207,30 @@ namespace Quests
 
         public RewardType type;
         public List<Item> rewardItems = new List<Item>();
-        
-        
-        gjgh
+
+        public void Init(int questID)
+        {
+            var rnd = new Random(questID);
+            type = (RewardType) rnd.Next(0, Enum.GetNames(typeof(RewardType)).Length);
+            if (type == RewardType.Money)
+            {
+                var money = ItemsManager.GetCredits();
+                money.amount.SetValue(rnd.Next(100, 2000));
+                rewardItems.Add(money);
+            }
+            else
+            {
+                int count = 1;
+                if (type == RewardType.Items)
+                {
+                    count += rnd.Next(0, 2);
+                }
+                for (int i = 0; i < count; i++)
+                {
+                    rewardItems.Add(ItemsManager.GetRewardItem(rnd));
+                }
+            }
+        }
     }
 
     public enum Fraction

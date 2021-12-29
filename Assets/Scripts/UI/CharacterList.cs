@@ -81,15 +81,20 @@ public class CharacterList : BaseTab
                 Disable();
             }
         }
+
+        if (upDownUI.itemsCount != 0)
+        {
+            var rect = holder.GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(0, upDownUI.selectedIndex * 255f), 10 * Time.deltaTime);  //255 - Высота итема магическим числом так как лень
+        }
     }
 
     public void UpdateList()
     {
         foreach (Transform tr in holder)
         {
-                if (tr.gameObject.activeSelf)
-                    Destroy(tr.gameObject);
-            
+            if (tr.gameObject.activeSelf)
+                Destroy(tr.gameObject);
         }
 
         items = new List<ButtonEffect>();

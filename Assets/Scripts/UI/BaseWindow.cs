@@ -19,32 +19,29 @@ public class BaseWindow : MonoBehaviour
     [SerializeField] private List<IconType> icons;
     [SerializeField] private CharacterList characters;
     [SerializeField] private TMP_Text repairT, fuelT;
+
     private void Start()
     {
-        if (World.Scene == Scenes.Location)
-        {
-            Init();
-        }
-        else
+        if (World.Scene != Scenes.Location)
         {
             gameObject.SetActive(false);
         }
-        Player.OnSceneChanged += Init;
+        Init();
     }
 
     public void Init()
     {
         ChangeUI();
-        Player.inst.GetComponent<LandManager>().OnLand += RedrawAll;
-        Player.OnSceneChanged -= Init;
+        Player.inst.land.OnLand += RedrawAll;
     }
 
     public void ChangeUI()
     {
-        rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
-        nameText.text = WorldOrbitalStation.Instance.transform.name;
-        UpdateCosts();
+            rect = GetComponent<RectTransform>();
+
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
+            nameText.text = WorldOrbitalStation.Instance.transform.name;
+            UpdateCosts();
     }
 
     public void UpdateCosts()
@@ -76,8 +73,8 @@ public class BaseWindow : MonoBehaviour
         ChangeUI();
         characters.UpdateList();
     }
-    
-    
+
+
     public IconType GetIcon(Fraction fraction)
     {
         return icons.Find(x => x.fraction == fraction);

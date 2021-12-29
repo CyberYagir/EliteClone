@@ -11,9 +11,12 @@ public class QuestInfoUI : BaseTab
     [SerializeField] private BaseTab questList;
     [Space] [SerializeField] private TMP_Text targetName;
     [SerializeField] private TMP_Text targetSystem;
-    [SerializeField] private TMP_Text rewardText, jumpsCount;
+    [SerializeField] private TMP_Text rewardText, rewardTypeText, jumpsCount;
     [SerializeField] private TMP_Text buttonText;
-
+    [SerializeField] private Transform rewardsHolder, rewardItem;
+    [SerializeField] private Transform transferHolder, transferFullInfo;
+    
+    
     private Quest currentQuest;
     
     private void Start()
@@ -82,6 +85,23 @@ public class QuestInfoUI : BaseTab
         targetSystem.text = "";
         rewardText.text = "";
         jumpsCount.text = "";
+        rewardTypeText.text = "";
+    }
+
+    public void DrawItems(Transform holder, Transform item, List<Item> items)
+    {
+        foreach (Transform it in holder)
+        {
+            if (it.gameObject.active)
+                Destroy(it.gameObject);
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            var it = Instantiate(item, holder);
+            it.GetComponent<ItemUI>().Init(items[i]);
+            it.gameObject.SetActive(true);
+        }
     }
     public void UpdateData(Quest quest)
     {
@@ -89,12 +109,23 @@ public class QuestInfoUI : BaseTab
         var last = quest.GetLastQuestPath();
         targetName.text = "Target: " + last.targetName;
         targetSystem.text = "System: " + last.solarName;
-        rewardText.text = "Path:\n";
+        rewardTypeText.text = "Reward: " + quest.reward.type;
+        jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
+        rewardText.text = "Reward: " + quest.reward.rewardItems.Count + " Items";
+
+        DrawItems(rewardsHolder, rewardItem, quest.reward.rewardItems);
+
+        transferFullInfo.gameObject.SetActive(quest.questType == Quest.QuestType.Transfer);
+        if (quest.questType == Quest.QuestType.Transfer)
+        {
+            DrawItems(transferHolder, rewardItem, quest.toTransfer);
+        }
+        
         foreach (var names in quest.ConvertToStrings())
         {
-            rewardText.text += names + ">\n";
+            jumpsCount.text += names + ">\n";
         }
-        jumpsCount.text = "Jumps count: " + quest.JumpsCount().ToString();
+        
         if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
         {
             if (!quest.isComplited)

@@ -12,6 +12,11 @@ public class LandManager : MonoBehaviour
 
     public event Action OnLand = delegate {  };
 
+    private void Awake()
+    {
+        OnLand = delegate {  };
+    }
+
     public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
     {
         landPoint = point;

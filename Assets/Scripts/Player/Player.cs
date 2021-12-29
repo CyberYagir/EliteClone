@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     private float heatTime;
     private void Awake()
     {
+        OnSceneChanged = delegate {  };
         Init();
     }
 

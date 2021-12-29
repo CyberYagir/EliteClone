@@ -12,7 +12,7 @@ public class PlayerData
     public float Fuel, Health, Shields, Speed;
     public Dictionary<string, object> Keys;
     public LandLocation IsLanded;
-    public List<Quest> quests = new List<Quest>();
+    public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
 }
 
 
@@ -107,7 +107,7 @@ public class SaveLoadData : MonoBehaviour
             WorldPos = world.transform.position,
             Keys = keys,
             IsLanded = p.land.GetLand(),
-            quests = p.quests.quests
+            quests = p.quests.GetData()
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });

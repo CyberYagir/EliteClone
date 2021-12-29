@@ -53,6 +53,11 @@ public class IDTruple
     public int id;
     public string idname;
 
+    public IDTruple()
+    {
+        
+    }
+    
     public IDTruple(string nameID)
     {
         idname = nameID;
