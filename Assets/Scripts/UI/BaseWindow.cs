@@ -37,11 +37,11 @@ public class BaseWindow : MonoBehaviour
 
     public void ChangeUI()
     {
-            rect = GetComponent<RectTransform>();
+        rect = GetComponent<RectTransform>();
 
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
-            nameText.text = WorldOrbitalStation.Instance.transform.name;
-            UpdateCosts();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
+        nameText.text = WorldOrbitalStation.Instance.transform.name;
+        UpdateCosts();
     }
 
     public void UpdateCosts()

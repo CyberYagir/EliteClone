@@ -145,7 +145,7 @@ public class SolarSystemGenerator : MonoBehaviour
     {
         if (planetTextures == null)
         {
-            planetTextures = Resources.Load<PlanetTextures>("PlanetTextures");
+            planetTextures = Resources.LoadAll<PlanetTextures>("")[0];
         }
     }
 

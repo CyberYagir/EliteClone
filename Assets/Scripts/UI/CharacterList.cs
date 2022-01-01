@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class BaseTab: MonoBehaviour
@@ -91,12 +92,8 @@ public class CharacterList : BaseTab
 
     public void UpdateList()
     {
-        foreach (Transform tr in holder)
-        {
-            if (tr.gameObject.activeSelf)
-                Destroy(tr.gameObject);
-        }
-
+        UITweaks.ClearHolder(holder);
+        
         items = new List<ButtonEffect>();
         foreach (var character in WorldOrbitalStation.Instance.characters)
         {

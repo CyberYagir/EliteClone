@@ -22,13 +22,13 @@ public class Player : MonoBehaviour
     
     
     
-    [SerializeField] ItemShip spaceShip;
 
     public static event System.Action OnSceneChanged = delegate {  };
 
     private Cargo cargo;
     private TargetManager targets;
     private ShipModels models;
+    Ship spaceShip;
     
     private float heatTime;
     private void Awake()
@@ -39,20 +39,20 @@ public class Player : MonoBehaviour
 
     public void AddHeat(float heat)
     {
-        spaceShip.heat.value += heat * Time.deltaTime;
-        if (spaceShip.heat.value > spaceShip.heat.max)
+        var currShip = this.spaceShip.GetShip();
+        currShip.heat.value += heat * Time.deltaTime;
+        if (currShip.heat.value > currShip.heat.max)
         {
-            spaceShip.heat.value = spaceShip.heat.max;
-            spaceShip.hp.value -= Time.deltaTime;
+            currShip.heat.value = currShip.heat.max;
+            currShip.hp.value -= Time.deltaTime;
             WarningManager.AddWarning("Heat level critical!", WarningTypes.Damage);
-            
         }
 
         if (heat > 0)
             heatTime = 0;
-        if (spaceShip.heat.value < 0)
+        if (currShip.heat.value < 0)
         {
-            spaceShip.heat.value = 0;
+            currShip.heat.value = 0;
         }
     }
 
@@ -96,7 +96,8 @@ public class Player : MonoBehaviour
     public void Init()
     {
         inst = this;
-        spaceShip = spaceShip.Clone();
+        spaceShip = GetComponent<Ship>();
+        spaceShip.SetShip(spaceShip.CloneShip());
         GalaxyGenerator.LoadSystems();
         control = GetComponent<ShipController>();
         cargo = GetComponent<Cargo>();
@@ -111,11 +112,7 @@ public class Player : MonoBehaviour
 
     public ItemShip Ship()
     {
-        return spaceShip;
-    }
-    public List<int> Cargo()
-    {
-        return cargo.items;
+        return spaceShip.GetShip();
     }
     public WorldSpaceObject GetTarget()
     {

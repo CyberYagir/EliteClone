@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Quests;
 using TMPro;
+using UI;
 using UnityEngine;
 
 public class QuestInfoUI : BaseTab
@@ -90,12 +91,8 @@ public class QuestInfoUI : BaseTab
 
     public void DrawItems(Transform holder, Transform item, List<Item> items)
     {
-        foreach (Transform it in holder)
-        {
-            if (it.gameObject.active)
-                Destroy(it.gameObject);
-        }
-
+        UITweaks.ClearHolder(holder);
+        
         for (int i = 0; i < items.Count; i++)
         {
             var it = Instantiate(item, holder);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,13 +23,8 @@ public class DrawContacts : MonoBehaviour
     private void UpdateList()
     {
         tabControl = GetComponentInParent<UITabControl>();
-        foreach (Transform it in holder.transform)
-        {
-            if (it.gameObject.active)
-            {
-                Destroy(it.gameObject);
-            }
-        }
+        
+        UITweaks.ClearHolder(holder);
 
         items = new List<NavItem>();
         var objects = FindObjectsOfType<ContactObject>();

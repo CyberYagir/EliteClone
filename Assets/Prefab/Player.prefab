@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 488169678872001209}
   - component: {fileID: 6361905012610660566}
   - component: {fileID: 227262322764977332}
+  - component: {fileID: 4876795581525673855}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -381,7 +382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015b6a8ec9f4ea6458902b1eab3efaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceShip: {fileID: 11400000, guid: 673d585c6acb3194e9f2d777966bf1b6, type: 2}
 --- !u!54 &594618446116798296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -506,6 +506,19 @@ MonoBehaviour:
   modelsHolder: {fileID: 8840065455424495954}
   spawnedCabine: {fileID: 0}
   shipRenderer: {fileID: 4426691576527588420}
+--- !u!114 &4876795581525673855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594618446116798275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1404b1c7c6cbb04f8f5399822fcf599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 11400000, guid: 673d585c6acb3194e9f2d777966bf1b6, type: 2}
 --- !u!1 &594618446833332335
 GameObject:
   m_ObjectHideFlags: 0

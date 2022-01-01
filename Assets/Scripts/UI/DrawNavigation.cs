@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -45,13 +46,8 @@ public class DrawNavigation : MonoBehaviour
     private void UpdateList()
     {
         tabControl = GetComponentInParent<UITabControl>();
-        foreach (Transform navitem in holder.transform)
-        {
-            if (navitem.gameObject.activeSelf)
-            {
-                Destroy(navitem.gameObject);
-            }
-        }
+        
+        UITweaks.ClearHolder(holder);
 
         items = new List<NavItem>();
         var objects = FindObjectsOfType<WorldSpaceObject>();
@@ -125,7 +121,6 @@ public class DrawNavigation : MonoBehaviour
     
     private void Update()
     {
-        print(tabControl);
         updown.enabled = tabControl.Active;
         
         if (tabControl.Active)

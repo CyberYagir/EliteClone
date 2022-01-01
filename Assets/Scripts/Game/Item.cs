@@ -40,6 +40,12 @@ public class ValueLimit
         value += val;
         Clamp();
     }
+    
+    public void AddValue(float val)
+    {
+        value += val;
+        Clamp();
+    }
 
     void Clamp()
     {
@@ -114,6 +120,17 @@ public class Item : ScriptableObject
     public ValueLimit amount;
     public ItemType itemType;
     public List<KeyPair> keysData;
+
+    public object GetKeyPair(KeyPairValue value)
+    {
+        var fided = keysData.Find(x => x.KeyPairValue == value);
+        if (fided != null)
+        {
+            return fided.num;
+        }
+        return 0f;
+    }
+
     public Item Clone()
     {
         return Instantiate(this);
