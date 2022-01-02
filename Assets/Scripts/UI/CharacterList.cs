@@ -4,24 +4,7 @@ using System.Collections.Generic;
 using UI;
 using UnityEngine;
 
-public class BaseTab: MonoBehaviour
-{
-    [SerializeField] public GameObject enableOverlay;
-    [SerializeField] public UpDownUI upDownUI;
-    
-    public void Enable()
-    {
-        this.enabled = true;
-        upDownUI.enabled = true;
-    }
-    public void Disable()
-    {
-        enabled = false;
-        upDownUI.enabled = false;
-    }
-}
-
-public class CharacterList : BaseTab
+public class CharacterList : BaseTabUI
 {
     [SerializeField] private Transform holder;
     [SerializeField] private QuestListUI questList;
@@ -100,7 +83,12 @@ public class CharacterList : BaseTab
             var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
             it.InitQuesterItem(character.fraction, baseWindow.GetIcon(character.fraction).icon, character.firstName + " " + character.lastName, character);
             it.gameObject.SetActive(true);
-            items.Add(it.GetComponent<ButtonEffect>());
+            var bEffect = it.GetComponent<ButtonEffect>();
+            items.Add(bEffect);
+            if (WorldOrbitalStation.Instance.additionalCharacters.Contains(character.characterID))
+            {
+                bEffect.SetNoneColor(Color.green);
+            }
         }
         upDownUI.itemsCount = WorldOrbitalStation.Instance.characters.Count;
 

@@ -40,12 +40,16 @@ namespace Quests
             Mine,
             Transfer
         }
-
+        public enum QuestComplited
+        {
+            None, BrokeQuest, Complited, Rewarded
+        }
+        
         public Character quester;
         public QuestType questType;
         public int questID;
         public QuestPath pathToTarget = new QuestPath();
-        public bool brokedQuest, isComplited, isRewarded;
+        public QuestComplited questState;
 
         public Reward reward = new Reward();
         public string appliedStation, appliedSolar;
@@ -118,6 +122,32 @@ namespace Quests
             reward.Init(questID);
         }
 
+        public void CheckIsQuestCompleted()
+        {
+            if (questType == QuestType.Transfer)
+            {
+                bool allItemInInventory = true;
+                for (int i = 0; i < toTransfer.Count; i++)
+                {
+                    if (!Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
+                    {
+                        allItemInInventory = false;
+                    }
+                }
+
+                var last = GetLastQuestPath();
+                if (allItemInInventory)
+                {
+                    if (last.solarName == PlayerDataManager.CurrentSolarSystem.name)
+                    {
+                        if (WorldOrbitalStation.Instance.transform.name == last.targetName)
+                        {
+                            questState = QuestComplited.Complited;
+                        }
+                    }
+                }
+            }
+        }
 
         public QuestPath GetPath(Random rnd, string stationName, string solarName)
         {
@@ -177,7 +207,7 @@ namespace Quests
             }
             else
             {
-                brokedQuest = true;
+                questState = QuestComplited.BrokeQuest;
             }
 
             return first;

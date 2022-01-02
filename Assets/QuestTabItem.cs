@@ -24,10 +24,10 @@ public class QuestTabItem : MonoBehaviour
             questPath = questPath.nextPath;
             if (!isOnPath)
             {
-                isOnPath = questPath.solarName != PlayerDataManager.CurrentSolarSystem.name;
+                isOnPath = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name;
             }
         }
-
+    
         if (isOnPath)
             jumpToT.text = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + questPath.solarName;
         else

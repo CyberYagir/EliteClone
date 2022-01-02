@@ -19,13 +19,13 @@ public class Player : MonoBehaviour
     public SaveLoadData saves { get; private set; }
     public LandManager land { get; private set; }
     public AppliedQuests quests { get; private set; }
+    public Cargo cargo { get; private set; }
     
     
     
 
     public static event System.Action OnSceneChanged = delegate {  };
 
-    private Cargo cargo;
     private TargetManager targets;
     private ShipModels models;
     Ship spaceShip;
@@ -95,19 +95,22 @@ public class Player : MonoBehaviour
     }
     public void Init()
     {
-        inst = this;
-        spaceShip = GetComponent<Ship>();
-        spaceShip.SetShip(spaceShip.CloneShip());
-        GalaxyGenerator.LoadSystems();
-        control = GetComponent<ShipController>();
-        cargo = GetComponent<Cargo>();
-        targets = GetComponent<TargetManager>();
-        warp = GetComponent<WarpManager>();
-        saves = GetComponent<SaveLoadData>();
-        land = GetComponent<LandManager>();
-        quests = GetComponent<AppliedQuests>();
-        models = GetComponent<ShipModels>();
-        models.InitShip(Ship());
+        if (inst == null)
+        {
+            inst = this;
+            spaceShip = GetComponent<Ship>();
+            spaceShip.SetShip(spaceShip.CloneShip());
+            GalaxyGenerator.LoadSystems();
+            control = GetComponent<ShipController>();
+            cargo = GetComponent<Cargo>();
+            targets = GetComponent<TargetManager>();
+            warp = GetComponent<WarpManager>();
+            saves = GetComponent<SaveLoadData>();
+            land = GetComponent<LandManager>();
+            quests = GetComponent<AppliedQuests>();
+            models = GetComponent<ShipModels>();
+            models.InitShip(Ship());
+        }
     }
 
     public ItemShip Ship()

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class WorldSpaceObject : MonoBehaviour
 {
-    [HideInInspector]
     public bool isVisible;    
     [HideInInspector]
     public string dist;
@@ -17,6 +16,11 @@ public class WorldSpaceObject : MonoBehaviour
     }
 
     private void Update()
+    {
+        UpdateVisibility();
+    }
+
+    public void UpdateVisibility()
     {
         isVisible = Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
     }

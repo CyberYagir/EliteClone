@@ -6,10 +6,10 @@ using TMPro;
 using UI;
 using UnityEngine;
 
-public class QuestInfoUI : BaseTab
+public class QuestInfoUI : BaseTabUI
 {
     [SerializeField] private List<ButtonEffect> items;
-    [SerializeField] private BaseTab questList;
+    [SerializeField] private BaseTabUI questList;
     [Space] [SerializeField] private TMP_Text targetName;
     [SerializeField] private TMP_Text targetSystem;
     [SerializeField] private TMP_Text rewardText, rewardTypeText, jumpsCount;
@@ -45,7 +45,7 @@ public class QuestInfoUI : BaseTab
         {
             if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
             {
-                if (!currentQuest.isComplited)
+                if (currentQuest.questState != Quest.QuestComplited.Complited)
                 {
                     AppliedQuests.Instance.ApplyQuest(currentQuest);
                     UpdateData(currentQuest);
@@ -57,7 +57,7 @@ public class QuestInfoUI : BaseTab
             }
             else
             {
-                AppliedQuests.Instance.CancleQuest(currentQuest);
+                AppliedQuests.Instance.CancelQuest(currentQuest);
                 UpdateData(currentQuest);
             }
         }
@@ -104,15 +104,18 @@ public class QuestInfoUI : BaseTab
     {
         currentQuest = quest;
         var last = quest.GetLastQuestPath();
+        quest.CheckIsQuestCompleted();
+        
+        
         targetName.text = "Target: " + last.targetName;
         targetSystem.text = "System: " + last.solarName;
         rewardTypeText.text = "Reward: " + quest.reward.type;
         jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
         rewardText.text = "Reward: " + quest.reward.rewardItems.Count + " Items";
-
         DrawItems(rewardsHolder, rewardItem, quest.reward.rewardItems);
-
         transferFullInfo.gameObject.SetActive(quest.questType == Quest.QuestType.Transfer);
+        
+        
         if (quest.questType == Quest.QuestType.Transfer)
         {
             DrawItems(transferHolder, rewardItem, quest.toTransfer);
@@ -125,13 +128,13 @@ public class QuestInfoUI : BaseTab
         
         if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
         {
-            if (!quest.isComplited)
+            if (quest.questState != Quest.QuestComplited.Complited)
             {
                 buttonText.text = "Cancel";
             }
             else
             {
-                if (!quest.isRewarded)
+                if (quest.questState != Quest.QuestComplited.Rewarded)
                 {
                     buttonText.text = "Finish";
                 }

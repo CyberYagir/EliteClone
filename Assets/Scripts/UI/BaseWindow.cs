@@ -13,7 +13,7 @@ public class BaseWindow : MonoBehaviour
         public Sprite icon;
         public Fraction fraction;
     }
-    private RectTransform rect;
+    [SerializeField] private RectTransform rect;
     [SerializeField] private float height = 1400;
     [SerializeField] private TMP_Text infoText, nameText;
     [SerializeField] private List<IconType> icons;
@@ -22,24 +22,22 @@ public class BaseWindow : MonoBehaviour
 
     private void Start()
     {
+        Init();
         if (World.Scene != Scenes.Location)
         {
             gameObject.SetActive(false);
         }
-        Init();
     }
 
     public void Init()
     {
-        ChangeUI();
         Player.inst.land.OnLand += RedrawAll;
+        rect = GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
     }
 
     public void ChangeUI()
     {
-        rect = GetComponent<RectTransform>();
-
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         nameText.text = WorldOrbitalStation.Instance.transform.name;
         UpdateCosts();
     }
@@ -79,8 +77,12 @@ public class BaseWindow : MonoBehaviour
     {
         return icons.Find(x => x.fraction == fraction);
     }
+
     public void Animation()
     {
-        rect.sizeDelta = Vector2.Lerp(rect.sizeDelta,  new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+        if (rect)
+        {
+            rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+        }
     }
 }

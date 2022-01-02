@@ -14,7 +14,8 @@ public class WorldOrbitalStation : MonoBehaviour
     public Transform spawnPoint;
     public List<Quest> quests;
     public List<Character> characters;
-    
+    public List<int> additionalCharacters = new List<int>();
+
     public static event Action OnInit = delegate {  };
 
     public static void InitNames()
@@ -91,6 +92,7 @@ public class WorldOrbitalStation : MonoBehaviour
         {
             questInStation[i].quester.firstName = questInStation[i].quester.firstName;
             list.Add(questInStation[i].quester);
+            additionalCharacters.Add(questInStation[i].quester.characterID);
         }
 
         return list;
@@ -125,7 +127,7 @@ public class WorldOrbitalStation : MonoBehaviour
         {
             var questid = rnd.Next(-9999999, 9999999);
             var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name);
-            if (!q.brokedQuest)
+            if (q.questState != Quest.QuestComplited.BrokeQuest)
             {
                 list.Add(q);
             }

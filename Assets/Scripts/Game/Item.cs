@@ -25,6 +25,11 @@ public class ValueLimit
             maxValue = minValue;
         }
     }
+
+    public void SetMinZero()
+    {
+        minValue = 0;
+    }
     public void SetValue(int val)
     {
         value = val;
@@ -38,6 +43,11 @@ public class ValueLimit
     public void AddValue(int val)
     {
         value += val;
+        Clamp();
+    }
+    public void SubValue(int val)
+    {
+        value -= val;
         Clamp();
     }
     
@@ -133,6 +143,8 @@ public class Item : ScriptableObject
 
     public Item Clone()
     {
-        return Instantiate(this);
+        var clone = Instantiate(this);
+        clone.amount.SetMinZero();
+        return clone;
     } 
 }

@@ -6,12 +6,19 @@ namespace UI
     {
         public static void ClearHolder(Transform holder)
         {
-            foreach (Transform item in holder)
+            if (holder != null)
             {
-                if (item.gameObject.active)
+                foreach (Transform item in holder)
                 {
-                    Destroy(item.gameObject);
+                    if (item.gameObject.active)
+                    {
+                        Destroy(item.gameObject);
+                    }
                 }
+            }
+            else
+            {
+                Debug.LogError("Holder null!!");
             }
         }
     }

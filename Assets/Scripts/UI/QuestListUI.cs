@@ -5,11 +5,11 @@ using Quests;
 using UI;
 using UnityEngine;
 
-public class QuestListUI : BaseTab
+public class QuestListUI : BaseTabUI
 {
     [SerializeField] private Transform item, holder;
     [SerializeField] private List<ButtonEffect> items = new List<ButtonEffect>();
-    [SerializeField] private BaseTab characterList, questInfo;
+    [SerializeField] private BaseTabUI characterList, questInfo;
 
     private List<Quest> questsList;
     public event Action<Quest> OnChangeSelected = delegate {  };

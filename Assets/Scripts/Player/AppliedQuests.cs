@@ -16,6 +16,7 @@ public class AppliedQuests : MonoBehaviour
         public int seed;
         public Character character;
         public string stationName, solarName;
+        public Quest.QuestComplited state;
     }
     
     private void Awake()
@@ -33,7 +34,13 @@ public class AppliedQuests : MonoBehaviour
         List<QuestData> data = new List<QuestData>();
         for (int i = 0; i < quests.Count; i++)
         {
-            data.Add(new QuestData(){seed = quests[i].questID, character = quests[i].quester, stationName = quests[i].appliedStation, solarName = quests[i].appliedSolar});
+            data.Add(new QuestData(){
+                seed = quests[i].questID, 
+                character = quests[i].quester, 
+                stationName = quests[i].appliedStation, 
+                solarName = quests[i].appliedSolar,
+                state = quests[i].questState
+            });
         }
         return data;
     }
@@ -42,18 +49,27 @@ public class AppliedQuests : MonoBehaviour
         for (int i = 0; i < qts.Count; i++)
         {
             var qust = new Quest(qts[i].seed, qts[i].character, qts[i].stationName, qts[i].solarName);
+            qust.questState = qts[i].state;
             quests.Add(qust);
         }
     }
+
     public void ApplyQuest(Quest quest)
     {
-        quests.Add(quest);
-        OnChangeQuests();
+        if (Player.inst.cargo.AddItems(quest.toTransfer))
+        {
+            quests.Add(quest);
+            OnChangeQuests();
+        }
     }
-    public void CancleQuest(Quest quest)
+
+    public void CancelQuest(Quest quest)
     {
-        quests.RemoveAll(x=>x.questID == quest.questID);
-        OnChangeQuests();
+        if (Player.inst.cargo.RemoveItems(quest.toTransfer))
+        {
+            quests.RemoveAll(x => x.questID == quest.questID);
+            OnChangeQuests();
+        }
     }
 
     public bool IsQuestApplied(int id)

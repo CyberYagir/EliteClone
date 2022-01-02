@@ -32,4 +32,9 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over == ActionType.Over || over == ActionType.Selected ? 0 : startPixelsPerUnit, 10 * Time.deltaTime);
         image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), 10 * Time.deltaTime);
     }
+
+    public void SetNoneColor(Color color)
+    {
+        noneColor = color;
+    }
 }
