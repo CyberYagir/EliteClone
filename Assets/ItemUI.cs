@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ItemUI : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text text; 
     private Item item;
 
     public void Init(Item it)

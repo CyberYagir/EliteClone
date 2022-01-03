@@ -44,6 +44,8 @@ public class WorldOrbitalStation : MonoBehaviour
         characters.AddRange(SpawnQuestCharacters());
         quests.AddRange(GetTargetStationQuests());
 
+        RemoveCharactersWithoutQuests();
+
     }
     
     private static string[] LoadFromFile(string nm)
@@ -98,12 +100,28 @@ public class WorldOrbitalStation : MonoBehaviour
         return list;
     }
 
+    public void RemoveCharactersWithoutQuests()
+    {
+        foreach (var chr in characters)
+        {
+            if (quests.FindAll(x => x.quester.characterID == chr.characterID && x.questState != Quest.QuestComplited.Rewarded).Count == 0) 
+            {
+                characters.Remove(chr);
+                print("RemoveCharacter");
+                RemoveCharactersWithoutQuests();
+                break;
+            }
+        }
+    }
+    
     public List<Quest> GetTargetStationQuests()
     {
         List<Quest> questInStation = new List<Quest>();
         
         foreach (var quest in AppliedQuests.Instance.quests)
         {
+            if (quest.questState == Quest.QuestComplited.Rewarded) continue;
+            
             if (quest.GetLastQuestPath().targetName == transform.name)
             {
                 if (quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)

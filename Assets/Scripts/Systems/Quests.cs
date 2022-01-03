@@ -291,6 +291,11 @@ namespace Quests
             
         }
 
+        public void Reset()
+        {
+            firstName = null;
+            lastName = null;
+        }
         public void Init(System.Random rnd)
         {
             characterID = rnd.Next(-9999999, 9999999);

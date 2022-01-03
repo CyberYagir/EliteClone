@@ -50,15 +50,34 @@ public class QuestInfoUI : BaseTabUI
                     AppliedQuests.Instance.ApplyQuest(currentQuest);
                     UpdateData(currentQuest);
                 }
-                else
-                {
-                    //Get Reward
-                }
             }
             else
             {
-                AppliedQuests.Instance.CancelQuest(currentQuest);
-                UpdateData(currentQuest);
+                if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
+                {
+                    AppliedQuests.Instance.CancelQuest(currentQuest);
+                    UpdateData(currentQuest);
+                }
+                else if (currentQuest.questState == Quest.QuestComplited.Complited)
+                {
+                    if (currentQuest.questType == Quest.QuestType.Transfer)
+                    {
+                        if (Player.inst.cargo.ContainItems(currentQuest.toTransfer))
+                        {
+                            Player.inst.cargo.RemoveItems(currentQuest.toTransfer);
+                            if (Player.inst.cargo.AddItems(currentQuest.reward.rewardItems))
+                            {
+                                AppliedQuests.Instance.FinishQuest(currentQuest.questID);
+                                UpdateData(currentQuest);
+                                GetComponentInParent<BaseWindow>().RedrawAll();
+                            }
+                            else
+                            {
+                                Player.inst.cargo.AddItems(currentQuest.toTransfer);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -105,8 +124,6 @@ public class QuestInfoUI : BaseTabUI
         currentQuest = quest;
         var last = quest.GetLastQuestPath();
         quest.CheckIsQuestCompleted();
-        
-        
         targetName.text = "Target: " + last.targetName;
         targetSystem.text = "System: " + last.solarName;
         rewardTypeText.text = "Reward: " + quest.reward.type;
@@ -128,7 +145,7 @@ public class QuestInfoUI : BaseTabUI
         
         if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
         {
-            if (quest.questState != Quest.QuestComplited.Complited)
+            if (quest.questState == Quest.QuestComplited.None)
             {
                 buttonText.text = "Cancel";
             }

@@ -13,6 +13,7 @@ public class PlayerData
     public Dictionary<string, object> Keys;
     public LandLocation IsLanded;
     public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
+    public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
 }
 
 
@@ -84,6 +85,7 @@ public class SaveLoadData : MonoBehaviour
                 keys = playerData.Keys;
                 p.land.SetLand(playerData.IsLanded);
                 p.quests.LoadList(playerData.quests);
+                p.cargo.LoadData(playerData.items);
             }
         }
         else
@@ -107,7 +109,8 @@ public class SaveLoadData : MonoBehaviour
             WorldPos = world.transform.position,
             Keys = keys,
             IsLanded = p.land.GetLand(),
-            quests = p.quests.GetData()
+            quests = p.quests.GetData(),
+            items = p.cargo.GetData()
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });

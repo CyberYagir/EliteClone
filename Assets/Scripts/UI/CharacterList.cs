@@ -78,6 +78,7 @@ public class CharacterList : BaseTabUI
         UITweaks.ClearHolder(holder);
         
         items = new List<ButtonEffect>();
+        WorldOrbitalStation.Instance.RemoveCharactersWithoutQuests();
         foreach (var character in WorldOrbitalStation.Instance.characters)
         {
             var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();

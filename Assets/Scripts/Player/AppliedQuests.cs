@@ -54,6 +54,18 @@ public class AppliedQuests : MonoBehaviour
         }
     }
 
+    public void FinishQuest(int questID)
+    {
+        var quest = quests.Find(x => x.questID == questID);
+        if (quest != null)
+        {
+            quest.questState = Quest.QuestComplited.Rewarded;
+            quest.quester.Reset();
+        }
+
+        OnChangeQuests();
+    }
+    
     public void ApplyQuest(Quest quest)
     {
         if (Player.inst.cargo.AddItems(quest.toTransfer))

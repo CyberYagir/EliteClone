@@ -6,13 +6,42 @@ using UnityEngine;
 
 public class Cargo : MonoBehaviour
 {
+    public class ItemData
+    {
+        public string idName;
+        public float value;
+    }
+    
     private Ship currentShip;
-    [SerializeField] private List<Item> items = new List<Item>();
+    public List<Item> items { get; private set; } = new List<Item>();
     [SerializeField] private float tons = 0;
-
+    public event Action OnChangeInventory = delegate {  };
     private void Awake()
     {
         currentShip = GetComponent<Ship>();
+    }
+
+
+    public List<ItemData> GetData()
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+        for (int i = 0; i < items.Count; i++)
+        {
+            itemDatas.Add(new ItemData() {idName = items[i].id.idname, value = items[i].amount.Value});
+        }
+        return itemDatas;
+    }
+
+    public void LoadData(List<ItemData> itemDatas)
+    {
+        foreach (var data in itemDatas)
+        {
+            var item = ItemsManager.GetItem(data.idName).Clone();
+            item.amount.SetValue(data.value);
+            AddItem(item, false);
+        }
+
+        OnChangeInventory();
     }
 
     public Item FindItem(string itemName)
@@ -63,15 +92,16 @@ public class Cargo : MonoBehaviour
             {
                 foreach (var item in its)
                 {
-                    AddItem(item);
+                    AddItem(item, false);
                 }
             }
+            OnChangeInventory();
             return true;
         }
-
+        OnChangeInventory();
         return false;
     }
-    public bool AddItem(Item item)
+    public bool AddItem(Item item, bool callEvent = true)
     {
         var itemMass = item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
         
@@ -85,10 +115,12 @@ public class Cargo : MonoBehaviour
             {
                 findedItem.amount.AddValue(item.amount.Value);
                 tons += (item.amount.Value * mass);
+                if (callEvent) OnChangeInventory();
                 return true;
             }else if (canAddByWeight)
             {
                 AddToInventory(item);
+                if (callEvent) OnChangeInventory();
                 return true;
             }
         }
@@ -97,6 +129,7 @@ public class Cargo : MonoBehaviour
             if (tons + itemMass < currentShip.GetShip().data.maxCargoWeight)
             {
                 AddToInventory(item);
+                if (callEvent) OnChangeInventory();
                 return true;
             }
         }
@@ -108,18 +141,21 @@ public class Cargo : MonoBehaviour
         tons +=  item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
     }
 
-    public Item RemoveItem(string itemName, float value = 1)
+    public Item RemoveItem(string itemName, float value = 1, bool callEvent = false)
     {
         var item = FindItem(itemName);
         var removed = item.Clone();
         removed.amount.SetValue(0);
         if (item)
         {
+
+            var itemMass = (float) item.GetKeyPair(KeyPairValue.Mass);
             for (int i = 0; i < value; i++)
             {
                 if (item.amount.Value > 0)
                 {
                     item.amount.SubValue(1);
+                    tons -= itemMass;
                     removed.amount.AddValue(1);
                 }
             }
@@ -127,16 +163,19 @@ public class Cargo : MonoBehaviour
             if (item.amount.Value == 0)
             {
                 items.Remove(item);
+                tons -= item.amount.Value * itemMass;
                 Destroy(item);
             }
         }
 
         if (removed.amount.Value == 0)
         {
+            if (callEvent) OnChangeInventory();
             return null;
         }
         else
         {
+            if (callEvent) OnChangeInventory();
             return removed;
         }
     }
@@ -147,9 +186,9 @@ public class Cargo : MonoBehaviour
         {
             for (int i = 0; i < its.Count; i++)
             {
-                RemoveItem(its[i].id.idname, its[i].amount.Value);
+                RemoveItem(its[i].id.idname, its[i].amount.Value, false);
             }
-
+            OnChangeInventory();
             return true;
         }
         return false;

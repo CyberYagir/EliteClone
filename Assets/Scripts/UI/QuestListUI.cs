@@ -61,15 +61,20 @@ public class QuestListUI : BaseTabUI
         UITweaks.ClearHolder(holder);
         
         items = new List<ButtonEffect>();
+        int count = 0;
         for (int i = 0; i < quests.Count; i++)
         {
-            var questItem =  Instantiate(item, holder);
-            questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x=>x.type == quests[i].questType).icon, quests[i].questType.ToString());
-            questItem.gameObject.SetActive(true);
-            items.Add(questItem.GetComponent<ButtonEffect>());
+            if (quests[i].questState != Quest.QuestComplited.Rewarded)
+            {
+                var questItem = Instantiate(item, holder);
+                questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString());
+                questItem.gameObject.SetActive(true);
+                items.Add(questItem.GetComponent<ButtonEffect>());
+                count++;
+            }
         }
 
         upDownUI.selectedIndex = 0;
-        upDownUI.itemsCount = items.Count;
+        upDownUI.itemsCount = count;
     }
 }

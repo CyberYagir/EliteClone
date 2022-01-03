@@ -21,6 +21,10 @@ public class QuestTabItem : MonoBehaviour
         bool isOnPath = false;
         while (!questPath.isLast)
         {
+            if (!isOnPath)
+            {
+                isOnPath = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name;
+            }
             questPath = questPath.nextPath;
             if (!isOnPath)
             {
