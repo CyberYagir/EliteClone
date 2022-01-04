@@ -4,5 +4,17 @@ using UnityEngine;
 
 public class TODO : MonoBehaviour
 {
-    [SerializeField] [TextArea(10, int.MaxValue)] private string text;
+    [System.Serializable]
+    public class TODORow
+    {
+        public enum TaskPriority {
+            None, Middle, High
+            
+        }
+        public string text;
+        public bool isComplited;
+        public TaskPriority priority;
+    }
+    public List<TODORow> tasks = new List<TODORow>();
+    
 }
