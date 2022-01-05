@@ -13,7 +13,7 @@ public class CharacterList : BaseTabUI
     
     private List<ButtonEffect> items = new List<ButtonEffect>();
     private BaseWindow baseWindow;
-    public event Action ChangeSelect = delegate {  };
+    public Event ChangeSelect = new Event();
 
 
 
@@ -34,10 +34,10 @@ public class CharacterList : BaseTabUI
         ChangeSelect += RedrawQuests;
     }
 
-    private void OnDestroy()
-    {
-        ChangeSelect -= RedrawQuests;
-    }
+    // private void OnDestroy()
+    // {
+    //     ChangeSelect -= RedrawQuests;
+    // }
 
     public void ChangeSelected()
     {
@@ -45,7 +45,7 @@ public class CharacterList : BaseTabUI
         {
             items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
         }
-        ChangeSelect();
+        ChangeSelect.Run();
     }
 
     private void Update()

@@ -16,7 +16,7 @@ public class WorldOrbitalStation : MonoBehaviour
     public List<Character> characters;
     public List<int> additionalCharacters = new List<int>();
 
-    public static event Action OnInit = delegate {  };
+    public static Event OnInit = new Event();
 
     public static void InitNames()
     {
@@ -29,7 +29,7 @@ public class WorldOrbitalStation : MonoBehaviour
 
     public static void ClearEvent()
     {
-        OnInit = delegate {  };
+        OnInit = new Event();
         Instance = null;
     }
     public void Init()
@@ -58,7 +58,7 @@ public class WorldOrbitalStation : MonoBehaviour
 
     private void Start()
     {
-        OnInit();
+        OnInit.Run();
     }
 
     public void CalcSeed()

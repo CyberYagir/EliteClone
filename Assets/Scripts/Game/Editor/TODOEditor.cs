@@ -30,6 +30,10 @@ public class TODOEditor : Editor
             }
         }
         GUILayout.EndHorizontal();
+        
+        GUIStyle style = new GUIStyle(EditorStyles.textArea);
+        style.wordWrap = true;
+
         foreach (var task in script.tasks)
         {
             var oldEnabled = GUI.enabled;
@@ -39,7 +43,7 @@ public class TODOEditor : Editor
             {
                 if (!script.tasks[index - 1].isComplited && script.tasks[index].isComplited)
                 {
-                    ItemEditor.HorizontalLine(Color.gray);
+                    TweaksEditor.HorizontalLine(Color.gray);
                 }
             }
 
@@ -61,7 +65,7 @@ public class TODOEditor : Editor
             GUILayout.BeginHorizontal();
             {
                 GUI.enabled = !task.isComplited;
-                task.text = EditorGUILayout.TextArea(task.text, GUILayout.MinWidth(0), GUILayout.MinHeight(3 * EditorGUIUtility.singleLineHeight), GUILayout.ExpandHeight(true));
+                task.text = EditorGUILayout.TextArea(task.text,style, GUILayout.MinWidth(0), GUILayout.MinHeight(3 * EditorGUIUtility.singleLineHeight), GUILayout.ExpandHeight(true));
                 GUILayout.BeginVertical(GUILayout.MaxWidth(60));
                 {
                     if (InfoMode)
@@ -135,7 +139,7 @@ public class TODOEditor : Editor
         {
             script.tasks.Insert(0, new TODO.TODORow());
         }
-        
+
         EditorUtility.SetDirty(script);
     }
 }

@@ -34,10 +34,10 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     {
         skipFrame = true;
     }
-    private void OnDestroy()
-    {
-        Player.OnSceneChanged -= UpdateList;
-    }
+    // private void OnDestroy()
+    // {
+    //     Player.OnSceneChanged -= UpdateList;
+    // }
     public void UpdateList()
     {
         spaceObjects = new List<DisplaySpaceObject>();

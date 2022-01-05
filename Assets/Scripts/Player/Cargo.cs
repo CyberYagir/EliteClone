@@ -15,7 +15,7 @@ public class Cargo : MonoBehaviour
     private Ship currentShip;
     public List<Item> items { get; private set; } = new List<Item>();
     [SerializeField] private float tons = 0;
-    public event Action OnChangeInventory = delegate {  };
+    public Event OnChangeInventory = new Event();
     private void Awake()
     {
         currentShip = GetComponent<Ship>();
@@ -41,7 +41,7 @@ public class Cargo : MonoBehaviour
             AddItem(item, false);
         }
 
-        OnChangeInventory();
+        OnChangeInventory.Run();
     }
 
     public Item FindItem(string itemName)
@@ -95,10 +95,10 @@ public class Cargo : MonoBehaviour
                     AddItem(item, false);
                 }
             }
-            OnChangeInventory();
+            OnChangeInventory.Run();
             return true;
         }
-        OnChangeInventory();
+        OnChangeInventory.Run();
         return false;
     }
     public bool AddItem(Item item, bool callEvent = true)
@@ -115,12 +115,12 @@ public class Cargo : MonoBehaviour
             {
                 findedItem.amount.AddValue(item.amount.Value);
                 tons += (item.amount.Value * mass);
-                if (callEvent) OnChangeInventory();
+                if (callEvent) OnChangeInventory.Run();
                 return true;
             }else if (canAddByWeight)
             {
                 AddToInventory(item);
-                if (callEvent) OnChangeInventory();
+                if (callEvent) OnChangeInventory.Run();
                 return true;
             }
         }
@@ -129,7 +129,7 @@ public class Cargo : MonoBehaviour
             if (tons + itemMass < currentShip.GetShip().data.maxCargoWeight)
             {
                 AddToInventory(item);
-                if (callEvent) OnChangeInventory();
+                if (callEvent) OnChangeInventory.Run();
                 return true;
             }
         }
@@ -170,12 +170,12 @@ public class Cargo : MonoBehaviour
 
         if (removed.amount.Value == 0)
         {
-            if (callEvent) OnChangeInventory();
+            if (callEvent) OnChangeInventory.Run();
             return null;
         }
         else
         {
-            if (callEvent) OnChangeInventory();
+            if (callEvent) OnChangeInventory.Run();
             return removed;
         }
     }
@@ -188,7 +188,7 @@ public class Cargo : MonoBehaviour
             {
                 RemoveItem(its[i].id.idname, its[i].amount.Value, false);
             }
-            OnChangeInventory();
+            OnChangeInventory.Run();
             return true;
         }
         return false;

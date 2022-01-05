@@ -20,7 +20,7 @@ public class QuestTabItem : MonoBehaviour
         QuestPath questPath = first;
         QuestPath current = null;
         bool isOnPath = false;
-        while (!questPath.isLast)
+        while (questPath != null)
         {
             if (!isOnPath)
             {

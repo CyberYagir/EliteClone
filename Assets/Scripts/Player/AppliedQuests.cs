@@ -9,7 +9,7 @@ public class AppliedQuests : MonoBehaviour
     
     public static AppliedQuests Instance;
     public List<Quest> quests { get; private set; } = new List<Quest>();
-    public event Action OnChangeQuests = delegate {  };
+    public Event OnChangeQuests = new Event();
     
     public class QuestData
     {
@@ -26,7 +26,7 @@ public class AppliedQuests : MonoBehaviour
 
     private void Start()
     {
-        OnChangeQuests();
+        OnChangeQuests.Run();
     }
 
     public List<QuestData> GetData()
@@ -63,7 +63,7 @@ public class AppliedQuests : MonoBehaviour
             quest.quester.Reset();
         }
 
-        OnChangeQuests();
+        OnChangeQuests.Run();
     }
     
     public void ApplyQuest(Quest quest)
@@ -71,7 +71,7 @@ public class AppliedQuests : MonoBehaviour
         if (Player.inst.cargo.AddItems(quest.toTransfer))
         {
             quests.Add(quest);
-            OnChangeQuests();
+            OnChangeQuests.Run();
         }
     }
 
@@ -80,7 +80,7 @@ public class AppliedQuests : MonoBehaviour
         if (Player.inst.cargo.RemoveItems(quest.toTransfer))
         {
             quests.RemoveAll(x => x.questID == quest.questID);
-            OnChangeQuests();
+            OnChangeQuests.Run();
         }
     }
 

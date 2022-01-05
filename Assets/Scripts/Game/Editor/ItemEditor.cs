@@ -35,11 +35,11 @@ namespace Game.Editor
         
             EditorGUI.BeginChangeCheck();
             {
-                HorizontalLine(Color.gray);
+                TweaksEditor.HorizontalLine(Color.gray);
                 item.itemName = EditorGUILayout.TextField("Item name: ", item.itemName);
-                HorizontalLine(Color.gray);
+                TweaksEditor.HorizontalLine(Color.gray);
                 item.icon = (Sprite) EditorGUILayout.ObjectField("Sprite:", item.icon, typeof(Sprite), allowSceneObjects: true);
-                HorizontalLine(Color.gray);
+                TweaksEditor.HorizontalLine(Color.gray);
                 amountOpen = EditorGUILayout.Foldout(amountOpen, "Amount", true);
                 if (amountOpen)
                 {
@@ -50,10 +50,10 @@ namespace Game.Editor
                     item.amount.SetClamp(min, max);
                 }
 
-                HorizontalLine(Color.gray);
+                TweaksEditor.HorizontalLine(Color.gray);
             
                 item.itemType = (ItemType) EditorGUILayout.EnumPopup("Type: ", item.itemType);
-                HorizontalLine(Color.gray);
+                TweaksEditor.HorizontalLine(Color.gray);
 
                 keysOpen = EditorGUILayout.Foldout(keysOpen, "Keys Values", true);
                 if (keysOpen)
@@ -109,21 +109,7 @@ namespace Game.Editor
             }
         }
     
-        public static void HorizontalLine ( Color color, float space = 20) {
         
-            GUIStyle horizontalLine;
-            horizontalLine = new GUIStyle();
-            horizontalLine.normal.background = EditorGUIUtility.whiteTexture;
-            horizontalLine.margin = new RectOffset( 0, 0, 4, 4 );
-            horizontalLine.fixedHeight = 1;
-            GUILayout.Space(space/2f);
-            var c = GUI.color;
-            GUI.color = color;
-            GUILayout.Box( GUIContent.none, horizontalLine );
-            GUI.color = c;
-        
-            GUILayout.Space(space/2f);
-        }
 
     }
 }

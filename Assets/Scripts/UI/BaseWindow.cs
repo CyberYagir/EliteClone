@@ -48,11 +48,11 @@ public class BaseWindow : MonoBehaviour
         fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().fuel.max - Player.inst.Ship().fuel.value));
     }
     
-    private void OnDestroy()
-    {
-        Player.OnSceneChanged -= Init;
-        Player.inst.land.OnLand -= RedrawAll;
-    }
+    // private void OnDestroy()
+    // {
+    //     Player.OnSceneChanged -= Init;
+    //     Player.inst.land.OnLand -= RedrawAll;
+    // }
 
     private void Update()
     {

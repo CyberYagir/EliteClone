@@ -52,7 +52,7 @@ namespace Game.Editor
                     ship.shipModel = (Mesh) EditorGUILayout.ObjectField("Mesh:", ship.shipModel, typeof(Mesh));
                     ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
                 
-                    ItemEditor.HorizontalLine(Color.gray);
+                    TweaksEditor.HorizontalLine(Color.gray);
                     EditorGUILayout.LabelField("Data: ", EditorStyles.boldLabel);
                     EditorGUIUtility.labelWidth = 80;
                     ship.data.XRotSpeed = EditorGUILayout.FloatField("X Speed: ", ship.data.XRotSpeed);
@@ -67,7 +67,7 @@ namespace Game.Editor
             DrawPreview();
             GUILayout.EndHorizontal();
 
-            ItemEditor.HorizontalLine(Color.gray);
+            TweaksEditor.HorizontalLine(Color.gray);
             drawStats = EditorGUILayout.Foldout(drawStats, "Stats", true);
             if (drawStats)
             {
@@ -77,7 +77,7 @@ namespace Game.Editor
                 ship.heat = DrawEditor("Heat", ship.heat);
             }
             
-            ItemEditor.HorizontalLine(Color.gray);
+            TweaksEditor.HorizontalLine(Color.gray);
             drawSlots = EditorGUILayout.Foldout(drawSlots, "Slots", true);
             if (drawSlots)
             {
@@ -107,7 +107,7 @@ namespace Game.Editor
                 }
             }
 
-            ItemEditor.HorizontalLine(Color.gray);
+            TweaksEditor.HorizontalLine(Color.gray);
             EditorGUIUtility.labelWidth = oldLengh;
         }
 
@@ -116,7 +116,7 @@ namespace Game.Editor
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(10);  
-                ItemEditor.HorizontalLine(Color.gray, 30);
+                TweaksEditor.HorizontalLine(Color.gray, 30);
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();

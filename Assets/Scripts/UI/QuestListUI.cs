@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Quests;
 using UI;
@@ -12,7 +10,7 @@ public class QuestListUI : BaseTabUI
     [SerializeField] private BaseTabUI characterList, questInfo;
 
     private List<Quest> questsList;
-    public event Action<Quest> OnChangeSelected = delegate {  };
+    public Event<Quest> OnChangeSelected = new Event<Quest>();
     
 
     private void Start()
@@ -34,7 +32,7 @@ public class QuestListUI : BaseTabUI
             items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
         }
 
-        OnChangeSelected(questsList[upDownUI.selectedIndex]);
+        OnChangeSelected.Run(questsList[upDownUI.selectedIndex]);
     }
 
     private void Update()

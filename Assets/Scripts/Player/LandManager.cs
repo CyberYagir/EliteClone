@@ -10,11 +10,11 @@ public class LandManager : MonoBehaviour
     private Vector3 landPoint;
     private Quaternion landRot;
 
-    public event Action OnLand = delegate {  };
+    public Event OnLand = new Event();
 
     private void Awake()
     {
-        OnLand = delegate {  };
+        OnLand = new Event();
     }
 
     public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
@@ -30,7 +30,7 @@ public class LandManager : MonoBehaviour
             Player.inst.StopAxis();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            OnLand();
+            OnLand.Run();
         }
         else
         {

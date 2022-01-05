@@ -11,10 +11,10 @@ public class LocationUIActivator : MonoBehaviour
         Player.OnSceneChanged += OnAddEvent;
     }
 
-    private void OnDestroy()
-    {
-        Player.OnSceneChanged -= OnAddEvent;
-    }
+    // private void OnDestroy()
+    // {
+    //     Player.OnSceneChanged -= OnAddEvent;
+    // }
 
     public void OnAddEvent()
     {

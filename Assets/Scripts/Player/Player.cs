@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     
     
 
-    public static event System.Action OnSceneChanged = delegate {  };
+    public static Event OnSceneChanged = new Event();
 
     private TargetManager targets;
     private ShipModels models;
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private float heatTime;
     private void Awake()
     {
-        OnSceneChanged = delegate {  };
+        OnSceneChanged = new Event();
         Init();
     }
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
             AddHeat(-10);
         }
     }
-    
+
     private void Start()
     {
         ChangeScene();
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
     public static void ChangeScene()
     {
-        OnSceneChanged(); 
+        OnSceneChanged.Run(); 
     }
 
     public void HardStop()

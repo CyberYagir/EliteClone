@@ -22,7 +22,7 @@ public class WorldSpaceObject : MonoBehaviour
 
     public void UpdateVisibility()
     {
-        isVisible = Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
+        isVisible =  Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
     }
 
     private void OnDestroy()

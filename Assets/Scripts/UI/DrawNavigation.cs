@@ -38,10 +38,10 @@ public class DrawNavigation : MonoBehaviour
         UpdateList();
     }
 
-    private void OnDestroy()
-    {
-        Player.OnSceneChanged -= UpdateList;
-    }
+    // private void OnDestroy()
+    // {
+    //     Player.OnSceneChanged -= UpdateList;
+    // }
 
     private void UpdateList()
     {

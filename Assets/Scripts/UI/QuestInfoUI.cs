@@ -27,10 +27,10 @@ public class QuestInfoUI : BaseTabUI
         Player.OnSceneChanged += UpdateQuestInfo;
     }
 
-    private void OnDestroy()
-    {
-        Player.OnSceneChanged -= UpdateQuestInfo;
-    }
+    // private void OnDestroy()
+    // {
+    //     Player.OnSceneChanged -= UpdateQuestInfo;
+    // }
 
     void UpdateQuestInfo()
     {

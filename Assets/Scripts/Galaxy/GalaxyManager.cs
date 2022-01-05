@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public class GalaxyManager : MonoBehaviour
 {
     public static GalaxyPoint selectedPoint { get; private set; }
-    public static event Action onUpdateSelected = delegate { };
+    public static Event onUpdateSelected = new Event();
 
     private void Awake()
     {
-        onUpdateSelected = delegate { };
+        onUpdateSelected = new Event();
     }
 
     private void Start()
@@ -42,7 +42,7 @@ public class GalaxyManager : MonoBehaviour
             if (newSel != selectedPoint)
             {
                 selectedPoint = newSel;
-                onUpdateSelected();
+                onUpdateSelected.Run();
                 return true;
             }
         }
