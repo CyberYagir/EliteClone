@@ -48,7 +48,6 @@ public class DrawNavigation : MonoBehaviour
         tabControl = GetComponentInParent<UITabControl>();
         
         UITweaks.ClearHolder(holder);
-
         items = new List<NavItem>();
         var objects = FindObjectsOfType<WorldSpaceObject>();
         objects = objects.Reverse().ToArray();
@@ -79,6 +78,7 @@ public class DrawNavigation : MonoBehaviour
             items.Add(navI);
         }
 
+        updown.selectedIndex = 0;
         updown.itemsCount = items.Count;
     }
 

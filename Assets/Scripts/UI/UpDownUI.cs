@@ -10,17 +10,20 @@ public class UpDownUI : MonoBehaviour
     public event Action OnNavigateChange = delegate {  };
     private void Update()
     {
-        if (InputM.GetAxisDown(KAction.TabsVertical))
+        if (gameObject.active)
         {
-            selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
-            if (selectedIndex < 0) selectedIndex = itemsCount - 1;
-            if (selectedIndex >= itemsCount) selectedIndex = 0;
-            OnNavigateChange();
-        }
+            if (InputM.GetAxisDown(KAction.TabsVertical))
+            {
+                selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
+                if (selectedIndex < 0) selectedIndex = itemsCount - 1;
+                if (selectedIndex >= itemsCount) selectedIndex = 0;
+                OnNavigateChange();
+            }
 
-        if (InputM.GetAxisDown(KAction.Select))
-        {
-            OnChangeSelected();
+            if (InputM.GetAxisDown(KAction.Select))
+            {
+                OnChangeSelected();
+            }
         }
     }
 }

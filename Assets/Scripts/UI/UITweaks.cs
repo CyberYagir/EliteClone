@@ -10,7 +10,7 @@ namespace UI
             {
                 foreach (Transform item in holder)
                 {
-                    if (item.gameObject.active)
+                    if (item.gameObject.activeSelf)
                     {
                         Destroy(item.gameObject);
                     }

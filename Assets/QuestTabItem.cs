@@ -18,22 +18,24 @@ public class QuestTabItem : MonoBehaviour
         targetT.text = questsQuest.GetLastQuestPath().targetName;
         QuestPath first = questsQuest.pathToTarget;
         QuestPath questPath = first;
+        QuestPath current = null;
         bool isOnPath = false;
         while (!questPath.isLast)
         {
             if (!isOnPath)
             {
                 isOnPath = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name;
+                if (isOnPath)
+                {
+                    current = questPath;
+                    break;
+                }
             }
             questPath = questPath.nextPath;
-            if (!isOnPath)
-            {
-                isOnPath = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name;
-            }
         }
-    
+
         if (isOnPath)
-            jumpToT.text = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + questPath.solarName;
+            jumpToT.text = questsQuest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
         else
             jumpToT.text = $"Unown path [{first.solarName}]";
 
