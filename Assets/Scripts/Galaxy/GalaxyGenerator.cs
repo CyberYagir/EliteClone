@@ -59,9 +59,26 @@ public class GalaxyGenerator : MonoBehaviour
         {
             if (File.Exists(PlayerDataManager.GalaxyFile))
             {
-                systems = JsonConvert.DeserializeObject<Dictionary<string,SolarSystem>>(
-                    File.ReadAllText(PlayerDataManager.GalaxyFile));
+                try
+                {
+                    var saved = JsonConvert.DeserializeObject<SavedGalaxy>(
+                        File.ReadAllText(PlayerDataManager.GalaxyFile));
 
+                    if (saved.version == Application.version.ToString())
+                    {
+                        systems = saved.systems;
+                    }
+                    else
+                    {
+                        File.Delete(PlayerDataManager.GalaxyFile);
+                        ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
+                    ThrowLoadError($"Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
+                }
                 return;
             }
         }
@@ -69,6 +86,14 @@ public class GalaxyGenerator : MonoBehaviour
         if (World.Scene == Scenes.Galaxy)
             World.LoadLevel(Scenes.Init);
     }
+
+    public static void ThrowLoadError(string text)
+    {
+        PlayerPrefs.SetString("Error", text);
+        Destroy(PlayerDataManager.Instance);
+        World.LoadLevel(Scenes.Init);
+    }
+
 
     public void DrawsSystems()
     {
@@ -204,9 +229,19 @@ public class GalaxyGenerator : MonoBehaviour
         yield break;
     }
 
+    
+    public class SavedGalaxy
+    {
+        public Dictionary<string, SolarSystem> systems = new Dictionary<string, SolarSystem>();
+        public string version = "";
+        
+        public SavedGalaxy(){}
+        
+    }
     public static void SaveGalaxy()
     {
-        File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(systems, Formatting.None));
+        var galaxy = new SavedGalaxy() {systems = systems, version = Application.version};
+        File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
         PlayerDataManager.GenerateProgress = 1f;
     }
 

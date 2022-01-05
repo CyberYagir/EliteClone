@@ -61,7 +61,7 @@ public class TODOEditor : Editor
             GUILayout.BeginHorizontal();
             {
                 GUI.enabled = !task.isComplited;
-                task.text = EditorGUILayout.TextArea(task.text, GUILayout.MinHeight(3 * EditorGUIUtility.singleLineHeight), GUILayout.ExpandHeight(true));
+                task.text = EditorGUILayout.TextArea(task.text, GUILayout.MinWidth(0), GUILayout.MinHeight(3 * EditorGUIUtility.singleLineHeight), GUILayout.ExpandHeight(true));
                 GUILayout.BeginVertical(GUILayout.MaxWidth(60));
                 {
                     if (InfoMode)
@@ -72,22 +72,29 @@ public class TODOEditor : Editor
                         {
                             if (script.tasks[0] != task)
                             {
-                                if (GUILayout.Button("↑"))
+                                if (!script.tasks[index].isComplited)
                                 {
-                                    TODO.TODORow row = script.tasks[index - 1];
-                                    script.tasks[index - 1] = task;
-                                    script.tasks[index] = row;
-                                    break;
+                                    if (GUILayout.Button("↑"))
+                                    {
+                                        TODO.TODORow row = script.tasks[index - 1];
+                                        script.tasks[index - 1] = task;
+                                        script.tasks[index] = row;
+                                        break;
+                                    }
                                 }
                             }
+
                             if (script.tasks[script.tasks.Count - 1] != task)
                             {
-                                if (GUILayout.Button("↓"))
+                                if (!script.tasks[index + 1].isComplited)
                                 {
-                                    TODO.TODORow row = script.tasks[index + 1];
-                                    script.tasks[index + 1] = task;
-                                    script.tasks[index] = row;
-                                    break;
+                                    if (GUILayout.Button("↓"))
+                                    {
+                                        TODO.TODORow row = script.tasks[index + 1];
+                                        script.tasks[index + 1] = task;
+                                        script.tasks[index] = row;
+                                        break;
+                                    }
                                 }
                             }
                         }

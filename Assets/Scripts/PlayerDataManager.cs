@@ -126,7 +126,7 @@ public class PlayerDataManager : MonoBehaviour
             {
                 loading = true;
                 GenerateProgress = 1;
-                DelChilds();
+                DelChilds();    
             }
             else
             {
