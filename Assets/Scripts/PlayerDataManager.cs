@@ -23,20 +23,10 @@ public class PlayerDataManager : MonoBehaviour
                 {
                     World.LoadLevel(Scenes.Galaxy);
                     enabled = false;
-                    DelChilds();
                 }
             }
         }
     }
-
-    public void DelChilds()
-    {
-        foreach (Transform it in transform)
-        {
-            Destroy(it.gameObject);
-        }
-    }
-    
     private void Awake()
     {
         LoadStatic();
@@ -113,12 +103,10 @@ public class PlayerDataManager : MonoBehaviour
         if (File.Exists(CurrentLocationFile))
         {
             World.LoadLevel(Scenes.Location);
-            DelChilds();
         }
         else if (File.Exists(CurrentSystemFile))
         {
             World.LoadLevel(Scenes.System);
-            DelChilds();
         }
         else
         {
@@ -126,7 +114,6 @@ public class PlayerDataManager : MonoBehaviour
             {
                 loading = true;
                 GenerateProgress = 1;
-                DelChilds();    
             }
             else
             {

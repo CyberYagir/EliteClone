@@ -90,7 +90,8 @@ public class GalaxyGenerator : MonoBehaviour
     public static void ThrowLoadError(string text)
     {
         PlayerPrefs.SetString("Error", text);
-        Destroy(PlayerDataManager.Instance);
+        Destroy(PlayerDataManager.Instance.gameObject);
+        PlayerDataManager.Instance = null;
         World.LoadLevel(Scenes.Init);
     }
 

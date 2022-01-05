@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Paths
 {
@@ -13,7 +14,6 @@ public class LineDrawer : MonoBehaviour
     public static LineDrawer instance;
 
     public GameObject linePrefab, holder;
-    public bool updateRequire;
 
     public float time = 0;
 
@@ -36,9 +36,6 @@ public class LineDrawer : MonoBehaviour
             line.gameObject.SetActive(false);
         }
     }
-
-   
-
     private void Update()
     {
         time += Time.deltaTime;
@@ -48,17 +45,19 @@ public class LineDrawer : MonoBehaviour
         }
     }
 
+    private RaycastHit[] result = new RaycastHit[50];
+    
     public void CollectLines()
     {
         if (Vector3.Distance(oldCameraPos, transform.position) > 5)
         {
-            var cast = Physics.SphereCastAll(transform.position + transform.forward * 50, 100, Vector3.down, 100f);
-            if (cast.Length > 1)
+            var size = Physics.SphereCastNonAlloc(transform.position + transform.forward * 50, 100, Vector3.down, result, 100f);
+            if (size > 1)
             {
                 stars = new List<GalaxyPoint>();
-                for (int i = 0; i < cast.Length; i++)
+                for (int i = 0; i < size; i++)
                 {
-                    var g = cast[i].transform.GetComponent<GalaxyPoint>();
+                    var g = result[i].transform.GetComponent<GalaxyPoint>();
                     oldStars.Remove(g);
                     stars.Add(g);
                     stars[stars.Count - 1].particles.Play();
@@ -88,7 +87,7 @@ public class LineDrawer : MonoBehaviour
             item.gameObject.SetActive(false);
         }
         linesPool = linesPool.OrderBy(x => x.transform.name).ToList();
-        activeLines = new List<GalaxyLine>();
+        activeLines.Clear();// = new List<GalaxyLine>();
         foreach (var s1 in stars)
         {
             foreach (var sibling in s1.solarSystem.sibligs)

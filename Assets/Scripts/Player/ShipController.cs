@@ -90,7 +90,7 @@ public class ShipController : MonoBehaviour
                             player.HardStop();
                         }
 
-                        if (obj.transform.tag == "Sun")
+                        if (obj.transform.CompareTag("Sun"))
                         {
                             WarningManager.AddWarning("The cosmic body in front of you is too hot. Don't get any closer.", WarningTypes.Heat);
                             player.AddHeat(10);
