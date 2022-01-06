@@ -14,7 +14,7 @@ public class Cargo : MonoBehaviour
     
     private Ship currentShip;
     public List<Item> items { get; private set; } = new List<Item>();
-    [SerializeField] private float tons = 0;
+    public float tons { get; private set; } = 0;
     public Event OnChangeInventory = new Event();
     private void Awake()
     {

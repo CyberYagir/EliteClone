@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,6 +21,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     {
         public WorldSpaceObject Obj;
         public WorldSpaceCanvasItem CanvasPoint;
+        public bool isSystem;
     }
 
 
@@ -34,10 +36,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     {
         skipFrame = true;
     }
-    // private void OnDestroy()
-    // {
-    //     Player.OnSceneChanged -= UpdateList;
-    // }
+    
     public void UpdateList()
     {
         spaceObjects = new List<DisplaySpaceObject>();
@@ -50,11 +49,23 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         }
         foreach (var wsp in SolarSystemGenerator.objects)
         {
-            var obj = Instantiate(pointPrefab, transform).GetComponent<WorldSpaceCanvasItem>();
-            spaceObjects.Add(new DisplaySpaceObject() {Obj = wsp, CanvasPoint = obj});
-            obj.Init(wsp);
+            SpawnPoint(wsp);
         }
+
+        foreach (var point in FindObjectsOfType<SolarSystemPoint>())
+        {
+            SpawnPoint(point.GetComponent<WorldSpaceObject>());
+        }
+
+        spaceObjects = spaceObjects.OrderBy(x => x.isSystem).ToList();
         UpdatePoints();
+    }
+
+    public void SpawnPoint(WorldSpaceObject wsp)
+    {
+        var obj = Instantiate(pointPrefab, transform).GetComponent<WorldSpaceCanvasItem>();
+        spaceObjects.Add(new DisplaySpaceObject() {Obj = wsp, CanvasPoint = obj});
+        obj.Init(wsp);
     }
     private void LateUpdate()
     {
@@ -76,12 +87,15 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
                 spaceObjects.RemoveAll(x=>x.Obj == null);
                 return;
             }
+
             if (wsp.Obj.isVisible)
             {
-                wsp.CanvasPoint.transform.position = (Vector2)camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
-                wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position);
+                wsp.CanvasPoint.transform.position = (Vector2) camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                if (!wsp.isSystem)
+                    wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position);
                 wsp.CanvasPoint.SetSelect(wsp.Obj == Player.inst.GetTarget());
             }
+
             wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
         }
     }
@@ -111,11 +125,5 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         }
         
         return startPos + new Vector2(0, yOffcet);
-    }
-
-    public bool Dist(Transform canvasPoint, Transform worldObject)
-    {
-        return Vector2.Distance(canvasPoint.position,
-                camera.WorldToScreenPoint(worldObject.position, Camera.MonoOrStereoscopicEye.Mono)) < Screen.width * 0.2f;
     }
 }

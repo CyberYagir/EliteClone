@@ -38,11 +38,6 @@ public class DrawNavigation : MonoBehaviour
         UpdateList();
     }
 
-    // private void OnDestroy()
-    // {
-    //     Player.OnSceneChanged -= UpdateList;
-    // }
-
     private void UpdateList()
     {
         tabControl = GetComponentInParent<UITabControl>();
@@ -106,7 +101,7 @@ public class DrawNavigation : MonoBehaviour
             {
                 items[i].Button.over = ButtonEffect.ActionType.Over;
             }
-            else if (items[i].SpaceObject == Player.inst.GetTarget())
+            else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
             {
                 items[i].Button.over = ButtonEffect.ActionType.Selected;
             }
