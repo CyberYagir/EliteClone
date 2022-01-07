@@ -25,13 +25,13 @@ public class InitMenu : MonoBehaviour
         }
         else
         {
-            dowloadDialog.reverse = false;
+            WindowManager.Instance.OpenWindow(dowloadDialog);
         }
     }
 
     public void GenerateGalaxy()
     {
-        dowloadDialog.reverse = true;
+        WindowManager.Instance.OpenWindow(null);
         menuback.DOPlayForward();
         loading.DOPlayForward();
         loadingText.text = "Loading Galaxy";
@@ -40,7 +40,7 @@ public class InitMenu : MonoBehaviour
 
     public void DowloadGalaxy()
     {
-        dowloadDialog.reverse = true;
+        WindowManager.Instance.OpenWindow(null);
         menuback.DOPlayForward();
         loading.DOPlayForward();
         StartCoroutine(DowloadVersonFile());

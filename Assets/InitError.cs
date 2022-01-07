@@ -13,7 +13,7 @@ public class InitError : MonoBehaviour
         if (PlayerPrefs.HasKey("Error"))
         {
             text.text = "Error: " + PlayerPrefs.GetString("Error");
-            animate.reverse = false;
+            WindowManager.Instance.OpenWindow(animate);
             PlayerPrefs.DeleteKey("Error");
         }
     }

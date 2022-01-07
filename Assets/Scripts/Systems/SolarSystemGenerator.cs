@@ -314,10 +314,7 @@ public class SolarSystemGenerator : MonoBehaviour
             sun.transform.position = item.position.ToVector() * _scale;
             sun.transform.localScale *= (float) item.radius * _scale;
         
-            var renderer = sun.GetComponent<Renderer>();
-            renderer.material.color = item.GetColor();
-            renderer.material.SetColor("_MainColor", item.GetColor());
-            renderer.material.SetFloat("_MainEmission", ((int)item.starType+1) * 50);
+            sun.GetComponent<SunTexture>().SetMaterials(item, ((int)item.starType+1) * 50);
             
             var rotate = sun.GetComponent<RotateAround>();
             rotate.InitOrbit(attractor.transform, (float) rnd.NextDouble() * 0.01f, objects.Count);
