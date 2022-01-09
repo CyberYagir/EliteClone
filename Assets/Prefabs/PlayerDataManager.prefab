@@ -59,7 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axes:
-  - action: 0
+  - name: Horizontal
+    action: 0
     plus: 100
     minus: 97
     value: 0
@@ -67,7 +68,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 1
+  - name: Vertical
+    action: 1
     plus: 119
     minus: 115
     value: 0
@@ -75,7 +77,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 2
+  - name: Tabs Change
+    action: 2
     plus: 113
     minus: 101
     value: 0
@@ -83,7 +86,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 4
+  - name: Tabs Horiz.
+    action: 4
     plus: 275
     minus: 276
     value: 0
@@ -91,7 +95,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 3
+  - name: Tabs Vert.
+    action: 3
     plus: 273
     minus: 274
     value: 0
@@ -99,7 +104,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 5
+  - name: Select
+    action: 5
     plus: 32
     minus: 0
     value: 0
@@ -107,23 +113,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 6
-    plus: 324
-    minus: 0
-    value: 0
-    transitionSpeed: 10000
-    rawvalue: 0
-    down: 0
-    up: 0
-  - action: 7
-    plus: 113
-    minus: 101
-    value: 0
-    transitionSpeed: 10
-    rawvalue: 0
-    down: 0
-    up: 0
-  - action: 8
+  - name: Head View
+    action: 8
     plus: 325
     minus: 0
     value: 0
@@ -131,7 +122,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 9
+  - name: Set Target
+    action: 9
     plus: 116
     minus: 0
     value: 0
@@ -139,7 +131,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 10
+  - name: Jump
+    action: 10
     plus: 114
     minus: 0
     value: 0
@@ -147,7 +140,8 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 11
+  - name: Warp
+    action: 11
     plus: 102
     minus: 0
     value: 0
@@ -155,11 +149,30 @@ MonoBehaviour:
     rawvalue: 0
     down: 0
     up: 0
-  - action: 12
+  - name: Stop
+    action: 12
     plus: 120
     minus: 0
     value: 0
     transitionSpeed: 10000
+    rawvalue: 0
+    down: 0
+    up: 0
+  - name: Click
+    action: 6
+    plus: 324
+    minus: 0
+    value: 0
+    transitionSpeed: 10000
+    rawvalue: 0
+    down: 0
+    up: 0
+  - name: Glaxy Vert.
+    action: 7
+    plus: 113
+    minus: 101
+    value: 0
+    transitionSpeed: 10
     rawvalue: 0
     down: 0
     up: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlanetTexture : MonoBehaviour
 {
     [SerializeField] private Renderer[] renderers;
+    public int setted;
     public void SetTexture(int id)
     {
         if (SolarSystemGenerator.planetTextures == null)
@@ -12,6 +13,7 @@ public class PlanetTexture : MonoBehaviour
             SolarSystemGenerator.GetPlanetTextures();
         }
 
+        setted = id;
         for (int i = 0; i < renderers.Length; i++)
         {
             renderers[i].material = SolarSystemGenerator.planetTextures.textures[id];

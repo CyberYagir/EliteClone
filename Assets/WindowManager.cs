@@ -19,7 +19,7 @@ public class WindowManager : MonoBehaviour
         {
             if (item == animate)
             {
-                item.reverse = false;
+                item.reverse = !item.reverse;
             }
             else
             {

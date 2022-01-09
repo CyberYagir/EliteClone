@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 public enum Scenes
 {
     Init, Galaxy, System, Location
@@ -15,6 +16,13 @@ public static class World
     {
         SceneManager.LoadSceneAsync(scenes.ToString());
         Scene = scenes;
+    }
+    
+    public static AsyncOperation LoadLevelAsync(Scenes scenes)
+    {
+        var op = SceneManager.LoadSceneAsync(scenes.ToString());
+        Scene = scenes;
+        return op;
     }
 
     public static void SetScene(Scenes scene)

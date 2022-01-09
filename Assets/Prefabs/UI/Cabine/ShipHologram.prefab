@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4020786454383666988}
   - component: {fileID: 5389343111708837375}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Normalizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 7643544952896788021}
   - component: {fileID: 4560268809134915197}
   - component: {fileID: 5402402488273547974}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Land (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 2695197498016484220}
   - component: {fileID: 7562919184067696679}
   - component: {fileID: 3670780502221698560}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Land
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8919540184383551835}
   - component: {fileID: 8919540184383551833}
   - component: {fileID: 8919540184383551834}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8919540185427376618}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8919540185433465098}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: ShipHologram
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,6 +461,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Console
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1300264252759386080, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.8918641
@@ -495,7 +499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5233112405309087440, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8442510506162454399, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -507,7 +511,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 238e618eb0cd31a43a7ff92171749969, type: 2}
     - target: {fileID: 9013638940889411661, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70fb04e6beadaf44e9bf9cfacb76b98b, type: 3}

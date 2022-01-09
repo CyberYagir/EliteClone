@@ -6,6 +6,7 @@ public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, 
 [System.Serializable]
 public class Axis
 {
+    public string name;
     public KAction action;
     public KeyCode plus, minus;
     public float value;
@@ -22,13 +23,28 @@ public class InputM : MonoBehaviour
 
     private void Awake()
     {
+        LoadControls();
+    }
+
+    public void LoadControls()
+    {
         keys = new Dictionary<KAction, Axis>();
         foreach (var ax in axes)
         {
             keys.Add(ax.action, ax);
         }
     }
-
+    
+    public List<Axis> GetAxesList()
+    {
+        return axes;
+    }
+    public void SetAxesList(List<Axis> axies)
+    {
+        axes = axies;
+        LoadControls();
+    }
+    
     private void Update()
     {
         foreach (var axies in keys)

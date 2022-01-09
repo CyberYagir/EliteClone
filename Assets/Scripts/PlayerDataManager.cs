@@ -8,9 +8,12 @@ public class PlayerDataManager : MonoBehaviour
 {
     public static PlayerDataManager Instance;
     public static SolarSystem CurrentSolarSystem;
+
+    public static InitOptions.PlayerConfig PlayerConfig;
+    
     public static int galaxySeed = -1;
     public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-    public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile;
+    public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile;
     public static float GenerateProgress;
     private bool loading = false;
     private void Update()
@@ -96,6 +99,7 @@ public class PlayerDataManager : MonoBehaviour
         CurrentSystemFile = GlobalFolder + "system.json";
         CurrentLocationFile = GlobalFolder + "location.json";
         PlayerDataFile = GlobalFolder + "player.json";
+        ConfigFile = PlayerFolder + "options.config";
     }
 
     public void LoadScene()

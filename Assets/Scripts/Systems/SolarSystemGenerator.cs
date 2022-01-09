@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 [System.Serializable]
@@ -225,7 +226,8 @@ public class SolarSystemGenerator : MonoBehaviour
             }
 
             var planet = new Planet(rnd, system.stars[system.stars.Count - 1], pPos);
-
+            
+            planet.textureID = rnd.Next(0, planetTextures.textures.Count);
             planet.name = system.name.Split(' ')[0] + " O" + (i + 1);
             var sattelites = rnd.Next(0, 3);
 
@@ -337,6 +339,9 @@ public class SolarSystemGenerator : MonoBehaviour
             var rotate = planet.GetComponent<RotateAround>();
             rotate.InitOrbit(attractor.transform, (float) rnd.NextDouble() * 0.001f, objects.Count);
             
+            
+            planet.GetComponent<PlanetTexture>().SetTexture(item.textureID);
+            
             objects.Add(planet.GetComponent<WorldSpaceObject>());
 
             for (int i = 0; i < item.sattelites.Count; i++)
@@ -355,8 +360,7 @@ public class SolarSystemGenerator : MonoBehaviour
 
         if (setPos)
         {
-            FindObjectOfType<Player>().transform.position = new Vector3(0,
-                (float) (masses[0].radius * rnd.Next(2, 6)) * _scale, (float) (masses[0].radius * 5) * _scale);
+            FindObjectOfType<Player>().transform.position = new Vector3(0, (float) (masses[0].radius * rnd.Next(2, 6)) * _scale, (float) (masses[0].radius * 5) * _scale);
             FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
         }
         else

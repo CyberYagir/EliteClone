@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using DG.Tweening;
 using Newtonsoft.Json;
+using OmniSARTechnologies.LiteFPSCounter;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class InitMenu : MonoBehaviour
 {
@@ -91,5 +93,12 @@ public class InitMenu : MonoBehaviour
                 GenerateGalaxy();
             }
         }
+    }
+
+
+    
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
