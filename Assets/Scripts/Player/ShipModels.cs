@@ -7,7 +7,7 @@ public class ShipModels : MonoBehaviour
 {
     [SerializeField] private Transform modelsHolder;
     [SerializeField] private GameObject spawnedCabine;
-    [SerializeField] private MeshFilter shipRenderer;
+    [SerializeField] private GameObject shipRenderer;
 
 
     public void InitShip(ItemShip ship)
@@ -17,6 +17,6 @@ public class ShipModels : MonoBehaviour
             Destroy(spawnedCabine.gameObject);
         }
         spawnedCabine = Instantiate(ship.shipCabine.gameObject, modelsHolder);
-        shipRenderer.mesh = ship.shipModel;
+        shipRenderer = Instantiate(ship.shipModel.gameObject, modelsHolder);
     }
 }

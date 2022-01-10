@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using Random = System.Random;
 
@@ -11,8 +12,8 @@ public class StationRefiller : MonoBehaviour
     {
         public enum RefillType
         {
-            Fuel,
-            Curpus
+            Fuel = 0,
+            Curpus = 1
         }
 
         public RefillType refillType;
@@ -40,5 +41,33 @@ public class StationRefiller : MonoBehaviour
     public float NextFloat(System.Random rnd, float min, float max)
     {
         return min + (max - min) * (float)rnd.NextDouble();
+    }
+
+    public void Fill(Refiller.RefillType type)
+    {
+        var cost = 0f;
+        switch (type)
+        {
+            case Refiller.RefillType.Fuel:
+                cost = GetRefillerValue(Refiller.RefillType.Fuel);
+                ApplyType(Player.inst.Ship().fuel, cost);
+                break;
+            case Refiller.RefillType.Curpus:
+                cost = GetRefillerValue(Refiller.RefillType.Curpus);
+                ApplyType(Player.inst.Ship().hp, cost);
+                break;
+        }
+    }
+
+    public void ApplyType(ShipClaped data, float cost)
+    {
+        while (Player.inst.cargo.GetCredits() > 0 && data.value < data.max)
+        {
+            if(Player.inst.cargo.RemoveCredits(cost))
+            {
+                data.value++;
+            }
+        }
+        Player.inst.cargo.UpdateInventory();
     }
 }

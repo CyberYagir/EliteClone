@@ -65,7 +65,7 @@ public class WarpManager : MonoBehaviour
                     warpParticle.Play();
                     SolarSystemGenerator.SaveSystem(true);
 
-                    LocationGenerator.SaveLocationFile(activeLocationPoint.root.name);
+                    LocationGenerator.SaveLocationFile(activeLocationPoint.root.name, activeLocationPoint.locationType);
 
                     Player.inst.saves.SetKey("loc_start", true);
                     DontDestroyOnLoad(Player.inst);
@@ -105,16 +105,13 @@ public class WarpManager : MonoBehaviour
                     {
                         if (warpSpeed >= maxWarpSpeed / 2f)
                         {
-
                             isWarp = false;
                             warpSpeed = 0;
                             warpParticle.Play();
                             Player.inst.HardStop();
                             DontDestroyOnLoad(Player.inst);
                             SolarSystemGenerator.DeleteSystemFile();
-                            PlayerDataManager.CurrentSolarSystem =
-                                GalaxyGenerator.systems[
-                                    Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
+                            PlayerDataManager.CurrentSolarSystem = GalaxyGenerator.systems[Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
                             World.LoadLevel(Scenes.System);
                             return;
                         }

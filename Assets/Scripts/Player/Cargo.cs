@@ -16,12 +16,62 @@ public class Cargo : MonoBehaviour
     public List<Item> items { get; private set; } = new List<Item>();
     public float tons { get; private set; } = 0;
     public Event OnChangeInventory = new Event();
+    
+    
+    
+    
     private void Awake()
     {
         currentShip = GetComponent<Ship>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            var item = ItemsManager.GetCredits();
+            item.amount.SetValue(1000);
+            AddItem(item);
+        }
+    }
 
+    public int GetCredits()
+    {
+        var credit = FindItem("credit");
+        if (credit != null)
+        {
+            return (int)credit.amount.Value;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public bool RemoveCredits(float remove, bool updateInventory = false)
+    {
+        var credit = FindItem("credit");
+        if (credit != null)
+        {
+            if (credit.amount.Value >= remove)
+            {
+                credit.amount.SubValue(remove);
+                if (updateInventory)
+                {
+                    OnChangeInventory.Run();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void UpdateInventory()
+    {
+        OnChangeInventory.Run();
+    }
+    
+    
     public List<ItemData> GetData()
     {
         List<ItemData> itemDatas = new List<ItemData>();

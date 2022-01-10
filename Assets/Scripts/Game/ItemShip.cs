@@ -30,7 +30,7 @@ namespace Game
     public class ItemShip : ScriptableObject
     {
         public string shipName;
-        public Mesh shipModel;
+        public GameObject shipModel;
         public GameObject shipCabine;
         public ShipClaped fuel, hp, shields, heat;
         public ShipVariables data;

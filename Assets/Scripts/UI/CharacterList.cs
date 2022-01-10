@@ -19,9 +19,12 @@ public class CharacterList : BaseTabUI
 
     public void RedrawQuests()
     {
-        var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
-        var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
-        questList.UpdateQuests(quests);
+        if (WorldOrbitalStation.Instance != null)
+        {
+            var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
+            var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
+            questList.UpdateQuests(quests);
+        }
     }
 
 

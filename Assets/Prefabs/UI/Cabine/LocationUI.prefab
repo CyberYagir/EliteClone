@@ -3507,7 +3507,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6028275485763584055}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 534097234141873076}
+        m_TargetAssemblyTypeName: BaseWindow, Assembly-CSharp
+        m_MethodName: Refill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6028275485763584049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4293,7 +4305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb12071667682441a37cb7eb19b1520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rect: {fileID: 0}
   height: 1400
   infoText: {fileID: 5975358690855273408}
   nameText: {fileID: 3593959259550599303}
@@ -5190,7 +5201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8222240847938649640}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 534097234141873076}
+        m_TargetAssemblyTypeName: BaseWindow, Assembly-CSharp
+        m_MethodName: Refill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8222240847938649646
 MonoBehaviour:
   m_ObjectHideFlags: 0

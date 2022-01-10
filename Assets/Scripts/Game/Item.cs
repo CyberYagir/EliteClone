@@ -50,7 +50,11 @@ public class ValueLimit
         value -= val;
         Clamp();
     }
-    
+    public void SubValue(float val)
+    {
+        value -= val;
+        Clamp();
+    }
     public void AddValue(float val)
     {
         value += val;

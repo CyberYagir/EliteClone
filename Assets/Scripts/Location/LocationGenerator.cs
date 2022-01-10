@@ -10,11 +10,12 @@ public class Location
 {
     public string systemName;
     public string locationName;
+    public LocationPoint.LocationType type;
 }
 
 public class LocationGenerator : MonoBehaviour
 {
-    public GameObject player, planet, sunPrefab, station, systemPoint;
+    public GameObject player, planet, sunPrefab, station, systemPoint, beltPoint;
     public static Location CurrentSave;
     private void Awake()
     {
@@ -50,7 +51,7 @@ public class LocationGenerator : MonoBehaviour
                 File.ReadAllText(PlayerDataManager.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
         PlayerDataManager.CurrentSolarSystem = system;
         SolarSystemGenerator.DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planet, station,
-            systemPoint, 40,
+            systemPoint, beltPoint, 40,
             false);
     }
 
@@ -61,7 +62,7 @@ public class LocationGenerator : MonoBehaviour
             item.enabled = false;
         }
 
-        foreach (var item in FindObjectsOfType<WorldOrbitalStation>())
+        foreach (var item in FindObjectsOfType<WorldInteractivePoint>())
         {
             if (item.name != CurrentSave.locationName)
             {
@@ -83,14 +84,15 @@ public class LocationGenerator : MonoBehaviour
     public void InitFirstFrame()
     {
         var location = MoveWorld();
-        var station = location.GetComponent<WorldOrbitalStation>();
+        var locationObject = location.GetComponent<WorldInteractivePoint>();
         if (Player.inst.saves.ExKey("loc_start"))
         {
-            Player.inst.transform.position = station.spawnPoint.position;
-            Player.inst.transform.rotation = station.spawnPoint.rotation;
+            Player.inst.transform.position = locationObject.spawnPoint.position;
+            Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
             Player.inst.saves.DelKey("loc_start");
         }
-        station.Init();
+
+        locationObject.initEvent.Invoke();
     }
 
     public GameObject MoveWorld()
@@ -109,12 +111,13 @@ public class LocationGenerator : MonoBehaviour
     
     
     
-    public static void SaveLocationFile(string locName)
+    public static void SaveLocationFile(string locName, LocationPoint.LocationType type)
     {
         var n = new Location()
         {
             systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
             locationName = locName,
+            type = type
         };
         File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n));
     }

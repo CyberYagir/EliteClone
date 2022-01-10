@@ -1,5 +1,4 @@
 using System.Linq;
-using Game.Editor;
 using UnityEditor;
 using UnityEngine;
 [CustomEditor(typeof(TODO))]
@@ -65,7 +64,7 @@ public class TODOEditor : Editor
             GUILayout.BeginHorizontal();
             {
                 GUI.enabled = !task.isComplited;
-                task.text = EditorGUILayout.TextArea(task.text,style, GUILayout.MinWidth(0), GUILayout.MinHeight(3 * EditorGUIUtility.singleLineHeight), GUILayout.ExpandHeight(true));
+                task.text = EditorGUILayout.TextArea(task.text,style, GUILayout.MinWidth(0), GUILayout.ExpandHeight(true));
                 GUILayout.BeginVertical(GUILayout.MaxWidth(60));
                 {
                     if (InfoMode)

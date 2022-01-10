@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class LocationPoint : MonoBehaviour
 {
+    public enum LocationType
+    {
+        Station, Belt
+    }
     private Camera mainCamera;
     [SerializeField] float size;
     public GameObject root;
     public float minDist;
+    public LocationType locationType;
     private void Start()
     {
         mainCamera = Camera.main;

@@ -11,7 +11,6 @@ public class WorldOrbitalStation : MonoBehaviour
     public static string[] FirstNames, LastNames;
     [SerializeField] private int uniqSeed;
     [SerializeField] private StationRefiller refiller;
-    public Transform spawnPoint;
     public List<Quest> quests;
     public List<Character> characters;
     public List<int> additionalCharacters = new List<int>();

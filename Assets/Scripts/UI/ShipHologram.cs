@@ -9,12 +9,20 @@ public class ShipHologram : MonoBehaviour
 
     [SerializeField] private Transform floor;
     [SerializeField] private MeshFilter shipModel;
-
+    [SerializeField] private Material material;
     private void Start()
     {
         startRotation = transform.localRotation;
         player = Player.inst;
-        shipModel.sharedMesh = player.Ship().shipModel;
+        shipModel.sharedMesh = player.Ship().shipModel.GetComponent<MeshFilter>().sharedMesh;
+
+        var matsCount = new Material[10];
+        for (int i = 0; i < matsCount.Length; i++)
+        {
+            matsCount[i] = material;
+        }
+
+        shipModel.GetComponent<Renderer>().materials = matsCount;
     }
 
     private void Update()

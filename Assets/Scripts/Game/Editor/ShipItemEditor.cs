@@ -16,7 +16,7 @@ namespace Game.Editor
         private void OnEnable()
         {
             ship = target as ItemShip;
-            mesh = new GameObject();
+            mesh = Instantiate(ship.shipModel);
 
             if (previewBackgroundTexture == null)
             {
@@ -24,10 +24,6 @@ namespace Game.Editor
                 previewBackgroundTexture = (Texture2D)AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D));
             }
         
-            Material material = new Material(Shader.Find("HDRP/Lit"));
-        
-            mesh.AddComponent<MeshRenderer>().material = material;
-            mesh.AddComponent<MeshFilter>().mesh = ship.shipModel;
             mesh.hideFlags = HideFlags.HideInHierarchy;
         }
     
@@ -49,7 +45,7 @@ namespace Game.Editor
                 GUILayout.BeginVertical();
                 {
                     ship.shipName = EditorGUILayout.TextField("Name:", ship.shipName);
-                    ship.shipModel = (Mesh) EditorGUILayout.ObjectField("Mesh:", ship.shipModel, typeof(Mesh));
+                    ship.shipModel = (GameObject) EditorGUILayout.ObjectField("Ship:", ship.shipModel, typeof(GameObject));
                     ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
                 
                     TweaksEditor.HorizontalLine(Color.gray);

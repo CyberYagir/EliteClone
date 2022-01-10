@@ -26,7 +26,7 @@ public class SavedSolarSystemLocation
 
 public class SolarSystemGenerator : MonoBehaviour
 {
-    public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint;
+    public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint, beltPoint;
     public static List<WorldSpaceObject> objects = new List<WorldSpaceObject>();
     public static List<WorldSpaceObject> suns = new List<WorldSpaceObject>();
     static SavedSolarSystem savedSolarSystem;
@@ -105,7 +105,7 @@ public class SolarSystemGenerator : MonoBehaviour
             Player.inst.transform.parent = null;
             Player.inst.transform.position = Vector3.zero;
             DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab,
-                systemPoint, scale, savedSolarSystem == null);
+                systemPoint, beltPoint, scale, savedSolarSystem == null);
             if (savedSolarSystem != null)
             {
                 transform.position = savedSolarSystem.worldPos;
@@ -182,6 +182,8 @@ public class SolarSystemGenerator : MonoBehaviour
 
         return stars;
     }
+    
+    
     public static SolarSystem Generate(SolarSystem solarSystem)
     {
         GetPlanetTextures();
@@ -192,10 +194,11 @@ public class SolarSystemGenerator : MonoBehaviour
         var starsCount = rnd.Next(1, 4);
         var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
         var basesCount = rnd.Next(0, planetsCount);
-
+        var beltsCount = rnd.Next(0, 4);
 
         system.stars = GenStars(starsCount, system.name, system.position);
         system.stations = GenerateOrbitStations(basesCount, system.name, system.position);
+        system.belts = GenerateBelts(beltsCount, system.name, system.position);
         
         
         var masses = system.stars.OrderBy(x => x.mass).ToList();
@@ -209,8 +212,6 @@ public class SolarSystemGenerator : MonoBehaviour
         }
 
         int usesBases = 0;
-        
-
         for (int i = 0; i < planetsCount; i++)
         {
             DVector pPos = new DVector();
@@ -260,8 +261,33 @@ public class SolarSystemGenerator : MonoBehaviour
 
             system.planets.Add(planet);
         }
+
+        
+        for (int i = 0; i < beltsCount; i++)
+        {
+            var bpos = new DVector(0,0, system.planets[rnd.Next(0, system.planets.Count)].position.z);
+            bpos += new DVector(0, 0, rnd.Next(15, 30));
+            system.belts[i].position = bpos;
+        }
+        
         return system;
     }
+
+    private static List<Belt> GenerateBelts(int beltsCount, string systemName, DVector pos)
+    {
+        List<Belt> belts = new List<Belt>();
+        System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+
+        for (int i = 0; i < beltsCount; i++)
+        {
+            var belt = new Belt(rnd);
+            belt.name = systemName.Split(' ')[0] + " Belt #" + i;
+            belts.Add(belt);
+        }
+
+        return belts;
+    }
+
 
     public static List<OrbitStation> GenerateOrbitStations(int stationsCount, string systemName, DVector pos)
     {
@@ -280,7 +306,7 @@ public class SolarSystemGenerator : MonoBehaviour
     
     
     public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab,
-        GameObject stationPointPrefab, GameObject systemPoint, float _scale, bool setPos = true)
+        GameObject stationPointPrefab, GameObject systemPoint, GameObject beltPoint, float _scale, bool setPos = true)
     {
         suns = new List<WorldSpaceObject>();
         objects = new List<WorldSpaceObject>();
@@ -358,6 +384,17 @@ public class SolarSystemGenerator : MonoBehaviour
             }
         }
 
+        foreach (var item in PlayerDataManager.CurrentSolarSystem.belts)
+        {
+            var belt = Instantiate(beltPoint, transform);
+            belt.transform.name = item.name;
+            belt.transform.position = item.position.ToVector() * _scale;
+            belt.transform.RotateAround(center, Vector3.up, rnd.Next(0, 360));
+            
+            objects.Add(belt.GetComponent<WorldSpaceObject>());
+        }
+        
+        
         if (setPos)
         {
             FindObjectOfType<Player>().transform.position = new Vector3(0, (float) (masses[0].radius * rnd.Next(2, 6)) * _scale, (float) (masses[0].radius * 5) * _scale);

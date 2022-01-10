@@ -242,10 +242,11 @@ namespace Quests
         {
             var rnd = new Random(questID);
             type = (RewardType) rnd.Next(0, Enum.GetNames(typeof(RewardType)).Length);
+            
             if (type == RewardType.Money)
             {
                 var money = ItemsManager.GetCredits();
-                money.amount.SetValue(rnd.Next(100, 2000));
+                money.amount.SetValue(rnd.Next(2000, 8000));
                 rewardItems.Add(money);
             }
             else

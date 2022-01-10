@@ -13,7 +13,7 @@ public class BaseWindow : MonoBehaviour
         public Sprite icon;
         public Fraction fraction;
     }
-    [SerializeField] private RectTransform rect;
+    private RectTransform rect;
     [SerializeField] private float height = 1400;
     [SerializeField] private TMP_Text infoText, nameText;
     [SerializeField] private List<IconType> icons;
@@ -26,6 +26,13 @@ public class BaseWindow : MonoBehaviour
         if (World.Scene != Scenes.Location)
         {
             gameObject.SetActive(false);
+        }
+        else
+        {
+            if (WorldOrbitalStation.Instance != null)
+            {
+                ChangeUI();
+            }
         }
     }
 
@@ -47,13 +54,6 @@ public class BaseWindow : MonoBehaviour
         repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().hp.max - Player.inst.Ship().hp.value));
         fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().fuel.max - Player.inst.Ship().fuel.value));
     }
-    
-    // private void OnDestroy()
-    // {
-    //     Player.OnSceneChanged -= Init;
-    //     Player.inst.land.OnLand -= RedrawAll;
-    // }
-
     private void Update()
     {
         Animation();
@@ -62,14 +62,17 @@ public class BaseWindow : MonoBehaviour
             var date = DateTime.Now.Date.AddYears(1025);    
             infoText.text = $"Date: {date:d}\n" +
                             $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
-                            $"Credits: Empty";
+                            $"Credits: " + Player.inst.cargo.GetCredits();
         }
     }
 
     public void RedrawAll()
     {
-        ChangeUI();
-        characters.UpdateList();
+        if (LocationGenerator.CurrentSave.type == LocationPoint.LocationType.Station)
+        {
+            ChangeUI();
+            characters.UpdateList();
+        }
     }
 
 
@@ -84,5 +87,11 @@ public class BaseWindow : MonoBehaviour
         {
             rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
         }
+    }
+
+    public void Refill(int type)
+    {
+        StationRefiller.Instance.Fill((StationRefiller.Refiller.RefillType)type);
+        RedrawAll(); 
     }
 }

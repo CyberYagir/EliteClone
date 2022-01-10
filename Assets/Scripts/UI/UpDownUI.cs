@@ -10,7 +10,7 @@ public class UpDownUI : MonoBehaviour
     public Event OnNavigateChange = new Event();
     private void Update()
     {
-        if (gameObject.active)
+        if (gameObject.active && itemsCount != 0)
         {
             if (InputM.GetAxisDown(KAction.TabsVertical))
             {
