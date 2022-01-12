@@ -67,7 +67,7 @@ public class PlayerDataManager : MonoBehaviour
     }
 
 
-    public void FoldersManage()
+    public static void FoldersManage()
     {
         if (!Directory.Exists(Directory.GetParent(Application.dataPath).FullName + "/Saves"))
         {
@@ -104,27 +104,30 @@ public class PlayerDataManager : MonoBehaviour
 
     public void LoadScene()
     {
-        if (File.Exists(CurrentLocationFile))
+        if (GalaxyGenerator.LoadSystems())
         {
-            World.LoadLevel(Scenes.Location);
-        }
-        else if (File.Exists(CurrentSystemFile))
-        {
-            World.LoadLevel(Scenes.System);
-        }
-        else
-        {
-            if (File.Exists(GalaxyFile))
+            if (File.Exists(CurrentLocationFile))
             {
-                loading = true;
-                GenerateProgress = 1;
+                World.LoadLevel(Scenes.Location);
+            }
+            else if (File.Exists(CurrentSystemFile))
+            {
+                World.LoadLevel(Scenes.System);
             }
             else
             {
-                if (!loading)
+                if (File.Exists(GalaxyFile))
                 {
-                    StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
                     loading = true;
+                    GenerateProgress = 1;
+                }
+                else
+                {
+                    if (!loading)
+                    {
+                        StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
+                        loading = true;
+                    }
                 }
             }
         }

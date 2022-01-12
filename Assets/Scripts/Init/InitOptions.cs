@@ -90,4 +90,12 @@ public class InitOptions : MonoBehaviour
         UILoad(PlayerDataManager.PlayerConfig);
     }
 
+
+    public void RemoveSave()
+    {
+        Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
+        Directory.Delete(PlayerDataManager.GlobalFolder, true);
+        
+        PlayerDataManager.FoldersManage();
+    }
 }

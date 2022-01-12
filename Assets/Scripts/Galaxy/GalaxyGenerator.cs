@@ -53,7 +53,7 @@ public class GalaxyGenerator : MonoBehaviour
         LoadSystems();
     }
 
-    public static void LoadSystems()
+    public static bool LoadSystems()
     {
         if (systems == null)
         {
@@ -61,30 +61,33 @@ public class GalaxyGenerator : MonoBehaviour
             {
                 try
                 {
-                    var saved = JsonConvert.DeserializeObject<SavedGalaxy>(
-                        File.ReadAllText(PlayerDataManager.GalaxyFile));
+                    var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(PlayerDataManager.GalaxyFile));
 
                     if (saved.version == Application.version.ToString())
                     {
                         systems = saved.systems;
+                        return true;
                     }
                     else
                     {
                         File.Delete(PlayerDataManager.GalaxyFile);
+                        Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
                     }
                 }
                 catch (Exception e)
                 {
                     Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
+                    Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                     ThrowLoadError($"Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                 }
-                return;
             }
         }
 
         if (World.Scene == Scenes.Galaxy)
             World.LoadLevel(Scenes.Init);
+        
+        return false;
     }
 
     public static void ThrowLoadError(string text)
