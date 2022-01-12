@@ -83,15 +83,33 @@ public class WarpManager : MonoBehaviour
             {
                 if (warpSpeed >= 50)
                 {
-                    warpParticle.Play();
-                    DontDestroyOnLoad(Player.inst);
-                    PlayerDataManager.CurrentSolarSystem = null;
-                    LocationGenerator.RemoveLocationFile();
-                    World.LoadLevel(Scenes.System);
+                    if (InputM.GetAxisDown(KAction.JumpIn))
+                    {
+                        JumpFromAnimation();
+                    }
+                    else
+                    {
+                        WarningManager.AddWarning("Press \"Jump\" to jump out location", WarningTypes.GoLocation);
+                    }
                 }
+            }
+
+            if (Player.inst.transform.position.magnitude > 2500)
+            {
+                JumpFromAnimation();
             }
         }
     }
+
+    void JumpFromAnimation()
+    {
+        warpParticle.Play();
+        DontDestroyOnLoad(Player.inst);
+        PlayerDataManager.CurrentSolarSystem = null;
+        LocationGenerator.RemoveLocationFile();
+        World.LoadLevel(Scenes.System);
+    }
+    
     public void JumpToSystem()
     {
         if (Player.inst.GetTarget() != null)

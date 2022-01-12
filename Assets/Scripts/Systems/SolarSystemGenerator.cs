@@ -50,8 +50,7 @@ public class SolarSystemGenerator : MonoBehaviour
 
     public void Load()
     {
-        savedSolarSystem =
-            JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
+        savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
     }
 
     public void InitSystem()
@@ -77,8 +76,7 @@ public class SolarSystemGenerator : MonoBehaviour
                 var file = PlayerDataManager.CacheSystemsFolder + "/" + savedSolarSystem.systemName + ".solar";
                 if (File.Exists(file))
                 {
-                    PlayerDataManager.CurrentSolarSystem =
-                        JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(file));
+                    PlayerDataManager.CurrentSolarSystem = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(file));
                 }
                 else
                 {
@@ -104,8 +102,7 @@ public class SolarSystemGenerator : MonoBehaviour
             Player.inst.transform.parent = transform;
             Player.inst.transform.parent = null;
             Player.inst.transform.position = Vector3.zero;
-            DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab,
-                systemPoint, beltPoint, scale, savedSolarSystem == null);
+            DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planetPrefab, stationPointPrefab, systemPoint, beltPoint, scale, savedSolarSystem == null);
             if (savedSolarSystem != null)
             {
                 transform.position = savedSolarSystem.worldPos;
@@ -128,8 +125,6 @@ public class SolarSystemGenerator : MonoBehaviour
     private void OnEnable()
     {
         savedSolarSystem = null;
-
-
         InitSystem();
         CreateSystem();
     }
@@ -280,8 +275,10 @@ public class SolarSystemGenerator : MonoBehaviour
 
         for (int i = 0; i < beltsCount; i++)
         {
-            var belt = new Belt(rnd);
-            belt.name = systemName.Split(' ')[0] + " Belt #" + i;
+            var belt = new Belt(rnd)
+            {
+                name = systemName.Split(' ')[0] + " Belt #" + i
+            };
             belts.Add(belt);
         }
 
