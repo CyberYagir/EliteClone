@@ -23,9 +23,8 @@ public class InitOptions : MonoBehaviour
     [SerializeField] private TMP_Dropdown qualityD;
     [SerializeField] private Toggle showFpsTgToggle;
     [SerializeField] private GameObject fpsHolder;
+    [SerializeField] private InitOptionsControlsDrawer controlsDrawer;
 
-    
-    
     private void Start()
     {
         if (fpsHolder.gameObject == null)
@@ -69,7 +68,7 @@ public class InitOptions : MonoBehaviour
         showFpsTgToggle.isOn = cfg.showFPS;
         FPSCounterToggle(showFpsTgToggle);
         
-        GetComponentInChildren<InitOptionsControlsDrawer>().DrawControls();
+        controlsDrawer.DrawControls();
     }
 
     public void LoadConfig()

@@ -13,6 +13,15 @@ public class WindowManager : MonoBehaviour
         Instance = this;
     }
 
+    public void FixedUpdate()
+    {
+        foreach (var animations in customAnimate)
+        {
+            animations.CustomUpdate();
+            
+        }
+    }
+
     public void OpenWindow(CustomAnimate animate)
     {
         foreach (var item in customAnimate)

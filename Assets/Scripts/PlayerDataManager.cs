@@ -10,12 +10,13 @@ public class PlayerDataManager : MonoBehaviour
     public static SolarSystem CurrentSolarSystem;
 
     public static InitOptions.PlayerConfig PlayerConfig;
-    
+
     public static int galaxySeed = -1;
     public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
     public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile;
     public static float GenerateProgress;
     private bool loading = false;
+
     private void Update()
     {
         if (World.Scene == Scenes.Init)
@@ -30,6 +31,7 @@ public class PlayerDataManager : MonoBehaviour
             }
         }
     }
+
     private void Awake()
     {
         LoadStatic();
@@ -75,7 +77,7 @@ public class PlayerDataManager : MonoBehaviour
         }
 
         RootFolder = Directory.GetParent(Application.dataPath)?.FullName + "/Saves";
-        
+
         if (!Directory.Exists(RootFolder + "/Player"))
         {
             Directory.CreateDirectory(RootFolder + "/Player/");
@@ -104,30 +106,28 @@ public class PlayerDataManager : MonoBehaviour
 
     public void LoadScene()
     {
-        if (GalaxyGenerator.LoadSystems())
+        var haveGalaxy = GalaxyGenerator.LoadSystems();
+        if (File.Exists(CurrentLocationFile) && haveGalaxy)
         {
-            if (File.Exists(CurrentLocationFile))
+            World.LoadLevel(Scenes.Location);
+        }
+        else if (File.Exists(CurrentSystemFile) && haveGalaxy)
+        {
+            World.LoadLevel(Scenes.System);
+        }
+        else
+        {
+            if (File.Exists(GalaxyFile))
             {
-                World.LoadLevel(Scenes.Location);
-            }
-            else if (File.Exists(CurrentSystemFile))
-            {
-                World.LoadLevel(Scenes.System);
+                loading = true;
+                GenerateProgress = 1;
             }
             else
             {
-                if (File.Exists(GalaxyFile))
+                if (!loading)
                 {
+                    StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
                     loading = true;
-                    GenerateProgress = 1;
-                }
-                else
-                {
-                    if (!loading)
-                    {
-                        StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
-                        loading = true;
-                    }
                 }
             }
         }

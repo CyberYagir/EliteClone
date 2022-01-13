@@ -35,7 +35,7 @@ public class InitMenu : MonoBehaviour
     {
         WindowManager.Instance.OpenWindow(null);
         menuback.DOPlayForward();
-        loading.DOPlayForward();
+        ActiveLoading();
         loadingText.text = "Loading Galaxy";
         PlayerDataManager.Instance.LoadScene();
     }
@@ -44,8 +44,14 @@ public class InitMenu : MonoBehaviour
     {
         WindowManager.Instance.OpenWindow(null);
         menuback.DOPlayForward();
-        loading.DOPlayForward();
+        ActiveLoading();
         StartCoroutine(DowloadVersonFile());
+    }
+
+    public void ActiveLoading()
+    {
+        loading.gameObject.SetActive(true);
+        loading.DOPlayForward();
     }
 
     IEnumerator DowloadVersonFile()
@@ -96,6 +102,17 @@ public class InitMenu : MonoBehaviour
     }
 
 
+    public void OpenDXDiag(string url)
+    {
+        if (File.Exists(url))
+        {
+            Application.OpenURL(url);
+        }
+        else
+        {
+            GalaxyGenerator.ThrowLoadError($"DXDiag not found by path [{url}]");
+        }
+    }
     
     public void Quit()
     {

@@ -12,14 +12,25 @@ public class CustomAnimate : MonoBehaviour
     private RectTransform rect;
     private Vector2 startPos;
 
-    private void Start()
+    private bool inited;
+    private void Init()
     {
         rect = GetComponent<RectTransform>();
         startPos = rect.anchoredPosition;
+        inited = true;
     }
 
-    private void Update()
+    public void CustomUpdate()
     {
+        if (!inited)
+        {
+            Init();
+        }
+
         rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, !reverse ? endPos : startPos, speed * Time.deltaTime);
+        if (reverse)
+            gameObject.SetActive(Vector2.Distance(rect.anchoredPosition, !reverse ? endPos : startPos) > 5);
+        else 
+            gameObject.SetActive(true);
     }
 }

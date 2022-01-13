@@ -83,6 +83,10 @@ public class GalaxyGenerator : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            return true;
+        }
 
         if (World.Scene == Scenes.Galaxy)
             World.LoadLevel(Scenes.Init);
