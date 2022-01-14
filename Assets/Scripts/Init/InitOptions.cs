@@ -5,7 +5,9 @@ using System.IO;
 using Newtonsoft.Json;
 using OmniSARTechnologies.LiteFPSCounter;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 
@@ -20,7 +22,7 @@ public class InitOptions : MonoBehaviour
 
     }
 
-    [SerializeField] private TMP_Dropdown qualityD;
+    [SerializeField] private TMP_Dropdown qualityD, apiD;
     [SerializeField] private Toggle showFpsTgToggle;
     [SerializeField] private GameObject fpsHolder;
     [SerializeField] private InitOptionsControlsDrawer controlsDrawer;
@@ -88,8 +90,7 @@ public class InitOptions : MonoBehaviour
         
         UILoad(PlayerDataManager.PlayerConfig);
     }
-
-
+    
     public void RemoveSave()
     {
         Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
