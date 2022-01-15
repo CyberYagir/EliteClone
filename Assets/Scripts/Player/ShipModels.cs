@@ -10,11 +10,13 @@ public class ShipModels : MonoBehaviour
     [SerializeField] private GameObject shipRenderer;
 
 
-    public void InitShip(ItemShip ship)
+    public void InitShip()
     {
+        var ship = Player.inst.Ship();
         if (spawnedCabine != null)
         {
             Destroy(spawnedCabine.gameObject);
+            Destroy(shipRenderer.gameObject);
         }
         spawnedCabine = Instantiate(ship.shipCabine.gameObject, modelsHolder);
         shipRenderer = Instantiate(ship.shipModel.gameObject, modelsHolder);

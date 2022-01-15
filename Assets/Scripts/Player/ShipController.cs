@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
+using static Game.ItemShip.ShipValuesTypes;
 
 public class ShipController : MonoBehaviour
 {
@@ -26,7 +28,7 @@ public class ShipController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         player.warp.WarpStop();
-        player.Ship().hp.value -= ((speed + player.warp.warpSpeed));
+        player.Ship().GetValue(Health).value -= ((speed + player.warp.warpSpeed));
         speed *= -1;
         WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
     }
@@ -165,7 +167,7 @@ public class ShipController : MonoBehaviour
 
     public bool CheckFuel()
     {
-        if (Player.inst.Ship().fuel.value <= 0)
+        if (Player.inst.Ship().GetValue(Fuel).value <= 0)
         {
             return false;
         }
@@ -179,7 +181,7 @@ public class ShipController : MonoBehaviour
         ForceAndWarpControl();
         if (CheckFuel())
         {
-            Player.inst.Ship().fuel.value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
+            Player.inst.Ship().GetValue(Fuel).value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
 
             if (!IsStoping())
             {

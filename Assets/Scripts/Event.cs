@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
 public class Event : UnityEvent
 {
     public static Event operator+ (Event b, UnityAction c) {

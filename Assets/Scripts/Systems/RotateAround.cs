@@ -21,8 +21,12 @@ public class RotateAround : MonoBehaviour
 
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
         camera = Camera.main;
-        var rnd = new System.Random(orbitID + DateTime.Today.Day);
+        Rotate();
+    }
 
+    public void Rotate()
+    {
+        var rnd = new System.Random(orbitID + DateTime.Today.Day);
         transform.RotateAround(point.position, orbitRotation, rnd.Next(0, 360));
         transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
     }

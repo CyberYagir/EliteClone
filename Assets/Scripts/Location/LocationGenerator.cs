@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ public class Location
     public string locationName;
     public LocationPoint.LocationType type;
 }
-
 public class LocationGenerator : MonoBehaviour
 {
     public GameObject player, planet, sunPrefab, station, systemPoint, beltPoint;
@@ -41,18 +41,18 @@ public class LocationGenerator : MonoBehaviour
         LoadLocation();
         SetSystemToLocation();
         InitFirstFrame();
+
+        Player.inst.transform.parent = transform;
+        Player.inst.transform.parent = null;
+        
     }
 
     public void LoadLocation()
     {
         CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
-        var system =
-            JsonConvert.DeserializeObject<SolarSystem>(
-                File.ReadAllText(PlayerDataManager.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
+        var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
         PlayerDataManager.CurrentSolarSystem = system;
-        SolarSystemGenerator.DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planet, station,
-            systemPoint, beltPoint, 40,
-            false);
+        SolarSystemGenerator.DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, 15, false);
     }
 
     public void SetSystemToLocation()
@@ -71,6 +71,7 @@ public class LocationGenerator : MonoBehaviour
         }
         foreach (var item in FindObjectsOfType<RotateAround>())
         {
+            item.Rotate();
             Destroy(item);
         }
     }
@@ -89,12 +90,30 @@ public class LocationGenerator : MonoBehaviour
         {
             Player.inst.transform.position = locationObject.spawnPoint.position;
             Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
-            Player.inst.saves.DelKey("loc_start");
         }
-
         locationObject.initEvent.Invoke();
     }
 
+    private void Start()
+    {
+        SetSpaceObjectDistance();
+    }
+
+    public void SetSpaceObjectDistance()
+    {
+        if (Player.inst.saves.ExKey("loc_start"))
+        {   
+            Player.inst.saves.DelKey("loc_start");
+        }
+        else
+        {
+            foreach (Transform spaceObject in transform)
+            {
+                spaceObject.transform.position += Player.inst.transform.position;
+            } 
+        }
+    }
+    
     public GameObject MoveWorld()
     {
         var location = GameObject.Find(CurrentSave.locationName);
@@ -113,13 +132,14 @@ public class LocationGenerator : MonoBehaviour
     
     public static void SaveLocationFile(string locName, LocationPoint.LocationType type)
     {
+        var point = FindObjectOfType<FloatingPoint>();
         var n = new Location()
         {
             systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
             locationName = locName,
             type = type
         };
-        File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n));
+        File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
     }
 
     public static void RemoveLocationFile()

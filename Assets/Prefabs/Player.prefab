@@ -421,6 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d1846986f0a254ab8c52193cca1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnChangeInventory:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &594618446116798299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +481,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLanded: 0
+  OnLand:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6361905012610660566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6566895a4f76c468cccc978bf74ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnChangeQuests:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &227262322764977332
 MonoBehaviour:
   m_ObjectHideFlags: 0

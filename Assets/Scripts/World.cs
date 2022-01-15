@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 public enum Scenes
 {
-    Init, Galaxy, System, Location
+    Init, Galaxy, System, Location, Garage
 }
 
 public static class World

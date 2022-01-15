@@ -50,11 +50,11 @@ public class StationRefiller : MonoBehaviour
         {
             case Refiller.RefillType.Fuel:
                 cost = GetRefillerValue(Refiller.RefillType.Fuel);
-                ApplyType(Player.inst.Ship().fuel, cost);
+                ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel), cost);
                 break;
             case Refiller.RefillType.Curpus:
                 cost = GetRefillerValue(Refiller.RefillType.Curpus);
-                ApplyType(Player.inst.Ship().hp, cost);
+                ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health), cost);
                 break;
         }
     }
@@ -68,6 +68,7 @@ public class StationRefiller : MonoBehaviour
                 data.value++;
             }
         }
+        data.Clamp();
         Player.inst.cargo.UpdateInventory();
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
@@ -67,10 +68,23 @@ namespace Game.Editor
             drawStats = EditorGUILayout.Foldout(drawStats, "Stats", true);
             if (drawStats)
             {
-                ship.hp = DrawEditor("HP", ship.hp);
-                ship.shields = DrawEditor("Shields", ship.shields);
-                ship.fuel = DrawEditor("Fuel", ship.fuel);
-                ship.heat = DrawEditor("Heat", ship.heat);
+                for (int i = 0; i < ship.shipValuesList.Count; i++)
+                {
+                    var res = DrawEditor(ship.shipValuesList[i]);
+                    if (res != null)
+                    {
+                        ship.shipValuesList[i] = res;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                if (GUILayout.Button("Add"))
+                {
+                    ship.shipValuesList.Add(new ShipClaped());
+                }
             }
             
             TweaksEditor.HorizontalLine(Color.gray);
@@ -90,6 +104,22 @@ namespace Game.Editor
                     ship.slots[i].uid = EditorGUILayout.IntField(ship.slots[i].uid);
                     ship.slots[i].slotLevel = EditorGUILayout.IntField(ship.slots[i].slotLevel);
                     ship.slots[i].slotType = (ItemType) EditorGUILayout.EnumPopup(ship.slots[i].slotType);
+                    
+                    EditorGUI.BeginChangeCheck();
+                    {
+                        ship.slots[i].current = (Item)EditorGUILayout.ObjectField(ship.slots[i].current, typeof(Item));
+                    }
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        if (ship.slots[i].current != null)
+                        {
+                            if (ship.slots[i].current.itemType != ship.slots[i].slotType)
+                            {
+                                ship.slots[i].current = null;
+                            }
+                        }
+                    }
+                    
                     if (GUILayout.Button("-"))
                     {
                         ship.slots.RemoveAt(i);
@@ -107,7 +137,7 @@ namespace Game.Editor
             EditorGUIUtility.labelWidth = oldLengh;
         }
 
-        public ShipClaped DrawEditor(string label,  ShipClaped clamped)
+        public ShipClaped DrawEditor(ShipClaped clamped)
         {
             GUILayout.BeginHorizontal();
             {
@@ -117,14 +147,29 @@ namespace Game.Editor
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             {
-                EditorGUILayout.LabelField(label + ":", EditorStyles.boldLabel, GUILayout.Width(60));
+                var old = clamped.name;
+                EditorGUI.BeginChangeCheck();
+                {
+                    clamped.name = (ItemShip.ShipValuesTypes) EditorGUILayout.EnumPopup(clamped.name, GUILayout.Width(60));
+                }
+                if (EditorGUI.EndChangeCheck())
+                {
+                    if (ship.shipValuesList.Find(x => x.name == clamped.name && x != clamped) != null)
+                    {
+                        clamped.name = old;
+                    }
+                }
                 EditorGUILayout.LabelField("Value");
                 EditorGUILayout.LabelField("Max");
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Space(65);
+                if (GUILayout.Button("-", GUILayout.Width(65)))
+                {
+                    ship.shipValuesList.Remove(clamped);
+                    return null;
+                }
                 clamped.value = EditorGUILayout.FloatField(clamped.value);
                 clamped.max = EditorGUILayout.FloatField(clamped.max);
             }

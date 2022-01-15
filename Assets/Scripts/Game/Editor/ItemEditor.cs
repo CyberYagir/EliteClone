@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -58,6 +59,51 @@ namespace Game.Editor
                 keysOpen = EditorGUILayout.Foldout(keysOpen, "Keys Values", true);
                 if (keysOpen)
                 {
+                    if (item.keysData == null)
+                    {
+                        item.keysData = new List<KeyPair>();
+                        item.keysData.Add(new KeyPair()
+                        {
+                            KeyPairType = KeyPairType.Int, KeyPairValue = KeyPairValue.Level, num = 1
+                        });
+                        item.keysData.Add(new KeyPair()
+                        {
+                            KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Mass, num = 1f
+                        });
+
+                        if (item.itemType == ItemType.Weapon)
+                        {
+                            item.keysData.Add(new KeyPair()
+                            {
+                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Cooldown, num = 0.2f
+                            });
+                            item.keysData.Add(new KeyPair()
+                            {
+                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Damage, num = 1f
+                            });
+                            item.keysData.Add(new KeyPair()
+                            {
+                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = -1f
+                            });
+                        }
+
+                        if (item.itemType == ItemType.Generator)
+                        {
+                            item.keysData.Add(new KeyPair()
+                            {
+                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = 5f
+                            });
+                        }
+                        
+                        if (item.itemType == ItemType.Armor || item.itemType == ItemType.Cooler)
+                        {
+                            item.keysData.Add(new KeyPair()
+                            {
+                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Value, num = 10f
+                            });
+                        }
+                    }
+                    
                     for (int i = 0; i < item.keysData.Count; i++)
                     {
                         GUILayout.BeginHorizontal();
@@ -100,6 +146,10 @@ namespace Game.Editor
                     if (GUILayout.Button("Add"))
                     {
                         item.keysData.Add(new KeyPair());
+                    }
+                    if (GUILayout.Button("Reset"))
+                    {
+                        item.keysData = null;
                     }
                 }
             }

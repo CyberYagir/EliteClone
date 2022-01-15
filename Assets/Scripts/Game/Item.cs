@@ -92,12 +92,12 @@ public class IDTruple
 
 public enum KeyPairValue
 {
-    Damage, Cooldown, Regen, HeatAdd, Mass, Level, Value
+    Damage, Cooldown, Mass, Level, Value, Energy
 }
 
 public enum ItemType
 {
-    None, Weapon, Shields, Armor, Cooler
+    None, Weapon, Shields, Armor, Cooler, Generator
 }
 public enum KeyPairType
 {

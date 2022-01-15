@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,10 +16,12 @@ public class HPShieldsCanvas : MonoBehaviour
     [SerializeField] Bar hp, shield;
     private void Update()
     {
-        hp.img.fillAmount = (Player.inst.Ship().hp.value / Player.inst.Ship().hp.max);
+        var hpValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health);
+        hp.img.fillAmount = (hpValue.value / hpValue.max);
         hp.text.text = "Corpus " + (int)(hp.img.fillAmount * 100) + "%";
         
-        shield.img.fillAmount = (Player.inst.Ship().shields.value / Player.inst.Ship().shields.max);
+        var shValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
+        shield.img.fillAmount = (shValue.value / shValue.max);
         shield.text.text = "Shields " + (int)(shield.img.fillAmount * 100) + "%";
     }
 }

@@ -3,13 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game;
 using UnityEngine;
-
-
-[System.Serializable]
-public class SpaceShip
-{
-    
-}
+using static Game.ItemShip.ShipValuesTypes;
 
 public class Player : MonoBehaviour
 {
@@ -40,19 +34,20 @@ public class Player : MonoBehaviour
     public void AddHeat(float heat)
     {
         var currShip = this.spaceShip.GetShip();
-        currShip.heat.value += heat * Time.deltaTime;
-        if (currShip.heat.value > currShip.heat.max)
+        var temperature = currShip.GetValue(Temperature);
+        temperature.value += heat * Time.deltaTime;
+        if (temperature.value > temperature.max)
         {
-            currShip.heat.value = currShip.heat.max;
-            currShip.hp.value -= Time.deltaTime;
+            temperature.Clamp();
+            currShip.GetValue(Health).value -= Time.deltaTime;
             WarningManager.AddWarning("Heat level critical!", WarningTypes.Damage);
         }
 
         if (heat > 0)
             heatTime = 0;
-        if (currShip.heat.value < 0)
+        if (currShip.GetValue(Temperature).value < 0)
         {
-            currShip.heat.value = 0;
+            currShip.GetValue(Temperature).value = 0;
         }
     }
 
@@ -99,7 +94,6 @@ public class Player : MonoBehaviour
         {
             inst = this;
             spaceShip = GetComponent<Ship>();
-            spaceShip.SetShip(spaceShip.CloneShip());
             GalaxyGenerator.LoadSystems();
             control = GetComponent<ShipController>();
             cargo = GetComponent<Cargo>();
@@ -109,7 +103,10 @@ public class Player : MonoBehaviour
             land = GetComponent<LandManager>();
             quests = GetComponent<AppliedQuests>();
             models = GetComponent<ShipModels>();
-            models.InitShip(Ship());
+
+            spaceShip.OnChangeShip += models.InitShip;
+            
+            spaceShip.SetShip(spaceShip.CloneShip());
         }
     }
 
@@ -117,6 +114,14 @@ public class Player : MonoBehaviour
     {
         return spaceShip.GetShip();
     }
+    
+    public void LoadShip(ShipData data)
+    {
+        spaceShip.LoadShip(data);
+        spaceShip.GetShip().ValuesToDictionary();
+    }
+    
+    
     public WorldSpaceObject GetTarget()
     {
         return targets.target;

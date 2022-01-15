@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Game;
 using Quests;
 using UnityEngine;
 public class PlayerData
@@ -9,7 +10,8 @@ public class PlayerData
     public Vector3 WorldPos;
     public Vector3 Pos;
     public Vector3 Rot;
-    public float Fuel, Health, Shields, Speed;
+    public float Speed;
+    public ShipData Ship;
     public Dictionary<string, object> Keys;
     public LandLocation IsLanded;
     public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
@@ -77,10 +79,9 @@ public class SaveLoadData : MonoBehaviour
 
                 p.transform.position = playerData.Pos;
                 p.transform.eulerAngles = playerData.Rot;
-                
-                p.Ship().fuel.value = playerData.Fuel;
-                p.Ship().hp.value = playerData.Health;
-                p.Ship().shields.value = playerData.Shields;
+
+                p.LoadShip(playerData.Ship);
+
                 p.control.speed = playerData.Speed;
                 keys = playerData.Keys;
                 p.land.SetLand(playerData.IsLanded);
@@ -92,6 +93,7 @@ public class SaveLoadData : MonoBehaviour
         {
             Save();
         }
+        
     }
 
     public void Save()
@@ -100,9 +102,7 @@ public class SaveLoadData : MonoBehaviour
         var p = Player.inst;
         var playerData = new PlayerData()
         {
-            Fuel = p.Ship().fuel.value,
-            Health = p.Ship().hp.value,
-            Shields = p.Ship().shields.value,
+            Ship = p.Ship().SaveShip(),
             Speed = p.control.speed,
             Pos = p.transform.position,
             Rot = p.transform.eulerAngles,

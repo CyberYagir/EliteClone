@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using Quests;
 using TMPro;
 using UnityEngine;
+using static Game.ItemShip.ShipValuesTypes;
 
 public class BaseWindow : MonoBehaviour
 {
@@ -51,8 +53,8 @@ public class BaseWindow : MonoBehaviour
 
     public void UpdateCosts()
     {
-        repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().hp.max - Player.inst.Ship().hp.value));
-        fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().fuel.max - Player.inst.Ship().fuel.value));
+        repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().GetValue(Health).max - Player.inst.Ship().GetValue(Health).value));
+        fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().GetValue(Fuel).max - Player.inst.Ship().GetValue(Fuel).value));
     }
     private void Update()
     {

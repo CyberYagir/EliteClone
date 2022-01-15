@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Game.ItemShip.ShipValuesTypes;
 
 [System.Serializable]
 public class WarpDisplayCanvasRow
@@ -44,8 +46,8 @@ public class StatsDisplayCanvas : MonoBehaviour
     {
         var ship = player.control;
         speedValue.SetValue(ship.speed, player.Ship().data.maxSpeedUnits, $"{ship.moveMode.ToString()} {(ship.speed * World.unitSize).ToString("F0")} u/s");
-        fuelValue.SetValue(player.Ship().fuel.value, player.Ship().fuel.max);
-        heatValue.SetValue(player.Ship().heat.value, player.Ship().heat.max);
+        fuelValue.SetValue(player.Ship().GetValue(Fuel).value, player.Ship().GetValue(Fuel).max);
+        heatValue.SetValue(player.Ship().GetValue(Temperature).value, player.Ship().GetValue(Temperature).max);
         warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
         warpDisplayRow.UpdateColor();
     }
