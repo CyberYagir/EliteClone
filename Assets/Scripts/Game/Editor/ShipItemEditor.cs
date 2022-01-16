@@ -10,7 +10,6 @@ namespace Game.Editor
     public class ShipItemEditor : UnityEditor.Editor
     {
         UnityEditor.Editor gameObjectEditor;
-        static Texture2D previewBackgroundTexture;
         private static bool drawStats, drawSlots;
         private ItemShip ship;
         private GameObject mesh;
@@ -18,22 +17,16 @@ namespace Game.Editor
         {
             ship = target as ItemShip;
             mesh = Instantiate(ship.shipModel);
-
-            if (previewBackgroundTexture == null)
-            {
-                var path = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("Front_1K_TEX")[0]);
-                previewBackgroundTexture = (Texture2D)AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D));
-            }
-        
-            mesh.hideFlags = HideFlags.HideInHierarchy;
+            mesh.hideFlags = HideFlags.HideAndDontSave;
         }
     
         private void OnDisable()
         {
-            DestroyImmediate(mesh.gameObject);
             EditorUtility.SetDirty(ship);
             AssetDatabase.SaveAssets();
-            //AssetDatabase.Refresh();
+            gameObjectEditor.ResetTarget();
+            DestroyImmediate(gameObjectEditor);
+            DestroyImmediate(mesh.gameObject);
         } 
 
         public override void OnInspectorGUI()

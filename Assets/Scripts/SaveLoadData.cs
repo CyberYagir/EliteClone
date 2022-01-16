@@ -31,7 +31,10 @@ public class SaveLoadData : MonoBehaviour
     Dictionary<string, object> keys = new Dictionary<string, object>();
     private void Awake()
     {
-        Load();
+        if (Player.inst)
+        {
+            Load();
+        }
     }
 
     public bool ExKey(string name)
@@ -62,14 +65,12 @@ public class SaveLoadData : MonoBehaviour
         keys.Remove(name);
         Save();
     }
-    
+
     public void Load()
     {
-        if (File.Exists(PlayerDataManager.PlayerDataFile))
+        var playerData = LoadData();
+        if (playerData != null)
         {
-            var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
-            PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(json);
-
             var world = GameObject.FindGameObjectWithTag("WorldHolder");
             var p = Player.inst;
 
@@ -93,7 +94,17 @@ public class SaveLoadData : MonoBehaviour
         {
             Save();
         }
-        
+    }
+
+    public PlayerData LoadData()
+    {
+        if (File.Exists(PlayerDataManager.PlayerDataFile))
+        {
+            var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
+            PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(json);
+            return playerData;
+        }
+        return null;
     }
 
     public void Save()
@@ -119,6 +130,9 @@ public class SaveLoadData : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Save();
+        if (Player.inst)
+        {
+            Save();
+        }
     }
 }
