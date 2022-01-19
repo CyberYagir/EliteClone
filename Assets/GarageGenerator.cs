@@ -7,8 +7,7 @@ using UnityEngine;
 public class GarageGenerator : MonoBehaviour
 {
     public static GarageGenerator Instance;
-    
-    [SerializeField] private SaveLoadData saves;
+    [SerializeField] private GarageDataCollect dataCollect;
     [SerializeField] private ItemShip ship;
     private PlayerData playerData;
 
@@ -20,12 +19,13 @@ public class GarageGenerator : MonoBehaviour
 
     private void Start()
     {
+        dataCollect.InitDataCollector();
         LoadShip();
     }
 
     public void LoadShip()
     {
-        playerData = saves.LoadData();
+        playerData = dataCollect.playerData;
         ship = playerData.Ship.GetShip();
         OnChangeShip.Invoke();
     }

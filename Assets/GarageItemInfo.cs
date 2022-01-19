@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -6,12 +7,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GarageItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]private Image image;
     [SerializeField]private TMP_Text itemName, itemData, itemValue, itemType;
     [SerializeField] private GarageSlotInfo info;
     private Item currentItem;
+
+    private void Start()
+    {
+        Init();
+    }
 
     public void Init(Item item)
     {
@@ -36,20 +42,13 @@ public class GarageItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         for (int i = 0; i < currentItem.keysData.Count; i++)
         {
             var key = currentItem.keysData[i];
-            itemData.text += key.KeyPairValue.ToString() + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
+            itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
         }
     }
+    
 
-    public void Show()
-    {
-        GetComponent<RectTransform>().DOLocalMove(new Vector2(500, 300), 0.5f);
-    }
-
-    public void Hide()
-    {
-        GetComponent<RectTransform>().DOLocalMove(new Vector2(500, 900), 0.5f);
-    }
-
+   
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         info.over = true;

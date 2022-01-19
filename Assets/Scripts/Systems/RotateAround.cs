@@ -26,7 +26,7 @@ public class RotateAround : MonoBehaviour
 
     public void Rotate()
     {
-        var rnd = new System.Random(orbitID + DateTime.Today.Day);
+        var rnd = new System.Random(orbitID);
         transform.RotateAround(point.position, orbitRotation, rnd.Next(0, 360));
         transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
     }

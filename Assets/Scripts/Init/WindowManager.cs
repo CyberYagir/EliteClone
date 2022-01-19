@@ -18,7 +18,6 @@ public class WindowManager : MonoBehaviour
         foreach (var animations in customAnimate)
         {
             animations.CustomUpdate();
-            
         }
     }
 

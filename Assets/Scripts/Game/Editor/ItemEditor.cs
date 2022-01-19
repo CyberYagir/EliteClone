@@ -61,47 +61,7 @@ namespace Game.Editor
                 {
                     if (item.keysData == null)
                     {
-                        item.keysData = new List<KeyPair>();
-                        item.keysData.Add(new KeyPair()
-                        {
-                            KeyPairType = KeyPairType.Int, KeyPairValue = KeyPairValue.Level, num = 1
-                        });
-                        item.keysData.Add(new KeyPair()
-                        {
-                            KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Mass, num = 1f
-                        });
-
-                        if (item.itemType == ItemType.Weapon)
-                        {
-                            item.keysData.Add(new KeyPair()
-                            {
-                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Cooldown, num = 0.2f
-                            });
-                            item.keysData.Add(new KeyPair()
-                            {
-                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Damage, num = 1f
-                            });
-                            item.keysData.Add(new KeyPair()
-                            {
-                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = -1f
-                            });
-                        }
-
-                        if (item.itemType == ItemType.Generator)
-                        {
-                            item.keysData.Add(new KeyPair()
-                            {
-                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = 5f
-                            });
-                        }
-                        
-                        if (item.itemType == ItemType.Armor || item.itemType == ItemType.Cooler)
-                        {
-                            item.keysData.Add(new KeyPair()
-                            {
-                                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Value, num = 10f
-                            });
-                        }
+                        InitItem(item);
                     }
                     
                     for (int i = 0; i < item.keysData.Count; i++)
@@ -121,6 +81,11 @@ namespace Game.Editor
                                 }
                             }
 
+                            if (item.keysData[i].customName == "")
+                            {
+                                item.keysData[i].customName = EditorGUILayout.TextField(item.keysData[i].customName, GUILayout.Width(10));
+                            }
+                            
                             switch (item.keysData[i].KeyPairType)
                             {
                                 case KeyPairType.Int:
@@ -141,6 +106,10 @@ namespace Game.Editor
                             }
                         }
                         GUILayout.EndHorizontal();
+                        if (item.keysData[i].customName != "")
+                        {
+                            item.keysData[i].customName = EditorGUILayout.TextField("Custom Name: ", item.keysData[i].customName);
+                        }
                     }
 
                     if (GUILayout.Button("Add"))
@@ -160,6 +129,53 @@ namespace Game.Editor
         }
     
         
+        public void InitItem(Item item){
+            item.keysData = new List<KeyPair>();
+            item.keysData.Add(new KeyPair()
+            {
+                KeyPairType = KeyPairType.Int, KeyPairValue = KeyPairValue.Level, num = 1
+            });
+
+            item.keysData.Add(new KeyPair()
+            {
+                KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Mass, num = 1f
+            });
+            
+            if (item.itemType == ItemType.Weapon)
+            {
+                item.keysData.Add(new KeyPair()
+                {
+                    KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Cooldown, num = 0.2f
+                });
+                item.keysData.Add(new KeyPair()
+                {
+                    KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Damage, num = 1f
+                });
+                item.keysData.Add(new KeyPair()
+                {
+                    KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = -1f
+                });
+            }
+
+            if (item.itemType == ItemType.Generator)
+            {
+                item.keysData.Add(new KeyPair()
+                {
+                    KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Energy, num = 5f
+                });
+            }
+                        
+            if (item.itemType == ItemType.Armor || item.itemType == ItemType.Cooler)
+            {
+                item.keysData.Add(new KeyPair()
+                {
+                    KeyPairType = KeyPairType.Float, KeyPairValue = KeyPairValue.Value, num = 10f
+                });
+            }
+
+        }
 
     }
+    
+    
 }

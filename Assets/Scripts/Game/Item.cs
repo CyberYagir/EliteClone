@@ -108,6 +108,7 @@ public class KeyPair
 {
     public KeyPairValue KeyPairValue;
     public KeyPairType  KeyPairType;
+    public string customName = "";
     public float num = 1 ;
     public string str;
 

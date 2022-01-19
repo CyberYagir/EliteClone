@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CustomAnimate : MonoBehaviour
 {
-    [SerializeField] private Vector2 endPos;
+    [SerializeField] protected Vector2 endPos;
     [SerializeField] public bool reverse;
     [SerializeField] private float speed;
 
-    private RectTransform rect;
-    private Vector2 startPos;
+    protected RectTransform rect;
+    protected Vector2 startPos;
 
     private bool inited;
-    private void Init()
+    protected void Init()
     {
         rect = GetComponent<RectTransform>();
         startPos = rect.anchoredPosition;
@@ -33,4 +34,15 @@ public class CustomAnimate : MonoBehaviour
         else 
             gameObject.SetActive(true);
     }
+    
+    public void Show()
+    {
+        rect.DOLocalMove(endPos, 0.5f);
+    }
+
+    public void Hide()
+    {
+        rect.DOLocalMove(startPos, 0.5f);
+    }
+    
 }
