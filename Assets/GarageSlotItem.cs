@@ -14,8 +14,9 @@ public class GarageSlotItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private RectTransform select, point;
     [SerializeField] private Image image;
     [SerializeField] private TMP_Text text;
-    [SerializeField] private Slot slot;
     [SerializeField] private GarageSlotInfo slotInfo;
+    
+    [SerializeField] public Slot slot;
     public bool over;
     [SerializeField] private float minX, maxX;
 

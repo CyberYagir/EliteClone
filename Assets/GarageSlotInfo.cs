@@ -46,6 +46,7 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
         }
         else
         {
+            rect.localScale = Vector3.Lerp(rect.localScale, Vector3.one, Time.deltaTime * 10f);
             lastItem.Select();
             time = 0;
         }
