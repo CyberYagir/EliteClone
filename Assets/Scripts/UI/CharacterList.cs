@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Quests;
 using UI;
 using UnityEngine;
 
@@ -51,6 +52,8 @@ public class CharacterList : BaseTabUI
         ChangeSelect.Run();
     }
 
+
+    
     private void Update()
     {
         if (InputM.GetAxisDown(KAction.TabsHorizontal))
@@ -82,10 +85,11 @@ public class CharacterList : BaseTabUI
         
         items = new List<ButtonEffect>();
         WorldOrbitalStation.Instance.RemoveCharactersWithoutQuests();
+        int id = 0;
         foreach (var character in WorldOrbitalStation.Instance.characters)
         {
             var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
-            it.InitQuesterItem(character.fraction, baseWindow.GetIcon(character.fraction).icon, character.firstName + " " + character.lastName, character);
+            it.InitQuesterItem(character.fraction, baseWindow.GetIcon(character.fraction).icon, character.firstName + " " + character.lastName, character, id);
             it.gameObject.SetActive(true);
             var bEffect = it.GetComponent<ButtonEffect>();
             items.Add(bEffect);
@@ -93,6 +97,8 @@ public class CharacterList : BaseTabUI
             {
                 bEffect.SetNoneColor(Color.green);
             }
+
+            id++;
         }
         upDownUI.itemsCount = WorldOrbitalStation.Instance.characters.Count;
 

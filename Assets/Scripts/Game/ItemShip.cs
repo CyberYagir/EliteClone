@@ -68,8 +68,7 @@ namespace Game
         {
             if (itemData != null)
             {
-                current = ItemsManager.GetItem(itemData.idName);
-                current.amount.SetValue(itemData.value);
+                current = ItemsManager.GetItem(itemData);
             }
         }
 

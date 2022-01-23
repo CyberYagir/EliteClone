@@ -65,7 +65,7 @@ public class QuestListUI : BaseTabUI
             if (quests[i].questState != Quest.QuestComplited.Rewarded)
             {
                 var questItem = Instantiate(item, holder);
-                questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString());
+                questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString(), i);
                 questItem.gameObject.SetActive(true);
                 items.Add(questItem.GetComponent<ButtonEffect>());
                 count++;

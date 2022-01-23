@@ -18,5 +18,6 @@ public class BaseUIOverlay : MonoBehaviour
     private void Update()
     {
         image.color = Color.Lerp(image.color, behaviour.enabled ? new Color(0, 0, 0, 0): color, 10 * Time.deltaTime);
+        image.raycastTarget = !behaviour.enabled;
     }
 }

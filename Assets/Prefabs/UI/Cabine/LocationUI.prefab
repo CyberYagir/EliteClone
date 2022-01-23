@@ -2666,6 +2666,7 @@ GameObject:
   - component: {fileID: 8324185352536494133}
   - component: {fileID: 2415956190951680738}
   - component: {fileID: 2524197266629790964}
+  - component: {fileID: 8288398905490648906}
   m_Layer: 9
   m_Name: Item
   m_TagString: Untagged
@@ -2765,6 +2766,62 @@ MonoBehaviour:
   overColor: {r: 0, g: 0.6039216, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &8288398905490648906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4325401120802694995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 8324185352536494133}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2415956190951680738}
+        m_TargetAssemblyTypeName: QuesterItemUI, Assembly-CSharp
+        m_MethodName: SetSelectedButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4365979941570676185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2868,6 +2925,7 @@ GameObject:
   - component: {fileID: 8745523896066197651}
   - component: {fileID: 3258845995168680948}
   - component: {fileID: 7285009023138859945}
+  - component: {fileID: 8243670610530764704}
   m_Layer: 9
   m_Name: Item
   m_TagString: Untagged
@@ -2963,6 +3021,62 @@ MonoBehaviour:
   overColor: {r: 0, g: 0.6039216, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &8243670610530764704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744912430395142361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 8745523896066197651}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3258845995168680948}
+        m_TargetAssemblyTypeName: QuestItemUI, Assembly-CSharp
+        m_MethodName: SelectItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4852204411105310287
 GameObject:
   m_ObjectHideFlags: 0
@@ -3981,6 +4095,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 0
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7929113018709685554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4389,6 +4509,7 @@ GameObject:
   - component: {fileID: 6489998055934042082}
   - component: {fileID: 534097234141873076}
   - component: {fileID: 3056952207167318172}
+  - component: {fileID: 8151682439328157966}
   m_Layer: 9
   m_Name: BaseUI
   m_TagString: Untagged
@@ -4515,6 +4636,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45658d616b07a8e4888da16094ffa8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8151682439328157966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7245148032811826322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &7355796349923170193
 GameObject:
   m_ObjectHideFlags: 0
@@ -5119,6 +5257,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 0
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1469917542893604067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5137,6 +5281,9 @@ MonoBehaviour:
   questList: {fileID: 7929113018709685554}
   item: {fileID: 2415956190951680738}
   buttonsUI: {fileID: 2619415509709442996}
+  ChangeSelect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7252660012507161187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,6 +5815,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 1
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &10471533801351863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6052,6 +6205,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8822533055014831055}
     m_Modifications:
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5098800406241735250}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: QuestInfoUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921842, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_Name
       value: Apply

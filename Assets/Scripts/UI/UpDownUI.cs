@@ -26,4 +26,11 @@ public class UpDownUI : MonoBehaviour
             }
         }
     }
+
+    public void ForceChangeSelect(int newSelected)
+    {
+        selectedIndex = newSelected;
+        OnNavigateChange.Run();
+        OnChangeSelected.Run();
+    }
 }

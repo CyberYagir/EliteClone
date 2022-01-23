@@ -15,9 +15,9 @@ public class QuesterItemUI : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text questerNameT, fractionNameT;
     private Character character;
+    private int itemIndex;
 
-
-    public void InitQuesterItem(Fraction _fraction, Sprite _frationImage, string _questerName, Character _character)
+    public void InitQuesterItem(Fraction _fraction, Sprite _frationImage, string _questerName, Character _character, int itemID)
     {
         fraction = _fraction;
         image.sprite = _frationImage;
@@ -26,10 +26,17 @@ public class QuesterItemUI : MonoBehaviour
         fractionNameT.text = fraction.ToString();
 
         character = _character;
+
+        itemIndex = itemID;
     }
 
     public Character GetCharacter()
     {
         return character;
+    }
+
+    public void SetSelectedButton()
+    {
+        GetComponentInParent<CharacterList>().upDownUI.ForceChangeSelect(itemIndex);
     }
 }

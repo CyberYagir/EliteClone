@@ -12,11 +12,13 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         over = ActionType.Over;
+        CursorManager.ChangeCursor(CursorManager.CursorType.Action);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         over = ActionType.None;
+        CursorManager.ChangeCursor(CursorManager.CursorType.Normal);
     }
 
     private float startPixelsPerUnit;

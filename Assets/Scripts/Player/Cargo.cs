@@ -86,8 +86,7 @@ public class Cargo : MonoBehaviour
     {
         foreach (var data in itemDatas)
         {
-            var item = ItemsManager.GetItem(data.idName).Clone();
-            item.amount.SetValue(data.value);
+            var item = ItemsManager.GetItem(data);
             AddItem(item, false);
         }
 

@@ -44,6 +44,13 @@ public class ItemsManager : MonoBehaviour
     {
         return itemList.Get(id);
     }
+    
+    public static Item GetItem(Cargo.ItemData data)
+    {
+        var item = itemList.Get(data.idName);
+        item.amount.SetValue(data.value);
+        return item;
+    }
 
     public static Item GetItem(Item id)
     {

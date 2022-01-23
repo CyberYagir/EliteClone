@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e276123f1524f61958afcdb5f920d61, type: 3}
+  m_Name: CursorSheet
+  m_EditorClassIdentifier: 
+  cursors:
+  - type: 0
+    hotpost: {x: 0, y: 0}
+    texture: {fileID: 2800000, guid: c26fcd81f46c6cb4490338d25866fa72, type: 3}
+  - type: 1
+    hotpost: {x: 32, y: 32}
+    texture: {fileID: 2800000, guid: 6c5ba7152302c0445890d2ba20663f38, type: 3}
+  - type: 2
+    hotpost: {x: 32, y: 32}
+    texture: {fileID: 2800000, guid: 9e996f642b184de478d1131143edfcf3, type: 3}

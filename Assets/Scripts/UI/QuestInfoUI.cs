@@ -39,7 +39,7 @@ public class QuestInfoUI : BaseTabUI
         Disable();
     }
 
-    private void SelectButton()
+    public void SelectButton()
     {
         if (upDownUI.selectedIndex == 0)
         {
