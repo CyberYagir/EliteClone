@@ -3,13 +3,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Object = UnityEngine.Object;
 
-public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler
+public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
 {
     [SerializeField] protected bool over, clicked;
     protected Sprite dragImage;
     protected Object data;
 
     private Vector2 startPos;
+
+
+    public Object GetData() => data;
     
     private void LateUpdate()
     {
@@ -52,6 +55,7 @@ public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerD
         }
     }
     
+    
     public virtual void StartDrag(){}
 
     public virtual void StopDrag()
@@ -59,6 +63,13 @@ public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerD
         over = false;
         clicked = false;
     }
+    
+    public virtual void Clicked(){}
 
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (over && clicked && Vector2.Distance(startPos, Input.mousePosition) < 2)
+            Clicked();
+    }
 }

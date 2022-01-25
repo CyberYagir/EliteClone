@@ -32,7 +32,7 @@ public class DragManager : MonoBehaviour
                 CursorManager.ChangeCursor(CursorManager.CursorType.Drag);
             }
 
-            movableObject.position = Input.mousePosition;
+            movableObject.position = Vector3.Lerp(movableObject.position, Input.mousePosition, (Screen.width * 0.01f) * Time.deltaTime);
         }
     }
 
@@ -54,6 +54,7 @@ public class DragManager : MonoBehaviour
         obj.StartDrag();
         image.sprite = sprite;
         CursorManager.ChangeCursor(CursorManager.CursorType.Drag);
+        movableObject.position = Input.mousePosition;
         return true;
     }
 }

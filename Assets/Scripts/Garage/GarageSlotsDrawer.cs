@@ -16,10 +16,16 @@ public class GarageSlotsDrawer : MonoBehaviour
     }
     [SerializeField] private Transform holder, item;
     [SerializeField] private List<Icon> icons = new List<Icon>();
+    private GarageSlotInfo slotInfo;
+    
+    
     private void Awake()
     {
+        slotInfo = FindObjectOfType<GarageSlotInfo>();
         GarageGenerator.OnChangeShip += Draw;
     }
+    
+    
     public void Draw()
     {
         item.gameObject.SetActive(false);
@@ -37,6 +43,10 @@ public class GarageSlotsDrawer : MonoBehaviour
             button.gameObject.SetActive(true);
             button.SetImage(icons.Find(x=>x.type == slot.slotType).icon);
             button.Init(slot.current, slot);
+            
+            
+            
+            slotInfo.OnChange += button.CheckDeselect;
         }
         
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());

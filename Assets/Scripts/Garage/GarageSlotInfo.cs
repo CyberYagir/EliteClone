@@ -10,16 +10,31 @@ using UnityEngine.UI;
 
 public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
-    [SerializeField] private TMP_Text slotText, slotLevel, slotType;
-    [SerializeField] private Image preview;
-    [SerializeField] private bool close;
+    [System.Serializable]
+    private class GarageSlotInfoUIData
+    {
+        public TMP_Text slotText, slotLevel, slotType;
+        public Image preview;
+        public ButtonEffect manageButton;
+        public ItemReplacer replacer;
+    }
+
+    [SerializeField] private GarageSlotInfoUIData options;
+    
+    
     
     private RectTransform rect;
     private float time;
+    private bool close;
+    
+    
     
     public bool over;
     public RectTransform last;
     public GarageSlotItem lastItem;
+
+    [HideInInspector]
+    public Event<GarageSlotInfo> OnChange = new Event<GarageSlotInfo>();
     private void Start()
     {
         gameObject.SetActive(false);
@@ -29,37 +44,96 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     {
         if (close && !over)
         {
-            time += Time.deltaTime;
-            if (time > 1)
-            {
-                rect.localScale = Vector3.Lerp(rect.localScale, Vector3.zero, Time.deltaTime * 10f);
-                if (rect.localScale.magnitude < 0.1f)
-                {
-                    if (lastItem != null)
-                    {
-                        lastItem.Deselect();
-                        lastItem = null;
-                    }
-                    gameObject.SetActive(false);
-                }
-            }
+            CloseCooldown();
         }
         else
         {
-            rect.localScale = Vector3.Lerp(rect.localScale, Vector3.one, Time.deltaTime * 10f);
-            lastItem.Select();
-            time = 0;
+            OverWindow();
         }
-        if (gameObject.activeSelf)
+
+        UpdateInfo();
+    }
+
+    public void CloseCooldown()
+    {
+        time += Time.deltaTime;
+        if (time > 1)
         {
-            var spacing = 50;
-            var pos = last.position;
-            rect.position = Vector3.Lerp(rect.position, pos, 5 * Time.deltaTime);
+            rect.localScale = Vector3.Lerp(rect.localScale, Vector3.zero, Time.deltaTime * 10f);
+            if (rect.localScale.magnitude < 0.1f)
+            {
+                if (lastItem != null)
+                {
+                    lastItem.Deselect();
+                    lastItem = null;
+                }
+                gameObject.SetActive(false);
+            }
         }
     }
 
-    public void Init(Slot slot, RectTransform postion, Sprite sprite, GarageSlotItem item)
+    public void OverWindow()
     {
+        rect.localScale = Vector3.Lerp(rect.localScale, Vector3.one, Time.deltaTime * 10f);
+        if (lastItem != null)
+        {
+            lastItem.Select();
+        }
+        time = 0;
+    }
+    
+
+    public void UpdateInfo()
+    {
+        if (gameObject.activeSelf)
+        {
+            rect.position = Vector3.Lerp(rect.position, last.position, 5 * Time.deltaTime);
+
+            ManageButton();
+            CheckRealTimeDrop();
+        }
+    }
+
+    public void CheckRealTimeDrop()
+    {
+        var isActive = DragManager.Instance.dragObject != null && lastItem.slot.slotType == (DragManager.Instance.dragObject.GetData() as Item).itemType;
+        if (lastItem && isActive)
+        {
+            options.replacer.enabled = isActive;
+        }
+        else
+        {
+            options.replacer.Disable();
+        }
+    }
+
+    public void ManageButton()
+    {
+        options.manageButton.gameObject.SetActive(lastItem != null && ItemReplacer.selectedSlot != lastItem.slot);
+        if (!options.manageButton.gameObject.activeSelf)
+        {
+            options.manageButton.over = ButtonEffect.ActionType.None;
+        }
+    }
+    
+    
+    public void CloseObject()
+    {
+        if (lastItem != null)
+        {
+            over = false;
+            time = 2;
+            lastItem.Deselect();
+            lastItem = null;
+        }
+        
+        ItemReplacer.SetSelected(null);
+    }
+    
+    public void Init(GarageSlotItem item)
+    {
+        var slot = item.slot;
+
         if (rect == null)
         {
             rect = GetComponent<RectTransform>();
@@ -67,11 +141,11 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
 
         time = 0;
         close = false;
-        slotText.text = $"Slot [{slot.uid}]";
-        slotLevel.text = "Level: " + slot.slotLevel.ToString();
-        slotType.text = "Type: " + slot.slotType.ToString();
-        preview.sprite = sprite;
-        last = postion;
+        options.slotText.text = $"Slot [{slot.uid}]";
+        options.slotLevel.text = "Level: " + slot.slotLevel.ToString();
+        options.slotType.text = "Type: " + slot.slotType.ToString();
+        options.preview.sprite = slot.current.icon;
+        last = item.GetPoint();
         lastItem = item;
         var pos = new Vector3(last.anchoredPosition.x + last.sizeDelta.x + 20, last.anchoredPosition.y, 0);
 
@@ -82,6 +156,8 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
             rect.anchoredPosition = pos;
             gameObject.SetActive(true);
         }
+
+        OnChange.Run(this);
     }
 
     public void Close()

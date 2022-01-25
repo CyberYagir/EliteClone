@@ -8,69 +8,75 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GarageSlotItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class GarageSlotItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private RectTransform content;
-    [SerializeField] private RectTransform select, point;
-    [SerializeField] private Image image;
-    [SerializeField] private TMP_Text text;
-    [SerializeField] private GarageSlotInfo slotInfo;
-    
-    [SerializeField] public Slot slot;
-    public bool over;
+    [System.Serializable]
+    public class GarageSlotItemUIData
+    {
+        public RectTransform mover;
+        public RectTransform select, point;
+        public Image image;
+        public TMP_Text itemName;
+    }
+
+    [SerializeField] private GarageSlotItemUIData options;
     [SerializeField] private float minX, maxX;
+    //[SerializeField] private GarageSlotInfo slotInfo;
+
+    public Event OnEnter = new Event(), OnExit = new Event();
+    
+    [HideInInspector] public Slot slot;
+    public bool over;
 
     public void Init(Item item, Slot slt)
     {
         slot = slt;
-        text.text = item.itemName;
+        options.itemName.text = item.itemName;
     }
+    
 
-    private void FixedUpdate()
+    public void CheckDeselect(GarageSlotInfo slotInfo)
     {
-        if (slotInfo.last != point)
+        if (slotInfo.last != options.point)
         {
             Deselect();
         }
     }
 
+    public RectTransform GetPoint() => options.point;
+    
     private void Start()
     {
-        select.transform.localScale = new Vector3(0, 1, 1);
+        options.select.transform.localScale = new Vector3(0, 1, 1);
     }
 
     public void SetImage(Sprite img)
     {
-        image.sprite = img;
+        options.image.sprite = img;
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        slotInfo.Init(slot, point, image.sprite, this);
+        OnEnter.Run();
         Select();
     }
 
     public void Select()
     {
-        content.DOLocalMove(new Vector3(maxX, content.localPosition.y, content.localPosition.z), 0.2f);
-        select.DOScale(new Vector3(1, 1, 1), 0.5f);
+        options.mover.DOLocalMove(new Vector3(maxX, options.mover.localPosition.y, options.mover.localPosition.z), 0.2f);
+        options.select.DOScale(new Vector3(1, 1, 1), 0.5f);
         over = true;
     }
 
     public void Deselect()
     {
-        content.DOLocalMove(new Vector3(minX, content.localPosition.y, content.localPosition.z), 0.2f);
-        select.DOScale(new Vector3(0, 1, 1), 0.5f);
+        options.mover.DOLocalMove(new Vector3(minX, options.mover.localPosition.y, options.mover.localPosition.z), 0.2f);
+        options.select.DOScale(new Vector3(0, 1, 1), 0.5f);
         over = false;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        slotInfo.Close();
-        
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
+        OnExit.Run();
     }
 }
