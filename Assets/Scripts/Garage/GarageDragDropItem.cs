@@ -30,6 +30,6 @@ public class GarageDragDropItem : Draggable
     public override void Clicked()
     {
         base.Clicked();
-        GetComponentInParent<GarageExplorer>().SetItem(data as Item);
+        GetComponentInParent<GarageExplorer>().SetItem(data);
     }
 }

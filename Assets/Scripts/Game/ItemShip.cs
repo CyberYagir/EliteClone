@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -82,12 +83,13 @@ namespace Game
         public ShipVariables data;
         public List<Slot> slots;
         public Dictionary<ShipValuesTypes, ShipClaped> shipValues;
-
+        public Event OnChangeShipData = new Event();
             
         public enum ShipValuesTypes
         {
             Fuel, Health, Shields, Temperature
         }
+
         public List<ShipClaped> shipValuesList = new List<ShipClaped> { new ShipClaped(ShipValuesTypes.Fuel, 1000, 1000), new ShipClaped(ShipValuesTypes.Health, 100, 100), new ShipClaped(ShipValuesTypes.Shields, 100, 100), new ShipClaped(ShipValuesTypes.Temperature, 100, 100)};
         public ItemShip Clone()
         {
@@ -96,6 +98,22 @@ namespace Game
             return clone;
         }
 
+        public void ReplaceSlotItem(Item item, int slotID, Cargo cargo)
+        {
+            var slot = slots.Find(x => x.uid == slotID);
+            if (slot != null)
+            {
+                if (item.itemType == slot.slotType)
+                {
+                    var oldItem = slot.current;
+                    cargo.AddItem(oldItem);
+                    var removed = cargo.RemoveItem(item.id.idname);
+                    slot.current = removed;
+                }
+                OnChangeShipData.Invoke();
+            }
+        } 
+        
         public void ValuesToDictionary()
         {
             shipValues = new Dictionary<ShipValuesTypes, ShipClaped>();

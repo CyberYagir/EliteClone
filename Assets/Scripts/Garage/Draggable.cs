@@ -7,13 +7,13 @@ public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerD
 {
     [SerializeField] protected bool over, clicked;
     protected Sprite dragImage;
-    protected Object data;
+    protected Item data;
 
     private Vector2 startPos;
 
 
-    public Object GetData() => data;
-    
+    public Item GetData() => data;
+
     private void LateUpdate()
     {
         if (clicked)
@@ -31,7 +31,7 @@ public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerD
         }
     }
 
-    public virtual void Init(Sprite sprite, Object data)
+    public virtual void Init(Sprite sprite, Item data)
     {
         dragImage = sprite;
         this.data = data;

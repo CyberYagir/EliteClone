@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game;
 using UnityEngine;
 
 public class Cargo : MonoBehaviour
@@ -12,7 +13,7 @@ public class Cargo : MonoBehaviour
         public float value;
     }
     
-    private Ship currentShip;
+    private ItemShip currentShip;
     public List<Item> items { get; private set; } = new List<Item>();
     public float tons { get; private set; } = 0;
     public Event OnChangeInventory = new Event();
@@ -22,7 +23,18 @@ public class Cargo : MonoBehaviour
     
     private void Awake()
     {
-        currentShip = GetComponent<Ship>();
+        var ship = GetComponent<Ship>();
+        if (ship != null)
+        {
+            currentShip = ship.GetShip();
+        }
+    }
+
+
+    public void CustomInit(PlayerData data, ItemShip ship)
+    {
+        currentShip = ship;
+        LoadData(data.items);
     }
 
     private void Update()
@@ -135,7 +147,7 @@ public class Cargo : MonoBehaviour
             itemsWeight += item.amount.Value * (float)item.GetKeyPair(KeyPairValue.Mass);
         }
 
-        if (tons + itemsWeight < currentShip.GetShip().data.maxCargoWeight)
+        if (tons + itemsWeight < currentShip.data.maxCargoWeight)
         {
             if (add)
             {
@@ -159,7 +171,7 @@ public class Cargo : MonoBehaviour
         {
             var mass = (float) findedItem.GetKeyPair(KeyPairValue.Mass);
             var tonsWithOut = tons - (findedItem.amount.Value * mass);
-            var canAddByWeight = tonsWithOut + (item.amount.Value * mass) < currentShip.GetShip().data.maxCargoWeight;
+            var canAddByWeight = tonsWithOut + (item.amount.Value * mass) < currentShip.data.maxCargoWeight;
             if (findedItem.amount.Value + item.amount.Value < findedItem.amount.Max && canAddByWeight)
             {
                 findedItem.amount.AddValue(item.amount.Value);
@@ -175,7 +187,7 @@ public class Cargo : MonoBehaviour
         }
         else
         {
-            if (tons + itemMass < currentShip.GetShip().data.maxCargoWeight)
+            if (tons + itemMass < currentShip.data.maxCargoWeight)
             {
                 AddToInventory(item);
                 if (callEvent) OnChangeInventory.Run();
@@ -190,9 +202,9 @@ public class Cargo : MonoBehaviour
         tons +=  item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
     }
 
-    public Item RemoveItem(string itemName, float value = 1, bool callEvent = false)
+    public Item RemoveItem(string idName, float value = 1, bool callEvent = false)
     {
-        var item = FindItem(itemName);
+        var item = FindItem(idName);
         var removed = item.Clone();
         removed.amount.SetValue(0);
         if (item)
@@ -208,12 +220,12 @@ public class Cargo : MonoBehaviour
                     removed.amount.AddValue(1);
                 }
             }
-
             if (item.amount.Value == 0)
             {
                 items.Remove(item);
                 tons -= item.amount.Value * itemMass;
                 Destroy(item);
+                OnChangeInventory.Run();
             }
         }
 

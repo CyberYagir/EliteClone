@@ -15,17 +15,19 @@ public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitH
         itemInfo = FindObjectOfType<GarageItemInfo>();
         Init();
         UpdateList();
+        GarageDataCollect.OnChangeShip += UpdateList;
+        GarageDataCollect.Instance.ship.OnChangeShipData += UpdateList;
+        GarageDataCollect.Instance.cargo.OnChangeInventory += UpdateList;
     }
 
     public void UpdateList()
     {
         UITweaks.ClearHolder(holder);
-        foreach (var it in GarageDataCollect.Instance.playerData.items)
+        foreach (var it in GarageDataCollect.Instance.cargo.items)
         {
             var spawned = Instantiate(item, holder).GetComponent<GarageDragDropItem>();
-            var findedItem = ItemsManager.GetItem(it);
-            spawned.Init(findedItem.icon, findedItem);
-            spawned.SetSprite(findedItem.icon);
+            spawned.Init(it.icon, it);
+            spawned.SetSprite(it.icon);
             spawned.gameObject.SetActive(true);
         }
     }

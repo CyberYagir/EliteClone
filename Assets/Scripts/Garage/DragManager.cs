@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Object = System.Object;
 
@@ -12,9 +13,17 @@ public class DragManager : MonoBehaviour
     public Draggable dragObject;
     [SerializeField] private RectTransform movableObject;
     [SerializeField] private Image image;
+    [SerializeField] private GraphicRaycaster mainCanvas;
+    public Event<DragDropData> OnDrop = new Event<DragDropData>();
     private void Awake()
     {
         Instance = this;
+    }
+    
+    public class DragDropData
+    {
+        public GameObject hit;
+        public Item item;
     }
 
     private void Update()
@@ -40,6 +49,14 @@ public class DragManager : MonoBehaviour
     {
         if (dragObject != null)
         {
+            var hits = new List<RaycastResult>();
+            movableObject.gameObject.SetActive(false);
+            mainCanvas.Raycast(new PointerEventData(EventSystem.current){position = Input.mousePosition}, hits);
+            if (hits.Count != 0)
+            {
+                OnDrop.Run(new DragDropData(){ hit = hits[0].gameObject, item = dragObject.GetData()});
+            }
+
             dragObject.StopDrag();
             CursorManager.ChangeCursor(CursorManager.CursorType.Normal);
             dragObject = null;

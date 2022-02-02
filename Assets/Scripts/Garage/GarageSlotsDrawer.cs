@@ -22,10 +22,16 @@ public class GarageSlotsDrawer : MonoBehaviour
     private void Awake()
     {
         slotInfo = FindObjectOfType<GarageSlotInfo>();
-        GarageGenerator.OnChangeShip += Draw;
     }
-    
-    
+
+    private void Start()
+    {
+        GarageDataCollect.OnChangeShip += Draw;
+        GarageDataCollect.Instance.ship.OnChangeShipData += Draw;
+        Draw();
+    }
+
+
     public void Draw()
     {
         item.gameObject.SetActive(false);
@@ -35,9 +41,13 @@ public class GarageSlotsDrawer : MonoBehaviour
         vl.enabled = true;
         csf.enabled = true;
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-        
+        foreach (Transform child in holder)
+        {
+            child.gameObject.SetActive(false);
+        }
         UITweaks.ClearHolder(holder);
-        foreach (var slot in GarageGenerator.Instance.GetShip().slots)
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        foreach (var slot in GarageDataCollect.Instance.ship.slots)
         {
             var button = Instantiate(item.gameObject, holder).GetComponent<GarageSlotItem>();
             button.gameObject.SetActive(true);
@@ -48,9 +58,7 @@ public class GarageSlotsDrawer : MonoBehaviour
             
             slotInfo.OnChange += button.CheckDeselect;
         }
-        
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-        
         vl.enabled = false;
         csf.enabled = false;
     }

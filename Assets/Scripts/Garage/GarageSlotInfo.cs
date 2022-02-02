@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
-using Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -50,7 +46,6 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
         {
             OverWindow();
         }
-
         UpdateInfo();
     }
 
@@ -87,16 +82,22 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     {
         if (gameObject.activeSelf)
         {
-            rect.position = Vector3.Lerp(rect.position, last.position, 5 * Time.deltaTime);
+            if (rect != null)
+            {
+                if (last != null)
+                {
+                    rect.position = Vector3.Lerp(rect.position, last.position, 5 * Time.deltaTime);
+                }
 
-            ManageButton();
-            CheckRealTimeDrop();
+                ManageButton();
+                CheckRealTimeDrop();
+            }
         }
     }
 
     public void CheckRealTimeDrop()
     {
-        var isActive = DragManager.Instance.dragObject != null && lastItem.slot.slotType == (DragManager.Instance.dragObject.GetData() as Item).itemType;
+        var isActive = DragManager.Instance.dragObject != null && lastItem.slot.slotType == DragManager.Instance.dragObject.GetData().itemType;
         if (lastItem && isActive)
         {
             options.replacer.enabled = isActive;

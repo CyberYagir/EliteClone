@@ -21,6 +21,7 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
     [SerializeField] private GarageItemInfoUIData options;
     
     private GarageSlotInfo slotInfo;
+    private int inventoryID;
     private Item currentItem;
     private Slot currentSlot;
     private void Awake()
@@ -31,18 +32,45 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
     private void Start()
     {
         Init();
+        options.replacer.OnItemDrops += ItemDropped;
+    }
+
+    public void ItemDropped(Item drop)
+    {
+        if (currentSlot != null)
+        {
+            if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= currentSlot.slotLevel)
+            {
+                GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, currentSlot.uid, GarageDataCollect.Instance.cargo);
+                UpdateAll();
+            }
+        }
     }
 
     public void Update()
     {
-        if (currentSlot != null && currentItem != null && currentItem.itemType == currentSlot.slotType)
+        if (DragManager.Instance.dragObject != null)
         {
-            options.replacer.enabled = true;
+            var dragged = DragManager.Instance.dragObject.GetData();
+            if (currentSlot != null && currentItem != null && dragged.itemType == currentSlot.slotType)
+            {
+                options.replacer.enabled = true;
+            }
+            else
+            {
+                DisableReplacer();
+            }
         }
         else
         {
-            options.replacer.Disable();
+            DisableReplacer();
         }
+    }
+
+    public void DisableReplacer()
+    {
+        options.replacer.Disable();
+        options.replacer.enabled = false;
     }
 
     public void SetItem(Item item)
@@ -64,6 +92,14 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
 
     public void UpdateAll()
     {
+        if (currentSlot != null)
+        {
+            if (currentSlot.current != currentItem)
+            {
+                currentItem = currentSlot.current;
+            }
+        }
+
         options.itemName.text = currentItem.itemName;
         if (slotInfo.lastItem != null)
         {

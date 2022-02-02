@@ -10,9 +10,20 @@ public class ItemReplacer : MonoBehaviour
 
     public static Slot selectedSlot = null;
 
+    public Event<Item> OnItemDrops = new Event<Item>();
+
     private void Start()
     {
+        DragManager.Instance.OnDrop += OnDrop;
         UpdateVisible();
+    }
+
+    public void OnDrop(DragManager.DragDropData data)
+    {
+        if (data.hit == gameObject)
+        {
+            OnItemDrops.Run(data.item);
+        }
     }
 
     private void Update()

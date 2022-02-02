@@ -27,7 +27,14 @@ namespace Game.Editor
             gameObjectEditor.ResetTarget();
             DestroyImmediate(gameObjectEditor);
             DestroyImmediate(mesh.gameObject);
-        } 
+        }
+
+        private void OnDestroy()
+        {
+            gameObjectEditor.ResetTarget();
+            DestroyImmediate(gameObjectEditor);
+            DestroyImmediate(mesh.gameObject);
+        }
 
         public override void OnInspectorGUI()
         {

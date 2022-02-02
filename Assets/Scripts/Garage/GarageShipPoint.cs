@@ -12,7 +12,7 @@ public class GarageShipPoint : MonoBehaviour
 
     private void Awake()
     {
-        GarageGenerator.OnChangeShip += InitShip;
+        GarageDataCollect.OnChangeShip += InitShip;
     }
 
     public void InitShip()
@@ -34,7 +34,7 @@ public class GarageShipPoint : MonoBehaviour
             yield return new WaitForSeconds(5);
             Destroy(spawnedShip.gameObject);
         }
-        spawnedShip = Instantiate(GarageGenerator.Instance.GetShip().shipModel, transform);
+        spawnedShip = Instantiate(GarageDataCollect.Instance.ship.shipModel, transform);
         spawnedShip.transform.position = spawnPoint.position;
         spawnedShip.transform.localScale = Vector3.one;
         spawnedShip.transform.DOLocalMove(Vector3.zero, 5);
