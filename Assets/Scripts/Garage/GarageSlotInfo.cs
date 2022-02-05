@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -29,13 +30,28 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     public RectTransform last;
     public GarageSlotItem lastItem;
 
-    [HideInInspector]
     public Event<GarageSlotInfo> OnChange = new Event<GarageSlotInfo>();
+
+    public Event OnChangeItem = new Event();
     private void Start()
     {
         gameObject.SetActive(false);
+        options.replacer.OnItemDrops += ItemDropped;
     }
 
+    public void ItemDropped(Item drop)
+    {
+        if (lastItem != null)
+        {
+            if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= lastItem.slot.slotLevel)
+            {
+                GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, lastItem.slot.uid, GarageDataCollect.Instance.cargo);
+                UpdateInfo();
+                OnChangeItem.Run();
+            }
+        }
+    }
+    
     private void Update()
     {
         if (close && !over)

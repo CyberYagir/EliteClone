@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,13 +9,19 @@ using UnityEngine.UI;
 public class GarageDragDropItem : Draggable
 {
     [SerializeField] private Image image;
+    [SerializeField] private TMP_Text nameT, levelT;
 
-
-    public void SetSprite(Sprite sprite)
+    public void SetSprite(Item item)
     {
-        image.sprite = sprite;
+        image.sprite = item.icon;
+        nameT.text = item.itemName;
+        var level = (float) item.GetKeyPair(KeyPairValue.Level);
+        if (level != 0f)
+            levelT.text = "Level: " + (int)level;
+        else
+            levelT.gameObject.SetActive(false);
     }
-    
+
     public override void StartDrag()
     {
         base.StartDrag();

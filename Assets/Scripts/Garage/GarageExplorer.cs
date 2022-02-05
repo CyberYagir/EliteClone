@@ -22,12 +22,12 @@ public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitH
 
     public void UpdateList()
     {
-        UITweaks.ClearHolder(holder);
+        UITweaks.ClearHolderAll(holder);
         foreach (var it in GarageDataCollect.Instance.cargo.items)
         {
             var spawned = Instantiate(item, holder).GetComponent<GarageDragDropItem>();
             spawned.Init(it.icon, it);
-            spawned.SetSprite(it.icon);
+            spawned.SetSprite(it);
             spawned.gameObject.SetActive(true);
         }
     }

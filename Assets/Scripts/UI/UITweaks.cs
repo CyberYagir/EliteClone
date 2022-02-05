@@ -21,5 +21,20 @@ namespace UI
                 Debug.LogError("Holder null!!");
             }
         }
+
+        public static void ClearHolderAll(Transform holder)
+        {
+            if (holder != null)
+            {
+                foreach (Transform item in holder)
+                {
+                    Destroy(item.gameObject);
+                }
+            }
+            else
+            {
+                Debug.LogError("Holder null!!");
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ public class Event : UnityEvent
     }
 }
 
+[System.Serializable]
 public class Event<T> : UnityEvent<T>
 {
     public static Event<T> operator+ (Event<T> b, UnityAction<T> c) {

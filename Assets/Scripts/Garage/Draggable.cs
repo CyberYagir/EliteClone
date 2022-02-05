@@ -18,7 +18,7 @@ public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerD
     {
         if (clicked)
         {
-            if (Vector2.Distance(startPos, Input.mousePosition) > GetComponent<RectTransform>().sizeDelta.x)
+            if (Vector2.Distance(startPos, Input.mousePosition) > GetComponent<RectTransform>().sizeDelta.y)
             {
                 DragManager.Instance.SetDrag(this, dragImage);
             }

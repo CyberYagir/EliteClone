@@ -27,11 +27,12 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
     private void Awake()
     {
         slotInfo = FindObjectOfType<GarageSlotInfo>();
+        slotInfo.OnChangeItem += UpdateAll;
     }
 
     private void Start()
     {
-        Init();
+        Init(); 
         options.replacer.OnItemDrops += ItemDropped;
     }
 

@@ -9,7 +9,6 @@ public class ItemReplacer : MonoBehaviour
     [SerializeField] private GameObject icon, replacer;
 
     public static Slot selectedSlot = null;
-
     public Event<Item> OnItemDrops = new Event<Item>();
 
     private void Start()
