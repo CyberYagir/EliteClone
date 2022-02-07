@@ -60,6 +60,13 @@ public class Cargo : MonoBehaviour
         }
     }
 
+    public void AddCredits(float count)
+    {
+        var credits = ItemsManager.GetCredits().Clone();
+        credits.amount.SetValue(count);
+        AddItem(credits, true);
+        OnChangeInventory.Run();
+    }
     public bool RemoveCredits(float remove, bool updateInventory = false)
     {
         var credit = FindItem("credit");

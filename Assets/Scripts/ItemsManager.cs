@@ -15,9 +15,19 @@ public class ItemsManager : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    public static void Init()
+    {
         itemList = Resources.LoadAll<ItemList>("").ToList().First();
         itemRewards = Resources.LoadAll<QuestsRewards>("").ToList().First();
         shipList = Resources.LoadAll<ShipList>("").ToList().First();
+    }
+
+    public static bool IsInited()
+    {
+        return itemList != null;
     }
 
     public static Item GetCredits()
@@ -40,6 +50,7 @@ public class ItemsManager : MonoBehaviour
         return itemList.Get(id);
     }
 
+
     public static Item GetItem(string id)
     {
         return itemList.Get(id);
@@ -51,11 +62,16 @@ public class ItemsManager : MonoBehaviour
         item.amount.SetValue(data.value);
         return item;
     }
-
     public static Item GetItem(Item id)
     {
         return itemList.Get(id);
     }
+    
+    public static List<Item> GetItemList()
+    {
+        return itemList.GetItemList();
+    }
+    
     
     public static ItemShip GetShipItem(ItemShip id)
     {
