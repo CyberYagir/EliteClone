@@ -16,6 +16,7 @@ public class PlayerData
     public LandLocation IsLanded;
     public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
     public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
+    public Dictionary<string, ShipData> shipsInStations = new Dictionary<string, ShipData>();
 }
 
 
@@ -28,7 +29,8 @@ public class LandLocation
 
 public class SaveLoadData : MonoBehaviour
 {
-    Dictionary<string, object> keys = new Dictionary<string, object>();
+    private Dictionary<string, object> keys = new Dictionary<string, object>();
+    private Dictionary<string, ShipData> shipsInStations = new Dictionary<string, ShipData>();
     private void Awake()
     {
         if (Player.inst)
@@ -88,6 +90,8 @@ public class SaveLoadData : MonoBehaviour
                 p.land.SetLand(playerData.IsLanded);
                 p.quests.LoadList(playerData.quests);
                 p.cargo.LoadData(playerData.items);
+
+                shipsInStations = playerData.shipsInStations;
             }
         }
         else
@@ -101,7 +105,7 @@ public class SaveLoadData : MonoBehaviour
         if (File.Exists(PlayerDataManager.PlayerDataFile))
         {
             var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
-            PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(json);
+            var playerData = JsonConvert.DeserializeObject<PlayerData>(json);
             return playerData;
         }
         return null;
@@ -121,7 +125,8 @@ public class SaveLoadData : MonoBehaviour
             Keys = keys,
             IsLanded = p.land.GetLand(),
             quests = p.quests.GetData(),
-            items = p.cargo.GetData()
+            items = p.cargo.GetData(),
+            shipsInStations = shipsInStations
         };
 
         var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
