@@ -51,6 +51,8 @@ namespace Game
         [JsonIgnore]
         public Item current;
 
+        public int button = -1;
+
         public Cargo.ItemData itemData = null;
 
         public Slot()

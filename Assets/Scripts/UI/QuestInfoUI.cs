@@ -182,7 +182,8 @@ public class QuestInfoUI : BaseTabUI
             if (WorldOrbitalStation.Instance.transform.name == quest.GetLastQuestPath().targetName)
             {
                 buttonText.text = "Items to transfer missing";
-            }else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+            }
+            else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
             {
                 if (quest.IsHaveAllItems())
                 {

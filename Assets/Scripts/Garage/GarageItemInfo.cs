@@ -16,6 +16,8 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
         public Image image;
         public TMP_Text itemName, itemData, itemValue, itemType;
         public ItemReplacer replacer;
+        public GameObject binder;
+        public TMP_Dropdown binderKey;
     }
     
     [SerializeField] private GarageItemInfoUIData options;
@@ -89,8 +91,34 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
         currentSlot = slotInfo.lastItem.slot;
         UpdateAll();
     }
-    
 
+    public void BindKey()
+    {
+        if (currentSlot != null)
+        {
+            if (options.binderKey.value == 0)
+            {
+                currentSlot.button = -1;
+            }
+            else
+            {
+                currentSlot.button = int.Parse(options.binderKey.options[options.binderKey.value].text);
+            }
+        }
+    }
+
+    public void LoadBindKey()
+    {
+        if (currentSlot.button == -1)
+        {
+            options.binderKey.value = 0;
+        }
+        else
+        {
+            options.binderKey.value = options.binderKey.options.FindIndex(x => x.text == currentSlot.button.ToString());
+        }
+    }
+    
     public void UpdateAll()
     {
         if (currentSlot != null)
@@ -99,7 +127,10 @@ public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitH
             {
                 currentItem = currentSlot.current;
             }
+
+            LoadBindKey();
         }
+        options.binder.SetActive(currentSlot != null);
 
         options.itemName.text = currentItem.itemName;
         if (slotInfo.lastItem != null)

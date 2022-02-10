@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public LandManager land { get; private set; }
     public AppliedQuests quests { get; private set; }
     public Cargo cargo { get; private set; }
+    public ShipAttack attack { get; private set; }
     
     
     
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour
             land = GetComponent<LandManager>();
             quests = GetComponent<AppliedQuests>();
             models = GetComponent<ShipModels>();
-
+            attack = GetComponent<ShipAttack>();
             spaceShip.OnChangeShip += models.InitShip;
             
             spaceShip.SetShip(spaceShip.CloneShip());
