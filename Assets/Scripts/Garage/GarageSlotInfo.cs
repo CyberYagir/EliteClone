@@ -46,7 +46,9 @@ public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterH
             if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= lastItem.slot.slotLevel)
             {
                 GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, lastItem.slot.uid, GarageDataCollect.Instance.cargo);
+                Init(lastItem);
                 UpdateInfo();
+                
                 OnChangeItem.Run();
             }
         }

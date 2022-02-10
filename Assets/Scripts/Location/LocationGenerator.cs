@@ -72,6 +72,13 @@ public class LocationGenerator : MonoBehaviour
         foreach (var item in FindObjectsOfType<RotateAround>())
         {
             item.Rotate();
+            if (item.GetComponent<PlanetTexture>() != null || item.GetComponent<SunTexture>() != null)
+            {
+                foreach (var coll in item.GetComponentsInChildren<SphereCollider>())
+                {
+                    coll.enabled = false;
+                }
+            }
             Destroy(item);
         }
     }

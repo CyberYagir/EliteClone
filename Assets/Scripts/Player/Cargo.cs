@@ -33,8 +33,13 @@ public class Cargo : MonoBehaviour
 
     public void CustomInit(PlayerData data, ItemShip ship)
     {
-        currentShip = ship;
+        SetShip(ship);
         LoadData(data.items);
+    }
+
+    public void SetShip(ItemShip ship)
+    {
+        currentShip = ship;
     }
 
     private void Update()
@@ -194,7 +199,7 @@ public class Cargo : MonoBehaviour
         }
         else
         {
-            if (tons + itemMass < currentShip.data.maxCargoWeight)
+            if (tons + itemMass <= currentShip.data.maxCargoWeight)
             {
                 AddToInventory(item);
                 if (callEvent) OnChangeInventory.Run();

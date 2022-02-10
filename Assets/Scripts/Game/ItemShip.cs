@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Game
 {
@@ -84,7 +85,7 @@ namespace Game
         public List<Slot> slots;
         public Dictionary<ShipValuesTypes, ShipClaped> shipValues;
         public Event OnChangeShipData = new Event();
-            
+        public int shipID;
         public enum ShipValuesTypes
         {
             Fuel, Health, Shields, Temperature
@@ -95,6 +96,7 @@ namespace Game
         {
             var clone = Instantiate(this);
             clone.ValuesToDictionary();
+            clone.shipID = new Random(DateTime.Now.Millisecond * DateTime.Now.Second * DateTime.Now.Hour * DateTime.Now.Day).Next(100000000, 999999999);
             return clone;
         }
 
@@ -146,6 +148,7 @@ namespace Game
 
     public class ShipData
     {
+        public int shipID;
         public string shipName;
         public List<ShipClaped> valuesList = new List<ShipClaped>();
         public List<Slot> slots;
@@ -168,6 +171,7 @@ namespace Game
                 slot.Save();
             }
 
+            shipID = item.shipID;
             slots = item.slots;
         }
 
@@ -181,6 +185,7 @@ namespace Game
                 slot.Load();
             }
 
+            ship.shipID = shipID;
             ship.slots = slots;
 
             return ship;

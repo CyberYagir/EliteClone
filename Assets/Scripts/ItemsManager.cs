@@ -72,10 +72,19 @@ public class ItemsManager : MonoBehaviour
         return itemList.GetItemList();
     }
     
+    public static List<ItemShip> GetShisList()
+    {
+        return shipList.GetShipsList();
+    }
+    
     
     public static ItemShip GetShipItem(ItemShip id)
     {
         return shipList.Get(id);
+    }
+    public static ShipList.ShipListData GetShipCost(ItemShip id)
+    {
+        return shipList.GetData(id.shipName);
     }
     public static ItemShip GetShipItem(string name)
     {

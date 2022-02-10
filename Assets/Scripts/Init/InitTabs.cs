@@ -10,6 +10,8 @@ public class InitTabs : MonoBehaviour
     [SerializeField] private GameObject[] tabs;
     [SerializeField] private ButtonEffect[] buttons;
 
+    public Event OnChangeTab = new Event();
+    
     private void Start()
     {
         ChangeTab(0);
@@ -31,5 +33,6 @@ public class InitTabs : MonoBehaviour
             tabs[i].gameObject.SetActive(i == tabIndex);
         }
         LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[index].GetComponent<RectTransform>());
+        OnChangeTab.Run();
     }
 }

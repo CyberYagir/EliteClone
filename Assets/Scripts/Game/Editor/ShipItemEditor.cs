@@ -46,6 +46,9 @@ namespace Game.Editor
                 GUILayout.BeginVertical();
                 {
                     ship.shipName = EditorGUILayout.TextField("Name:", ship.shipName);
+                    GUI.enabled = false;
+                    EditorGUILayout.IntField("UID:", ship.shipID);
+                    GUI.enabled = true;
                     ship.shipModel = (GameObject) EditorGUILayout.ObjectField("Ship:", ship.shipModel, typeof(GameObject));
                     ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
                 

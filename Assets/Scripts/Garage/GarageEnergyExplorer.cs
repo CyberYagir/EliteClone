@@ -19,6 +19,17 @@ public class GarageEnergyExplorer : MonoBehaviour, IPointerEnterHandler, IPointe
     private void Awake()
     {
         GarageDataCollect.OnChangeShip += CalculatePower;
+        GarageDataCollect.OnChangeShip += AddChangeSlotsEvent;
+    }
+    
+    private void Start()
+    {
+        GarageDataCollect.Instance.cargo.OnChangeInventory += CalculatePower;
+    }
+
+    public void AddChangeSlotsEvent()
+    {
+        GarageDataCollect.Instance.ship.OnChangeShipData += CalculatePower;
     }
 
     public void CalculatePower()
@@ -78,8 +89,6 @@ public class GarageEnergyExplorer : MonoBehaviour, IPointerEnterHandler, IPointe
             usedPowerI.transform.DOScale(Vector3.one, 1f);
         }
     }
-
-    const float itemHeight = 64f;
 
     private void Update()
     {

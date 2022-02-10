@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
+  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -400,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
+  notPPUM: 0
   overColor: {r: 0, g: 0.6039216, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1440,6 +1442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
+  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -1767,7 +1770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0.3640747}
+  m_AnchoredPosition: {x: -8, y: -1.387558}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3353435076824703547
@@ -2092,7 +2095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 2.3483887}
+  m_AnchoredPosition: {x: -8, y: -2.6041718}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5933543484969003683
@@ -2572,7 +2575,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4859107748629430011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2826,6 +2829,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 0
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9005084181097769276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3024,7 +3033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 2.3805847}
+  m_AnchoredPosition: {x: -8, y: -2.4031677}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &4859107749374313798
@@ -3149,6 +3158,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 0
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4859107749726890004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,6 +3332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
+  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -3479,6 +3495,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsCount: 0
   selectedIndex: 0
+  OnChangeSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNavigateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &340698915373645620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3860,6 +3882,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8847173261000318960}
+  - component: {fileID: 8366767513490612175}
   m_Layer: 9
   m_Name: Content
   m_TagString: Untagged
@@ -3887,6 +3910,20 @@ RectTransform:
   m_AnchoredPosition: {x: -0, y: -0}
   m_SizeDelta: {x: 1005.2, y: 422.7}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &8366767513490612175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079465550714489705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &6465472415839249600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4239,7 +4276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 2.6191254}
+  m_AnchoredPosition: {x: -8, y: -0.925766}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1027141013950773319
@@ -4967,6 +5004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
+  notPPUM: 0
   overColor: {r: 0, g: 0.6039216, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
@@ -5703,11 +5741,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
---- !u!224 &1418572542964591816 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5185739836914921843, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
-  m_PrefabInstance: {fileID: 6077813160643993019}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1418572542964591819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5185739836914921840, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
@@ -5719,3 +5752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e109b31864b8b5d4981cfd402248513f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1418572542964591816 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5185739836914921843, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+  m_PrefabInstance: {fileID: 6077813160643993019}
+  m_PrefabAsset: {fileID: 0}

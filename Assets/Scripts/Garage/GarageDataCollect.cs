@@ -14,10 +14,8 @@ public class GarageDataCollect : MonoBehaviour
     public Location playerLocation  { get; private set; }
     
     public ItemShip ship { get; private set; }
-    
-    
-    [SerializeField]
-    private ItemShip serializeShip;
+
+    public SaveLoadData saves { get; private set; }
     
     public static Event OnChangeShip = new Event();
     
@@ -29,13 +27,37 @@ public class GarageDataCollect : MonoBehaviour
 
     public void InitDataCollector()
     {
-        playerData = GetComponent<SaveLoadData>().LoadData();
-        playerLocation = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
+        saves = GetComponent<SaveLoadData>();
+        playerData = saves.LoadData();
+        if (File.Exists(PlayerDataManager.CurrentLocationFile))
+        {
+            playerLocation = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
+        }
+        else
+        {
+            World.LoadLevel(Scenes.Location);
+            return;
+        }
+
         stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName);
         cargo = GetComponent<Cargo>();
-        ship = playerData.Ship.GetShip();
+        ChangeShip(playerData.Ship.GetShip());
         cargo.CustomInit(playerData, ship);
-        serializeShip = ship;
+    }
+
+    public void ChangeShip(ItemShip newShip)
+    {
+        ship = newShip;
+        cargo.SetShip(newShip);
         OnChangeShip.Invoke();
+    }
+
+    public void Save()
+    {
+        playerData.Ship = ship.SaveShip();
+        playerData.shipsInStations = saves.GetStorageShip();
+        playerData.items = cargo.GetData();
+        
+        saves.SaveData(playerData);
     }
 }

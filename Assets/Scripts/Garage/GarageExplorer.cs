@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Transform holder, item;
+    [SerializeField] private StatsDisplayCanvasRow row;
     private GarageSlotInfo slotInfo;
     private GarageItemInfo itemInfo;
     void Start()
@@ -30,6 +31,7 @@ public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitH
             spawned.SetSprite(it);
             spawned.gameObject.SetActive(true);
         }
+        row.SetValue(GarageDataCollect.Instance.cargo.tons, GarageDataCollect.Instance.ship.data.maxCargoWeight, $"Weight {GarageDataCollect.Instance.cargo.tons}/{GarageDataCollect.Instance.ship.data.maxCargoWeight}");
     }
 
     public void OnPointerEnter(PointerEventData eventData)

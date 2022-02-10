@@ -17,19 +17,19 @@ MonoBehaviour:
   shipCabine: {fileID: 5443539320837342653, guid: 3f1d30559fcfccb44a3cf06d7fcebb22, type: 3}
   data:
     ZRotSpeed: 30
-    XRotSpeed: 30
-    YRotSpeed: 30
-    maxSpeedUnits: 2
+    XRotSpeed: 20
+    YRotSpeed: 20
+    maxSpeedUnits: 1.5
     speedUpMultiplier: 0.5
-    maxCargoWeight: 20
+    maxCargoWeight: 50
   slots:
   - uid: 0
     slotType: 1
-    slotLevel: 1
+    slotLevel: 2
     current: {fileID: 11400000, guid: 9894e73519658e540be1d2c5302065ee, type: 2}
   - uid: 1
     slotType: 1
-    slotLevel: 1
+    slotLevel: 2
     current: {fileID: 11400000, guid: 9894e73519658e540be1d2c5302065ee, type: 2}
   - uid: 2
     slotType: 2
@@ -50,10 +50,11 @@ MonoBehaviour:
   OnChangeShipData:
     m_PersistentCalls:
       m_Calls: []
+  shipID: 0
   shipValuesList:
   - name: 0
-    value: 1000
-    max: 1000
+    value: 4000
+    max: 4000
   - name: 1
     value: 100
     max: 100
@@ -62,4 +63,4 @@ MonoBehaviour:
     max: 100
   - name: 3
     value: 0
-    max: 100
+    max: 50

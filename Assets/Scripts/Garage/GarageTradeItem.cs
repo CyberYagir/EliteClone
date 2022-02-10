@@ -29,7 +29,10 @@ public class GarageTradeItem : MonoBehaviour
     {
         if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost))
         {
-            GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone());
+            if (!GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone()))
+            {
+                GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+            }
         }
     }
 

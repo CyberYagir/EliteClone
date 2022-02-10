@@ -126,15 +126,8 @@ namespace Quests
         {
             if (questType == QuestType.Transfer)
             {
-                bool allItemInInventory = true;
-                for (int i = 0; i < toTransfer.Count; i++)
-                {
-                    if (!Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
-                    {
-                        allItemInInventory = false;
-                    }
-                }
-
+                bool allItemInInventory = IsHaveAllItems();
+                
                 var last = GetLastQuestPath();
                 if (allItemInInventory)
                 {
@@ -149,6 +142,20 @@ namespace Quests
             }
         }
 
+        public bool IsHaveAllItems()
+        {
+            bool allItemInInventory = true;
+            for (int i = 0; i < toTransfer.Count; i++)
+            {
+                if (!Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
+                {
+                    allItemInInventory = false;
+                }
+            }
+
+            return allItemInInventory;
+        }
+        
         public QuestPath GetPath(Random rnd, string stationName, string solarName)
         {
             int pathLength = rnd.Next(0, 7);
@@ -245,8 +252,8 @@ namespace Quests
             
             if (type == RewardType.Money)
             {
-                var money = ItemsManager.GetCredits();
-                money.amount.SetValue(rnd.Next(2000, 8000));
+                var money = ItemsManager.GetCredits().Clone();
+                money.amount.SetValue(rnd.Next(5000, 20000));
                 rewardItems.Add(money);
             }
             else
@@ -260,6 +267,9 @@ namespace Quests
                 {
                     rewardItems.Add(ItemsManager.GetRewardItem(rnd));
                 }
+                var money = ItemsManager.GetCredits().Clone();
+                money.amount.SetValue(rnd.Next(1000, 3000));
+                rewardItems.Add(money);
             }
         }
     }

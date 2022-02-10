@@ -20,5 +20,6 @@ public class ShipModels : MonoBehaviour
         }
         spawnedCabine = Instantiate(ship.shipCabine.gameObject, modelsHolder);
         shipRenderer = Instantiate(ship.shipModel.gameObject, modelsHolder);
+        shipRenderer.GetComponent<ShipMeshManager>().InitSlots(Player.inst.Ship());
     }
 }

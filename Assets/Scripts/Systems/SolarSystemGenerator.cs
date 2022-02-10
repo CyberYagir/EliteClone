@@ -195,7 +195,6 @@ public class SolarSystemGenerator : MonoBehaviour
         system.stations = GenerateOrbitStations(basesCount, system.name, system.position);
         system.belts = GenerateBelts(beltsCount, system.name, system.position);
         
-        
         var masses = system.stars.OrderBy(x => x.mass).ToList();
         for (int i = 1; i < starsCount; i++)
         {
@@ -220,7 +219,7 @@ public class SolarSystemGenerator : MonoBehaviour
             {
                 pPos = system.planets[i - 1].position + new DVector(0, 0, rnd.Next(20, 200));
             }
-
+        
             var planet = new Planet(rnd, system.stars[system.stars.Count - 1], pPos);
             
             planet.textureID = rnd.Next(0, planetTextures.textures.Count);
@@ -245,7 +244,6 @@ public class SolarSystemGenerator : MonoBehaviour
                 }
                 else
                 {
-                    
                     sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
                     system.stations[usesBases].position = sPos;
                     planet.stations.Add(system.stations[usesBases]);
@@ -255,6 +253,24 @@ public class SolarSystemGenerator : MonoBehaviour
             }
 
             system.planets.Add(planet);
+        }
+
+        if (usesBases < basesCount) //если не все станции заспавнились
+        {
+            for (int i = 0; i < planetsCount; i++)
+            {
+                if (system.planets[i].stations.Count == 0)
+                {
+                    var nPos = system.planets[i].position + new DVector(0, 0, system.planets[i].radius * 2m * rnd.Next(1, 3));
+                    system.stations[usesBases].position = nPos;
+                    system.planets[i].stations.Add(system.stations[usesBases]);
+                    usesBases++;
+                    if (usesBases >= basesCount)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         

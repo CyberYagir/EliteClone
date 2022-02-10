@@ -92,7 +92,7 @@ public class IDTruple
 
 public enum KeyPairValue
 {
-    Damage, Cooldown, Mass, Level, Value, Energy
+    Damage, Cooldown, Mass, Level, Value, Energy, MeshType
 }
 
 public enum ItemType
@@ -101,7 +101,7 @@ public enum ItemType
 }
 public enum KeyPairType
 {
-    Int, String, Float
+    Int, String, Float, MeshType
 }
 [System.Serializable]
 public class KeyPair
@@ -144,6 +144,11 @@ public class Item : ScriptableObject
             return fided.num;
         }
         return 0f;
+    }
+
+    public bool IsHaveKeyPair(KeyPairValue value)
+    {
+        return keysData.Find(x => x.KeyPairValue == value) != null;
     }
 
     public Item Clone()

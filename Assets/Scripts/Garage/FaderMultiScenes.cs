@@ -11,6 +11,7 @@ public class FaderMultiScenes : MonoBehaviour
 
     public void LoadLocation()
     {
+        GarageDataCollect.Instance.Save();
         LoadScene(Scenes.Location);
     }
     

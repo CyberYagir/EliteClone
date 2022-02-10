@@ -15,7 +15,6 @@ public class GarageSlotsDrawer : MonoBehaviour
         public Sprite icon;
     }
     [SerializeField] private Transform holder, item;
-    [SerializeField] private List<Icon> icons = new List<Icon>();
     private GarageSlotInfo slotInfo;
     
     
@@ -28,6 +27,7 @@ public class GarageSlotsDrawer : MonoBehaviour
     {
         GarageDataCollect.OnChangeShip += Draw;
         GarageDataCollect.Instance.ship.OnChangeShipData += Draw;
+        GarageDataCollect.Instance.cargo.OnChangeInventory += Draw;
         Draw();
     }
 
@@ -51,7 +51,7 @@ public class GarageSlotsDrawer : MonoBehaviour
         {
             var button = Instantiate(item.gameObject, holder).GetComponent<GarageSlotItem>();
             button.gameObject.SetActive(true);
-            button.SetImage(icons.Find(x=>x.type == slot.slotType).icon);
+            button.SetImage(slot.current.icon);
             button.Init(slot.current, slot);
             
             

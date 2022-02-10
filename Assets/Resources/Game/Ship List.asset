@@ -13,5 +13,15 @@ MonoBehaviour:
   m_Name: Ship List
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: 673d585c6acb3194e9f2d777966bf1b6, type: 2}
-  - {fileID: 11400000, guid: c0559a1a34bab2245a0877835dc6f976, type: 2}
+  - ship: {fileID: 11400000, guid: 673d585c6acb3194e9f2d777966bf1b6, type: 2}
+    cost:
+      value: 0
+      minValue: 3000
+      maxValue: 5000
+      MaxCount: 10
+  - ship: {fileID: 11400000, guid: c0559a1a34bab2245a0877835dc6f976, type: 2}
+    cost:
+      value: 0
+      minValue: 3000
+      maxValue: 6600
+      MaxCount: 10

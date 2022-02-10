@@ -40,4 +40,15 @@ public class TradeManager : MonoBehaviour
         }
         OnUpdateOffers.Run();
     }
+
+    public float GetItemCost(string idName)
+    {
+        var findItem = offers.Find(x => x.item.id.idname == idName);
+        if (findItem != null)
+        {
+            return findItem.cost;
+        }
+
+        return 0;
+    }
 }

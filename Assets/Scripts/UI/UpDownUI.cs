@@ -22,7 +22,15 @@ public class UpDownUI : MonoBehaviour
 
             if (InputM.GetAxisDown(KAction.Select))
             {
-                OnChangeSelected.Run();
+                if (itemsCount <= selectedIndex)
+                {
+                    selectedIndex = itemsCount - 1;
+                }
+
+                if (itemsCount != 0)
+                {
+                    OnChangeSelected.Run();
+                }
             }
         }
     }

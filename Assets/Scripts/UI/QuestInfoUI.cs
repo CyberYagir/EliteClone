@@ -41,39 +41,42 @@ public class QuestInfoUI : BaseTabUI
 
     public void SelectButton()
     {
-        if (upDownUI.selectedIndex == 0)
+        if (Player.inst.land.isLanded)
         {
-            if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
+            if (upDownUI.selectedIndex == 0)
             {
-                if (currentQuest.questState != Quest.QuestComplited.Complited)
+                if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
                 {
-                    AppliedQuests.Instance.ApplyQuest(currentQuest);
-                    UpdateData(currentQuest);
-                }
-            }
-            else
-            {
-                if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
-                {
-                    AppliedQuests.Instance.CancelQuest(currentQuest);
-                    UpdateData(currentQuest);
-                }
-                else if (currentQuest.questState == Quest.QuestComplited.Complited)
-                {
-                    if (currentQuest.questType == Quest.QuestType.Transfer)
+                    if (currentQuest.questState != Quest.QuestComplited.Complited)
                     {
-                        if (Player.inst.cargo.ContainItems(currentQuest.toTransfer))
+                        AppliedQuests.Instance.ApplyQuest(currentQuest);
+                        UpdateData(currentQuest);
+                    }
+                }
+                else
+                {
+                    if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
+                    {
+                        AppliedQuests.Instance.CancelQuest(currentQuest);
+                        UpdateData(currentQuest);
+                    }
+                    else if (currentQuest.questState == Quest.QuestComplited.Complited)
+                    {
+                        if (currentQuest.questType == Quest.QuestType.Transfer)
                         {
-                            Player.inst.cargo.RemoveItems(currentQuest.toTransfer);
-                            if (Player.inst.cargo.AddItems(currentQuest.reward.rewardItems))
+                            if (Player.inst.cargo.ContainItems(currentQuest.toTransfer))
                             {
-                                AppliedQuests.Instance.FinishQuest(currentQuest.questID);
-                                UpdateData(currentQuest);
-                                GetComponentInParent<BaseWindow>().RedrawAll();
-                            }
-                            else
-                            {
-                                Player.inst.cargo.AddItems(currentQuest.toTransfer);
+                                Player.inst.cargo.RemoveItems(currentQuest.toTransfer);
+                                if (Player.inst.cargo.AddItems(currentQuest.reward.rewardItems))
+                                {
+                                    AppliedQuests.Instance.FinishQuest(currentQuest.questID);
+                                    UpdateData(currentQuest);
+                                    GetComponentInParent<BaseWindow>().RedrawAll();
+                                }
+                                else
+                                {
+                                    Player.inst.cargo.AddItems(currentQuest.toTransfer);
+                                }
                             }
                         }
                     }
@@ -84,17 +87,21 @@ public class QuestInfoUI : BaseTabUI
 
     private void Update()
     {
-        if (InputM.GetAxisDown(KAction.TabsHorizontal))
+        if (Player.inst.land.isLanded)
         {
-            if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+            if (InputM.GetAxisDown(KAction.TabsHorizontal))
             {
-                questList.Enable();
-                Disable();
+                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                {
+                    questList.Enable();
+                    Disable();
+                }
             }
-        }
-        for (int i = 0; i < items.Count; i++)
-        {
-            items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+            }
         }
     }
 
@@ -142,12 +149,13 @@ public class QuestInfoUI : BaseTabUI
         {
             jumpsCount.text += names + ">\n";
         }
-        
+        buttonText.transform.parent.gameObject.SetActive(true);
         if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
         {
             if (quest.questState == Quest.QuestComplited.None)
             {
-                buttonText.text = "Cancel";
+                buttonText.text = "";
+                TransferButton(quest);
             }
             else
             {
@@ -166,4 +174,31 @@ public class QuestInfoUI : BaseTabUI
             buttonText.text = "Apply";
         }
     }
+
+    public void TransferButton(Quest quest)
+    {
+        if (quest.questType == Quest.QuestType.Transfer)
+        {
+            if (WorldOrbitalStation.Instance.transform.name == quest.GetLastQuestPath().targetName)
+            {
+                buttonText.text = "Items to transfer missing";
+            }else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+            {
+                if (quest.IsHaveAllItems())
+                {
+                    buttonText.text = "Cancel";
+                }
+                else
+                {
+                    buttonText.text = "Items to transfer missing [cant cancel]";
+                }
+            }
+            else
+            {
+                buttonText.transform.parent.gameObject.SetActive(false);
+            }
+        }
+
+    }
+    
 }

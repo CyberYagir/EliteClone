@@ -34,15 +34,31 @@ public class GarageShipPoint : MonoBehaviour
             yield return new WaitForSeconds(5);
             Destroy(spawnedShip.gameObject);
         }
-        spawnedShip = Instantiate(GarageDataCollect.Instance.ship.shipModel, transform);
-        spawnedShip.transform.position = spawnPoint.position;
-        spawnedShip.transform.localScale = Vector3.one;
-        spawnedShip.transform.DOLocalMove(Vector3.zero, 5);
+
+        spawnedShip = SpawnShip();
+        
         yield return new WaitForSeconds(5);
         rotator.enabled = true;
         
         door.DOLocalMove(new Vector3(door.localPosition.x, 9.2f, door.localPosition.z), 1f);
         yield return new WaitForSeconds(0.9f);
         CameraShake.Shake(0.2f);
+    }
+
+    public GameObject SpawnShip()
+    {
+        var ship = Instantiate(GarageDataCollect.Instance.ship.shipModel, transform);
+        ship.transform.position = spawnPoint.position;
+        ship.transform.localScale = Vector3.one;
+        ship.transform.DOLocalMove(Vector3.zero, 5);
+
+        
+        
+        var manager = ship.GetComponent<ShipMeshManager>();
+        manager.SetCurrentShip(GarageDataCollect.Instance.ship);
+        GarageDataCollect.Instance.ship.OnChangeShipData += manager.SetInitSlotsWithoutArgs;
+        GarageDataCollect.Instance.ship.OnChangeShipData.Run();
+
+        return ship.gameObject;
     }
 }
