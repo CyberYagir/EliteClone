@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SunTexture : MonoBehaviour
+public class SunTexture : TexturingScript
 {
     [SerializeField] private Material sunMaterial;
     [SerializeField] private List<Renderer> renderers;

@@ -20,6 +20,7 @@ public class GarageEnergyExplorer : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         GarageDataCollect.OnChangeShip += CalculatePower;
         GarageDataCollect.OnChangeShip += AddChangeSlotsEvent;
+        
     }
     
     private void Start()

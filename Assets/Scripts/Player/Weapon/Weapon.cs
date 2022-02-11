@@ -7,16 +7,43 @@ public abstract class Weapon : MonoBehaviour
 {
     protected int weaponID;
     protected Item currentItem;
-    public void Init(int shootKey, Item current)
+    protected GameObject cacheHolder;
+    protected WeaponOptionsItem options;
+    protected Camera camera;
+    
+    public void Init(int shootKey, Item current, WeaponOptionsItem opt)
     {
         currentItem = current;
         weaponID = shootKey;
+        options = opt;
+        
+        camera = Camera.main;
+
+        cacheHolder = SpawnCacheHolder();
+        
         if (Player.inst != null)
         {
             Player.inst.attack.OnShoot += CheckIsCurrentWeapon;
+            Player.inst.attack.OnHold += OnHold;
+            Player.inst.attack.OnHold += OnHoldDown;
         }
+
+        InitData();
     }
 
+    protected virtual void InitData(){}
+    
+    
+    private GameObject SpawnCacheHolder()
+    {
+        var holder = new GameObject("SlotData");
+        holder.transform.parent = transform;
+        holder.transform.localPosition = Vector3.zero;
+        holder.transform.localEulerAngles = Vector3.zero;
+        holder.layer = LayerMask.NameToLayer("Main");
+        return holder;
+    }
+    
     private void CheckIsCurrentWeapon(int shootKey)
     {
         if (shootKey == weaponID)
@@ -24,7 +51,30 @@ public abstract class Weapon : MonoBehaviour
             Attack();
         }
     }
+
+    private void OnHold(int shootKey)
+    {
+        if (shootKey == weaponID)
+        {
+            NotAttack();
+        }
+    } 
+    private void OnHoldDown(int shootKey)
+    {
+        if (shootKey == weaponID)
+        {
+            AttackDown();
+        }
+    }
     
+
+    protected virtual void NotAttack()
+    {
+        
+    }
+    protected virtual void AttackDown()
+    {
+    }
     protected virtual void Attack()
     {
     }
@@ -41,6 +91,7 @@ public abstract class Weapon : MonoBehaviour
     
     private void OnDestroy()
     {
+        Destroy(cacheHolder.gameObject);
         ClearData();
     }
 }

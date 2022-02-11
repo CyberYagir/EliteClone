@@ -17,6 +17,7 @@ public class ShipMeshSlot : MonoBehaviour
         public WeaponMesh meshName;
         public GameObject mesh;
         public Object weaponScript;
+        public WeaponOptionsItem options;
     }
     
     public int slotID;
@@ -38,7 +39,7 @@ public class ShipMeshSlot : MonoBehaviour
                     if (mesh.weaponScript != null)
                     {
                         currentWeapon = (Weapon)gameObject.AddComponent(Type.GetType(mesh.weaponScript.name));
-                        currentWeapon.Init(slot.button, slot.current);
+                        currentWeapon.Init(slot.button, slot.current, mesh.options);
                     }
 
                     mesh.mesh.SetActive(true);

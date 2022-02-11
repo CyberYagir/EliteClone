@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetTexture : MonoBehaviour
+public abstract class TexturingScript: MonoBehaviour{}
+
+
+public class PlanetTexture : TexturingScript
 {
     [SerializeField] private Renderer[] renderers;
     public int setted;
