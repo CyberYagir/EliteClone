@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f5a2e5452ed3a44915e92b0cd934fd, type: 3}
+  m_Name: Spider_Ship
+  m_EditorClassIdentifier: 
+  shipName: Spider
+  shipModel: {fileID: 6585631712840951333, guid: 8204bbc471479c3479d702fecf3d9161, type: 3}
+  shipCabine: {fileID: 7813869148150440362, guid: 333e8e66744b14f46865688a9e4aaa35, type: 3}
+  data:
+    ZRotSpeed: 45
+    XRotSpeed: 45
+    YRotSpeed: 45
+    maxSpeedUnits: 3
+    speedUpMultiplier: 0.5
+    maxCargoWeight: 10
+  slots:
+  - uid: 0
+    slotType: 1
+    slotLevel: 1
+    current: {fileID: 11400000, guid: 9894e73519658e540be1d2c5302065ee, type: 2}
+    button: -1
+  - uid: 2
+    slotType: 2
+    slotLevel: 1
+    current: {fileID: 11400000, guid: ecc3dd10c0cbc0e429a23ec18d7a86f9, type: 2}
+    button: -1
+  - uid: 3
+    slotType: 3
+    slotLevel: 1
+    current: {fileID: 11400000, guid: 9f964decb16b12c47a4e4de89f544492, type: 2}
+    button: -1
+  - uid: 4
+    slotType: 4
+    slotLevel: 1
+    current: {fileID: 11400000, guid: 29dcbbc6e2349594c804b819f64a01f7, type: 2}
+    button: -1
+  - uid: 5
+    slotType: 5
+    slotLevel: 1
+    current: {fileID: 11400000, guid: 9c1e322340ebcc4429e772c8cc51c506, type: 2}
+    button: -1
+  OnChangeShipData:
+    m_PersistentCalls:
+      m_Calls: []
+  shipID: 0
+  shipValuesList:
+  - name: 0
+    value: 400
+    max: 400
+  - name: 1
+    value: 60
+    max: 60
+  - name: 2
+    value: 100
+    max: 100
+  - name: 3
+    value: 0
+    max: 100

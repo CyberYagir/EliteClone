@@ -64,6 +64,11 @@ public class TradeWindow : EditorWindow
             {
                 GUILayout.BeginVertical();
                 {
+                    if (manager.staticOffers[i].item == null)
+                    {
+                        manager.staticOffers.RemoveAt(i);
+                        break;
+                    }
                     GUILayout.Label(manager.staticOffers[i].item.id.idname);
                     GUILayout.BeginHorizontal();
                     {
@@ -75,6 +80,10 @@ public class TradeWindow : EditorWindow
                                 GUI.enabled = false;
                                 EditorGUILayout.ObjectField("", manager.staticOffers[i].item.icon, typeof(Sprite), false, GUILayout.MaxWidth(100));
                                 GUI.enabled = true;
+                                if (manager.staticOffers[i].costLevel == null)
+                                {
+                                    manager.staticOffers[i].costLevel = new AnimationCurve();
+                                }
                                 manager.staticOffers[i].costLevel = EditorGUILayout.CurveField("Cost Curve: ", manager.staticOffers[i].costLevel, GUILayout.Height(60), GUILayout.Width(300));
                                 GUILayout.BeginVertical();
                                 {

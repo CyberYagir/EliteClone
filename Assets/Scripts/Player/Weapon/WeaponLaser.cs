@@ -10,6 +10,7 @@ public class WeaponLaser : Weapon
     protected override void InitData()
     {
         line = cacheHolder.AddComponent<LineRenderer>();
+        line.enabled = false;
         line.material = options.laserOptions.materal;
         line.widthCurve = options.laserOptions.width;
         line.renderingLayerMask = 256;

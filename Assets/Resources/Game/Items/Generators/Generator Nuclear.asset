@@ -10,27 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: Warp_Engine
+  m_Name: Generator Nuclear
   m_EditorClassIdentifier: 
   id:
-    id: -206830
-    idname: warp_engine
-  itemName: Warp Engine
-  icon: {fileID: 21300000, guid: 16aba9da4e27bb84a9d86294c70a9f1c, type: 3}
+    id: -457577
+    idname: generator_nuclear
+  itemName: Generator Nuclear
+  icon: {fileID: 21300000, guid: fb1a25bcae5571f4fb829b60dde98ecf, type: 3}
   amount:
     value: 1
     minValue: 1
     maxValue: 1
     MaxCount: 10
-  itemType: 0
+  itemType: 5
   keysData:
   - KeyPairValue: 3
     KeyPairType: 0
     customName: 
-    num: 1
+    num: 4
     str: 
   - KeyPairValue: 2
     KeyPairType: 2
     customName: 
-    num: 1
+    num: 10
+    str: 
+  - KeyPairValue: 5
+    KeyPairType: 2
+    customName: 
+    num: 20
     str: 
