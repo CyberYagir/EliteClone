@@ -92,7 +92,7 @@ public class IDTruple
 
 public enum KeyPairValue
 {
-    Damage, Cooldown, Mass, Level, Value, Energy, MeshType
+    Damage, Cooldown, Mass, Level, Value, Energy, MeshType, Mineral
 }
 
 public enum ItemType
@@ -101,8 +101,14 @@ public enum ItemType
 }
 public enum KeyPairType
 {
-    Int, String, Float, MeshType
+    Int, String, Float, MeshType, MineralType
 }
+
+public enum MineralType
+{
+    Al, Fe, Au, Mg, Mn, Cu, Ni, Sn, Pt, Ag, Cr, Zn, Rock, Slag, Dust
+}
+
 [System.Serializable]
 public class KeyPair
 {

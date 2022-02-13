@@ -12,6 +12,19 @@ public class Location
     public string systemName;
     public string locationName;
     public LocationPoint.LocationType type;
+
+    public string GetSystemCode()
+    {
+        var strings = systemName.Split(' ');
+        if (strings.Length == 2)
+        {
+            return strings[1];
+        }
+        else
+        {
+            return systemName;
+        }
+    }
 }
 public class LocationGenerator : MonoBehaviour
 {

@@ -7,6 +7,8 @@ public class WeaponLaser : Weapon
 {
     [SerializeField] private LineRenderer line;
     [SerializeField] private GameObject particles;
+    private RaycastHit lastHit;
+    
     protected override void InitData()
     {
         line = cacheHolder.AddComponent<LineRenderer>();
@@ -48,12 +50,18 @@ public class WeaponLaser : Weapon
 
     public Vector3 GetPoint()
     {
+        lastHit = new RaycastHit();
+        var lastPos = new Vector3();
+        var lastDir = new Vector3();
         var hitPoint = camera.transform.position + camera.transform.forward * 500;
         bool hitted = false;
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit))
         {
             if (hit.transform.GetComponent<TexturingScript>() == null)
             {
+                lastHit = hit;
+                lastPos = camera.transform.position;
+                lastDir = camera.transform.forward;
                 hitPoint = hit.point;
                 hitted = true;
             }
@@ -63,17 +71,32 @@ public class WeaponLaser : Weapon
         {
             if (hit1.transform.GetComponent<TexturingScript>() == null)
             {
+                lastHit = hit;
+                lastPos = transform.position;
+                lastDir = hitPoint - transform.position;
                 hitPoint = hit1.point;
                 hitted = true;
             }
         }
 
-        if (line.enabled)
-            particles.SetActive(hitted);
-        if (particles.activeSelf)
+        if (options.maxDistance >= lastHit.distance)
         {
-            particles.transform.position = hitPoint;
+            if (line.enabled)
+            {
+                SpawnDecal(options.attackDecal, lastPos, lastDir, lastHit);
+                particles.SetActive(hitted);
+            }
+
+            if (particles.activeSelf)
+            {
+                particles.transform.position = hitPoint;
+            }
         }
+        else
+        {
+            particles.SetActive(false);
+        }
+
         return hitPoint;
     }
 

@@ -12,6 +12,7 @@ public class WeaponOptionsItem : ScriptableObject
     }
 
     public LaserOptions laserOptions;
-
+    public float maxDistance;
     public GameObject attackParticles;
+    public GameObject attackDecal;
 }

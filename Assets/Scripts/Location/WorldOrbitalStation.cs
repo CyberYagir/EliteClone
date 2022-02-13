@@ -35,7 +35,7 @@ public class WorldOrbitalStation : MonoBehaviour
     {
         Instance = this;
         InitNames();
-        uniqSeed = CalcSeed(transform.name);
+        uniqSeed = CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
         refiller.InitRefiller(uniqSeed);
         characters = InitCharacters(uniqSeed);
         quests = InitQuests(uniqSeed, characters);
@@ -60,10 +60,10 @@ public class WorldOrbitalStation : MonoBehaviour
         OnInit.Run();
     }
 
-    public static int CalcSeed(string stationName)
+    public static int CalcSeed(string stationName, string systemName)
     {
         int uniqSeed = 0;
-        foreach (var ch in Encoding.ASCII.GetBytes(stationName))
+        foreach (var ch in Encoding.ASCII.GetBytes(stationName + systemName))
         {
             uniqSeed += ch;
         }

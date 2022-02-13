@@ -39,7 +39,7 @@ public class GarageDataCollect : MonoBehaviour
             return;
         }
 
-        stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName);
+        stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName, playerLocation.GetSystemCode());
         cargo = GetComponent<Cargo>();
         ChangeShip(playerData.Ship.GetShip());
         cargo.CustomInit(playerData, ship);

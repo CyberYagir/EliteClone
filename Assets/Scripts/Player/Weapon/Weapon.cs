@@ -10,13 +10,15 @@ public abstract class Weapon : MonoBehaviour
     protected GameObject cacheHolder;
     protected WeaponOptionsItem options;
     protected Camera camera;
-    
+
+    private float decalTime;
+    private LayerMask decalLayer;
     public void Init(int shootKey, Item current, WeaponOptionsItem opt)
     {
         currentItem = current;
         weaponID = shootKey;
         options = opt;
-        
+        decalLayer = LayerMask.GetMask("Decals");
         camera = Camera.main;
 
         cacheHolder = SpawnCacheHolder();
@@ -54,6 +56,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void OnHold(int shootKey)
     {
+        decalTime += Time.deltaTime;
         if (shootKey == weaponID)
         {
             NotAttack();
@@ -87,6 +90,33 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void ClearData()
     {
         
+    }
+
+    protected void SpawnDecal(GameObject decal, Vector3 start, Vector3 dir, RaycastHit initHit)
+    {
+        if (decalTime >= 1/5f)
+        {
+            bool addToDecal = false;
+            if (Physics.Raycast(start, dir, out RaycastHit hit, options.maxDistance, decalLayer))
+            {
+                var findedDecal = hit.collider.GetComponent<Decal>();
+                if (findedDecal)
+                {
+                    findedDecal.AddToOpacity();
+                    addToDecal = true;
+                }
+            }
+
+            if (!addToDecal)
+            {
+                var d = Instantiate(decal, initHit.point, Quaternion.identity);
+                d.transform.rotation = Quaternion.FromToRotation(Vector3.forward, initHit.normal);
+                d.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+                d.transform.parent = initHit.transform;
+            }
+
+            decalTime = 0;
+        }
     }
     
     private void OnDestroy()
