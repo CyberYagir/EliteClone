@@ -15,4 +15,5 @@ public class WeaponOptionsItem : ScriptableObject
     public float maxDistance;
     public GameObject attackParticles;
     public GameObject attackDecal;
+    public float damage;
 }

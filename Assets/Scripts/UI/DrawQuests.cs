@@ -9,7 +9,6 @@ public class DrawQuests : MonoBehaviour
 {
     [SerializeField] private RectTransform holder, item;
     [SerializeField] private UpDownUI upDownUI;
-    [SerializeField] private StatsDisplayCanvasRow tonsRow;
     private AppliedQuests quests;
     private float height;
     private void Awake()
@@ -40,7 +39,6 @@ public class DrawQuests : MonoBehaviour
                 count++;
             }
         }
-        tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight, "_");
         upDownUI.itemsCount = count;
     }
 }

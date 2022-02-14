@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Game;
 using UnityEngine;
 
@@ -16,11 +17,18 @@ public class WorldDrop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.GetComponent<ShipMeshManager>())
         {
             if (Player.inst.cargo.AddItem(item, true))
             {
-                Destroy(gameObject);
+                transform.DOMove(other.transform.position, 0.7f);
+                transform.DOScale(Vector3.zero, 0.4f);
+                foreach (var col in GetComponents<Collider>())
+                {
+                    col.enabled = false;
+                }
+                Destroy(gameObject,1);
+                Destroy(this);
             }
         }
     }

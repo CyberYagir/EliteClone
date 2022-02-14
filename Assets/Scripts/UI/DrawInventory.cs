@@ -7,6 +7,7 @@ public class DrawInventory : MonoBehaviour
 {
     [SerializeField] private RectTransform holder, item;
     [SerializeField] private UpDownUI upDownUI;
+    [SerializeField] private StatsDisplayCanvasRow tonsRow;
     private Cargo cargo;
     private float height;
     private void Awake()
@@ -33,5 +34,6 @@ public class DrawInventory : MonoBehaviour
             newItem.gameObject.SetActive(true);
         }
         upDownUI.itemsCount = cargo.items.Count;
+        tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight, "_");
     }
 }

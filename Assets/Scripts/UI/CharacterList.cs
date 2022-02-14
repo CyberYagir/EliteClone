@@ -24,6 +24,7 @@ public class CharacterList : BaseTabUI
         {
             var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
             var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
+            quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestComplited.Rewarded && y.questID == x.questID) != null);
             questList.UpdateQuests(quests);
         }
     }
@@ -36,6 +37,7 @@ public class CharacterList : BaseTabUI
         upDownUI.OnChangeSelected += ChangeSelected;
         upDownUI.OnNavigateChange += ChangeSelected;
         ChangeSelect += RedrawQuests;
+        Player.inst.land.OnLand += Enable;
     }
 
     // private void OnDestroy()

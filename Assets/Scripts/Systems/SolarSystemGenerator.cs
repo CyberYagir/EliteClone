@@ -220,7 +220,7 @@ public class SolarSystemGenerator : MonoBehaviour
                 pPos = system.planets[i - 1].position + new DVector(0, 0, rnd.Next(20, 200));
             }
         
-            var planet = new Planet(rnd, system.stars[system.stars.Count - 1], pPos);
+            var planet = new Planet(rnd, pPos);
             
             planet.textureID = rnd.Next(0, planetTextures.textures.Count);
             planet.name = system.name.Split(' ')[0] + " O" + (i + 1);
@@ -232,14 +232,20 @@ public class SolarSystemGenerator : MonoBehaviour
             {
                 if (haveBase || usesBases >= basesCount)
                 {
-                    sPos += new DVector(0, 0, planet.radius * 2m * rnd.Next(1, 3));
-                    var sattelite = new Planet(rnd, planet, sPos);
+                    sPos += new DVector(0, 0, planet.radius * 1.5m * rnd.Next(1, 3));
+                    var sattelite = new Planet(rnd, sPos, true);
                     sattelite.position = sPos;
                     sattelite.rotation = new DVector(rnd.Next(0, 360), rnd.Next(0, 360), rnd.Next(0, 360));
                     sattelite.mass *= 0.1m;
                     sattelite.radius *= 0.1m;
                     sattelite.name = system.name.Split(' ')[0] + " O" + (i + 1) + " " + (j + 1);
-                    sattelite.textureID = rnd.Next(0, planetTextures.textures.Count);
+
+                    var textureID = rnd.Next(0, planetTextures.textures.Count);
+                    while (planetTextures.textures[textureID].type == Planet.PlanetType.Gas)
+                    {
+                        textureID = rnd.Next(0, planetTextures.textures.Count);
+                    }
+                    sattelite.textureID = textureID;
                     planet.sattelites.Add(sattelite);
                 }
                 else

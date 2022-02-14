@@ -22,16 +22,38 @@ public class GarageTradeItem : MonoBehaviour
             count += (int)allItem[i].amount.Value;
         }
 
-        haveT.text = "INV: " + count;
+        if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
+        {
+            haveT.text = "INV: " + count;
+        }
+        else
+        {
+            haveT.text = "INV: " + (count/100);
+        }
     }
 
     public void BuyOne()
     {
-        if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost))
+        if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
         {
-            if (!GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone()))
+            if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost))
             {
-                GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                if (!GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone()))
+                {
+                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                }
+            }
+        }
+        else
+        {
+            if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost*100))
+            {
+                var item = offer.item.Clone();
+                item.amount.value = item.amount.Max;
+                if (!GarageDataCollect.Instance.cargo.AddItem(item))
+                {
+                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost*100);
+                }
             }
         }
     }
@@ -41,9 +63,22 @@ public class GarageTradeItem : MonoBehaviour
         var allItem = GarageDataCollect.Instance.cargo.items.FindAll(x => x.id.idname == offer.item.id.idname);
         if (allItem.Count > 0)
         {
-            if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 1, true))
+            if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
             {
-                GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 1, true))
+                {
+                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                }
+            }
+            else
+            {
+                if (allItem[0].amount.value == allItem[0].amount.Max)
+                {
+                    if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 100, true))
+                    {
+                        GarageDataCollect.Instance.cargo.AddCredits(offer.cost * 100);
+                    }
+                }
             }
         }
     }

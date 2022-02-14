@@ -11,10 +11,12 @@ public class LandManager : MonoBehaviour
     private Quaternion landRot;
 
     public Event OnLand = new Event();
+    public Event OnUnLand = new Event();
 
     private void Awake()
     {
         OnLand = new Event();
+        OnUnLand = new Event();
     }
 
     public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
@@ -35,6 +37,7 @@ public class LandManager : MonoBehaviour
         else
         {
             transform.DOMove(transform.position + (transform.up * 10), 1f);
+            OnUnLand.Run();
         }
     }
 

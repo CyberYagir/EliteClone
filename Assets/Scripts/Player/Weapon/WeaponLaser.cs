@@ -55,7 +55,8 @@ public class WeaponLaser : Weapon
         var lastDir = new Vector3();
         var hitPoint = camera.transform.position + camera.transform.forward * 500;
         bool hitted = false;
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit))
+        var layer = LayerMask.GetMask("Default", "Main");
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, options.maxDistance, layer, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform.GetComponent<TexturingScript>() == null)
             {
@@ -67,7 +68,7 @@ public class WeaponLaser : Weapon
             }
         }
 
-        if (Physics.Raycast(transform.position, hitPoint - transform.position, out RaycastHit hit1))
+        if (Physics.Raycast(transform.position, hitPoint - transform.position, out RaycastHit hit1, options.maxDistance, layer, QueryTriggerInteraction.Ignore))
         {
             if (hit1.transform.GetComponent<TexturingScript>() == null)
             {
@@ -83,7 +84,8 @@ public class WeaponLaser : Weapon
         {
             if (line.enabled)
             {
-                SpawnDecal(options.attackDecal, lastPos, lastDir, lastHit);
+                if (lastHit.collider != null)
+                    SpawnDecal(options.attackDecal, lastPos, lastDir, lastHit);
                 particles.SetActive(hitted);
             }
 

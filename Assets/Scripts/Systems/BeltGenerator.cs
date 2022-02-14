@@ -34,11 +34,11 @@ public class BeltGenerator : MonoBehaviour
             met.Init(rnd, mineMinerals[rnd.Next(0, mineMinerals.Count)]);
             met.transform.position = new Vector3(rnd.Next(-maxRadius, maxRadius), rnd.Next(-200, 200), rnd.Next(-maxRadius, maxRadius));
             met.transform.parent = transform;
-            met.gameObject.isStatic = true;
+            //met.gameObject.isStatic = true;
             meteors.Add(met.gameObject);
         }
 
-        transform.gameObject.isStatic = true;
-        StaticBatchingUtility.Combine(meteors.ToArray(), gameObject);
+        //transform.gameObject.isStatic = true;
+        //StaticBatchingUtility.Combine(meteors.ToArray(), gameObject);
     }
 }

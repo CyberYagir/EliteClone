@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3384461305475527601}
   - component: {fileID: 3664549856826812479}
   - component: {fileID: 4821267775461893479}
+  - component: {fileID: 4291765884755688586}
   m_Layer: 6
   m_Name: Meteor
   m_TagString: Untagged
@@ -43,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595807962878084142}
-  m_Mesh: {fileID: 677139493514295760, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
+  m_Mesh: {fileID: 7247588804680124859, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
 --- !u!23 &1482388273342169683
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52,7 +53,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595807962878084142}
   m_Enabled: 1
-  m_CastShadows: 0
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -98,7 +99,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 677139493514295760, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
+  m_Mesh: {fileID: 7247588804680124859, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
 --- !u!54 &3384461305475527601
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,6 +129,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshes:
+  - {fileID: 57158112015519593, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 1867579087414035123, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 5929525742661888972, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -8136128327864165160, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 3062790265931535012, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 3143292006947129724, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -8819598455540863952, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -4221042627551628596, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -1071521237053546528, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -6480676986389578858, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -3020874707041479268, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 522409719548680011, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 8999690736584132896, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 4501417763987966291, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -8588778287439200736, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -3107684595064961418, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -2774365430512242268, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -1554376130827375641, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 4132665612439411558, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 677139493514295760, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -8991272976326722100, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: -4609770392160304802, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 5082188566232484425, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 3322558534849760616, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 2086084587227638439, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  - {fileID: 7247588804680124859, guid: 8358093fb7e05db409c77cadcd90c422, type: 3}
+  colliders:
   - {fileID: 57158112015519593, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
   - {fileID: 1867579087414035123, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
   - {fileID: 5929525742661888972, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
@@ -156,9 +184,42 @@ MonoBehaviour:
   - {fileID: 7247588804680124859, guid: afd81e036a5ce984b9dcaef293996f55, type: 3}
   materials:
   - {fileID: 2100000, guid: c06a25e252f532a46bad8de2b413d903, type: 2}
-  rb: {fileID: 3384461305475527601}
   maxMass: 10000
   maxSize: 50
+  mineralDrop: {fileID: 5170676381009984893, guid: 2a1f39db050284a438191883a8b3b80f, type: 3}
+  sizePercent:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.008333334
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.7939334
+      value: 0.28899205
+      inSlope: 0.25595057
+      outSlope: 0.25595057
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24788846
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 10.227263
+      outSlope: 10.227263
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.27314904
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!205 &4821267775461893479
 LODGroup:
   m_ObjectHideFlags: 0
@@ -178,3 +239,21 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1482388273342169683}
   m_Enabled: 1
+--- !u!114 &4291765884755688586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595807962878084142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4c267369bd3914c9f629ca5e795e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

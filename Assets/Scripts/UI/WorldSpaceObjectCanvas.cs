@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +18,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     
     private Camera camera;
     private bool skipFrame = false;
+    private bool enablePoints = true;
     [SerializeField] private GraphicRaycaster canvasRaycaster;
     public class DisplaySpaceObject
     {
@@ -32,6 +35,22 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         Player.OnSceneChanged += UpdateList;
     }
 
+
+
+    public bool SetActiveObjects()
+    {
+        if (enablePoints != !Player.inst.land.isLanded)
+        {
+            foreach (var wsp in spaceObjects)
+            {
+                wsp.CanvasPoint.gameObject.SetActive(!Player.inst.land.isLanded);
+            }
+            enablePoints = !Player.inst.land.isLanded;
+        }
+
+        return enablePoints;
+    }
+    
     public void SkipFrame()
     {
         skipFrame = true;
@@ -78,25 +97,44 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
             skipFrame = false;
         }
     }
+    
     public void UpdatePoints()
     {
-        foreach (var wsp in spaceObjects)
+        if (SetActiveObjects())
         {
-            if (wsp.Obj == null)
+            foreach (var wsp in spaceObjects)
             {
-                spaceObjects.RemoveAll(x=>x.Obj == null);
-                return;
-            }
+                if (wsp.Obj.isVisible)
+                {
+                    wsp.CanvasPoint.transform.position = (Vector2) camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                    if (!wsp.isSystem)
+                        wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position);
+                    wsp.CanvasPoint.SetSelect(wsp.Obj == Player.inst.GetTarget());
 
-            if (wsp.Obj.isVisible)
+                    if (Player.inst.GetTarget() == wsp.Obj)
+                    {
+                        wsp.CanvasPoint.SetText(wsp.Obj.transform.name + $" [{Vector3.Distance(wsp.Obj.transform.position, Player.inst.transform.position).ToString("F5")}]");
+                    }
+                    else
+                    {
+                        wsp.CanvasPoint.SetText(wsp.Obj.transform.name);
+                    }
+                }
+
+                wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
+            }
+        }
+        else
+        {
+            foreach (var wsp in spaceObjects)
             {
-                wsp.CanvasPoint.transform.position = (Vector2) camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
-                if (!wsp.isSystem)
-                    wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position);
-                wsp.CanvasPoint.SetSelect(wsp.Obj == Player.inst.GetTarget());
+                if (wsp.Obj == null)
+                {
+                    Destroy(wsp.CanvasPoint.gameObject);
+                    spaceObjects.Remove(wsp);
+                    return;
+                }
             }
-
-            wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
         }
     }
 

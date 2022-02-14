@@ -92,27 +92,33 @@ public abstract class Weapon : MonoBehaviour
         
     }
 
+    protected Event<RaycastHit> OnSpawnDecal = new Event<RaycastHit>();
     protected void SpawnDecal(GameObject decal, Vector3 start, Vector3 dir, RaycastHit initHit)
     {
         if (decalTime >= 1/5f)
         {
-            bool addToDecal = false;
-            if (Physics.Raycast(start, dir, out RaycastHit hit, options.maxDistance, decalLayer))
+            if (initHit.transform.GetComponent<WorldDrop>() == null)
             {
-                var findedDecal = hit.collider.GetComponent<Decal>();
-                if (findedDecal)
+                bool addToDecal = false;
+                if (Physics.Raycast(start, dir, out RaycastHit hit, options.maxDistance, decalLayer))
                 {
-                    findedDecal.AddToOpacity();
-                    addToDecal = true;
+                    var findedDecal = hit.collider.GetComponent<Decal>();
+                    if (findedDecal)
+                    {
+                        findedDecal.AddToOpacity();
+                        OnSpawnDecal.Run(initHit);
+                        addToDecal = true;
+                    }
                 }
-            }
 
-            if (!addToDecal)
-            {
-                var d = Instantiate(decal, initHit.point, Quaternion.identity);
-                d.transform.rotation = Quaternion.FromToRotation(Vector3.forward, initHit.normal);
-                d.transform.localRotation *= Quaternion.Euler(90, 0, 0);
-                d.transform.parent = initHit.transform;
+                if (!addToDecal)
+                {
+                    var d = Instantiate(decal, initHit.point, Quaternion.identity);
+                    d.transform.rotation = Quaternion.FromToRotation(Vector3.forward, initHit.normal);
+                    d.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+                    d.transform.parent = initHit.transform;
+                    OnSpawnDecal.Run(initHit);
+                }
             }
 
             decalTime = 0;

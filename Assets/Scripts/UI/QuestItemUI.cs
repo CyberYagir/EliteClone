@@ -8,7 +8,7 @@ public class QuestItemUI : MonoBehaviour
 {
     [SerializeField] private Image fractionImage;
     [SerializeField] private TMP_Text fractionName;
-    private int itemIndex;
+    [SerializeField] private int itemIndex;
 
     public void Init(Sprite fractionIcon, string fname, int itemID)
     {

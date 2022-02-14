@@ -103,6 +103,9 @@ namespace Game.Editor
                                 case KeyPairType.MineralType:
                                     item.keysData[i].num = (int)((MineralType)EditorGUILayout.EnumPopup((MineralType)((int)item.keysData[i].num)));
                                     break;
+                                case KeyPairType.Object:
+                                    item.keysData[i].obj = EditorGUILayout.ObjectField(item.keysData[i].obj, typeof(Object));
+                                    break;
                             }
 
                             if (GUILayout.Button("-"))

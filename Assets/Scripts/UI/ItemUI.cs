@@ -15,6 +15,13 @@ public class ItemUI : MonoBehaviour
         item = it;
 
         image.sprite = it.icon;
-        text.text = it.itemName + $" [{it.amount.Value}]";
+        if (it.IsHaveKeyPair(KeyPairValue.Mineral))
+        {
+            text.text = it.itemName + $" [{(int)((it.amount.Value/it.amount.Max) * 100)}%]";
+        }
+        else
+        {
+            text.text = it.itemName + $" [{it.amount.Value}]";
+        }
     }
 }

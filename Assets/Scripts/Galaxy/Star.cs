@@ -14,10 +14,10 @@ public class Star: SpaceObject
         {
             case StarType.M:
                 mass = GalaxyGenerator.NextDecimal(rnd, 0.30m, 0.7m);
-                radius = GalaxyGenerator.NextDecimal(rnd, 0.3m, 0.8m);
+                radius = GalaxyGenerator.NextDecimal(rnd, 0.8m, 1m);
                 break;
             case StarType.K:
-                mass = GalaxyGenerator.NextDecimal(rnd, 0.8m, 1.3m);
+                mass = GalaxyGenerator.NextDecimal(rnd, 1m, 1.3m);
                 radius = GalaxyGenerator.NextDecimal(rnd, 0.9m, 1.1m);
                 break;
             case StarType.G:

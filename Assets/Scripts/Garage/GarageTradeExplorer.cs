@@ -27,7 +27,7 @@ public class GarageTradeExplorer : MonoBehaviour
         for (int i = 0; i < manager.offers.Count; i++)
         {
             var isIn = seed.Next(0, 2);
-            if (isIn == 0)
+            if (isIn == 0 || manager.offers[i].item.IsHaveKeyPair(KeyPairValue.Mineral))
             {
                 var it = Instantiate(item.gameObject, holder);
                 it.GetComponent<GarageTradeItem>().Init(manager.offers[i]);

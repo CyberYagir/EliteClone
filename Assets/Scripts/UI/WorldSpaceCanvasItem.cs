@@ -15,6 +15,14 @@ public class WorldSpaceCanvasItem : MonoBehaviour
         text.text = wso.transform.name;
     }
 
+    public void SetText(string str)
+    {
+        if (text.text != str)
+        {
+            text.text = str;
+        }
+    }
+    
     public void SetSelect(bool state)
     {
         selection.gameObject.SetActive(state);

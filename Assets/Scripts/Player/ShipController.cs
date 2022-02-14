@@ -17,7 +17,7 @@ public class ShipController : MonoBehaviour
     private Rigidbody rigidbody;
 
     public float speed;
-
+    private float collisionCooldown;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -29,7 +29,12 @@ public class ShipController : MonoBehaviour
     {
         player.warp.WarpStop();
         player.Ship().GetValue(Health).value -= ((speed + player.warp.warpSpeed));
-        speed *= -1;
+        if (collisionCooldown > 2f)
+        {
+            speed = player.Ship().data.maxSpeedUnits * 0.05f;
+            moveMode = MoveMode.B;
+        }
+
         WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
     }
 
@@ -40,6 +45,8 @@ public class ShipController : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+
+        collisionCooldown += Time.deltaTime;
         headView = InputM.GetPressButton(KAction.HeadView);
         RotationControl();
         ForwardBackward();

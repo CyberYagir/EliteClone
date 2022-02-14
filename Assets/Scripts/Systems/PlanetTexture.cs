@@ -19,7 +19,7 @@ public class PlanetTexture : TexturingScript
         setted = id;
         for (int i = 0; i < renderers.Length; i++)
         {
-            renderers[i].material = SolarSystemGenerator.planetTextures.textures[id];
+            renderers[i].material = SolarSystemGenerator.planetTextures.textures[id].material;
         }
         
     }

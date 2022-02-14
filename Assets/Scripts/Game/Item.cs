@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class ValueLimit
 {
-    [SerializeField] float value;
+    [SerializeField] public float value;
     [SerializeField] float minValue, maxValue;
     public float Value => value;
     public float Min => minValue;
@@ -25,6 +26,12 @@ public class ValueLimit
             maxValue = minValue;
         }
     }
+
+    public ref float GetValue()
+    {
+        return ref value;
+    }
+    
 
     public void SetMinZero()
     {
@@ -101,7 +108,7 @@ public enum ItemType
 }
 public enum KeyPairType
 {
-    Int, String, Float, MeshType, MineralType
+    Int, String, Float, MeshType, MineralType, Object
 }
 
 public enum MineralType
@@ -117,17 +124,18 @@ public class KeyPair
     public string customName = "";
     public float num = 1 ;
     public string str;
+    public Object obj;
 
     public object GetValue()
     {
         switch (KeyPairType)
         {
-            case KeyPairType.Float:
-                return num;
-            case KeyPairType.Int:
-                return (int) num;
-            default:
+            case KeyPairType.String:
                 return str;
+            case KeyPairType.Object:
+                return obj;
+            default:
+                return num;
         }
     }
 }
@@ -147,7 +155,7 @@ public class Item : ScriptableObject
         var fided = keysData.Find(x => x.KeyPairValue == value);
         if (fided != null)
         {
-            return fided.num;
+            return fided.GetValue();
         }
         return 0f;
     }

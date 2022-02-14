@@ -25,6 +25,7 @@ public class QuestInfoUI : BaseTabUI
         (questList as QuestListUI).OnChangeSelected += UpdateData;
         upDownUI.OnChangeSelected += SelectButton;
         Player.OnSceneChanged += UpdateQuestInfo;
+        Player.inst.land.OnUnLand += Disable;
     }
 
     // private void OnDestroy()

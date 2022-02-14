@@ -5,7 +5,12 @@ using Game;
 using UnityEngine;
 using static Game.ItemShip.ShipValuesTypes;
 
-public class Player : MonoBehaviour
+interface IDamagable
+{
+    public void TakeDamage(float damage);
+}
+
+public class Player : MonoBehaviour, IDamagable
 {
     public static Player inst { get; private set; }
     public ShipController control { get; private set; }
@@ -15,9 +20,9 @@ public class Player : MonoBehaviour
     public AppliedQuests quests { get; private set; }
     public Cargo cargo { get; private set; }
     public ShipAttack attack { get; private set; }
-    
-    
-    
+
+    public Damager damager { get; private set; }
+
 
     public static Event OnSceneChanged = new Event();
 
@@ -34,13 +39,13 @@ public class Player : MonoBehaviour
 
     public void AddHeat(float heat)
     {
-        var currShip = this.spaceShip.GetShip();
+        var currShip = spaceShip.GetShip();
         var temperature = currShip.GetValue(Temperature);
         temperature.value += heat * Time.deltaTime;
         if (temperature.value > temperature.max)
         {
             temperature.Clamp();
-            currShip.GetValue(Health).value -= Time.deltaTime;
+            TakeDamage(Time.deltaTime);
             WarningManager.AddWarning("Heat level critical!", WarningTypes.Damage);
         }
 
@@ -51,7 +56,7 @@ public class Player : MonoBehaviour
             currShip.GetValue(Temperature).value = 0;
         }
     }
-
+    
     public void StopAxis()
     {
         control.horizontal = 0;
@@ -105,8 +110,9 @@ public class Player : MonoBehaviour
             quests = GetComponent<AppliedQuests>();
             models = GetComponent<ShipModels>();
             attack = GetComponent<ShipAttack>();
+            damager = GetComponent<Damager>();
+
             spaceShip.OnChangeShip += models.InitShip;
-            
             spaceShip.SetShip(spaceShip.CloneShip());
         }
     }
@@ -134,5 +140,10 @@ public class Player : MonoBehaviour
     public List<ContactObject> GetContacts()
     {
         return targets.contacts;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        damager.TakeDamage(ref spaceShip.GetShip().GetValue(Health).value, damage);
     }
 }

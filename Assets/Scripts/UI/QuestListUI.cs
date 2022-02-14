@@ -22,6 +22,8 @@ public class QuestListUI : BaseTabUI
             characterList.Enable();
             Disable();
         };
+
+        Player.inst.land.OnUnLand += Disable;
     }
 
 
@@ -62,10 +64,11 @@ public class QuestListUI : BaseTabUI
         int count = 0;
         for (int i = 0; i < quests.Count; i++)
         {
-            if (quests[i].questState != Quest.QuestComplited.Rewarded)
+            var findQuest = AppliedQuests.Instance.quests.Find(x => x.questID == quests[i].questID);
+            if (findQuest == null || findQuest.questState != Quest.QuestComplited.Complited)
             {
                 var questItem = Instantiate(item, holder);
-                questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString(), i);
+                questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString(), count);
                 questItem.gameObject.SetActive(true);
                 items.Add(questItem.GetComponent<ButtonEffect>());
                 count++;

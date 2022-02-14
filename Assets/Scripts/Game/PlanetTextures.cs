@@ -9,5 +9,11 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(fileName = "", menuName = "Game/PlanetTextures", order = 1)]
 public class PlanetTextures : ScriptableObject
 {
-    public List<Material> textures = new List<Material>();
+    [System.Serializable]
+    public class PlanetMaterial
+    {
+        public Planet.PlanetType type;
+        public Material material;
+    }
+    public List<PlanetMaterial> textures = new List<PlanetMaterial>();
 }

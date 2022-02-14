@@ -16,7 +16,7 @@ MonoBehaviour:
     id: -512490
     idname: mn_storage
   itemName: Mn Storage
-  icon: {fileID: 21300000, guid: 16aba9da4e27bb84a9d86294c70a9f1c, type: 3}
+  icon: {fileID: 21300000, guid: 35ebb1ce006fb454590c34100d51fd78, type: 3}
   amount:
     value: 1
     minValue: 1
@@ -29,13 +29,22 @@ MonoBehaviour:
     customName: 
     num: 1
     str: 
+    obj: {fileID: 0}
   - KeyPairValue: 2
     KeyPairType: 2
     customName: 
     num: 0.01
     str: 
+    obj: {fileID: 0}
   - KeyPairValue: 7
     KeyPairType: 4
     customName: 
     num: 4
     str: 
+    obj: {fileID: 0}
+  - KeyPairValue: 4
+    KeyPairType: 5
+    customName: 
+    num: 1
+    str: 
+    obj: {fileID: 2100000, guid: 0e72b9ade532e0b428ffd67911d3c9aa, type: 2}
