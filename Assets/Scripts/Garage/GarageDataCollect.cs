@@ -45,6 +45,7 @@ public class GarageDataCollect : MonoBehaviour
         cargo.CustomInit(playerData, ship);
     }
 
+
     public void ChangeShip(ItemShip newShip)
     {
         ship = newShip;

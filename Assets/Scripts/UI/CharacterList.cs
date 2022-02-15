@@ -22,10 +22,13 @@ public class CharacterList : BaseTabUI
     {
         if (WorldOrbitalStation.Instance != null)
         {
-            var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
-            var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
-            quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestComplited.Rewarded && y.questID == x.questID) != null);
-            questList.UpdateQuests(quests);
+            if (items.Count != 0 && upDownUI.selectedIndex != -1 && items.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex
+            {
+                var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
+                var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
+                quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestComplited.Rewarded && y.questID == x.questID) != null);
+                questList.UpdateQuests(quests);
+            }
         }
     }
 

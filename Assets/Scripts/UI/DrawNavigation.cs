@@ -81,36 +81,44 @@ public class DrawNavigation : MonoBehaviour
     public void ChangeSelect()
     {
         int selectedIndex = updown.selectedIndex;
-        if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
+        if (selectedIndex != -1)
         {
-            Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+            if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
+            {
+                Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+            }
+            else
+            {
+                Player.inst.SetTarget(null);
+            }
+
+            UpdateColors();
         }
-        else
-        {
-            Player.inst.SetTarget(null);
-        }
-        UpdateColors();
     }
 
     public void UpdateColors()
     {
         int selectedIndex = updown.selectedIndex;
-        for (int i = 0; i < items.Count; i++)
+        if (selectedIndex != -1)
         {
-            if (i == selectedIndex)
+            for (int i = 0; i < items.Count; i++)
             {
-                items[i].Button.over = ButtonEffect.ActionType.Over;
+                if (i == selectedIndex)
+                {
+                    items[i].Button.over = ButtonEffect.ActionType.Over;
+                }
+                else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
+                {
+                    items[i].Button.over = ButtonEffect.ActionType.Selected;
+                }
+                else
+                {
+                    items[i].Button.over = ButtonEffect.ActionType.None;
+                }
+
+                items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
+                items[i].Dist.text = items[i].SpaceObject.dist;
             }
-            else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
-            {
-                items[i].Button.over = ButtonEffect.ActionType.Selected;
-            }
-            else
-            {
-                items[i].Button.over = ButtonEffect.ActionType.None;
-            }
-            items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
-            items[i].Dist.text = items[i].SpaceObject.dist;
         }
     }
     

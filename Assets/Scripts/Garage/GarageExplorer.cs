@@ -31,7 +31,7 @@ public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitH
             spawned.SetSprite(it);
             spawned.gameObject.SetActive(true);
         }
-        row.SetValue(GarageDataCollect.Instance.cargo.tons, GarageDataCollect.Instance.ship.data.maxCargoWeight, $"Weight {GarageDataCollect.Instance.cargo.tons}/{GarageDataCollect.Instance.ship.data.maxCargoWeight}");
+        row.SetValue(GarageDataCollect.Instance.cargo.tons, GarageDataCollect.Instance.ship.data.maxCargoWeight, $"Weight {GarageDataCollect.Instance.cargo.tons:F1}/{GarageDataCollect.Instance.ship.data.maxCargoWeight}");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -56,5 +56,6 @@ public class GarageExplorer : CustomAnimate, IPointerEnterHandler, IPointerExitH
     {
         if (itemInfo == null) return;
         itemInfo.SetItem(data);
+        itemInfo.Show();
     }
 }

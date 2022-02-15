@@ -19,6 +19,11 @@ public class WeaponLaser : Weapon
         line.useWorldSpace = false;
         particles = Instantiate(options.attackParticles);
         particles.transform.parent = cacheHolder.transform;
+        var light = particles.GetComponentInChildren<Light>();
+        if (light != null)
+        {
+            light.color = options.laserOptions.materal.color;
+        }
         particles.SetActive(false);
     }
 
@@ -92,6 +97,7 @@ public class WeaponLaser : Weapon
             if (particles.activeSelf)
             {
                 particles.transform.position = hitPoint;
+                particles.transform.LookAt(Player.inst.transform);
             }
         }
         else

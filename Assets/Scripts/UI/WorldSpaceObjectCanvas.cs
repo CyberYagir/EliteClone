@@ -121,7 +121,8 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
                     }
                 }
 
-                wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
+                if (wsp.Obj.isVisible != wsp.CanvasPoint.gameObject.active)
+                    wsp.CanvasPoint.gameObject.SetActive(wsp.Obj.isVisible);
             }
         }
         else
@@ -138,13 +139,14 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         }
     }
 
+    private List<RaycastResult> results = new List<RaycastResult>(1);
     public Vector2 Raycast(Vector2 startPos)
     {
         var pointer = new PointerEventData(EventSystem.current);
         bool isEnded = false;
         int height = 35;
         int yOffcet = 0;
-        List<RaycastResult> results = new List<RaycastResult>(1);
+        results.Clear();
         while (!isEnded)
         {
             results = new List<RaycastResult>(1);

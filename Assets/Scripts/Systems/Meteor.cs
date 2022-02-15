@@ -43,6 +43,11 @@ public class Meteor : MonoBehaviour, IDamagable
             r.materials = mats.ToArray();
             GetComponent<MeshCollider>().sharedMesh = mesh;
         }
+
+        var displayData = GetComponent<DataToDisplay>();
+        displayData.AddLabel("Object", "Asteroid");
+        displayData.AddLabel("Resource", resource.itemName);
+        displayData.AddLabel("Mass", mass.ToString());
     }
 
     public void TakeDamage(float damage)
@@ -62,7 +67,7 @@ public class Meteor : MonoBehaviour, IDamagable
             var item = Instantiate(mineralDrop, point, Quaternion.identity);
             var drop = item.GetComponent<WorldDrop>();
             var itemData = resource.Clone();
-            itemData.amount.SetValue(new System.Random().Next(1, 10));
+            itemData.amount.SetValue(new System.Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(1, 10));
             drop.Init(itemData);
             item.GetComponent<Rigidbody>().AddForce((normal + UnityEngine.Random.insideUnitSphere) * 0.5f, ForceMode.Impulse);
         }

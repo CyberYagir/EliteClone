@@ -18,7 +18,7 @@ public class BeltGenerator : MonoBehaviour
     {
         seed = WorldOrbitalStation.CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
         var rnd = new Random(seed);
-        var mineralsCount = rnd.Next(1, maxMineralsCount);
+        var mineralsCount = rnd.Next(maxMineralsCount/2, maxMineralsCount);
 
         for (int i = 0; i < mineralsCount; i++)
         {

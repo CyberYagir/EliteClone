@@ -44,6 +44,10 @@ public class ItemsManager : MonoBehaviour
     {
         return GetItem(itemRewards.canBeTransfered[rnd.Next(0, itemRewards.canBeTransfered.Count)]);
     }
+    public static Item GetMineralItem(Random rnd)
+    {
+        return GetItem(itemRewards.canBeMineral[rnd.Next(0, itemRewards.canBeMineral.Count)]);
+    }
 
     public static Item GetItem(int id)
     {

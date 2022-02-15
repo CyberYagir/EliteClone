@@ -1,13 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Quests
 {
     [System.Serializable]
     public class QuestPath
     {
-        public string solarName, targetName;
+        public string solarName = "", targetName = "";
         public QuestPath prevPath, nextPath;
         public QuestPath()
         {
@@ -116,18 +118,28 @@ namespace Quests
             {
                 case QuestType.Transfer:
                     InitTransfer(stationName, solarName);
+                    reward.Init(questID);
+                    break;
+                case QuestType.Mine:
+                    InitMine(stationName, solarName);
+                    var cost = 0;
+                    for (int i = 0; i < toTransfer.Count; i++)
+                    {
+                        cost += (int)toTransfer[i].amount.value * rnd.Next(15, 25);
+                    }
+                    reward.Init(questID, cost);
                     break;
             }
 
-            reward.Init(questID);
         }
 
+        
+        
         public void CheckIsQuestCompleted()
         {
-            if (questType == QuestType.Transfer)
+            if (questType == QuestType.Transfer || questType == QuestType.Mine)
             {
                 bool allItemInInventory = IsHaveAllItems();
-                
                 var last = GetLastQuestPath();
                 if (allItemInInventory)
                 {
@@ -145,14 +157,34 @@ namespace Quests
         public bool IsHaveAllItems()
         {
             bool allItemInInventory = true;
+            List<Item> chekedItems = new List<Item>();
             for (int i = 0; i < toTransfer.Count; i++)
             {
                 if (!Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
                 {
                     allItemInInventory = false;
                 }
+                else
+                {
+                    var findItem = Player.inst.cargo.FindItem(toTransfer[i].id.idname);
+                    if (!chekedItems.Contains(findItem))
+                    {
+                        if (findItem.amount.value >= toTransfer[i].amount.value)
+                        {
+                            chekedItems.Add(findItem);
+                        }
+                        else
+                        {
+                            allItemInInventory = false;
+                        }
+                    }
+                    else
+                    {
+                        allItemInInventory = false;
+                    }
+                }
             }
-
+            
             return allItemInInventory;
         }
         
@@ -233,6 +265,19 @@ namespace Quests
 
             pathToTarget = GetPath(rnd, stationName, solarName);
         }
+        public void InitMine(string stationName, string solarName)
+        {
+            System.Random rnd = new Random(questID);
+            int transfersCount = rnd.Next(1, 3);
+            for (int i = 0; i < transfersCount; i++)
+            {
+                var mineral = ItemsManager.GetMineralItem(rnd);
+                mineral.amount.SetValue(mineral.amount.Max);
+                toTransfer.Add(mineral);
+            }
+
+            pathToTarget = new QuestPath() { solarName = solarName, targetName = stationName};
+        }
     }
 
     public class Reward
@@ -245,7 +290,7 @@ namespace Quests
         public RewardType type;
         public List<Item> rewardItems = new List<Item>();
 
-        public void Init(int questID)
+        public void Init(int questID, float settedMoney = -1)
         {
             var rnd = new Random(questID);
             type = (RewardType) rnd.Next(0, Enum.GetNames(typeof(RewardType)).Length);
@@ -268,7 +313,15 @@ namespace Quests
                     rewardItems.Add(ItemsManager.GetRewardItem(rnd));
                 }
                 var money = ItemsManager.GetCredits().Clone();
-                money.amount.SetValue(rnd.Next(1000, 3000));
+                if (settedMoney == -1)
+                {
+                    money.amount.SetValue(rnd.Next(1000, 3000));
+                }
+                else
+                {
+                    money.amount.SetValue(settedMoney);
+                }
+
                 rewardItems.Add(money);
             }
         }

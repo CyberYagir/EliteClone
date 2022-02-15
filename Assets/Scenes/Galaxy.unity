@@ -5587,7 +5587,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 3f9091feefeb7eb4b9bbbf0e46318a97, type: 2}
+  sharedProfile: {fileID: 11400000, guid: ece6d5a071e57ce4ca626285b4620ea0, type: 2}
 --- !u!4 &289333709
 Transform:
   m_ObjectHideFlags: 0
@@ -11743,7 +11743,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 3232799268366411417, guid: b8dc9444788bb2d418e36f1a970b6230, type: 3}
   holder: {fileID: 296829077}
-  updateRequire: 0
   time: 0
   stars: []
 --- !u!114 &892928881
@@ -23313,7 +23312,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 81367183}
   m_HandleRect: {fileID: 81367182}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999997
   m_Size: 0.6553131
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -40,6 +40,13 @@ public class QuestInfoUI : BaseTabUI
         Disable();
     }
 
+    public void AddQuest()
+    {
+        AppliedQuests.Instance.ApplyQuest(currentQuest);
+        UpdateData(currentQuest);
+    }
+
+
     public void SelectButton()
     {
         if (Player.inst.land.isLanded)
@@ -48,10 +55,18 @@ public class QuestInfoUI : BaseTabUI
             {
                 if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
                 {
-                    if (currentQuest.questState != Quest.QuestComplited.Complited)
+                    if (currentQuest.questType == Quest.QuestType.Transfer)
                     {
-                        AppliedQuests.Instance.ApplyQuest(currentQuest);
-                        UpdateData(currentQuest);
+                        if (currentQuest.questState != Quest.QuestComplited.Complited)
+                        {
+                            AddQuest();
+                        }
+                    }else if (currentQuest.questType == Quest.QuestType.Mine)
+                    {
+                        if (currentQuest.questState == Quest.QuestComplited.Complited || currentQuest.questState == Quest.QuestComplited.None)
+                        {
+                            AddQuest();
+                        }
                     }
                 }
                 else
@@ -63,7 +78,7 @@ public class QuestInfoUI : BaseTabUI
                     }
                     else if (currentQuest.questState == Quest.QuestComplited.Complited)
                     {
-                        if (currentQuest.questType == Quest.QuestType.Transfer)
+                        if (currentQuest.questType == Quest.QuestType.Transfer || currentQuest.questType == Quest.QuestType.Mine)
                         {
                             if (Player.inst.cargo.ContainItems(currentQuest.toTransfer))
                             {
@@ -135,13 +150,23 @@ public class QuestInfoUI : BaseTabUI
         targetName.text = "Target: " + last.targetName;
         targetSystem.text = "System: " + last.solarName;
         rewardTypeText.text = "Reward: " + quest.reward.type;
-        jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
-        rewardText.text = "Reward: " + quest.reward.rewardItems.Count + " Items";
-        DrawItems(rewardsHolder, rewardItem, quest.reward.rewardItems);
-        transferFullInfo.gameObject.SetActive(quest.questType == Quest.QuestType.Transfer);
-        
         
         if (quest.questType == Quest.QuestType.Transfer)
+        {
+            jumpsCount.enabled = true;
+            jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
+        }
+        else
+        {
+            jumpsCount.enabled = false;
+        }
+        rewardText.text = "Reward: " + quest.reward.rewardItems.Count + " Items";
+
+        DrawItems(rewardsHolder, rewardItem, quest.reward.rewardItems);
+        transferFullInfo.gameObject.SetActive(quest.questType == Quest.QuestType.Transfer || quest.questType == Quest.QuestType.Mine);
+        
+        
+        if (transferFullInfo.gameObject.active)
         {
             DrawItems(transferHolder, rewardItem, quest.toTransfer);
         }
@@ -157,6 +182,7 @@ public class QuestInfoUI : BaseTabUI
             {
                 buttonText.text = "";
                 TransferButton(quest);
+                MineButton(quest);
             }
             else
             {
@@ -202,5 +228,22 @@ public class QuestInfoUI : BaseTabUI
         }
 
     }
-    
+
+    public void MineButton(Quest quest)
+    {
+        if (quest.questType == Quest.QuestType.Mine)
+        {
+            if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+            {
+                if (quest.IsHaveAllItems() && quest.questState == Quest.QuestComplited.Complited)
+                {
+                    buttonText.text = "Finish";// хуй, после выполнения квеста с майн он остаётся и его можно взять
+                }
+                else
+                {
+                    buttonText.text = "Cancel";
+                }
+            }
+        }
+    }
 }

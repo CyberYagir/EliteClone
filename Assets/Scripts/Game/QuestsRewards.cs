@@ -12,4 +12,5 @@ public class QuestsRewards : ScriptableObject
     public Item creditItem;
     public List<Item> canBeRewarded;
     public List<Item> canBeTransfered;
+    public List<Item> canBeMineral;
 }

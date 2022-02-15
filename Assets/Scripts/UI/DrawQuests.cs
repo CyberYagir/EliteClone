@@ -21,7 +21,10 @@ public class DrawQuests : MonoBehaviour
 
     private void Update()
     {
-        holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);
+        if (upDownUI.selectedIndex != -1)
+        {
+            holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);
+        }
     }
 
     private void OnChangeQuests()

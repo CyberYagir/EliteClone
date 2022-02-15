@@ -8,27 +8,37 @@ using UnityEngine;
 public class WorldDrop : MonoBehaviour
 {
     [SerializeField] private Item item;
-
-    public void Init(Item dropped)
+    private float cooldown = 0;
+    public void Init(Item dropped, float delay = 0)
     {
         item = dropped;
+        cooldown = delay;
+        GetComponent<BoxCollider>().enabled = true;
     }
 
+    private void Update()
+    {
+        cooldown -= Time.deltaTime;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<ShipMeshManager>())
+        if (cooldown <= 0)
         {
-            if (Player.inst.cargo.AddItem(item, true))
+            if (other.GetComponent<ShipMeshManager>())
             {
-                transform.DOMove(other.transform.position, 0.7f);
-                transform.DOScale(Vector3.zero, 0.4f);
-                foreach (var col in GetComponents<Collider>())
+                if (Player.inst.cargo.AddItem(item, true))
                 {
-                    col.enabled = false;
+                    transform.DOMove(other.transform.position, 0.7f);
+                    transform.DOScale(Vector3.zero, 0.4f);
+                    foreach (var col in GetComponents<Collider>())
+                    {
+                        col.enabled = false;
+                    }
+
+                    Destroy(gameObject, 1);
+                    Destroy(this);
                 }
-                Destroy(gameObject,1);
-                Destroy(this);
             }
         }
     }

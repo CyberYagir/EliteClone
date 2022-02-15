@@ -117,7 +117,19 @@ namespace Game
                 OnChangeShipData.Invoke();
             }
         } 
-        
+        public float CalcMass()
+        {
+            var mass = 0f;
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].current.IsHaveKeyPair(KeyPairValue.Mass))
+                {
+                    mass += (float) slots[i].current.GetKeyPair(KeyPairValue.Mass);
+                }
+            }
+
+            return mass;
+        }
         public void ValuesToDictionary()
         {
             shipValues = new Dictionary<ShipValuesTypes, ShipClaped>();

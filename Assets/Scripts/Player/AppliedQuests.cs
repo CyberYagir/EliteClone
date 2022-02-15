@@ -68,20 +68,36 @@ public class AppliedQuests : MonoBehaviour
     
     public void ApplyQuest(Quest quest)
     {
-        if (Player.inst.cargo.AddItems(quest.toTransfer))
+        if (quest.questType == Quest.QuestType.Transfer)
+        {
+            if (Player.inst.cargo.AddItems(quest.toTransfer))
+            {
+                quests.Add(quest);
+            }
+        }
+
+        if (quest.questType == Quest.QuestType.Mine)
         {
             quests.Add(quest);
-            OnChangeQuests.Run();
         }
+        OnChangeQuests.Run();
     }
 
     public void CancelQuest(Quest quest)
     {
-        if (Player.inst.cargo.RemoveItems(quest.toTransfer))
+        if (quest.questType == Quest.QuestType.Transfer)
+        {
+            if (Player.inst.cargo.RemoveItems(quest.toTransfer))
+            {
+                quests.RemoveAll(x => x.questID == quest.questID);
+            }
+        }
+
+        if (quest.questType == Quest.QuestType.Mine)
         {
             quests.RemoveAll(x => x.questID == quest.questID);
-            OnChangeQuests.Run();
         }
+        OnChangeQuests.Run();
     }
 
     public bool IsQuestApplied(int id)

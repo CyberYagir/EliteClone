@@ -8,6 +8,12 @@ public class UpDownUI : MonoBehaviour
     public int itemsCount, selectedIndex;
     public Event OnChangeSelected = new Event();
     public Event OnNavigateChange = new Event();
+
+    private void Start()
+    {
+        selectedIndex = -1;
+    }
+
     private void Update()
     {
         if (gameObject.active && itemsCount != 0)
@@ -32,6 +38,11 @@ public class UpDownUI : MonoBehaviour
                     OnChangeSelected.Run();
                 }
             }
+        }
+        else
+        {
+            if (itemsCount == 0)
+                selectedIndex = -1;
         }
     }
 

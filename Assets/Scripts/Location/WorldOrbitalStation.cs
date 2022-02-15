@@ -93,8 +93,11 @@ public class WorldOrbitalStation : MonoBehaviour
         for (int i = 0; i < questInStation.Count; i++)
         {
             questInStation[i].quester.firstName = questInStation[i].quester.firstName;
-            list.Add(questInStation[i].quester);
-            additionalCharacters.Add(questInStation[i].quester.characterID);
+            if (characters.Find(x => x.characterID == questInStation[i].quester.characterID) == null)
+            {
+                list.Add(questInStation[i].quester);
+                additionalCharacters.Add(questInStation[i].quester.characterID);
+            }
         }
 
         return list;
@@ -107,7 +110,6 @@ public class WorldOrbitalStation : MonoBehaviour
             if (quests.FindAll(x => x.quester.characterID == chr.characterID && x.questState != Quest.QuestComplited.Rewarded).Count == 0) 
             {
                 characters.Remove(chr);
-                print("RemoveCharacter");
                 RemoveCharactersWithoutQuests();
                 break;
             }

@@ -48,7 +48,10 @@ public class UITabControl : MonoBehaviour
                         tabs[i].buttonEffect.over = ButtonEffect.ActionType.None;
                     }
 
-                    tabs[i].content.SetActive(i == tabIndex);
+                    if (tabs[i].content.active != (i == tabIndex))
+                    {
+                        tabs[i].content.SetActive(i == tabIndex);
+                    }
                 }
             }
         }

@@ -11,6 +11,7 @@ public class QuestTabItem : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text targetT, jumpToT;
     [SerializeField] private Transform rewardHolder, rewardItem;
+    [SerializeField] private Transform requireHolder;
 
     public void Init(Quest questsQuest)
     {
@@ -40,11 +41,18 @@ public class QuestTabItem : MonoBehaviour
             jumpToT.text = $"Unown path [{first.solarName}]";
 
         UITweaks.ClearHolder(rewardHolder);
+        UITweaks.ClearHolder(requireHolder);
 
         for (int i = 0; i < questsQuest.reward.rewardItems.Count; i++)
         {
             var it = Instantiate(rewardItem, rewardHolder).GetComponent<ItemUI>();
             it.Init(questsQuest.reward.rewardItems[i]);
+            it.gameObject.SetActive(true);
+        }
+        for (int i = 0; i < questsQuest.toTransfer.Count; i++)
+        {
+            var it = Instantiate(rewardItem, requireHolder).GetComponent<ItemUI>();
+            it.Init(questsQuest.toTransfer[i]);
             it.gameObject.SetActive(true);
         }
     }

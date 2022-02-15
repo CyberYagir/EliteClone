@@ -13,11 +13,12 @@ public class Cargo : MonoBehaviour
         public float value;
     }
     
+    [SerializeField] private GameObject dropPrefab;
+    
     private ItemShip currentShip;
     public List<Item> items { get; private set; } = new List<Item>();
     public float tons { get; private set; } = 0;
     public Event OnChangeInventory = new Event();
-    
     
     
     
@@ -29,7 +30,6 @@ public class Cargo : MonoBehaviour
             currentShip = ship.GetShip();
         }
     }
-
 
     public void CustomInit(PlayerData data, ItemShip ship)
     {
@@ -176,36 +176,64 @@ public class Cargo : MonoBehaviour
     }
     public bool AddItem(Item item, bool callEvent = true)
     {
-        var itemMass = item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
+        var oldItems = items;
         
-        var findedItem = items.Find(x => x.id.idname == item.id.idname);
-        if (findedItem)
+        var mass = (float) item.GetKeyPair(KeyPairValue.Mass);
+        var canAddByWeight = tons + (mass * item.amount.value) <= currentShip.data.maxCargoWeight;
+        if (!canAddByWeight)
         {
-            var mass = (float) findedItem.GetKeyPair(KeyPairValue.Mass);
-            var tonsWithOut = tons - (findedItem.amount.Value * mass);
-            var canAddByWeight = tonsWithOut + (item.amount.Value * mass) < currentShip.data.maxCargoWeight;
-            if (findedItem.amount.Value + item.amount.Value < findedItem.amount.Max && canAddByWeight)
+            return false;
+        }
+        
+        var findedItem = items.FindAll(x => x.id.idname == item.id.idname);
+        if (findedItem.Count != 0)
+        {
+            if (item.amount.Min != 0)
             {
-                findedItem.amount.AddValue(item.amount.Value);
-                tons += (item.amount.Value * mass);
-                if (callEvent) OnChangeInventory.Run();
-                return true;
-            }else if (canAddByWeight)
+                item.amount.SetMinZero();
+            }
+            for (int i = 0; i < findedItem.Count; i++)
             {
-                AddToInventory(item);
-                if (callEvent) OnChangeInventory.Run();
-                return true;
+                if (findedItem[i].amount.value == findedItem[i].amount.Max) continue;
+                
+                if (canAddByWeight && findedItem[i].amount.value + item.amount.value < findedItem[i].amount.Max)
+                {
+                    findedItem[i].amount.value += item.amount.value;
+                    tons += mass * item.amount.value;
+                    if (callEvent) OnChangeInventory.Run();
+                    return true;
+                }
+                else
+                {
+                    var startItemCount = item.amount.value;
+                    for (int j = 0; j < startItemCount; j++)
+                    {
+                        canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
+                        if (!canAddByWeight) break;
+                        if (findedItem[i].amount.Value + 1 <= findedItem[i].amount.Max && canAddByWeight)
+                        {
+                            findedItem[i].amount.AddValue(1);
+                            item.amount.SubValue(1);
+                            tons += mass;
+                        }
+                    }
+                    if (item.amount.value == 0)
+                    {
+                        if (callEvent) OnChangeInventory.Run();
+                        return true;
+                    }
+                }
             }
         }
-        else
+        var itemMass = item.amount.Value * mass;
+        if (tons + itemMass <= currentShip.data.maxCargoWeight)
         {
-            if (tons + itemMass <= currentShip.data.maxCargoWeight)
-            {
-                AddToInventory(item);
-                if (callEvent) OnChangeInventory.Run();
-                return true;
-            }
+            AddToInventory(item);
+            if (callEvent) OnChangeInventory.Run();
+            return true;
         }
+
+        items = oldItems;
         return false;
     }
     public void AddToInventory(Item item)
@@ -217,6 +245,11 @@ public class Cargo : MonoBehaviour
     public Item RemoveItem(string idName, float value = 1, bool callEvent = false)
     {
         var item = FindItem(idName);
+        return RemoveItem(item, value, callEvent);
+    }
+
+    public Item RemoveItem(Item item, float value = 1, bool callEvent = false)
+    {
         var removed = item.Clone();
         removed.amount.SetValue(0);
         if (item)
@@ -265,5 +298,23 @@ public class Cargo : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void DropItem(string itemIdName, float currentValue, float val)
+    {
+        if (ContainItem(itemIdName))
+        {
+            var item = items.Find(x => x.id.idname == itemIdName && x.amount.value == currentValue);
+            var removed = RemoveItem(item, val);
+            if (removed)
+            {
+                var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
+                Physics.IgnoreCollision(drop.GetComponent<BoxCollider>(), GetComponentInChildren<Collider>(), true);
+                drop.Init(removed, 2);
+                drop.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
+                
+                OnChangeInventory.Run();
+            }
+        }
     }
 }
