@@ -679,6 +679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 7171249915994698509}
   text: {fileID: 963770775062136123}
+  item: {fileID: 0}
 --- !u!1 &1241944957771025311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,7 +2402,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 4644103769603963942}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -3008,6 +3009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fractionImage: {fileID: 4868969728473454555}
   fractionName: {fileID: 5973204621267048174}
+  itemIndex: 0
 --- !u!114 &7285009023138859945
 MonoBehaviour:
   m_ObjectHideFlags: 0

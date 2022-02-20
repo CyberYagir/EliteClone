@@ -1234,8 +1234,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.4339623, g: 0.3560856, b: 0.14192474, a: 0.19215687}
-      maxColor: {r: 0.059629742, g: 0.1240542, b: 0.14150941, a: 0.20392157}
+      minColor: {r: 0, g: 0.97565913, b: 1, a: 0.03529412}
+      maxColor: {r: 0, g: 0.18582225, b: 1, a: 0.02745098}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6994,8 +6994,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.6320754, g: 0.44794947, b: 0, a: 1}
-      maxColor: {r: 0, g: 0.21574554, b: 0.29411766, a: 0.6313726}
+      minColor: {r: 0, g: 0.97565913, b: 1, a: 0.03529412}
+      maxColor: {r: 0, g: 0.18582225, b: 1, a: 0.02745098}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -17037,7 +17037,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1735231907}
   m_HandleRect: {fileID: 1735231906}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
