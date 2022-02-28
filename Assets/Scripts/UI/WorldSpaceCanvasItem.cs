@@ -22,9 +22,10 @@ public class WorldSpaceCanvasItem : MonoBehaviour
             text.text = str;
         }
     }
-    
+
     public void SetSelect(bool state)
     {
-        selection.gameObject.SetActive(state);
+        if (state != gameObject.active)
+            selection.gameObject.SetActive(state);
     }
 }

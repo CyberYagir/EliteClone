@@ -42,8 +42,9 @@ public class RotateAround : MonoBehaviour
     void Update()
     {
         transform.RotateAround(point.position, Vector3.up, speed * Time.deltaTime);
-        
     }
+
+    
     public void LateUpdate()
     {
         UpdateLine();
@@ -51,22 +52,15 @@ public class RotateAround : MonoBehaviour
     public void UpdateLine()
     {
         var curve = new AnimationCurve();
-
+        var camPos = camera.transform.position;
+        var current = transform;
+        var count = (float) lineRenderer.positionCount;
         for (int i = 0; i < lineRenderer.positionCount; i++)
         {
-            var dist = Vector3.Distance(transform.TransformPoint(lineRenderer.GetPosition(i)), camera.transform.position);
-            var time = i / (float)lineRenderer.positionCount;
-            var wdh = dist * width;
-
-
-            if (dist < 200)
-            {
-                curve.AddKey(time, wdh / 2f);
-            }
-            else
-            {
-                curve.AddKey(time, wdh);
-            }
+            var dist = (current.TransformPoint(lineRenderer.GetPosition(i)) - camPos).magnitude;
+            var time = i / count;
+            
+            curve.AddKey(time, dist * width);
         }
         lineRenderer.widthCurve = curve;
     }
@@ -74,11 +68,16 @@ public class RotateAround : MonoBehaviour
     public void DrawCircle(float radius)
     {
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
-        var segments = 90;
-        var line = lineRenderer;
-        line.positionCount = segments + 1;
 
-        var pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
+        var segments = 70;
+        if (transform.parent.GetComponent<PlanetTexture>())
+        {
+            segments = 40;
+        }
+        var line = lineRenderer;
+        var pointCount = segments + 1;
+        line.positionCount = pointCount;
+        
         var points = new Vector3[pointCount];
 
         for (int i = 0; i < pointCount; i++)

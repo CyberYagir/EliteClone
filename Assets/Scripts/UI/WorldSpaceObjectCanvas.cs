@@ -100,17 +100,20 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     
     public void UpdatePoints()
     {
+        
+        var pointer = new PointerEventData(EventSystem.current);
         if (SetActiveObjects())
         {
+            var target = Player.inst.GetTarget();
             foreach (var wsp in spaceObjects)
             {
                 if (wsp.Obj.isVisible)
                 {
                     wsp.CanvasPoint.transform.position = (Vector2) camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                    
                     if (!wsp.isSystem)
-                        wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position);
-                    wsp.CanvasPoint.SetSelect(wsp.Obj == Player.inst.GetTarget());
-
+                        wsp.CanvasPoint.transform.position = Raycast(wsp.CanvasPoint.transform.position, pointer);
+                    wsp.CanvasPoint.SetSelect(wsp.Obj == target);
                     if (Player.inst.GetTarget() == wsp.Obj)
                     {
                         wsp.CanvasPoint.SetText(wsp.Obj.transform.name + $" [{Vector3.Distance(wsp.Obj.transform.position, Player.inst.transform.position).ToString("F5")}]");
@@ -140,18 +143,16 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     }
 
     private List<RaycastResult> results = new List<RaycastResult>(1);
-    public Vector2 Raycast(Vector2 startPos)
+    public Vector2 Raycast(Vector2 startPos, PointerEventData pointer)
     {
-        var pointer = new PointerEventData(EventSystem.current);
         bool isEnded = false;
         int height = 35;
         int yOffcet = 0;
-        results.Clear();
         while (!isEnded)
         {
-            results = new List<RaycastResult>(1);
-            
+
             pointer.position = startPos + new Vector2(0, yOffcet);
+            results.Clear();
             canvasRaycaster.Raycast(pointer, results);
 
             if (results.Count == 0)
@@ -163,7 +164,7 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
                 yOffcet += height;
             }
         }
-        
+
         return startPos + new Vector2(0, yOffcet);
     }
 }
