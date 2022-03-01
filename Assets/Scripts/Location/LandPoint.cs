@@ -5,4 +5,5 @@ using UnityEngine;
 public class LandPoint : MonoBehaviour
 {
     public Transform point;
+    public bool isFilled;
 }

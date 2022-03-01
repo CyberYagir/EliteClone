@@ -21,6 +21,11 @@ public class LandManager : MonoBehaviour
 
     public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
     {
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
+        {
+            hit.transform.GetComponent<LandPoint>().isFilled = land;
+        }
+
         landPoint = point;
         landRot = rot;
         isLanded = land;
@@ -94,10 +99,13 @@ public class LandManager : MonoBehaviour
             var land = hit.transform.GetComponent<LandPoint>();
             if (land)
             {
-                WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
-                if (InputM.GetAxisDown(KAction.JumpIn))
+                if (!land.isFilled)
                 {
-                    SetLand(true, land.point.position, land.point.rotation);
+                    WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
+                    if (InputM.GetAxisDown(KAction.JumpIn))
+                    {
+                        SetLand(true, land.point.position, land.point.rotation);
+                    }
                 }
             }
         }
