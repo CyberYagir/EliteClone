@@ -11,10 +11,14 @@ public class WorldOrbitalStationPoints : MonoBehaviour
     [SerializeField] private GameObject botPrefab;
     [SerializeField] private List<Transform> botPoints;
 
-    private void Awake()
+    private void Start()
     {
-        Random rnd = new Random(DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour);
+        Init();
+    }
 
+    private void Init()
+    {
+        Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour);
         for (int i = 0; i < landPoints.Count; i++)
         {
             if (rnd.Next(0, 100) <= 30)
@@ -23,14 +27,19 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                 {
                     var bot = Instantiate(botPrefab, landPoints[i].point.transform.position, landPoints[i].point.transform.rotation);
                     bot.transform.parent = transform;
-                    bot.GetComponent<BotVisual>().SetVisual(rnd);
-                    bot.GetComponent<BotVisual>().SetLights(false);
+                    var builder = bot.GetComponent<BotBuilder>();
+                    
+                    builder.GetVisual().SetVisual(rnd);
+                    builder.GetVisual().SetLights(false);
+                    builder.GetShield().isActive = true;
+                    builder.AddContact(false);
+                    builder.InitBot(false, rnd);
+                    
                     Destroy(bot.GetComponent<WorldSpaceObject>());
                     landPoints[i].isFilled = true;
                 }
             }
         }
-
         StartCoroutine(BotWaiter());
     }
 
@@ -47,6 +56,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
     {
         bool isEnded = false;
         int trys = 0;
+        System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Second);
         while (!isEnded)
         {
             var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];
@@ -60,14 +70,23 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                         if (hit.transform == landPoint.transform)
                         {
                             var bot = Instantiate(botPrefab, spawns.position, spawns.rotation);
-                            bot.transform.DOMove(landPoint.point.position, 5);
-                            bot.transform.DORotate(landPoint.point.eulerAngles, 5);
-                            bot.GetComponent<BotVisual>().SetVisual(new Random(DateTime.Now.Second));
+                            var builder = bot.GetComponent<BotBuilder>();
+                            builder.PlayWarp();
+                            builder.GetShield().isActive = true;
+                            builder.GetVisual().SetVisual(rnd);
                             landPoint.isFilled = true;
                             isEnded = true;
-
+                            builder.InitBot(false);
+                            builder.AddContact(true);
+                            
+                            bot.transform.DOMove(landPoint.point.position, 5);
+                            bot.transform.DORotate(landPoint.point.eulerAngles, 5);
+                            
                             yield return new WaitForSeconds(6);
-                            bot.GetComponent<BotVisual>().SetLights(false);
+                            builder.GetVisual().SetLights(false);
+                            
+                            
+                            
 
                             break;
                         }

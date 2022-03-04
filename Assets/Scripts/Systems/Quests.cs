@@ -363,8 +363,9 @@ namespace Quests
         public void Init(System.Random rnd)
         {
             characterID = rnd.Next(-9999999, 9999999);
-            firstName = WorldOrbitalStation.ToUpperFist(WorldOrbitalStation.FirstNames[rnd.Next(0, WorldOrbitalStation.FirstNames.Length)]);
-            lastName = WorldOrbitalStation.ToUpperFist(WorldOrbitalStation.LastNames[rnd.Next(0, WorldOrbitalStation.LastNames.Length)]);
+            NamesHolder.Init();
+            firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[rnd.Next(0, NamesHolder.Instance.FirstNames.Length)]);
+            lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[rnd.Next(0, NamesHolder.Instance.LastNames.Length)]);
             fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
         }
     }

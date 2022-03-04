@@ -12,38 +12,16 @@ public class NavItem
     public ButtonEffect Button;
     public Image Image, Icon;
     public TMP_Text Name, Dist;
-    public WorldSpaceObject SpaceObject;
+    public GalaxyObject SpaceObject;
 }
-public class DrawNavigation : MonoBehaviour
+
+public class DrawNavigation : DrawNavList
 {
-    [SerializeField] private List<NavItem> items = new List<NavItem>();
-    [SerializeField] private GameObject item;
-    [SerializeField] private RectTransform holder;
-    [SerializeField] private UpDownUI updown;
     
-    
-    private UITabControl tabControl;
-
-    private float height;
-    private void Awake()
+    public override void RedrawList()
     {
-        height = item.GetComponent<RectTransform>().sizeDelta.y;
-        Player.OnSceneChanged += UpdateList;
-        updown.OnChangeSelected += ChangeSelect;
-        updown.OnNavigateChange += UpdateColors;
-    }
-
-    private void Start()
-    {
-        UpdateList();
-    }
-
-    private void UpdateList()
-    {
-        tabControl = GetComponentInParent<UITabControl>();
+        base.RedrawList(); 
         
-        UITweaks.ClearHolder(holder);
-        items = new List<NavItem>();
         var objects = FindObjectsOfType<WorldSpaceObject>();
         objects = objects.Reverse().ToArray();
         for (int i = 0; i < objects.Length; i++)
@@ -71,64 +49,6 @@ public class DrawNavigation : MonoBehaviour
             navI.Dist.text = objects[i].dist;
             b.SetActive(true);
             items.Add(navI);
-        }
-
-        updown.selectedIndex = 0;
-        updown.itemsCount = items.Count;
-    }
-
-
-    public void ChangeSelect()
-    {
-        int selectedIndex = updown.selectedIndex;
-        if (selectedIndex != -1)
-        {
-            if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
-            {
-                Player.inst.SetTarget(items[selectedIndex].SpaceObject);
-            }
-            else
-            {
-                Player.inst.SetTarget(null);
-            }
-
-            UpdateColors();
-        }
-    }
-
-    public void UpdateColors()
-    {
-        int selectedIndex = updown.selectedIndex;
-        if (selectedIndex != -1)
-        {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (i == selectedIndex)
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.Over;
-                }
-                else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.Selected;
-                }
-                else
-                {
-                    items[i].Button.over = ButtonEffect.ActionType.None;
-                }
-
-                items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
-                items[i].Dist.text = items[i].SpaceObject.dist;
-            }
-        }
-    }
-    
-    private void Update()
-    {
-        updown.enabled = tabControl.Active;
-        
-        if (tabControl.Active)
-        {
-            holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (updown.selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
         }
     }
 }

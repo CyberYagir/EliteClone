@@ -38,6 +38,15 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), 10 * Time.deltaTime);
     }
 
+    public void WithoutLerp()
+    {
+        if (image == null)
+        {
+            image = GetComponent<Image>();
+        }
+        image.color = over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor);
+    }
+
     public void SetNoneColor(Color color)
     {
         noneColor = color;

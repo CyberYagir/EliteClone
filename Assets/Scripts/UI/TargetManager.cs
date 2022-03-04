@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
-    public WorldSpaceObject target { get; private set; }
-    public List<ContactObject> contacts { get; private set; }
+    public GalaxyObject target { get; private set; }
+    public List<ContactObject> contacts { get; private set; } = new List<ContactObject>();
+
+    public Event ContactsChanges = new Event();
 
     private Camera camera;
 
@@ -32,6 +34,7 @@ public class TargetManager : MonoBehaviour
                         id = i;
                     }
                 }
+
                 if (angle < 5)
                 {
                     SetTarget(SolarSystemGenerator.objects[id]);
@@ -44,8 +47,22 @@ public class TargetManager : MonoBehaviour
         }
     }
 
-    public void SetTarget(WorldSpaceObject target)
+    public void SetTarget(GalaxyObject target)
     {
         this.target = target;
+    }
+
+    public void AddContact(ContactObject contact, bool trigger = true)
+    {
+        contacts.Add(contact);
+        if (trigger)
+            ContactsChanges.Run();
+    }
+
+    public void RemoveContact(ContactObject contact, bool trigger = true)
+    {
+        contacts.Remove(contact);
+        if (trigger)
+            ContactsChanges.Run();
     }
 }

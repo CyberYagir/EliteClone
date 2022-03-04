@@ -23,10 +23,11 @@ public class Player : MonoBehaviour, IDamagable
 
     public Damager damager { get; private set; }
 
+    public TargetManager targets { get; private set; }
 
     public static Event OnSceneChanged = new Event();
+    public static Event OnPreSceneChanged = new Event();
 
-    private TargetManager targets;
     private ShipModels models;
     Ship spaceShip;
     
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour, IDamagable
     private void Awake()
     {
         OnSceneChanged = new Event();
+        OnPreSceneChanged = new Event();
         Init();
     }
 
@@ -129,14 +131,16 @@ public class Player : MonoBehaviour, IDamagable
     }
     
     
-    public WorldSpaceObject GetTarget()
+    public GalaxyObject GetTarget()
     {
         return targets.target;
     }
-    public void SetTarget(WorldSpaceObject target)
+    public void SetTarget(GalaxyObject target)
     {
         targets.SetTarget(target);
     }
+    
+    
     public List<ContactObject> GetContacts()
     {
         return targets.contacts;

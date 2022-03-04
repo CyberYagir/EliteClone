@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldSpaceObject : MonoBehaviour
+
+public abstract class GalaxyObject : MonoBehaviour
+{
+    public Sprite icon;
+}
+
+public class WorldSpaceObject : GalaxyObject
 {
     public bool isVisible;    
     [HideInInspector]
     public string dist;
     private Transform camera;
-    public Sprite icon;
     private void Start()
     {
         camera = Camera.main.transform;

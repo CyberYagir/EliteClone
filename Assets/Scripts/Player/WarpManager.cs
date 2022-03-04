@@ -67,6 +67,7 @@ public class WarpManager : MonoBehaviour
                     LocationGenerator.SaveLocationFile(activeLocationPoint.root.name, activeLocationPoint.locationType);
                     Player.inst.saves.SetKey("loc_start", true);
                     DontDestroyOnLoad(Player.inst);
+                    Player.OnPreSceneChanged.Run();
                     World.LoadLevel(Scenes.Location);
                 }
             }
@@ -105,6 +106,7 @@ public class WarpManager : MonoBehaviour
         DontDestroyOnLoad(Player.inst);
         PlayerDataManager.CurrentSolarSystem = null;
         LocationGenerator.RemoveLocationFile();
+        Player.OnPreSceneChanged.Run();
         World.LoadLevel(Scenes.System);
     }
     
@@ -128,6 +130,8 @@ public class WarpManager : MonoBehaviour
                             DontDestroyOnLoad(Player.inst);
                             SolarSystemGenerator.DeleteSystemFile();
                             PlayerDataManager.CurrentSolarSystem = GalaxyGenerator.systems[Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
+                            
+                            Player.OnPreSceneChanged.Run();
                             World.LoadLevel(Scenes.System);
                             return;
                         }

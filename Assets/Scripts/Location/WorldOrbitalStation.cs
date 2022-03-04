@@ -5,10 +5,46 @@ using Quests;
 using UnityEngine;
 using Random = System.Random;
 
+
+
+public class NamesHolder
+{
+    public static NamesHolder Instance;
+    public string[] FirstNames, LastNames;
+
+
+    public static void Init()
+    {
+        if (Instance == null)
+        {
+            Instance = new NamesHolder();
+            if (Instance.FirstNames == null)
+            {
+                Instance.FirstNames = LoadFromFile("names");
+                Instance.LastNames = LoadFromFile("lastnames");
+            }
+        }
+    }
+
+    private static string[] LoadFromFile(string nm)
+    {
+        TextAsset mytxtData = (TextAsset) Resources.Load(nm);
+        var wrds = mytxtData.text;
+        return wrds.Split('/');
+    }
+    
+    public static string ToUpperFist(string str)
+    {
+        if (str.Length == 1)
+            return char.ToUpper(str[0]).ToString();
+        else
+            return (char.ToUpper(str[0]) + str.Substring(1).ToLower()).ToString();
+    }
+}
+
 public class WorldOrbitalStation : MonoBehaviour
 {
     public static WorldOrbitalStation Instance;
-    public static string[] FirstNames, LastNames;
     [SerializeField] private int uniqSeed;
     [SerializeField] private StationRefiller refiller;
     public List<Quest> quests;
@@ -19,11 +55,7 @@ public class WorldOrbitalStation : MonoBehaviour
 
     public static void InitNames()
     {
-        if (FirstNames == null)
-        {
-            FirstNames = LoadFromFile("names");
-            LastNames = LoadFromFile("lastnames");
-        }
+        NamesHolder.Init();
     }
 
     public static void ClearEvent()
@@ -43,16 +75,16 @@ public class WorldOrbitalStation : MonoBehaviour
         characters.AddRange(SpawnQuestCharacters());
         quests.AddRange(GetTargetStationQuests());
 
+        GetComponent<ContactObject>().Init(false);
+        
         RemoveCharactersWithoutQuests();
+    }
 
-    }
-    
-    private static string[] LoadFromFile(string nm)
+    public int GetUniqSeed()
     {
-        TextAsset mytxtData = (TextAsset) Resources.Load(nm);
-        var wrds = mytxtData.text;
-        return wrds.Split('/');
+        return uniqSeed;
     }
+
 
 
     private void Start()
@@ -154,13 +186,5 @@ public class WorldOrbitalStation : MonoBehaviour
         }
 
         return list;
-    }
-
-    public static string ToUpperFist(string str)
-    {
-        if (str.Length == 1)
-            return char.ToUpper(str[0]).ToString();
-        else
-            return (char.ToUpper(str[0]) + str.Substring(1).ToLower()).ToString();
     }
 }

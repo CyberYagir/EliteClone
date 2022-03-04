@@ -8,7 +8,13 @@ public class BotVisual : MonoBehaviour
 {
     public List<GameObject> ships = new List<GameObject>();
     private List<GameObject> engines = new List<GameObject>();
+    private int visualID;
 
+    public string GetShipName()
+    {
+        return ships[visualID].name.Replace("ShipMesh", "");
+    }
+    
     private void Awake()
     {
         foreach (var lights in GetComponentsInChildren<Light>(true))
@@ -19,7 +25,8 @@ public class BotVisual : MonoBehaviour
 
     public void SetVisual(Random rnd)
     {
-        ships[rnd.Next(0, ships.Count)].SetActive(true);
+        visualID = rnd.Next(0, ships.Count);
+        ships[visualID].SetActive(true);
     }
 
     public void ActiveLights()
