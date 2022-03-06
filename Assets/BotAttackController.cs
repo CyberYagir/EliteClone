@@ -18,12 +18,9 @@ public class BotAttackController : MonoBehaviour
     {
         MoveTo, MoveBack
     }
-    private Rigidbody rb;
-
     private Vector3 target;
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         SetPlayerPoint();
     }
 
@@ -46,8 +43,7 @@ public class BotAttackController : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, target) < 5)
             {
-                attackType = AttackType.MoveBack;
-                target = transform.position + (Random.insideUnitSphere * Random.Range(300, 600));
+                ChangePoint();
             }
             else
             {
@@ -66,6 +62,16 @@ public class BotAttackController : MonoBehaviour
     }
 
 
+    public void ChangePoint()
+    {
+        attackType = AttackType.MoveBack;
+        target = transform.position + (Random.insideUnitSphere * Random.Range(300, 600));
+        if (target.magnitude > 1000)
+        {
+            target = Vector3.zero;
+        }
+    }
+
     public void SetPlayerPoint()
     {
         target = targetShip.position + Player.inst.transform.up * 5 + -Player.inst.transform.forward *  Random.Range(100, 600);
@@ -73,6 +79,7 @@ public class BotAttackController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        ChangePoint();
         speed /= 2f;
     }
 }

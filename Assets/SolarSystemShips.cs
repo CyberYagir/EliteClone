@@ -21,15 +21,19 @@ public class SolarSystemShips : MonoBehaviour
     [System.Serializable]
     public class HumanShip
     {
+        public int uniqID;
+        public bool isDead;
         public int shipID;
         public string firstName, lastName;
 
-        public HumanShip(Random rnd, int maxID)
+        public HumanShip(Random rnd, int maxID, int uid, bool isDead)
         {
             NamesHolder.Init();
             shipID = rnd.Next(0, maxID);
             firstName = NamesHolder.GetFirstName(rnd);
             lastName = NamesHolder.GetLastName(rnd);
+            uniqID = uid;
+            this.isDead = isDead;
         }
     }
 
@@ -44,11 +48,8 @@ public class SolarSystemShips : MonoBehaviour
         return new Random(GetSpeed()).Next(10, 30);
     }
 
-    [SerializeField] private BotVisual botPrefab;
-    [SerializeField] private List<LocationHolder> locations = new List<LocationHolder>();
-    [SerializeField] private List<HumanShip> ships = new List<HumanShip>();
 
-    private void Start()
+    void InitShipsPoses()
     {
         for (int i = 0; i < PlayerDataManager.CurrentSolarSystem.stations.Count; i++)
         {
@@ -66,13 +67,11 @@ public class SolarSystemShips : MonoBehaviour
         {
             count = Mathf.Clamp(count, 2, 10);
         }
-
-        var date = DateTime.Now;
-        var positionsRnd = new Random(GetSpeed() + date.Year + date.Month + date.Day + date.Hour);
+        var positionsRnd = new Random(GetSpeed() + SaveLoadData.GetCurrentSaveSeed());
         for (int i = 0; i < count; i++)
         {
             var locID = positionsRnd.Next(-1, locations.Count);
-            var ship = new HumanShip(rnd, botPrefab.ships.Count);
+            var ship = new HumanShip(rnd, botPrefab.ships.Count, GetSpeed() + i, false);
             if (locID >= 0)
             {
                 if (locations[locID].humans.Count < 3)
@@ -83,6 +82,41 @@ public class SolarSystemShips : MonoBehaviour
             }
             
             ships.Add(ship);
+        }
+
+    }
+
+    [SerializeField] private BotVisual botPrefab;
+    [SerializeField] private List<LocationHolder> locations = new List<LocationHolder>();
+    [SerializeField] private List<HumanShip> ships = new List<HumanShip>();
+
+    public void Init()
+    {
+        if (PlayerDataManager.CurrentSolarSystem != null)
+        {
+            InitShipsPoses();
+            CreateBots();
+        }
+    }
+    public void CreateBots()
+    {
+        var isLocation = World.Scene == Scenes.Location;
+
+        if (isLocation)
+        {
+            var location = locations.Find(x => x.locationName == LocationGenerator.CurrentSave.locationName);
+            if (location != null)
+            {
+                for (int i = 0; i < location.humans.Count; i++)
+                {
+                    var pos = UnityEngine.Random.insideUnitSphere * 1000;
+                    var bot = Instantiate(botPrefab.gameObject, pos, Quaternion.Euler(-pos)).GetComponent<BotBuilder>();
+                    bot.InitBot(false, NamesHolder.ToUpperFist(location.humans[i].firstName), NamesHolder.ToUpperFist(location.humans[i].lastName));
+                    bot.GetVisual().SetVisual(location.humans[i].shipID);
+                    bot.AddContact(false);
+                    bot.SetBehaviour(BotBuilder.BotState.Moving);
+                }
+            }
         }
     }
 }

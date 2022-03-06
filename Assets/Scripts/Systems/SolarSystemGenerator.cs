@@ -127,6 +127,7 @@ public class SolarSystemGenerator : MonoBehaviour
         savedSolarSystem = null;
         InitSystem();
         CreateSystem();
+        GetComponent<SolarSystemShips>().Init();
     }
 
     public static string GetSystemFileName()

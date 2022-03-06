@@ -34,6 +34,11 @@ public class PlayerDataManager : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         LoadStatic();
         InitDataManager();
     }

@@ -25,8 +25,17 @@ public class BotVisual : MonoBehaviour
 
     public void SetVisual(Random rnd)
     {
-        visualID = rnd.Next(0, ships.Count);
-        ships[visualID].SetActive(true);
+        var id = rnd.Next(0, ships.Count);
+        SetVisual(id);
+    }
+
+    public void SetVisual(int id)
+    {
+        visualID = id;
+        for (int i = 0; i < ships.Count; i++)
+        {
+            ships[i].SetActive(i == id);
+        }
     }
 
     public void ActiveLights()

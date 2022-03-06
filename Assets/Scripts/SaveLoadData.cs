@@ -20,6 +20,7 @@ public class PlayerData
     public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
     public Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
     public decimal playedTime = 0;
+    public int startSaveTime = 0;
 }
 
 
@@ -34,15 +35,22 @@ public class SaveLoadData : MonoBehaviour
 {
     private Dictionary<string, object> keys = new Dictionary<string, object>();
     private Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
-    private decimal startTime, playedTime;
+    private static decimal startTime, playedTime;
+    private static int startSaveTime;
     private void Awake()
     {
         if (Player.inst)
         {
             Load();
+            
         }
     }
 
+    public static int GetCurrentSaveSeed()
+    {
+        return Mathf.FloorToInt((((float)startTime + (float)playedTime) * 2) / 60f / 60f) + startSaveTime;
+    }
+    
     private void Update()
     {
         playedTime += (decimal)Time.deltaTime;
@@ -146,6 +154,8 @@ public class SaveLoadData : MonoBehaviour
                 shipsInStations = playerData.shipsInStations;
 
                 startTime = playerData.playedTime;
+
+                startSaveTime = playerData.startSaveTime;
             }
         }
         else
@@ -168,6 +178,10 @@ public class SaveLoadData : MonoBehaviour
     {
         var world = GameObject.FindGameObjectWithTag("WorldHolder");
         var p = Player.inst;
+        if (startSaveTime == 0)
+        {
+            startSaveTime = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour * DateTime.Now.Minute * DateTime.Now.Millisecond;
+        }
         var playerData = new PlayerData()
         {
             Ship = p.Ship().SaveShip(),
@@ -180,7 +194,8 @@ public class SaveLoadData : MonoBehaviour
             quests = p.quests.GetData(),
             items = p.cargo.GetData(),
             shipsInStations = shipsInStations,
-            playedTime = GetTime()
+            playedTime = GetTime(),
+            startSaveTime = startSaveTime
         };
         SaveData(playerData);
     }

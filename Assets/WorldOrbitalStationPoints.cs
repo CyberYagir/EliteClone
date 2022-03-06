@@ -18,7 +18,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
 
     private void Init()
     {
-        Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour);
+        Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
         for (int i = 0; i < landPoints.Count; i++)
         {
             if (rnd.Next(0, 100) <= 30)
@@ -34,6 +34,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                     builder.GetShield().isActive = true;
                     builder.AddContact(false);
                     builder.InitBot(false, rnd);
+                    builder.SetBehaviour(BotBuilder.BotState.Land);
                     
                     Destroy(bot.GetComponent<WorldSpaceObject>());
                     landPoints[i].isFilled = true;
@@ -56,7 +57,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
     {
         bool isEnded = false;
         int trys = 0;
-        System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Second);
+        System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
         while (!isEnded)
         {
             var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];
@@ -81,13 +82,10 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                             
                             bot.transform.DOMove(landPoint.point.position, 5);
                             bot.transform.DORotate(landPoint.point.eulerAngles, 5);
+                            builder.SetBehaviour(BotBuilder.BotState.Land);
                             
                             yield return new WaitForSeconds(6);
                             builder.GetVisual().SetLights(false);
-                            
-                            
-                            
-
                             break;
                         }
 

@@ -4941,6 +4941,7 @@ GameObject:
   - component: {fileID: 8296444846279596883}
   - component: {fileID: 8296444846279596893}
   - component: {fileID: 1066150399775087652}
+  - component: {fileID: 6785303924637331912}
   - component: {fileID: 8296444846279596892}
   - component: {fileID: 4551080036014000068}
   - component: {fileID: 5555687441831744014}
@@ -5004,6 +5005,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLandProcess: 0
+--- !u!114 &6785303924637331912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296444846279596895}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b20fec725243345b20528dad5fa298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  currentRot: {x: 0, y: 0, z: 0}
 --- !u!54 &8296444846279596892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5017,7 +5032,7 @@ Rigidbody:
   m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &4551080036014000068
@@ -5050,13 +5065,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackControl: {fileID: 8296444846279596893}
   landControl: {fileID: 1066150399775087652}
+  movingControl: {fileID: 6785303924637331912}
   shield: {fileID: 1264241109534088375}
   visual: {fileID: 4551080036014000068}
   contactManager: {fileID: 5022914247411511008}
   particles: {fileID: 1518317486984035917}
-  OnBotInited:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7540778058651189035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5835,7 +5848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1094995278433385276, guid: 9bbdf343ed888244a868b62b1a0b00db, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2301114795550170905, guid: 9bbdf343ed888244a868b62b1a0b00db, type: 3}
       propertyPath: m_RenderingLayerMask

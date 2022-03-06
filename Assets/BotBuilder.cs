@@ -8,6 +8,7 @@ public class BotBuilder : MonoBehaviour
 {
     [SerializeField] private BotAttackController attackControl;
     [SerializeField] private BotLandController landControl;
+    [SerializeField] private BotMovingController movingControl;
     [SerializeField] private ShieldActivator shield;
     [SerializeField] private BotVisual visual;
     [SerializeField] private ContactObject contactManager;
@@ -46,13 +47,29 @@ public class BotBuilder : MonoBehaviour
 
         transform.name = GetComponent<BotVisual>().GetShipName() + $" [{firstName} {lastName}]";
     }
-
+    public void InitBot(bool triggerEvent, string first, string last)
+    {
+        NamesHolder.Init();
+        transform.name = GetComponent<BotVisual>().GetShipName() + $" [{first} {last}]";
+    }
     public ParticleSystem PlayWarp()
     {
         particles.Play();
         return particles;
     }
 
+    public enum BotState
+    {
+        Attack, Land, Moving
+    }
+
+    public void SetBehaviour(BotState botState)
+    {
+        attackControl.enabled = botState == BotState.Attack;
+        landControl.enabled = botState == BotState.Land;
+        movingControl.enabled = botState == BotState.Moving;
+    }
+    
     public ShieldActivator GetShield()
     {
         return shield;

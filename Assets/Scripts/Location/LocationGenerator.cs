@@ -59,6 +59,8 @@ public class LocationGenerator : MonoBehaviour
         Player.inst.transform.parent = transform;
         Player.inst.transform.parent = null;
         
+        
+        GetComponent<SolarSystemShips>().Init();
     }
 
     public void LoadLocation()
