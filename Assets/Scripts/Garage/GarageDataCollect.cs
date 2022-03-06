@@ -53,12 +53,17 @@ public class GarageDataCollect : MonoBehaviour
         OnChangeShip.Invoke();
     }
 
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
+
     public void Save()
     {
         playerData.Ship = ship.SaveShip();
         playerData.shipsInStations = saves.GetStorageShip();
         playerData.items = cargo.GetData();
-        
+        playerData.playedTime = saves.GetTime();
         saves.SaveData(playerData);
     }
 }

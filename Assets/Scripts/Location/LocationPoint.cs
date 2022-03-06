@@ -6,7 +6,7 @@ public class LocationPoint : MonoBehaviour
 {
     public enum LocationType
     {
-        Station, Belt
+        Station, Belt, Empty
     }
     private Camera mainCamera;
     [SerializeField] float size;

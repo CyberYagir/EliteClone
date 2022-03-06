@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ public class PlayerData
     public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
     public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
     public Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
+    public decimal playedTime = 0;
 }
 
 
@@ -32,12 +34,18 @@ public class SaveLoadData : MonoBehaviour
 {
     private Dictionary<string, object> keys = new Dictionary<string, object>();
     private Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
+    private decimal startTime, playedTime;
     private void Awake()
     {
         if (Player.inst)
         {
             Load();
         }
+    }
+
+    private void Update()
+    {
+        playedTime += (decimal)Time.deltaTime;
     }
 
     #region Keys
@@ -104,6 +112,12 @@ public class SaveLoadData : MonoBehaviour
     #endregion
 
     #region SaveLoad
+
+    public decimal GetTime()
+    {
+        return startTime + playedTime;
+    }
+    
     public void Load()
     {
         var playerData = LoadData();
@@ -127,7 +141,11 @@ public class SaveLoadData : MonoBehaviour
                 p.quests.LoadList(playerData.quests);
                 p.cargo.LoadData(playerData.items);
                 
+                startTime = playerData.playedTime;
+                
                 shipsInStations = playerData.shipsInStations;
+
+                startTime = playerData.playedTime;
             }
         }
         else
@@ -161,7 +179,8 @@ public class SaveLoadData : MonoBehaviour
             IsLanded = p.land.GetLand(),
             quests = p.quests.GetData(),
             items = p.cargo.GetData(),
-            shipsInStations = shipsInStations
+            shipsInStations = shipsInStations,
+            playedTime = GetTime()
         };
         SaveData(playerData);
     }

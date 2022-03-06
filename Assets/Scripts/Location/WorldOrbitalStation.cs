@@ -26,6 +26,16 @@ public class NamesHolder
         }
     }
 
+    public static string GetFirstName(Random rnd)
+    {
+        Init();
+        return Instance.FirstNames[rnd.Next(0, Instance.FirstNames.Length)];
+    }
+    public static string GetLastName(Random rnd)
+    {
+        Init();
+        return Instance.LastNames[rnd.Next(0, Instance.LastNames.Length)];
+    }
     private static string[] LoadFromFile(string nm)
     {
         TextAsset mytxtData = (TextAsset) Resources.Load(nm);

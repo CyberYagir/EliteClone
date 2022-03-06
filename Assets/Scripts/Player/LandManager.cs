@@ -23,7 +23,10 @@ public class LandManager : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
         {
-            hit.transform.GetComponent<LandPoint>().isFilled = land;
+            if (hit.transform.GetComponent<LandPoint>())
+            {
+                hit.transform.GetComponent<LandPoint>().isFilled = land;
+            }
         }
 
         landPoint = point;

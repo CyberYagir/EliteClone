@@ -364,8 +364,8 @@ namespace Quests
         {
             characterID = rnd.Next(-9999999, 9999999);
             NamesHolder.Init();
-            firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[rnd.Next(0, NamesHolder.Instance.FirstNames.Length)]);
-            lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[rnd.Next(0, NamesHolder.Instance.LastNames.Length)]);
+            firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
+            lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
             fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
         }
     }

@@ -13,34 +13,47 @@ namespace Game.Editor
         private static bool drawStats, drawSlots;
         private ItemShip ship;
         private GameObject mesh;
+
         private void OnEnable()
         {
             ship = target as ItemShip;
-            mesh = Instantiate(ship.shipModel);
-            mesh.hideFlags = HideFlags.HideAndDontSave;
+            if (!Application.isPlaying)
+            {
+                mesh = Instantiate(ship.shipModel);
+                mesh.hideFlags = HideFlags.HideAndDontSave;
+            }
         }
-    
+
         private void OnDisable()
         {
             EditorUtility.SetDirty(ship);
             AssetDatabase.SaveAssets();
-            gameObjectEditor.ResetTarget();
+            if (gameObjectEditor)
+                gameObjectEditor.ResetTarget();
             DestroyImmediate(gameObjectEditor);
-            DestroyImmediate(mesh.gameObject);
+            DestroyMesh();
         }
 
         private void OnDestroy()
         {
-            gameObjectEditor.ResetTarget();
+            if (gameObjectEditor)
+                gameObjectEditor.ResetTarget();
             DestroyImmediate(gameObjectEditor);
-            DestroyImmediate(mesh.gameObject);
+            DestroyMesh();
         }
+
+        public void DestroyMesh()
+        {
+            if (mesh)
+                DestroyImmediate(mesh.gameObject);
+        }
+
 
         public override void OnInspectorGUI()
         {
             var oldLengh = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 55;
-        
+
             GUILayout.BeginHorizontal();
             {
                 GUILayout.BeginVertical();
@@ -51,7 +64,7 @@ namespace Game.Editor
                     GUI.enabled = true;
                     ship.shipModel = (GameObject) EditorGUILayout.ObjectField("Ship:", ship.shipModel, typeof(GameObject));
                     ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
-                
+
                     TweaksEditor.HorizontalLine(Color.gray);
                     EditorGUILayout.LabelField("Data: ", EditorStyles.boldLabel);
                     EditorGUIUtility.labelWidth = 80;
@@ -89,7 +102,7 @@ namespace Game.Editor
                     ship.shipValuesList.Add(new ShipClaped());
                 }
             }
-            
+
             TweaksEditor.HorizontalLine(Color.gray);
             drawSlots = EditorGUILayout.Foldout(drawSlots, "Slots", true);
             if (drawSlots)
@@ -107,10 +120,10 @@ namespace Game.Editor
                     ship.slots[i].uid = EditorGUILayout.IntField(ship.slots[i].uid);
                     ship.slots[i].slotLevel = EditorGUILayout.IntField(ship.slots[i].slotLevel);
                     ship.slots[i].slotType = (ItemType) EditorGUILayout.EnumPopup(ship.slots[i].slotType);
-                    
+
                     EditorGUI.BeginChangeCheck();
                     {
-                        ship.slots[i].current = (Item)EditorGUILayout.ObjectField(ship.slots[i].current, typeof(Item));
+                        ship.slots[i].current = (Item) EditorGUILayout.ObjectField(ship.slots[i].current, typeof(Item));
                     }
                     if (EditorGUI.EndChangeCheck())
                     {
@@ -122,14 +135,16 @@ namespace Game.Editor
                             }
                         }
                     }
-                    
+
                     if (GUILayout.Button("-"))
                     {
                         ship.slots.RemoveAt(i);
                         break;
                     }
+
                     EditorGUILayout.EndHorizontal();
                 }
+
                 if (GUILayout.Button("Add"))
                 {
                     ship.slots.Add(new Slot() {uid = ship.slots.Count});
@@ -144,7 +159,7 @@ namespace Game.Editor
         {
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Space(10);  
+                GUILayout.Space(10);
                 TweaksEditor.HorizontalLine(Color.gray, 30);
             }
             GUILayout.EndHorizontal();
@@ -162,6 +177,7 @@ namespace Game.Editor
                         clamped.name = old;
                     }
                 }
+
                 EditorGUILayout.LabelField("Value");
                 EditorGUILayout.LabelField("Max");
             }
@@ -173,27 +189,29 @@ namespace Game.Editor
                     ship.shipValuesList.Remove(clamped);
                     return null;
                 }
+
                 clamped.value = EditorGUILayout.FloatField(clamped.value);
                 clamped.max = EditorGUILayout.FloatField(clamped.max);
             }
             GUILayout.EndHorizontal();
             return clamped;
         }
-    
+
         public void DrawPreview()
         {
-            EditorGUI.BeginChangeCheck();
-   
-            if(EditorGUI.EndChangeCheck())
+            if (mesh)
             {
-                if(gameObjectEditor != null) DestroyImmediate(gameObjectEditor);
-            }
-   
-            GUIStyle bgColor = new GUIStyle();
-   
-            bgColor.normal.background = EditorGUIUtility.whiteTexture;
-            if (mesh != null)
-            {
+                EditorGUI.BeginChangeCheck();
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    if (gameObjectEditor != null) DestroyImmediate(gameObjectEditor);
+                }
+
+                GUIStyle bgColor = new GUIStyle();
+
+                bgColor.normal.background = EditorGUIUtility.whiteTexture;
+
                 if (gameObjectEditor == null)
                 {
                     gameObjectEditor = UnityEditor.Editor.CreateEditor(mesh.gameObject);

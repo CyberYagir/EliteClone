@@ -35,13 +35,13 @@ public class BotBuilder : MonoBehaviour
         var lastName = "";
         if (rnd == null)
         {
-            firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[Random.Range(0, NamesHolder.Instance.FirstNames.Length)]);
-            lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[Random.Range(0, NamesHolder.Instance.LastNames.Length)]);
+            firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[UnityEngine.Random.Range(0, NamesHolder.Instance.FirstNames.Length)]);
+            lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[UnityEngine.Random.Range(0, NamesHolder.Instance.LastNames.Length)]);
         }
         else
         {
-            firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[rnd.Next(0, NamesHolder.Instance.FirstNames.Length)]);
-            lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[rnd.Next(0, NamesHolder.Instance.LastNames.Length)]);
+            firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
+            lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
         }
 
         transform.name = GetComponent<BotVisual>().GetShipName() + $" [{firstName} {lastName}]";
