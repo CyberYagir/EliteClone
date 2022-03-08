@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BotBuilder : MonoBehaviour
+public class BotBuilder : MonoBehaviour, IDamagable
 {
     [SerializeField] private BotAttackController attackControl;
     [SerializeField] private BotLandController landControl;
@@ -13,9 +14,11 @@ public class BotBuilder : MonoBehaviour
     [SerializeField] private BotVisual visual;
     [SerializeField] private ContactObject contactManager;
     [SerializeField] private ParticleSystem particles;
-    
+    [SerializeField] private ItemShip ship;
+    private Damager damager;
     private void Start()
     {
+        damager = GetComponent<Damager>();
         if (World.Scene == Scenes.Location)
         {
             attackControl.enabled = false;
@@ -29,6 +32,11 @@ public class BotBuilder : MonoBehaviour
         
     }
 
+    public void SetShip(ItemShip shipData)
+    {
+        ship = shipData;
+    }
+    
     public void InitBot(bool triggerEvent, System.Random rnd = null)
     {
         NamesHolder.Init();
@@ -83,5 +91,26 @@ public class BotBuilder : MonoBehaviour
     public void AddContact(bool trigger)
     {
         contactManager.Init(trigger);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        SetBehaviour(BotState.Attack);
+        attackControl.SetTarget(Player.inst.transform);
+        if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
+        {
+            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Health).value, damage);
+            shield.isActive = false;
+        }
+        else
+        {
+            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Shields).value, damage);
+            shield.isActive = true;
+        }
+    }
+
+    public ItemShip GetShip()
+    {
+        return ship;
     }
 }

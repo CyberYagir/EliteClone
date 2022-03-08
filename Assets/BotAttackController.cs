@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Game;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +15,10 @@ public class BotAttackController : MonoBehaviour
     [SerializeField] private Transform mesh;
 
     [SerializeField] private Transform targetShip;
-    
+
+
+    private List<Weapon> weapons = new List<Weapon>();
+    private List<IEnumerator> weaponHolds = new List<IEnumerator>();
     public enum AttackType
     {
         MoveTo, MoveBack
@@ -22,6 +27,18 @@ public class BotAttackController : MonoBehaviour
     private void Start()
     {
         SetPlayerPoint();
+        var weap = GetComponentsInChildren<ShipMeshSlot>(false).ToList();
+        var ship = GetComponent<BotBuilder>().GetShip();
+        for (int i = 0; i < weap.Count; i++)
+        {
+            weap[i].SetMesh(ship.slots[i]);
+            var weapon = weap[i].GetComponent<Weapon>();
+            weapon.SetCustomMask(LayerMask.GetMask("ShipMesh"));
+            weapon.SetCustomCamera(weapon.transform);
+            weapons.Add(weapon);
+        }
+
+        weaponHolds = new List<IEnumerator>(new IEnumerator[weap.Count]);
     }
 
     private void FixedUpdate()
@@ -29,6 +46,10 @@ public class BotAttackController : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);// = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
     }
 
+    public void SetTarget(Transform target)
+    {
+        targetShip = target;
+    }
     private void Update()
     {
         Vector3 dir = target - transform.position;
@@ -59,6 +80,35 @@ public class BotAttackController : MonoBehaviour
                 SetPlayerPoint();
             }
         }
+
+        if (Vector3.Angle(transform.forward, targetShip.position - transform.position) < 50)
+        {
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].transform.LookAt(targetShip);
+                weapons[i].GetComponent<Weapon>().OnHoldDown(-1);
+                if (weaponHolds[i] == null)
+                {
+                    weaponHolds[i] = Shoot(i);
+                    StartCoroutine(weaponHolds[i]);
+                }
+            }
+        }
+    }
+
+    IEnumerator Shoot(int id)
+    {
+        float time = 0;
+        print("Shoot");
+        weapons[id].SetOffcet(Random.insideUnitSphere / 10);
+        while (time < 1)
+        {
+            weapons[id].CheckIsCurrentWeapon(-1);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        weapons[id].OnHold(-1);
+        weaponHolds[id] = null;
     }
 
 
@@ -74,7 +124,7 @@ public class BotAttackController : MonoBehaviour
 
     public void SetPlayerPoint()
     {
-        target = targetShip.position + Player.inst.transform.up * 5 + -Player.inst.transform.forward *  Random.Range(100, 600);
+        target = targetShip.position + Player.inst.transform.up * 5 + -targetShip.forward *  Random.Range(100, 600);
     }
 
     private void OnCollisionEnter(Collision other)

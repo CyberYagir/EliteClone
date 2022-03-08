@@ -6,10 +6,6 @@ using UnityEngine.Events;
 
 public class Damager : MonoBehaviour
 {
-    public class DamagerData
-    {
-        public float currentHP, damage;
-    }
     [HideInInspector]
     public Event OnDamaged;
     [HideInInspector]

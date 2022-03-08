@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using Random = System.Random;
 
@@ -36,6 +37,8 @@ public class BotVisual : MonoBehaviour
         {
             ships[i].SetActive(i == id);
         }
+
+        GetComponent<BotBuilder>().SetShip(ItemsManager.GetShipItem(GetShipName()));
     }
 
     public void ActiveLights()
@@ -57,4 +60,5 @@ public class BotVisual : MonoBehaviour
             }
         }
     }
+
 }

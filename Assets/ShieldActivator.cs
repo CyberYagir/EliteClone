@@ -14,12 +14,8 @@ public class ShieldActivator : MonoBehaviour
         set
         {
             active = value;
-            shield.DOScale(Vector3.one, 0.5f);
+            shield.DOScale(active ? Vector3.one : Vector3.zero, 0.5f);
         }
-        get
-        {
-            shield.DOScale(Vector3.zero, 0.5f);
-            return active;
-        }
+        get => active;
     }
 }

@@ -114,6 +114,7 @@ public class SolarSystemShips : MonoBehaviour
                     bot.InitBot(false, NamesHolder.ToUpperFist(location.humans[i].firstName), NamesHolder.ToUpperFist(location.humans[i].lastName));
                     bot.GetVisual().SetVisual(location.humans[i].shipID);
                     bot.AddContact(false);
+                    bot.GetShield().isActive = true;
                     bot.SetBehaviour(BotBuilder.BotState.Moving);
                 }
             }

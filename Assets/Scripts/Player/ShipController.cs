@@ -139,6 +139,13 @@ public class ShipController : MonoBehaviour
         {
             CameraShake.Shake();
             player.warp.warpSpeed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.warp.warpSpeedUp;
+            if (World.Scene == Scenes.Location)
+            {
+                if (player.warp.warpSpeed > player.warp.maxLocationSpeed)
+                {
+                    player.warp.warpSpeed = player.warp.maxLocationSpeed;
+                }
+            }
             if (player.warp.warpSpeed < 0)
             {
                 player.warp.WarpStop();

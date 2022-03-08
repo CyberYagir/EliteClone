@@ -30,7 +30,7 @@ public class WeaponLaser : Weapon
     public void SetLines(Vector3 pos)
     {
         line.SetPosition(0, Vector3.zero);
-        line.SetPosition(1, cacheHolder.transform.InverseTransformPoint(pos));
+        line.SetPosition(1, cacheHolder.transform.InverseTransformPoint(pos) + pointOffcet);
     }
 
     protected override void AttackDown()
@@ -41,6 +41,7 @@ public class WeaponLaser : Weapon
         {
             particles.transform.position = point;
         }
+        
     }
 
     protected override void Attack()
@@ -50,19 +51,24 @@ public class WeaponLaser : Weapon
 
         var globalPos = cacheHolder.transform.TransformPoint(line.GetPosition(1));
         SetLines(Vector3.Lerp(globalPos, hitPoint, 10 * Time.deltaTime));
-        
     }
 
     public Vector3 GetPoint()
     {
+        
         lastHit = new RaycastHit();
         var lastPos = new Vector3();
         var lastDir = new Vector3();
         var hitPoint = camera.transform.position + camera.transform.forward * 500;
         bool hitted = false;
         var layer = LayerMask.GetMask("Default", "Main");
+        if (isLayerMaskChanged)
+        {
+            layer = customMask;
+        }
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, options.maxDistance, layer, QueryTriggerInteraction.Ignore))
         {
+            
             if (hit.transform.GetComponent<TexturingScript>() == null)
             {
                 lastHit = hit;
@@ -84,7 +90,6 @@ public class WeaponLaser : Weapon
                 hitted = true;
             }
         }
-
         if (options.maxDistance >= lastHit.distance)
         {
             if (line.enabled)

@@ -9,17 +9,20 @@ public abstract class Weapon : MonoBehaviour
     protected Item currentItem;
     protected GameObject cacheHolder;
     protected WeaponOptionsItem options;
-    protected Camera camera;
+    protected Transform camera;
 
     private float decalTime;
     private LayerMask decalLayer;
+    protected LayerMask customMask = -1;
+    protected bool isLayerMaskChanged;
+    protected Vector3 pointOffcet;
     public void Init(int shootKey, Item current, WeaponOptionsItem opt)
     {
         currentItem = current;
         weaponID = shootKey;
         options = opt;
         decalLayer = LayerMask.GetMask("Decals");
-        camera = Camera.main;
+        camera = Camera.main.transform;
 
         cacheHolder = SpawnCacheHolder();
         
@@ -33,6 +36,20 @@ public abstract class Weapon : MonoBehaviour
         InitData();
     }
 
+    public void SetCustomMask(LayerMask mask)
+    {
+        customMask = mask;
+        isLayerMaskChanged = true;
+    }
+
+    public void SetOffcet(Vector3 newOffcet)
+    {
+        pointOffcet = newOffcet;
+    }
+    public void SetCustomCamera(Transform newCamera)
+    {
+        camera = newCamera;
+    }
     protected virtual void InitData(){}
     
     
@@ -46,7 +63,7 @@ public abstract class Weapon : MonoBehaviour
         return holder;
     }
     
-    private void CheckIsCurrentWeapon(int shootKey)
+    public void CheckIsCurrentWeapon(int shootKey)
     {
         if (shootKey == weaponID)
         {
@@ -54,7 +71,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    private void OnHold(int shootKey)
+    public void OnHold(int shootKey)
     {
         decalTime += Time.deltaTime;
         if (shootKey == weaponID)
@@ -62,7 +79,7 @@ public abstract class Weapon : MonoBehaviour
             NotAttack();
         }
     } 
-    private void OnHoldDown(int shootKey)
+    public void OnHoldDown(int shootKey)
     {
         if (shootKey == weaponID)
         {

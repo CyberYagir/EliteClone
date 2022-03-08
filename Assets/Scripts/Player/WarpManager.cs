@@ -11,6 +11,8 @@ public class WarpManager : MonoBehaviour
     public bool isWarp;
     public float warpSpeed, maxWarpSpeed, warpSpeedUp, warpSpeedAdd;
 
+    public float maxLocationSpeed = 60;
+
     private void Update()
     {
         if (activeLocationPoint)

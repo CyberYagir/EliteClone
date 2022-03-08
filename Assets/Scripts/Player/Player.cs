@@ -148,6 +148,14 @@ public class Player : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
-        damager.TakeDamage(ref spaceShip.GetShip().GetValue(Health).value, damage);
+        var ship = spaceShip.GetShip();
+        if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
+        {
+            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Health).value, damage);
+        }
+        else
+        {
+            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Shields).value, damage);
+        }
     }
 }
