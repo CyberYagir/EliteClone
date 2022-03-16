@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TargetManager : MonoBehaviour
@@ -23,21 +24,31 @@ public class TargetManager : MonoBehaviour
         {
             if (target == null)
             {
-                int id = -1;
-                float angle = 9999;
-                for (int i = 0; i < SolarSystemGenerator.objects.Count; i++)
+                var worldBody = TargetFromArray(SolarSystemGenerator.objects.Cast<GalaxyObject>().ToList());
+                var contactBody = TargetFromArray(contacts.Cast<GalaxyObject>().ToList());
+
+                if (worldBody == null && contactBody == null)
                 {
-                    var ang = Vector3.Angle(SolarSystemGenerator.objects[i].transform.position - camera.transform.position, camera.transform.forward);
-                    if (ang < angle)
+                    SetTarget(null);
+                }
+                else if (worldBody != null && contactBody != null)
+                {
+                    if (Vector3.Distance(transform.position, worldBody.transform.position * SolarSystemGenerator.scale) < Vector3.Distance(transform.position, contactBody.transform.position))
                     {
-                        angle = ang;
-                        id = i;
+                        SetTarget(worldBody);
+                    }
+                    else
+                    {
+                        SetTarget(contactBody);
                     }
                 }
-
-                if (angle < 5)
+                else if (worldBody != null)
                 {
-                    SetTarget(SolarSystemGenerator.objects[id]);
+                    SetTarget(worldBody);
+                }
+                else if (contactBody != null)
+                {
+                    SetTarget(contactBody);
                 }
             }
             else
@@ -45,6 +56,31 @@ public class TargetManager : MonoBehaviour
                 SetTarget(null);
             }
         }
+    }
+
+    public GalaxyObject TargetFromArray(List<GalaxyObject> objectsList)
+    {
+        int id = -1;
+        float angle = 9999;
+        for (int i = 0; i < objectsList.Count; i++)
+        {
+            if (Vector3.Dot(camera.transform.forward, objectsList[i].transform.position - camera.transform.position) > 0)
+            {
+                var ang = Vector3.Angle(objectsList[i].transform.position - camera.transform.position, camera.transform.forward);
+                if (ang < angle)
+                {
+                    angle = ang;
+                    id = i;
+                }
+            }
+        }
+
+        if (angle < 5)
+        {
+            return objectsList[id];
+        }
+
+        return null;
     }
 
     public void SetTarget(GalaxyObject target)

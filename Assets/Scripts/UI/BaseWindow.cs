@@ -94,6 +94,6 @@ public class BaseWindow : MonoBehaviour
     public void Refill(int type)
     {
         StationRefiller.Instance.Fill((StationRefiller.Refiller.RefillType)type);
-        RedrawAll(); 
+        ChangeUI(); 
     }
 }

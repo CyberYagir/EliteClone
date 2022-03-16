@@ -9,7 +9,6 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     public enum ActionType { None, Over, Selected}
     public ActionType over;
-    public bool notPPUM = false;
     public void OnPointerEnter(PointerEventData eventData)
     {
         over = ActionType.Over;
@@ -22,20 +21,38 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         CursorManager.ChangeCursor(CursorManager.CursorType.Normal);
     }
 
-    private float startPixelsPerUnit;
     private Image image;
     [SerializeField] Color overColor, noneColor, selectedColor;
+    [SerializeField] private Image backImage;
+    [SerializeField] private bool withoutBack;
+    private float alpha;
     private void Start()
     {
         image = GetComponent<Image>();
-        startPixelsPerUnit = image.pixelsPerUnitMultiplier;
+        if (!withoutBack)
+        {
+            backImage.color = noneColor;
+            backImage.color *= new Color(1, 1, 1, 0);
+        }
     }
-
+    const float TransitionSpeed = 10;
     private void Update()
     {
-        if (!notPPUM)
-            image.pixelsPerUnitMultiplier = Mathf.Lerp(image.pixelsPerUnitMultiplier, over == ActionType.Over || over == ActionType.Selected ? 0 : startPixelsPerUnit, 10 * Time.deltaTime);
-        image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), 10 * Time.deltaTime);
+        if (!withoutBack)
+        {
+            if (over == ActionType.None)
+            {
+                alpha = Mathf.Lerp(alpha, 0, Time.deltaTime * TransitionSpeed);
+            }
+            else
+            {
+                alpha = Mathf.Lerp(alpha, 1, Time.deltaTime * TransitionSpeed);
+            }
+
+            backImage.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+        }
+
+        image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), TransitionSpeed * Time.deltaTime);
     }
 
     public void WithoutLerp()

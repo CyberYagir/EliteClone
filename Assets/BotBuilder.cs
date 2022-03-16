@@ -15,6 +15,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
     [SerializeField] private ContactObject contactManager;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private ItemShip ship;
+    [SerializeField] private GameObject explodePrefab;
     private Damager damager;
     private void Start()
     {
@@ -101,6 +102,11 @@ public class BotBuilder : MonoBehaviour, IDamagable
         {
             damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Health).value, damage);
             shield.isActive = false;
+            if (ship.GetValue(ItemShip.ShipValuesTypes.Health).value <= 0)
+            {
+                Destroy(Instantiate(explodePrefab, transform.position, transform.rotation), 120);
+                Destroy(gameObject);
+            }
         }
         else
         {

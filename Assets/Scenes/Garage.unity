@@ -17091,10 +17091,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 1
   overColor: {r: 0, g: 0.6032343, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 1, g: 0.18039216, b: 0, a: 1}
+  backImage: {fileID: 0}
+  withoutBack: 1
 --- !u!114 &754787557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36104,10 +36105,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.6032343, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 1, g: 0.18039216, b: 0, a: 1}
+  backImage: {fileID: 0}
+  withoutBack: 1
 --- !u!1 &1735929131
 GameObject:
   m_ObjectHideFlags: 0

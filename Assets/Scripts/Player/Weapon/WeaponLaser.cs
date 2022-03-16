@@ -8,7 +8,6 @@ public class WeaponLaser : Weapon
     [SerializeField] private LineRenderer line;
     [SerializeField] private GameObject particles;
     private RaycastHit lastHit;
-    
     protected override void InitData()
     {
         line = cacheHolder.AddComponent<LineRenderer>();

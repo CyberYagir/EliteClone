@@ -37,8 +37,10 @@ public class BotAttackController : MonoBehaviour
             weapon.SetCustomCamera(weapon.transform);
             weapons.Add(weapon);
         }
-
         weaponHolds = new List<IEnumerator>(new IEnumerator[weap.Count]);
+        
+        
+        GetComponent<BotVisual>().ActiveLights();
     }
 
     private void FixedUpdate()
@@ -99,7 +101,6 @@ public class BotAttackController : MonoBehaviour
     IEnumerator Shoot(int id)
     {
         float time = 0;
-        print("Shoot");
         weapons[id].SetOffcet(Random.insideUnitSphere / 10);
         while (time < 1)
         {

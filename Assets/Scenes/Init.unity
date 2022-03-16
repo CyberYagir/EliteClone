@@ -5808,9 +5808,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tasks:
+  - text: "\u041E\u0431\u043B\u043E\u043C\u043A\u0438 \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D\u043D\u043E\u0433\u043E
+      \u043A\u043E\u0440\u0430\u0431\u043B\u044F + \u0434\u0440\u043E\u043F"
+    isComplited: 0
+    priority: 0
+  - text: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D\u0438\u0435 \u0438\u0433\u0440\u043E\u043A\u0430"
+    isComplited: 0
+    priority: 0
   - text: "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0443\u0431\u0438\u0442\u044B\u0445
       \u041D\u041F\u0421"
     isComplited: 0
+    priority: 0
+  - text: "\u0410\u0432\u0442\u043E\u043D\u0430\u0432\u0435\u0434\u0435\u043D\u0438\u0435
+      \u043F\u0443\u0448\u043A\u0438"
+    isComplited: 1
     priority: 0
   - text: "\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u044C \u0430\u0442\u0442\u0430\u043A\u0438
       \u0438 \u0442\u0434"
@@ -16739,10 +16750,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.6032343, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 1, g: 0.18039216, b: 0, a: 1}
+  backImage: {fileID: 0}
+  withoutBack: 0
 --- !u!114 &988523044
 MonoBehaviour:
   m_ObjectHideFlags: 0

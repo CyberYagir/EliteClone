@@ -22,7 +22,7 @@ public abstract class Weapon : MonoBehaviour
         weaponID = shootKey;
         options = opt;
         decalLayer = LayerMask.GetMask("Decals");
-        camera = Camera.main.transform;
+        camera = transform;
 
         cacheHolder = SpawnCacheHolder();
         
@@ -36,6 +36,11 @@ public abstract class Weapon : MonoBehaviour
         InitData();
     }
 
+    public float GetDistance()
+    {
+        return options.maxDistance;
+    }
+    
     public void SetCustomMask(LayerMask mask)
     {
         customMask = mask;
