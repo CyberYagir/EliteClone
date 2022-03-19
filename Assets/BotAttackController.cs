@@ -83,7 +83,7 @@ public class BotAttackController : MonoBehaviour
             }
         }
 
-        if (Vector3.Angle(transform.forward, targetShip.position - transform.position) < 50)
+        if (targetShip && Vector3.Angle(transform.forward, targetShip.position - transform.position) < 50)
         {
             for (int i = 0; i < weapons.Count; i++)
             {
@@ -125,7 +125,10 @@ public class BotAttackController : MonoBehaviour
 
     public void SetPlayerPoint()
     {
-        target = targetShip.position + Player.inst.transform.up * 5 + -targetShip.forward *  Random.Range(100, 600);
+        if (Player.inst != null && targetShip != null)
+        {
+            target = targetShip.position + Player.inst.transform.up * 5 + -targetShip.forward * Random.Range(100, 600);
+        }
     }
 
     private void OnCollisionEnter(Collision other)

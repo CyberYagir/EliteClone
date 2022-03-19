@@ -151,7 +151,6 @@ namespace Game
             Debug.LogError($"{name} not found in ship {shipName}");
             return new ShipClaped();
         }
-
         public ShipData SaveShip()
         {
             return new ShipData(this);

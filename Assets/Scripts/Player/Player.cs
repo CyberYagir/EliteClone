@@ -128,6 +128,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         spaceShip.LoadShip(data);
         spaceShip.GetShip().ValuesToDictionary();
+        TakeDamage(0);
     }
     
     
@@ -149,13 +150,17 @@ public class Player : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         var ship = spaceShip.GetShip();
-        if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
+        if (ship.GetValue(Shields).value <= 0)
         {
-            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Health).value, damage);
+            damager.TakeDamage(ref ship.GetValue(Health).value, damage);
+            if (ship.GetValue(Health).value <= 0)
+            {
+                World.LoadLevel(Scenes.Death);
+            }
         }
         else
         {
-            damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Shields).value, damage);
+            damager.TakeDamage(ref ship.GetValue(Shields).value, damage);
         }
     }
 }

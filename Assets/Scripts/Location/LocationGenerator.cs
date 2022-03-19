@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using Random = UnityEngine.Random;
 
 
 [System.Serializable]
@@ -114,6 +115,21 @@ public class LocationGenerator : MonoBehaviour
             Player.inst.transform.position = locationObject.spawnPoint.position;
             Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
         }
+        else if (Player.inst.saves.ExKey("loc_start_on_pit"))
+        {
+            WorldOrbitalStation.OnInit.AddListener(delegate
+            {
+                var allPoints = WorldOrbitalStation.Instance.GetComponent<WorldOrbitalStationPoints>().GetLandPoint();
+                var point = allPoints[Random.Range(0, allPoints.Count)];
+            
+                Player.inst.transform.position = point.point.position;
+                Player.inst.transform.rotation = point.point.rotation;
+            
+                Player.inst.land.SetLand(true, point.point.position, point.point.rotation);
+
+                point.isFilled = true;
+            });
+        }
         locationObject.initEvent.Invoke();
     }
 
@@ -127,6 +143,10 @@ public class LocationGenerator : MonoBehaviour
         if (Player.inst.saves.ExKey("loc_start"))
         {   
             Player.inst.saves.DelKey("loc_start");
+        }else
+        if (Player.inst.saves.ExKey("loc_start_on_pit"))
+        {
+            Player.inst.saves.DelKey("loc_start_on_pit");
         }
         else
         {

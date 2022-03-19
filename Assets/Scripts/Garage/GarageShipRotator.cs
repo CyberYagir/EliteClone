@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GarageShipRotator : MonoBehaviour
 {
-    [SerializeField] private float speed, gravity;
+    [SerializeField] private float speed = 5, gravity = 1;
     private float velocity;
     void Update()
     {

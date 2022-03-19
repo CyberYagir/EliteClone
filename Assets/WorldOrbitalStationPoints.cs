@@ -52,7 +52,12 @@ public class WorldOrbitalStationPoints : MonoBehaviour
             yield return StartCoroutine(SpawnNewBot());
         }
     }
-    
+
+    public ref List<LandPoint> GetLandPoint()
+    {
+        return ref landPoints;
+    }
+
     public IEnumerator SpawnNewBot()
     {
         bool isEnded = false;

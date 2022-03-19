@@ -14,7 +14,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
     [SerializeField] private BotVisual visual;
     [SerializeField] private ContactObject contactManager;
     [SerializeField] private ParticleSystem particles;
-    [SerializeField] private ItemShip ship;
+    [SerializeField] private Ship ship;
     [SerializeField] private GameObject explodePrefab;
     private Damager damager;
     private void Start()
@@ -35,7 +35,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
 
     public void SetShip(ItemShip shipData)
     {
-        ship = shipData;
+        ship.SetShip(shipData);
     }
     
     public void InitBot(bool triggerEvent, System.Random rnd = null)
@@ -98,6 +98,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
     {
         SetBehaviour(BotState.Attack);
         attackControl.SetTarget(Player.inst.transform);
+        var ship = this.ship.GetShip();
         if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
         {
             damager.TakeDamage(ref ship.GetValue(ItemShip.ShipValuesTypes.Health).value, damage);
@@ -117,6 +118,6 @@ public class BotBuilder : MonoBehaviour, IDamagable
 
     public ItemShip GetShip()
     {
-        return ship;
+        return ship.GetShip();
     }
 }

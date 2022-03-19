@@ -62,27 +62,34 @@ public class SaveLoadData : MonoBehaviour
     {
         return keys.ContainsKey(name);
     }
-    public void SetKey(string name, object value)
+    public void SetKey(string name, object value, bool save = true)
     {
         if (keys.ContainsKey(name))
         {
-            ChangeKey(name, value);
+            ChangeKey(name, value, save);
         }
         else
         {
             keys.Add(name, value);
-            Save();
+            if (save)
+            {
+                Save();
+            }
         }
     }
-    public void ChangeKey(string name, object value)
+
+    public void ChangeKey(string name, object value, bool save = true)
     {
         keys[name] = value;
-        Save();
+        if (save)
+            Save();
     }
-    public void DelKey(string name)
+
+    public void DelKey(string name, bool save = true)
     {
         keys.Remove(name);
-        Save();
+        if (save)
+            Save();
     }
 
     #endregion
@@ -125,7 +132,11 @@ public class SaveLoadData : MonoBehaviour
     {
         return startTime + playedTime;
     }
-    
+
+    public Dictionary<string, object> GetKeys()
+    {
+        return keys;
+    }
     public void Load()
     {
         var playerData = LoadData();
@@ -169,6 +180,7 @@ public class SaveLoadData : MonoBehaviour
         {
             var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
             var playerData = JsonConvert.DeserializeObject<PlayerData>(json);
+            keys = playerData.Keys;
             shipsInStations = playerData.shipsInStations;
             return playerData;
         }

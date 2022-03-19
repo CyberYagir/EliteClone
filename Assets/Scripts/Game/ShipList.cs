@@ -27,6 +27,7 @@ public class ShipList : ScriptableObject
     }
 
     public ItemShip Get(string idName) => items.Find(x => x.ship.shipName == idName).ship.Clone();
+    public ItemShip Get(int id) => items[id].ship.Clone();
     public ItemShip Get(ItemShip original) => items.Find(x => x.ship == original).ship.Clone();
 
     public ShipListData GetData(string idName) => items.Find(x => x.ship.shipName == idName);

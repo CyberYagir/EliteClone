@@ -86,6 +86,10 @@ public class ItemsManager : MonoBehaviour
     {
         return shipList.Get(id);
     }
+    public static ItemShip GetShipItem(int id)
+    {
+        return shipList.Get(id);
+    }
     public static ShipList.ShipListData GetShipCost(ItemShip id)
     {
         return shipList.GetData(id.shipName);

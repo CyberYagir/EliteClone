@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipHologram : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class ShipHologram : MonoBehaviour
     [SerializeField] private Transform floor;
     [SerializeField] private MeshFilter shipModel;
     [SerializeField] private Material material;
+    [SerializeField] private Image shieldIndicator;
     private void Start()
     {
         startRotation = transform.localRotation;
@@ -27,6 +30,8 @@ public class ShipHologram : MonoBehaviour
 
     private void Update()
     {
+        var shields = player.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
+        shieldIndicator.fillAmount = Mathf.Lerp(shieldIndicator.fillAmount, shields.value / shields.max, Time.deltaTime);
         var ship = player.control;
         shipModel.transform.localRotation = Quaternion.Lerp(shipModel.transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * player.Ship().data.XRotSpeed, ship.yaw * ship.player.Ship().data.YRotSpeed * player.Ship().data.YRotSpeed, -ship.horizontal * player.Ship().data.ZRotSpeed), 10 * Time.deltaTime);
         LandHologram();

@@ -25,7 +25,7 @@ public class GarageDataCollect : MonoBehaviour
         Instance = this;
     }
 
-    public void InitDataCollector()
+    public virtual void InitDataCollector()
     {
         saves = GetComponent<SaveLoadData>();
         playerData = saves.LoadData();
@@ -58,7 +58,7 @@ public class GarageDataCollect : MonoBehaviour
         Save();
     }
 
-    public void Save()
+    public virtual void Save()
     {
         playerData.Ship = ship.SaveShip();
         playerData.shipsInStations = saves.GetStorageShip();

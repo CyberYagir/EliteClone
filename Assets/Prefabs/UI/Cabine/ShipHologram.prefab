@@ -49,6 +49,7 @@ MonoBehaviour:
   floor: {fileID: 2695197498016484220}
   shipModel: {fileID: 8919540184383551833}
   material: {fileID: 2100000, guid: 281868f0c0aa11a4faf98ad9323c5af8, type: 2}
+  shieldIndicator: {fileID: 2801583615758167128}
 --- !u!1 &4490274400500002522
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.8583193, b: 1, a: 1}
+  m_Color: {r: 0.61006284, g: 0.7782711, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -15,15 +15,6 @@ public class SavedSolarSystem
     public Vector3 playerPos;
     public Vector3 worldPos;
 }
-
-[System.Serializable]
-public class SavedSolarSystemLocation
-{
-    public Vector3 playerPos;
-    public bool startEnter;
-
-}
-
 public class SolarSystemGenerator : MonoBehaviour
 {
     public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint, beltPoint;
