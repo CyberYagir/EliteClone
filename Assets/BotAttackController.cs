@@ -38,8 +38,8 @@ public class BotAttackController : MonoBehaviour
             weapons.Add(weapon);
         }
         weaponHolds = new List<IEnumerator>(new IEnumerator[weap.Count]);
-        
-        
+
+        StartCoroutine(BlockCircleFly());
         GetComponent<BotVisual>().ActiveLights();
     }
 
@@ -113,6 +113,15 @@ public class BotAttackController : MonoBehaviour
     }
 
 
+    IEnumerator BlockCircleFly()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(30, 60));
+            ChangePoint();
+        }
+    }
+    
     public void ChangePoint()
     {
         attackType = AttackType.MoveBack;

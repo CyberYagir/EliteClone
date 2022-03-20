@@ -34,7 +34,7 @@ public class ShipController : MonoBehaviour
             speed = player.Ship().data.maxSpeedUnits * 0.05f;
             moveMode = MoveMode.B;
         }
-
+        player.TakeDamage(0);
         WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
     }
 

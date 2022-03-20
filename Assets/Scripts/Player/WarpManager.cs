@@ -65,7 +65,7 @@ public class WarpManager : MonoBehaviour
                 if (World.Scene == Scenes.System)
                 {
                     warpParticle.Play();
-                    SolarSystemGenerator.SaveSystem(true);
+                    SolarSystemGenerator.SaveSystem();
                     LocationGenerator.SaveLocationFile(activeLocationPoint.root.name, activeLocationPoint.locationType);
                     Player.inst.saves.SetKey("loc_start", true);
                     DontDestroyOnLoad(Player.inst);

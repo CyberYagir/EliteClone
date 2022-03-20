@@ -4,11 +4,11 @@ public class SpaceObject
     public string name;
     public DVector position;
     public DVector rotation;
-    public decimal mass, radius;
+    public float mass, radius;
 
    
 
-    public SpaceObject(string name, DVector position, DVector rotation, decimal mass, decimal radius)
+    public SpaceObject(string name, DVector position, DVector rotation, float mass, float radius)
     {
         this.name = name;
         this.position = position;

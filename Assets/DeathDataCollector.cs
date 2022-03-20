@@ -15,6 +15,7 @@ public class DeathDataCollector : MonoBehaviour
     public SaveLoadData saves { get; private set; }
     
     public OrbitStation findNearStation { get; private set; }
+    public SolarSystem findNear { get; private set; }
 
     public Event OnInited = new Event();
 
@@ -72,6 +73,7 @@ public class DeathDataCollector : MonoBehaviour
         {
             if (findNearStation == null)
             {
+                findNear = system;
                 findNearStation = system.stations[i];
             }
             yield break;
@@ -86,9 +88,16 @@ public class DeathDataCollector : MonoBehaviour
 
     public void Back()
     {
+        PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
         LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station);
+        if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
+        {
+            SolarSystemGenerator.SaveSystem();
+        }
+        SolarSystemGenerator.Load();
         playerData.Ship = ItemsManager.GetShipItem(0).SaveShip();
         saves.SetKey("loc_start_on_pit", true, false);
+        saves.SetKey("system_start_on", findNearStation.name, false);
         playerData.Keys = saves.GetKeys();
 
         var items = new List<Cargo.ItemData>() { };

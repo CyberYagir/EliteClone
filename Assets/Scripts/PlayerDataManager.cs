@@ -13,7 +13,7 @@ public class PlayerDataManager : MonoBehaviour
 
     public static int galaxySeed = -1;
     public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-    public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile;
+    public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile;
     public static float GenerateProgress;
     private bool loading = false;
 
@@ -105,6 +105,7 @@ public class PlayerDataManager : MonoBehaviour
         GalaxyFile = GlobalFolder + "galaxy.json";
         CurrentSystemFile = GlobalFolder + "system.json";
         CurrentLocationFile = GlobalFolder + "location.json";
+        DeadsNPCFile = GlobalFolder + "npcs.json";
         PlayerDataFile = GlobalFolder + "player.json";
         ConfigFile = PlayerFolder + "options.config";
     }

@@ -21,18 +21,18 @@ public class Planet: SpaceObject
     public Planet(System.Random rnd, DVector postion, bool isStattelite = false)
     {
         this.position = postion;
-        mass = GalaxyGenerator.NextDecimal(rnd, 0.05m, 0.25m);
+        mass = GalaxyGenerator.NextDecimal(rnd, 0.05f, 0.25f);
         if (!isStattelite)
         {
             type = (PlanetType) rnd.Next(0, 2);
         }
-        radius = GalaxyGenerator.NextDecimal(rnd, 0.1m, 0.2m);
+        radius = GalaxyGenerator.NextDecimal(rnd, 0.1f, 0.2f);
         if (type == PlanetType.Gas)
         {
-            radius *= 2 * (decimal)((1 + rnd.NextDouble()) + 0.5f);
-            if (radius <= 0.2m)
+            radius *= 2 * ((1 + (float)rnd.NextDouble()) + 0.5f);
+            if (radius <= 0.2f)
             {
-                radius = 0.3m;
+                radius = 0.3f;
             }
         }
     }

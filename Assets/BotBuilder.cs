@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class BotBuilder : MonoBehaviour, IDamagable
 {
+    public int uniqID = -1;
     [SerializeField] private BotAttackController attackControl;
     [SerializeField] private BotLandController landControl;
     [SerializeField] private BotMovingController movingControl;
@@ -105,6 +106,10 @@ public class BotBuilder : MonoBehaviour, IDamagable
             shield.isActive = false;
             if (ship.GetValue(ItemShip.ShipValuesTypes.Health).value <= 0)
             {
+                if (uniqID != -1)
+                {
+                    SolarSystemShips.Instance.AddDead(this);
+                }
                 Destroy(Instantiate(explodePrefab, transform.position, transform.rotation), 120);
                 Destroy(gameObject);
             }

@@ -17,8 +17,6 @@ public class RotateAround : MonoBehaviour
     private void Start()
     {
         DrawCircle(Vector3.Distance(transform.position, point.position));
-
-
         lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
         camera = Camera.main;
         Rotate();

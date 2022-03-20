@@ -10,8 +10,8 @@ public class GalaxyGenerator : MonoBehaviour
 {
     public static Dictionary<string, SolarSystem> systems;
     
-    public static decimal maxY = 5000, minY = -5000;
-    public static decimal maxRadius = 100000, minRadius = 30000;
+    public static float maxY = 5000, minY = -5000;
+    public static float maxRadius = 100000, minRadius = 30000;
     public static int maxSystemsCount = 6000, minSystemsCount = 3000;
     [Space]
 
@@ -173,7 +173,7 @@ public class GalaxyGenerator : MonoBehaviour
     {
         foreach (var sys in systems)
         {
-            if (sys.Value.position.Dist(system.position) < (decimal) siblingDist)
+            if (sys.Value.position.Dist(system.position) < siblingDist)
             {
                 var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
                 if (!sys.Value.sibligs.Contains(curr))
@@ -253,9 +253,9 @@ public class GalaxyGenerator : MonoBehaviour
         PlayerDataManager.GenerateProgress = 1f;
     }
 
-    public static decimal NextDecimal(System.Random rnd, decimal min, decimal max)
+    public static float NextDecimal(System.Random rnd, float min, float max)
     {
-        return min + (max - min) * (decimal)rnd.NextDouble();
+        return min + (max - min) * (float)rnd.NextDouble();
     }
     
 }
