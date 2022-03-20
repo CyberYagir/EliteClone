@@ -73,7 +73,41 @@ public class SolarSystemShips : MonoBehaviour
         }
 
         deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead() {locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
+
+        var garbage = CreateGarbage(builder.GetShip().shipName, builder.transform.position);
+        foreach (Rigidbody item in garbage.GetComponentsInChildren<Rigidbody>())
+        {
+            item.AddExplosionForce(20, builder.transform.position, 10);   
+        }
+        
         SaveDeads();
+    }
+
+    public GameObject CreateGarbage(string shipName, Vector3 pos)
+    {
+        var ship = ItemsManager.GetShipItem(shipName);
+        var wreckage = Instantiate(ship.shipWreckage.gameObject, pos, Quaternion.Euler(UnityEngine.Random.insideUnitSphere * 360));
+        wreckage.transform.localScale = Vector3.one * 0.2f;
+        foreach (Transform item in wreckage.transform)
+        {
+            var filter = item.GetComponent<MeshFilter>();
+            if (filter)
+            {
+                var mesh = filter.mesh;
+                if (mesh.triangles.Length > 15)
+                {
+                    if (item.GetComponent<MeshRenderer>())
+                    {
+                        var rb = item.gameObject.AddComponent<Rigidbody>();
+                        rb.useGravity = false;
+                        item.gameObject.layer = LayerMask.NameToLayer("Main");
+                        item.gameObject.AddComponent<MeshCollider>().convex = true;
+                    }
+                }
+            }
+        }
+
+        return wreckage;
     }
 
     public int GetSpeed()
@@ -159,6 +193,11 @@ public class SolarSystemShips : MonoBehaviour
                         bot.AddContact(false);
                         bot.GetShield().isActive = true;
                         bot.SetBehaviour(BotBuilder.BotState.Moving);
+                    }
+                    else
+                    {
+                        var dead = deadList[PlayerDataManager.CurrentSolarSystem.name].Find(x => x.uniqID == location.humans[i].uniqID);
+                        CreateGarbage(ItemsManager.GetShipItem(location.humans[i].shipID).shipName, dead.deadPos.ToVector());
                     }
                 }
             }

@@ -16,7 +16,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
     [SerializeField] private ContactObject contactManager;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private Ship ship;
-    [SerializeField] private GameObject explodePrefab;
+    [SerializeField] private GameObject explodePrefab, dropPrefab;
     private Damager damager;
     private void Start()
     {
@@ -106,12 +106,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
             shield.isActive = false;
             if (ship.GetValue(ItemShip.ShipValuesTypes.Health).value <= 0)
             {
-                if (uniqID != -1)
-                {
-                    SolarSystemShips.Instance.AddDead(this);
-                }
-                Destroy(Instantiate(explodePrefab, transform.position, transform.rotation), 120);
-                Destroy(gameObject);
+                Death();
             }
         }
         else
@@ -121,6 +116,36 @@ public class BotBuilder : MonoBehaviour, IDamagable
         }
     }
 
+    public void Death()
+    {
+        if (uniqID != -1)
+        {
+            SolarSystemShips.Instance.AddDead(this);
+        }
+
+        Drop();
+        
+        Destroy(Instantiate(explodePrefab, transform.position, transform.rotation), 120);
+        Destroy(gameObject);
+    }
+
+    public void Drop()
+    {
+        var rnd = new System.Random(uniqID);
+        if (uniqID == -1)
+        {
+            rnd = new System.Random();
+        }
+        var dropCount = rnd.Next(0, 6);
+        for (int i = 0; i < dropCount; i++)
+        {
+            var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
+            Physics.IgnoreCollision(drop.GetComponent<BoxCollider>(), Player.inst.GetComponentInChildren<Collider>(), true);
+            drop.Init(ItemsManager.GetRewardItem(rnd));
+            drop.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere, ForceMode.Impulse);
+        }   
+    }
+    
     public ItemShip GetShip()
     {
         return ship.GetShip();

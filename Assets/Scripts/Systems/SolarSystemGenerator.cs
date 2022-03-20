@@ -454,8 +454,6 @@ public class SolarSystemGenerator : MonoBehaviour
             orbital.transform.localScale = Vector3.one;
         }
         
-        print(orbital.transform.name);
-        
         orbital.transform.LookAt(planet.transform);
         var rotate = orbital.GetComponent<RotateAround>();
         rotate.InitOrbit(planet.transform, 0, 0, item.rotation.ToVector());

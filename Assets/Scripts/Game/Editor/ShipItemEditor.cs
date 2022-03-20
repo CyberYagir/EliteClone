@@ -64,6 +64,7 @@ namespace Game.Editor
                     GUI.enabled = true;
                     ship.shipModel = (GameObject) EditorGUILayout.ObjectField("Ship:", ship.shipModel, typeof(GameObject));
                     ship.shipCabine = (GameObject) EditorGUILayout.ObjectField("Cabine:", ship.shipCabine, typeof(GameObject));
+                    ship.shipWreckage = (GameObject) EditorGUILayout.ObjectField("Wreckage:", ship.shipWreckage, typeof(GameObject));
 
                     TweaksEditor.HorizontalLine(Color.gray);
                     EditorGUILayout.LabelField("Data: ", EditorStyles.boldLabel);

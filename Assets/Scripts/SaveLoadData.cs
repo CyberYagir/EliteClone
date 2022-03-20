@@ -42,7 +42,6 @@ public class SaveLoadData : MonoBehaviour
         if (Player.inst)
         {
             Load();
-            
         }
     }
 

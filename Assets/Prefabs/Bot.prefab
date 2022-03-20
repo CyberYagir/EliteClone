@@ -5065,6 +5065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1e181f76b3bf6419415f58cdaaf1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqID: -1
   attackControl: {fileID: 8296444846279596893}
   landControl: {fileID: 1066150399775087652}
   movingControl: {fileID: 6785303924637331912}
@@ -5074,6 +5075,7 @@ MonoBehaviour:
   particles: {fileID: 1518317486984035917}
   ship: {fileID: 3500517870644482456}
   explodePrefab: {fileID: 1763925583149680246, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+  dropPrefab: {fileID: 5170676381009984893, guid: 2a1f39db050284a438191883a8b3b80f, type: 3}
 --- !u!114 &7540778058651189035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5146,7 +5148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309ea19577e0aac4788f3d97c514a65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
 --- !u!1001 &275292414576546224
 PrefabInstance:
   m_ObjectHideFlags: 0

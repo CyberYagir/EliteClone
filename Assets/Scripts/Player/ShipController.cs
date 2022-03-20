@@ -34,7 +34,7 @@ public class ShipController : MonoBehaviour
             speed = player.Ship().data.maxSpeedUnits * 0.05f;
             moveMode = MoveMode.B;
         }
-        player.TakeDamage(0);
+        player.TakeDamageHeath(0);
         WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
     }
 
@@ -76,6 +76,10 @@ public class ShipController : MonoBehaviour
     public void StopPlayer()
     {
         speed = Mathf.Lerp(speed, 0, 20 * Time.deltaTime);
+        if (player.warp.warpSpeed > 200)
+        {
+            player.TakeDamageHeath((player.warp.warpSpeed/1000f) * 300);
+        }
         player.warp.warpSpeed = Mathf.Lerp(player.warp.warpSpeed, 0, 20 * Time.deltaTime);
         if (speed < 0.001f) speed = 0;
         if (player.warp.warpSpeed < 0.001f) player.warp.warpSpeed = 0;

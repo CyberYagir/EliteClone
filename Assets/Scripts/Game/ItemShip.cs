@@ -83,6 +83,7 @@ namespace Game
         public string shipName;
         public GameObject shipModel;
         public GameObject shipCabine;
+        public GameObject shipWreckage;
         public ShipVariables data;
         public List<Slot> slots;
         public Dictionary<ShipValuesTypes, ShipClaped> shipValues;
