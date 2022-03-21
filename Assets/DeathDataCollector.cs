@@ -89,7 +89,7 @@ public class DeathDataCollector : MonoBehaviour
     public void Back()
     {
         PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
-        LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station);
+        LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station, new Dictionary<string, object>());
         if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
         {
             SolarSystemGenerator.SaveSystem();

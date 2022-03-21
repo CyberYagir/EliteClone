@@ -13,6 +13,8 @@ public class LocationPoint : MonoBehaviour
     public GameObject root;
     public float minDist;
     public LocationType locationType;
+    public Dictionary<string, object> data { get; private set; } = new Dictionary<string, object>();
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -25,6 +27,11 @@ public class LocationPoint : MonoBehaviour
         SetActiveLocation();
     }
 
+    public void SetData(Dictionary<string, object> newData)
+    {
+        data = newData;
+    }
+    
     public void SetActiveLocation()
     {
         if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)

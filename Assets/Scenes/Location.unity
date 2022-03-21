@@ -231,6 +231,22 @@ MonoBehaviour:
   station: {fileID: 2617981788508908819, guid: 79b0a36e84df4164cb269812dd14af20, type: 3}
   systemPoint: {fileID: 7498844651477290654, guid: 5df1560796ec5c640ad421b7e4135e48, type: 3}
   beltPoint: {fileID: 2185213301358685400, guid: ce89fee785f9b6d46be6c03029a3b17c, type: 3}
+  botsLocation: {fileID: 0}
+  OnSetSystemToLocation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1065620154}
+        m_TargetAssemblyTypeName: SolarSystemShips, Assembly-CSharp
+        m_MethodName: OnLocationInit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1065620153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +271,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d23e07bb14fe4d4aa3b215b949cb8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botPrefab: {fileID: 4551080036014000068, guid: cad73af33cced1f43a229e00487e96ed, type: 3}
+  botPrefab: {fileID: 8296444846279596895, guid: cad73af33cced1f43a229e00487e96ed, type: 3}
+  botLocation: {fileID: 1889831862909443935, guid: f351c8e122af71641bff771f9248fe7c, type: 3}
+  botPrefabVisuals: {fileID: 4551080036014000068, guid: cad73af33cced1f43a229e00487e96ed, type: 3}
+  locations: []
+  ships: []
+  points: []
 --- !u!1 &1415199212
 GameObject:
   m_ObjectHideFlags: 1

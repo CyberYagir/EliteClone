@@ -29,11 +29,11 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                     bot.transform.parent = transform;
                     var builder = bot.GetComponent<BotBuilder>();
                     
-                    builder.GetVisual().SetVisual(rnd);
                     builder.GetVisual().SetLights(false);
                     builder.GetShield().isActive = true;
                     builder.AddContact(false);
-                    builder.InitBot(false, rnd);
+                    builder.InitBot(rnd);
+                    builder.GetVisual().SetVisual(rnd);
                     builder.SetBehaviour(BotBuilder.BotState.Land);
                     
                     Destroy(bot.GetComponent<WorldSpaceObject>());
@@ -79,10 +79,10 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                             var builder = bot.GetComponent<BotBuilder>();
                             builder.PlayWarp();
                             builder.GetShield().isActive = true;
-                            builder.GetVisual().SetVisual(rnd);
                             landPoint.isFilled = true;
                             isEnded = true;
-                            builder.InitBot(false);
+                            builder.InitBot();
+                            builder.GetVisual().SetVisual(rnd);
                             builder.AddContact(true);
                             
                             bot.transform.DOMove(landPoint.point.position, 5);

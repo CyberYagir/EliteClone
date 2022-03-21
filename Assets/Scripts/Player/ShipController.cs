@@ -78,7 +78,7 @@ public class ShipController : MonoBehaviour
         speed = Mathf.Lerp(speed, 0, 20 * Time.deltaTime);
         if (player.warp.warpSpeed > 200)
         {
-            player.TakeDamageHeath((player.warp.warpSpeed/1000f) * 300);
+            player.TakeDamageHeath((player.warp.warpSpeed/1000f) * 100);
         }
         player.warp.warpSpeed = Mathf.Lerp(player.warp.warpSpeed, 0, 20 * Time.deltaTime);
         if (speed < 0.001f) speed = 0;

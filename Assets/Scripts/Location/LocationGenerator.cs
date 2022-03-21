@@ -14,7 +14,7 @@ public class Location
     public string systemName;
     public string locationName;
     public LocationPoint.LocationType type;
-
+    public Dictionary<string, object> otherKeys = new Dictionary<string, object>();
     public string GetSystemCode()
     {
         var strings = systemName.Split(' ');
@@ -30,8 +30,10 @@ public class Location
 }
 public class LocationGenerator : MonoBehaviour
 {
-    public GameObject player, planet, sunPrefab, station, systemPoint, beltPoint;
+    public GameObject player, planet, sunPrefab, station, systemPoint, beltPoint, botsLocation;
     public static Location CurrentSave;
+
+    public Event OnSetSystemToLocation = new Event();
     private void Awake()
     {
         World.SetScene(Scenes.Location);
@@ -56,13 +58,14 @@ public class LocationGenerator : MonoBehaviour
         LoadLocation();
         SetSystemToLocation();
         InitFirstFrame();
-
+        
+        
         Player.inst.transform.parent = transform;
         Player.inst.transform.parent = null;
         
-        
         GetComponent<SolarSystemShips>().Init();
     }
+
 
     public void LoadLocation()
     {
@@ -98,8 +101,10 @@ public class LocationGenerator : MonoBehaviour
             }
             Destroy(item);
         }
-    }
 
+        OnSetSystemToLocation.Invoke();
+    }
+    
 
     private void Update()
     {
@@ -173,14 +178,14 @@ public class LocationGenerator : MonoBehaviour
     
     
     
-    public static void SaveLocationFile(string locName, LocationPoint.LocationType type)
+    public static void SaveLocationFile(string locName, LocationPoint.LocationType type, Dictionary<string, object> otherData = default)
     {
-        var point = FindObjectOfType<FloatingPoint>();
         var n = new Location()
         {
             systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
             locationName = locName,
-            type = type
+            type = type,
+            otherKeys = otherData
         };
         File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
     }

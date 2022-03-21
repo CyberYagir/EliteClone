@@ -37,9 +37,10 @@ public class BotBuilder : MonoBehaviour, IDamagable
     public void SetShip(ItemShip shipData)
     {
         ship.SetShip(shipData);
+        SetName();
     }
     
-    public void InitBot(bool triggerEvent, System.Random rnd = null)
+    public void InitBot(System.Random rnd = null)
     {
         NamesHolder.Init();
         var firstName = "";
@@ -55,9 +56,14 @@ public class BotBuilder : MonoBehaviour, IDamagable
             lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
         }
 
-        transform.name = GetComponent<BotVisual>().GetShipName() + $" [{firstName} {lastName}]";
+        transform.name = GetVisual().GetShipName() + $" [{firstName} {lastName}]";
     }
-    public void InitBot(bool triggerEvent, string first, string last)
+
+    public void SetName()
+    {
+        transform.name = GetVisual().GetShipName() + " [" + transform.name.Split('[')[1];
+    }
+    public void InitBot(string first, string last)
     {
         NamesHolder.Init();
         transform.name = GetComponent<BotVisual>().GetShipName() + $" [{first} {last}]";
@@ -70,7 +76,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
 
     public enum BotState
     {
-        Attack, Land, Moving
+        Attack, Land, Moving, Stationary
     }
 
     public void SetBehaviour(BotState botState)
