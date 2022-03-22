@@ -16,7 +16,13 @@ public class BotLandController : MonoBehaviour
     {
         inLandTime = Random.Range(30, 300);
     }
-    
+
+    private LandPoint point;
+
+    public void SetLandPoint(LandPoint p)
+    {
+        point = p;
+    }
 
     private void Update()
     {
@@ -65,5 +71,13 @@ public class BotLandController : MonoBehaviour
     public void Unland()
     {
         StartCoroutine(Animation());
+    }
+
+    private void OnDisable()
+    {
+        if (point)
+        {
+            point.isFilled = false;
+        }
     }
 }

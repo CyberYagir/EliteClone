@@ -35,7 +35,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                     builder.InitBot(rnd);
                     builder.GetVisual().SetVisual(rnd);
                     builder.SetBehaviour(BotBuilder.BotState.Land);
-                    
+                    builder.SetLandPoint(landPoints[i]);
                     Destroy(bot.GetComponent<WorldSpaceObject>());
                     landPoints[i].isFilled = true;
                 }
@@ -84,7 +84,7 @@ public class WorldOrbitalStationPoints : MonoBehaviour
                             builder.InitBot();
                             builder.GetVisual().SetVisual(rnd);
                             builder.AddContact(true);
-                            
+                            builder.SetLandPoint(landPoint);
                             bot.transform.DOMove(landPoint.point.position, 5);
                             bot.transform.DORotate(landPoint.point.eulerAngles, 5);
                             builder.SetBehaviour(BotBuilder.BotState.Land);

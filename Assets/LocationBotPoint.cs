@@ -27,13 +27,12 @@ public class LocationBotPoint : MonoBehaviour
 
             if (currentPerson == null || SolarSystemShips.Instance.IsDead(currentPerson.uniqID))
             {
-                Destroy(gameObject);
                 return;
             }
         }
         else
         {
-            Destroy(gameObject);
+            return;
         }
 
         CreateBots();
@@ -41,26 +40,29 @@ public class LocationBotPoint : MonoBehaviour
 
     public void CreateBots()
     {
-        SpawnMainBot();
+        var mainBot = SpawnMainBot();
         var rnd = new Random(uniqID);
-        
-        if (type == LocationBotType.Convoy)
+        if (mainBot != null)
         {
-            for (int i = 0; i < rnd.Next(2, 5); i++)
+            if (type == LocationBotType.Convoy)
             {
-                SpawnRandomBot(2, rnd);
+                for (int i = 0; i < rnd.Next(2, 5); i++)
+                {
+                    SpawnRandomBot(2, rnd);
+                }
             }
-        }
-        if (type == LocationBotType.OCG)
-        {
-            for (int i = 0; i < rnd.Next(1, 8); i++)
+
+            if (type == LocationBotType.OCG)
             {
-                SpawnRandomBot(rnd.Next(0, 2), rnd);
+                for (int i = 0; i < rnd.Next(1, 8); i++)
+                {
+                    SpawnRandomBot(rnd.Next(0, 2), rnd);
+                }
             }
         }
     }
 
-    public void SpawnRandomBot(int visuals, Random rnd)
+    public GameObject SpawnRandomBot(int visuals, Random rnd)
     {
         var pos = new Vector3(rnd.Next(-300, 300), rnd.Next(-300, 300), rnd.Next(-300, 300));
         var bot = SolarSystemShips.Instance.CreateBot(null, BotBuilder.BotState.Stationary);
@@ -68,13 +70,17 @@ public class LocationBotPoint : MonoBehaviour
         bot.InitBot(rnd);
         bot.GetVisual().SetVisual(visuals);
         bot.SetName();
+
+        return bot.gameObject;
     }
     
-    public void SpawnMainBot()
+    public GameObject SpawnMainBot()
     {
         var rnd = new Random(uniqID);
         var pos = new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100));
         var bot = SolarSystemShips.Instance.CreateBot(currentPerson, BotBuilder.BotState.Stationary);
         bot.transform.position = pos;
+
+        return bot.gameObject;
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5404468073058467880}
   - component: {fileID: 5170676381009984892}
   - component: {fileID: 3576393499561239028}
+  - component: {fileID: 6145939366509198295}
   m_Layer: 6
   m_Name: DropStorage
   m_TagString: Untagged
@@ -140,3 +141,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.005, y: 0.005, z: 0.005}
   m_Center: {x: 0, y: 0, z: 0.00032968767}
+--- !u!114 &6145939366509198295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5170676381009984893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf62fb01dc948e418334331572b22d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 35ebb1ce006fb454590c34100d51fd78, type: 3}

@@ -22,7 +22,7 @@ public class ShipMeshSlotRotate : MonoBehaviour
         if (Player.inst)
         {
             var target = Player.inst.GetTarget();
-            if (target && Vector3.Distance(transform.position, target.transform.position) < weapon.GetDistance())
+            if (target && target.GetComponent<IDamagable>() != null && Vector3.Distance(transform.position, target.transform.position) < weapon.GetDistance())
             {
                 Quaternion targetRotation = Quaternion.identity;
                 var dir = target.transform.position - Player.inst.transform.position;

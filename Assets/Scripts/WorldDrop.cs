@@ -14,6 +14,8 @@ public class WorldDrop : MonoBehaviour
         item = dropped;
         cooldown = delay;
         GetComponent<BoxCollider>().enabled = true;
+        transform.name = "Storage: " + item.itemName + $" [{item.amount.value}]";
+        GetComponent<ContactObject>().Init(true);
     }
 
     private void Update()

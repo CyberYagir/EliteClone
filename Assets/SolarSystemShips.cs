@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using Random = System.Random;
 
 public class SolarSystemShips : MonoBehaviour
@@ -11,6 +12,15 @@ public class SolarSystemShips : MonoBehaviour
     public static SolarSystemShips Instance;
 
     public Dictionary<string, List<HumanShipDead>> deadList { get; private set; } = new Dictionary<string, List<HumanShipDead>>();
+    
+    
+    [SerializeField] private GameObject botPrefab, botLocation, garbageContact;
+    [SerializeField] private BotVisual botPrefabVisuals;
+    [SerializeField] private List<LocationHolder> locations = new List<LocationHolder>();
+    [SerializeField] private List<HumanShip> ships = new List<HumanShip>();
+    [SerializeField] private List<HumanShip> allships = new List<HumanShip>();
+    private bool spawnEnviroment;
+    
 
     [System.Serializable]
     public class LocationHolder
@@ -44,7 +54,7 @@ public class SolarSystemShips : MonoBehaviour
     public class HumanShipDead
     {
         public int uniqID;
-        public string locationName;
+        public string locationName, botFullName;
         public DVector deadPos = new DVector();
     }
 
@@ -72,9 +82,9 @@ public class SolarSystemShips : MonoBehaviour
             deadList.Add(PlayerDataManager.CurrentSolarSystem.name, new List<HumanShipDead>());
         }
 
-        deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead() {locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
+        deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead() {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
 
-        var garbage = CreateGarbage(builder.GetShip().shipName, builder.transform.position);
+        var garbage = CreateGarbage(builder.transform.name, builder.GetShip().shipName, builder.transform.position, true);
         foreach (Rigidbody item in garbage.GetComponentsInChildren<Rigidbody>())
         {
             item.AddExplosionForce(20, builder.transform.position, 10);   
@@ -83,11 +93,12 @@ public class SolarSystemShips : MonoBehaviour
         SaveDeads();
     }
 
-    public GameObject CreateGarbage(string shipName, Vector3 pos)
+    public GameObject CreateGarbage(string botName,string shipName, Vector3 pos, bool triggerContactEvent = false)
     {
         var ship = ItemsManager.GetShipItem(shipName);
         var wreckage = Instantiate(ship.shipWreckage.gameObject, pos, Quaternion.Euler(UnityEngine.Random.insideUnitSphere * 360));
         wreckage.transform.localScale = Vector3.one * 0.2f;
+        
         foreach (Transform item in wreckage.transform)
         {
             var filter = item.GetComponent<MeshFilter>();
@@ -106,7 +117,23 @@ public class SolarSystemShips : MonoBehaviour
                 }
             }
         }
+        wreckage.name = botName + " Shipwreck";
 
+        var contact = Instantiate(garbageContact, wreckage.transform.position, wreckage.transform.rotation).GetComponent<ContactObject>();
+        contact.transform.parent = wreckage.transform;
+        contact.transform.name = wreckage.name;
+        contact.Init(triggerContactEvent);
+        
+        var light = new GameObject("Light");
+        light.transform.parent = wreckage.transform;
+        light.transform.localPosition = Vector3.zero;
+        var sLight = light.AddComponent<Light>();
+        var aLight = light.AddComponent<HDAdditionalLightData>();
+        aLight.intensity = 800;
+        sLight.type = LightType.Point;
+        sLight.color = Color.red;
+
+        
         return wreckage;
     }
 
@@ -124,6 +151,7 @@ public class SolarSystemShips : MonoBehaviour
 
     public void InitShipsPoses()
     {
+        allships = new List<HumanShip>();
         ships = new List<HumanShip>();
         for (int i = 0; i < PlayerDataManager.CurrentSolarSystem.stations.Count; i++)
         {
@@ -151,20 +179,17 @@ public class SolarSystemShips : MonoBehaviour
                 if (locations[locID].humans.Count < 3)
                 {
                     locations[locID].humans.Add(ship);
+                    allships.Add(ship);
                     continue;
                 }
             }
-            
+            allships.Add(ship);
             ships.Add(ship);
         }
 
     }
 
-    [SerializeField] private GameObject botPrefab, botLocation;
-    [SerializeField] private BotVisual botPrefabVisuals;
-    [SerializeField] private List<LocationHolder> locations = new List<LocationHolder>();
-    [SerializeField] private List<HumanShip> ships = new List<HumanShip>();
-    private bool spawnEnviroment;
+
     public void InitPre()
     {
         if (PlayerDataManager.CurrentSolarSystem != null)
@@ -205,11 +230,6 @@ public class SolarSystemShips : MonoBehaviour
                         {
                             CreateBot(location.humans[i]);
                         }
-                    }
-                    else
-                    {
-                        var dead = deadList[PlayerDataManager.CurrentSolarSystem.name].Find(x => x.uniqID == location.humans[i].uniqID);
-                        CreateGarbage(ItemsManager.GetShipItem(location.humans[i].shipID).shipName, dead.deadPos.ToVector());
                     }
                 }
             }
@@ -286,29 +306,56 @@ public class SolarSystemShips : MonoBehaviour
     {
         for (int i = 0; i < ships.Count; i++)
         {
-            var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) Player.inst.saves.GetTime() / 60f / 60f));
-            var pos = (new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100)) / 100f) * 10000f;
-            var worldBot = Instantiate(prefab.gameObject, pos, Quaternion.identity);
-            worldBot.name = NamesHolder.ToUpperFist(ships[i].firstName) + " " + NamesHolder.ToUpperFist(ships[i].lastName);
-            if (worldBot.TryGetComponent(out ContactObject contact))
+            var botName = NamesHolder.ToUpperFist(ships[i].firstName) + " " + NamesHolder.ToUpperFist(ships[i].lastName);
+            if (!IsDead(ships[i].uniqID) || (World.Scene == Scenes.Location && LocationGenerator.CurrentSave.locationName == botName))
             {
-                contact.Init(false);
-                var loc = worldBot.GetComponentInChildren<LocationPoint>();
-                
-                var data = new Dictionary<string, object>();
-                data.Add("tag", "ships");
-                data.Add("tag-type", (LocationBotType)rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length));
-                data.Add("uniqID", ships[i].uniqID);
-                
-                
-                loc.SetData(data);
-            }
-            else
-            {
-                points.Add(worldBot.GetComponent<WorldInteractivePoint>());
+                var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) Player.inst.saves.GetTime() / 60f / 60f));
+                var pos = (new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100)) / 100f) * 10000f;
+                var worldBot = Instantiate(prefab.gameObject, pos, Quaternion.identity);
+                worldBot.name = botName;
+                if (worldBot.TryGetComponent(out ContactObject contact))
+                {
+                    contact.Init(false);
+                    var loc = worldBot.GetComponentInChildren<LocationPoint>();
+
+                    var data = new Dictionary<string, object>();
+                    data.Add("tag", "ships");
+                    data.Add("tag-type", (LocationBotType) rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length));
+                    data.Add("uniqID", ships[i].uniqID);
+
+
+                    loc.SetData(data);
+                }
+                else
+                {
+                    points.Add(worldBot.GetComponent<WorldInteractivePoint>());
+                }
             }
         }
 
+        SpawnGarbage();
+        
+
         spawnEnviroment = true;
+    }
+
+
+    public void SpawnGarbage()
+    {
+        if (World.Scene == Scenes.Location)
+        {
+            if (deadList.ContainsKey(PlayerDataManager.CurrentSolarSystem.name))
+            {
+                var deadOnLoc = deadList[PlayerDataManager.CurrentSolarSystem.name].FindAll(x => x.locationName == LocationGenerator.CurrentSave.locationName);
+                for (int i = 0; i < deadOnLoc.Count; i++)
+                {
+                    var bot = allships.Find(x => x.uniqID == deadOnLoc[i].uniqID);
+                    if (bot != null)
+                    {
+                        CreateGarbage(deadOnLoc[i].botFullName, ItemsManager.GetShipItem(bot.shipID).shipName, deadOnLoc[i].deadPos.ToVector());
+                    }
+                }
+            }
+        }
     }
 }

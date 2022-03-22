@@ -146,7 +146,7 @@ public class BotBuilder : MonoBehaviour, IDamagable
         for (int i = 0; i < dropCount; i++)
         {
             var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
-            Physics.IgnoreCollision(drop.GetComponent<BoxCollider>(), Player.inst.GetComponentInChildren<Collider>(), true);
+            drop.GetComponent<BoxCollider>().isTrigger = true;
             drop.Init(ItemsManager.GetRewardItem(rnd));
             drop.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere, ForceMode.Impulse);
         }   
@@ -155,5 +155,10 @@ public class BotBuilder : MonoBehaviour, IDamagable
     public ItemShip GetShip()
     {
         return ship.GetShip();
+    }
+
+    public void SetLandPoint(LandPoint landPoint)
+    {
+        landControl.SetLandPoint(landPoint);
     }
 }

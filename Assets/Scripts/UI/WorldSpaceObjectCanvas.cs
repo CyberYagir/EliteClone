@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class WorldSpaceObjectCanvas : MonoBehaviour
 {
-    [SerializeField] private GameObject pointPrefab;
+    [SerializeField] private GameObject pointPrefab, contactPrefab;
     private List<DisplaySpaceObject> spaceObjects = new List<DisplaySpaceObject>();
     
     public static WorldSpaceObjectCanvas Instance;
@@ -100,10 +100,28 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
     
     public void UpdatePoints()
     {
-        
         var pointer = new PointerEventData(EventSystem.current);
         if (SetActiveObjects())
         {
+            if (Player.inst.GetTarget() != null && Player.inst.GetTarget().TryGetComponent(out ContactObject contact))
+            {
+                var angle = Vector3.Angle(camera.transform.position - transform.position, camera.transform.forward);
+                if (angle < 60)
+                {
+                    contactPrefab.SetActive(true);
+                    contactPrefab.transform.position = (Vector2) camera.WorldToScreenPoint(Player.inst.GetTarget().transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                    contactPrefab.transform.position = new Vector3(contactPrefab.transform.position.x, contactPrefab.transform.position.y, 0);
+                }
+                else
+                {
+                    contactPrefab.SetActive(false);
+                }
+            }
+            else
+            {
+                contactPrefab.SetActive(false);
+            }
+            
             var target = Player.inst.GetTarget();
             foreach (var wsp in spaceObjects)
             {
