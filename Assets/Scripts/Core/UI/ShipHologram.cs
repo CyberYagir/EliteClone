@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game;
@@ -9,10 +10,18 @@ public class ShipHologram : MonoBehaviour
     private Quaternion startRotation;
     private Player player;
 
+    public static ShipHologram Instance;
+    
     [SerializeField] private Transform floor;
     [SerializeField] private MeshFilter shipModel;
     [SerializeField] private Material material;
     [SerializeField] private Image shieldIndicator;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         startRotation = transform.localRotation;
