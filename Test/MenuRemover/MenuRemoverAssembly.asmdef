@@ -1,0 +1,22 @@
+{
+    "name": "MenuRemoverAssembly",
+    "rootNamespace": "MenuRemover",
+    "references": [
+        "ModsLoader",
+        "Core"
+    ],
+    "includePlatforms": [
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Mono.Cecil.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
