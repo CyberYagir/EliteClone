@@ -1,29 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "", menuName = "Game/ItemList", order = 1)]
-public class ItemList : ScriptableObject
+namespace Core.Game
 {
-    [SerializeField] private List<Item> items = new List<Item>();
-
-    public void SetList(List<Item> newList)
+    [CreateAssetMenu(fileName = "", menuName = "Game/ItemList", order = 1)]
+    public class ItemList : ScriptableObject
     {
-        items = newList;
-    }
+        [SerializeField] private List<Item> items = new List<Item>();
 
-    public Item Get(string idName) => items.Find(x => x.id.idname == idName.Trim().ToLower().Replace(" ", "_")).Clone();
-    public Item Get(Item original) => items.Find(x => x == original).Clone();
-    public Item Get(int id) => items.Find(x => x.id.id == id).Clone();
-
-    public List<Item> GetItemList()
-    {
-        var list = new List<Item>();
-        for (int i = 0; i < items.Count; i++)
+        public void SetList(List<Item> newList)
         {
-            list.Add(items[i]);
+            items = newList;
         }
 
-        return list;
+        public Item Get(string idName) => items.Find(x => x.id.idname == idName.Trim().ToLower().Replace(" ", "_")).Clone();
+        public Item Get(Item original) => items.Find(x => x == original).Clone();
+        public Item Get(int id) => items.Find(x => x.id.id == id).Clone();
+
+        public List<Item> GetItemList()
+        {
+            var list = new List<Item>();
+            for (int i = 0; i < items.Count; i++)
+            {
+                list.Add(items[i]);
+            }
+
+            return list;
+        }
     }
 }

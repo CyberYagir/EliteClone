@@ -1,23 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ContactObject : GalaxyObject
+namespace Core.Systems
 {
-    public void Init(bool triggerEvent = true)
+    public class ContactObject : GalaxyObject
     {
-        Player.inst.targets.AddContact(this, triggerEvent);
-        Player.OnPreSceneChanged += RemoveContact;
-    }
+        public void Init(bool triggerEvent = true)
+        {
+            Player.Player.inst.targets.AddContact(this, triggerEvent);
+            Player.Player.OnPreSceneChanged += RemoveContact;
+        }
 
-    private void OnDisable()
-    {
-        RemoveContact();
-    }
+        private void OnDisable()
+        {
+            RemoveContact();
+        }
 
-    public void RemoveContact()
-    {
-        Player.inst.targets.RemoveContact(this);
+        public void RemoveContact()
+        {
+            Player.Player.inst.targets.RemoveContact(this);
+        }
     }
 }

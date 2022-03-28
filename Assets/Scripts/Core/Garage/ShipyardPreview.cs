@@ -1,41 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ShipyardPreview : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private GameObject buy, sell;
-    [SerializeField] private TMP_Text costT;
-    private Shipyard shipyard;
+    public class ShipyardPreview : MonoBehaviour
+    {
+        [SerializeField] private GameObject buy, sell;
+        [SerializeField] private TMP_Text costT;
+        private Shipyard shipyard;
     
-    public void Start()
-    {
-        shipyard = GetComponentInParent<Shipyard>();
-        shipyard.OnReselect += ChangePreviewData;
-    }
-
-    private void ChangePreviewData(ShipyardItem selectedItem)
-    {
-        if (selectedItem != null)
+        public void Start()
         {
-            buy.SetActive(selectedItem.isMarket);
-            sell.SetActive(!selectedItem.isMarket);
+            shipyard = GetComponentInParent<Shipyard>();
+            shipyard.OnReselect += ChangePreviewData;
+        }
+
+        private void ChangePreviewData(ShipyardItem selectedItem)
+        {
+            if (selectedItem != null)
+            {
+                buy.SetActive(selectedItem.isMarket);
+                sell.SetActive(!selectedItem.isMarket);
             
             
-            var cost = 0f;
-            if (selectedItem.isMarket)
-                cost = shipyard.GetCost(shipyard.percent);
+                var cost = 0f;
+                if (selectedItem.isMarket)
+                    cost = shipyard.GetCost(shipyard.percent);
+                else
+                    cost = shipyard.GetCost();
+                costT.text = "Cost: " + cost.ToString("F2") + " credits";
+            }
             else
-                cost = shipyard.GetCost();
-            costT.text = "Cost: " + cost.ToString("F2") + " credits";
+            {
+                buy.SetActive(false);
+                sell.SetActive(false);
+                costT.text = "";
+            }
         }
-        else
-        {
-            buy.SetActive(false);
-            sell.SetActive(false);
-            costT.text = "";
-        }
-    }
 
+    }
 }

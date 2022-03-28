@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceManager : MonoBehaviour
+namespace Core
 {
-    void Start()
+    public class SpaceManager : MonoBehaviour
     {
-        Player.ChangeScene(); //Есть на каждой локе чтобы триггерить эвент смены локации
+        void Start()
+        {
+            Player.Player.ChangeScene(); //Есть на каждой локе чтобы триггерить эвент смены локации
+        }
     }
 }

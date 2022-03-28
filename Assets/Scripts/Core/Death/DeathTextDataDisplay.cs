@@ -1,42 +1,42 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DeathTextDataDisplay : MonoBehaviour
+namespace Core.Death
 {
-    [SerializeField] private TMP_Text text;
-    [SerializeField] private float addCharTime;
-    private string textTemplate = "Result: Destruction of the vehicle.\nCapsule heading to station: [%stationName%]\n\nData and cargo: lost.\n\nCommitments: remain";
-    private int textLetter;
-    private float time;
-    private bool isInited;
-    public void Update()
+    public class DeathTextDataDisplay : MonoBehaviour
     {
-        time += Time.deltaTime;
-        if (DeathDataCollector.Instance.findNearStation == null)
+        [SerializeField] private TMP_Text text;
+        [SerializeField] private float addCharTime;
+        private string textTemplate = "Result: Destruction of the vehicle.\nCapsule heading to station: [%stationName%]\n\nData and cargo: lost.\n\nCommitments: remain";
+        private int textLetter;
+        private float time;
+        private bool isInited;
+        public void Update()
         {
-            text.text = "Wait for data...";
-        }
-        else
-        {
-            if (!isInited)
+            time += Time.deltaTime;
+            if (DeathDataCollector.Instance.findNearStation == null)
             {
-                text.text = "";
-                textTemplate = textTemplate.Replace("%stationName%", DeathDataCollector.Instance.findNearStation.name);
-                isInited = true;
+                text.text = "Wait for data...";
             }
-            if (time > addCharTime)
+            else
             {
-                if (textLetter + 1 <= textTemplate.Length)
+                if (!isInited)
                 {
-                    text.text += textTemplate[textLetter];
-                    textLetter++;
-                    addCharTime = 0;
+                    text.text = "";
+                    textTemplate = textTemplate.Replace("%stationName%", DeathDataCollector.Instance.findNearStation.name);
+                    isInited = true;
+                }
+                if (time > addCharTime)
+                {
+                    if (textLetter + 1 <= textTemplate.Length)
+                    {
+                        text.text += textTemplate[textLetter];
+                        textLetter++;
+                        addCharTime = 0;
+                    }
                 }
             }
-        }
 
+        }
     }
 }

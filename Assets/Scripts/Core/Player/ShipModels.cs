@@ -1,25 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game;
 using UnityEngine;
 
-public class ShipModels : MonoBehaviour
+namespace Core.Player
 {
-    [SerializeField] private Transform modelsHolder;
-    [SerializeField] private GameObject spawnedCabine;
-    [SerializeField] private GameObject shipRenderer;
-
-
-    public void InitShip()
+    public class ShipModels : MonoBehaviour
     {
-        var ship = Player.inst.Ship();
-        if (spawnedCabine != null)
+        [SerializeField] private Transform modelsHolder;
+        [SerializeField] private GameObject spawnedCabine;
+        [SerializeField] private GameObject shipRenderer;
+
+
+        public void InitShip()
         {
-            Destroy(spawnedCabine.gameObject);
-            Destroy(shipRenderer.gameObject);
+            var ship = Player.inst.Ship();
+            if (spawnedCabine != null)
+            {
+                Destroy(spawnedCabine.gameObject);
+                Destroy(shipRenderer.gameObject);
+            }
+            spawnedCabine = Instantiate(ship.shipCabine.gameObject, modelsHolder);
+            shipRenderer = Instantiate(ship.shipModel.gameObject, modelsHolder);
+            shipRenderer.GetComponent<ShipMeshManager>().InitSlots(Player.inst.Ship());
         }
-        spawnedCabine = Instantiate(ship.shipCabine.gameObject, modelsHolder);
-        shipRenderer = Instantiate(ship.shipModel.gameObject, modelsHolder);
-        shipRenderer.GetComponent<ShipMeshManager>().InitSlots(Player.inst.Ship());
     }
 }

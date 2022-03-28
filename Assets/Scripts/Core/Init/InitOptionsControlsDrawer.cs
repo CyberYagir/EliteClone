@@ -1,84 +1,85 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UI;
+using Core.UI;
 using UnityEngine;
 
-public class InitOptionsControlsDrawer : MonoBehaviour
+namespace Core.Init
 {
-    [SerializeField] private GameObject item, holder;
+    public class InitOptionsControlsDrawer : MonoBehaviour
+    {
+        [SerializeField] private GameObject item, holder;
 
-    public Axis chageAxis;
-    public bool plus;
-    public bool isChange;
+        public Axis chageAxis;
+        public bool plus;
+        public bool isChange;
     
     
-    private void Start()
-    {
-        DrawControls();
-    }
-
-    public void DrawControls()
-    {
-        UITweaks.ClearHolder(holder.transform);
-        var input = FindObjectOfType<InputM>();
-        foreach (var axis in input.GetAxesList())
+        private void Start()
         {
-            var it = Instantiate(item, holder.transform).GetComponent<InitAxieItem>();
-            it.Init(axis);
-            it.gameObject.SetActive(true);
+            DrawControls();
         }
-    }
 
-    public void ChangeAxis(Axis axis, bool isplus)
-    {
-        if (!isChange)
+        public void DrawControls()
         {
-            plus = isplus;
-            chageAxis = axis;
-            isChange = true;
+            UITweaks.ClearHolder(holder.transform);
+            var input = FindObjectOfType<InputM>();
+            foreach (var axis in input.GetAxesList())
+            {
+                var it = Instantiate(item, holder.transform).GetComponent<InitAxieItem>();
+                it.Init(axis);
+                it.gameObject.SetActive(true);
+            }
         }
-    }
-    
-    private void OnGUI()
-    {
-        if (isChange)
-        {
-            var key = UnityEngine.Event.current;
-            var finalKey = KeyCode.None;
-            if (key.isKey)
-            {
-                finalKey = key.keyCode;
-            }
-            else
-            {
-                if (key.isMouse)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        var k = (KeyCode) Enum.Parse(typeof(KeyCode), "Mouse" + i);
-                        if (Input.GetKey(k))
-                        {
-                            finalKey = k;
-                            break;
-                        }
-                    }
-                }
-            }
 
-            if (finalKey != KeyCode.None)
+        public void ChangeAxis(Axis axis, bool isplus)
+        {
+            if (!isChange)
             {
-                if (plus)
+                plus = isplus;
+                chageAxis = axis;
+                isChange = true;
+            }
+        }
+    
+        private void OnGUI()
+        {
+            if (isChange)
+            {
+                var key = UnityEngine.Event.current;
+                var finalKey = KeyCode.None;
+                if (key.isKey)
                 {
-                    chageAxis.plus = finalKey;
+                    finalKey = key.keyCode;
                 }
                 else
                 {
-                    chageAxis.minus = finalKey;
+                    if (key.isMouse)
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            var k = (KeyCode) Enum.Parse(typeof(KeyCode), "Mouse" + i);
+                            if (Input.GetKey(k))
+                            {
+                                finalKey = k;
+                                break;
+                            }
+                        }
+                    }
                 }
 
-                DrawControls();
-                isChange = false;
+                if (finalKey != KeyCode.None)
+                {
+                    if (plus)
+                    {
+                        chageAxis.plus = finalKey;
+                    }
+                    else
+                    {
+                        chageAxis.minus = finalKey;
+                    }
+
+                    DrawControls();
+                    isChange = false;
+                }
             }
         }
     }

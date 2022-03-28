@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,64 +6,67 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ModItemUI : MonoBehaviour, IPointerClickHandler
+namespace Core.ModLoader
 {
-    [SerializeField] private TMP_Text modName, modDesc;
-    [SerializeField] private RawImage icon;
-    [SerializeField] private List<Button> buttons;
-    private Mod mod;
-    public void Init(Mod mod)
+    public class ModItemUI : MonoBehaviour, IPointerClickHandler
     {
-        this.mod = mod;
-        SetData(this.mod);
-    }
-
-    public string GetNameModName(int modID)
-    {
-        return Path.GetFileNameWithoutExtension(ModsManager.Instance.modLoader.loadChain.mods[modID]);
-    }
-    public void SetData(Mod mod)
-    {
-        if (ModsManager.Instance.modLoader.mods.Count == 1)
+        [SerializeField] private TMP_Text modName, modDesc;
+        [SerializeField] private RawImage icon;
+        [SerializeField] private List<Button> buttons;
+        private Mod mod;
+        public void Init(Mod mod)
         {
-            buttons.ForEach(x=>x.gameObject.SetActive(false));
+            this.mod = mod;
+            SetData(this.mod);
         }
-        else
+
+        public string GetNameModName(int modID)
         {
-            if (GetNameModName(0) == mod.data.modName)
+            return Path.GetFileNameWithoutExtension(ModsManager.Instance.modLoader.loadChain.mods[modID]);
+        }
+        public void SetData(Mod mod)
+        {
+            if (ModsManager.Instance.modLoader.mods.Count == 1)
             {
-                buttons.First().gameObject.SetActive(false);
+                buttons.ForEach(x=>x.gameObject.SetActive(false));
             }
-
-            if (GetNameModName(ModsManager.Instance.modLoader.mods.Count - 1) == mod.data.modName)
+            else
             {
-                buttons.Last().gameObject.SetActive(false);
+                if (GetNameModName(0) == mod.data.modName)
+                {
+                    buttons.First().gameObject.SetActive(false);
+                }
+
+                if (GetNameModName(ModsManager.Instance.modLoader.mods.Count - 1) == mod.data.modName)
+                {
+                    buttons.Last().gameObject.SetActive(false);
+                }
+            }
+        
+            if (mod == null || mod.data == null){Destroy(gameObject); return;}
+
+            modName.text = mod.data.modName + "[" + mod.data.modVersionData.ToString() + "]";
+            modDesc.text = mod.data.modDescription;
+        
+            if (mod.data.iconData.textureRaw.Length != 0)
+            {
+                icon.texture = mod.data.iconData.GetTexture();
             }
         }
-        
-        if (mod == null || mod.data == null){Destroy(gameObject); return;}
-
-        modName.text = mod.data.modName + "[" + mod.data.modVersionData.ToString() + "]";
-        modDesc.text = mod.data.modDescription;
-        
-        if (mod.data.iconData.textureRaw.Length != 0)
-        {
-            icon.texture = mod.data.iconData.GetTexture();
-        }
-    }
     
     
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        //mod.LoadSceneFromAsset(0);
-    }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            //mod.LoadSceneFromAsset(0);
+        }
 
-    public void MoveUp()
-    {
-        ModsManager.Instance.modLoader.loadChain.MoveModUp(mod.data.modName);
-    }
-    public void MoveDown()
-    {
-        ModsManager.Instance.modLoader.loadChain.MoveModDown(mod.data.modName);
+        public void MoveUp()
+        {
+            ModsManager.Instance.modLoader.loadChain.MoveModUp(mod.data.modName);
+        }
+        public void MoveDown()
+        {
+            ModsManager.Instance.modLoader.loadChain.MoveModDown(mod.data.modName);
+        }
     }
 }

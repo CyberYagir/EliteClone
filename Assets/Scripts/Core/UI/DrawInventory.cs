@@ -1,87 +1,88 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UI;
+using Core.Player;
 using UnityEngine;
 
-public class DrawInventory : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] private RectTransform holder, item;
-    [SerializeField] private UpDownUI upDownUI;
-    [SerializeField] private StatsDisplayCanvasRow tonsRow;
-    private Cargo cargo;
-    private float height;
-    private void Awake()
+    public class DrawInventory : MonoBehaviour
     {
-        cargo = Player.inst.cargo;
-        cargo.OnChangeInventory += OnChangeItems;
-        height = item.sizeDelta.y;
-        upDownUI.OnNavigateChange += ChangeButtonColors;
-    }
-
-    private void Start()
-    {
-        tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight, "_");
-    }
-
-    private void Update()
-    {
-        if (upDownUI.selectedIndex != -1 && drops.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex 
+        [SerializeField] private RectTransform holder, item;
+        [SerializeField] private UpDownUI upDownUI;
+        [SerializeField] private StatsDisplayCanvasRow tonsRow;
+        private Cargo cargo;
+        private float height;
+        private void Awake()
         {
-            holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);
-            if (buttons.Count != 0)
-            {
-                if (InputM.GetAxisDown(KAction.Drop))
-                {
-                    if (!drops[upDownUI.selectedIndex].isDrop)
-                    {
-                        drops[upDownUI.selectedIndex].StartEdit();
-                    }
-                    else
-                    {
-                        drops[upDownUI.selectedIndex].DropItem();
-                        return;
-                    }
-                }
+            cargo = Player.Player.inst.cargo;
+            cargo.OnChangeInventory += OnChangeItems;
+            height = item.sizeDelta.y;
+            upDownUI.OnNavigateChange += ChangeButtonColors;
+        }
 
-                if (drops[upDownUI.selectedIndex].isDrop)
+        private void Start()
+        {
+            tonsRow.SetValue(Player.Player.inst.cargo.tons, Player.Player.inst.Ship().data.maxCargoWeight, "_");
+        }
+
+        private void Update()
+        {
+            if (upDownUI.selectedIndex != -1 && drops.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex 
+            {
+                holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);
+                if (buttons.Count != 0)
                 {
-                    drops[upDownUI.selectedIndex].EditVal();
+                    if (InputM.GetAxisDown(KAction.Drop))
+                    {
+                        if (!drops[upDownUI.selectedIndex].isDrop)
+                        {
+                            drops[upDownUI.selectedIndex].StartEdit();
+                        }
+                        else
+                        {
+                            drops[upDownUI.selectedIndex].DropItem();
+                            return;
+                        }
+                    }
+
+                    if (drops[upDownUI.selectedIndex].isDrop)
+                    {
+                        drops[upDownUI.selectedIndex].EditVal();
+                    }
                 }
             }
         }
-    }
 
-    public void ChangeButtonColors()
-    {
-        for (int i = 0; i < buttons.Count; i++)
+        public void ChangeButtonColors()
         {
-            buttons[i].over = i == upDownUI.selectedIndex ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
-            if (i != upDownUI.selectedIndex)
-                drops[i].ResetText();
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].over = i == upDownUI.selectedIndex ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+                if (i != upDownUI.selectedIndex)
+                    drops[i].ResetText();
+            }
         }
-    }
 
-    private List<ButtonEffect> buttons = new List<ButtonEffect>();
-    private List<ItemUIDrop> drops = new List<ItemUIDrop>();
+        private List<ButtonEffect> buttons = new List<ButtonEffect>();
+        private List<ItemUIDrop> drops = new List<ItemUIDrop>();
 
-    private void OnChangeItems()
-    {
-        UITweaks.ClearHolder(holder);
-        buttons.Clear();
-        drops.Clear();
+        private void OnChangeItems()
+        {
+            UITweaks.ClearHolder(holder);
+            buttons.Clear();
+            drops.Clear();
         
         
-        for (int i = 0; i < cargo.items.Count; i++)
-        {
-            var newItem = Instantiate(item, holder);
-            var q = newItem.GetComponent<ItemUI>();
-            q.Init(cargo.items[i]);
-            newItem.gameObject.SetActive(true);
-            buttons.Add(newItem.GetComponent<ButtonEffect>());
-            drops.Add(newItem.GetComponent<ItemUIDrop>());
+            for (int i = 0; i < cargo.items.Count; i++)
+            {
+                var newItem = Instantiate(item, holder);
+                var q = newItem.GetComponent<ItemUI>();
+                q.Init(cargo.items[i]);
+                newItem.gameObject.SetActive(true);
+                buttons.Add(newItem.GetComponent<ButtonEffect>());
+                drops.Add(newItem.GetComponent<ItemUIDrop>());
+            }
+            upDownUI.itemsCount = cargo.items.Count;
+            tonsRow.SetValue(Player.Player.inst.cargo.tons, Player.Player.inst.Ship().data.maxCargoWeight, "_");
         }
-        upDownUI.itemsCount = cargo.items.Count;
-        tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight, "_");
     }
 }

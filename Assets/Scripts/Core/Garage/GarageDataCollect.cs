@@ -1,69 +1,71 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using Game;
+using Core.Game;
+using Core.Location;
+using Core.Player;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class GarageDataCollect : MonoBehaviour
+namespace Core.Garage
 {
-    public static GarageDataCollect Instance;
-    public PlayerData playerData { get; private set; }
-    public Cargo cargo  { get; private set; }
-    public Location playerLocation  { get; private set; }
-    
-    public ItemShip ship { get; private set; }
-
-    public SaveLoadData saves { get; private set; }
-    
-    public static Event OnChangeShip = new Event();
-    
-    public int stationSeed;
-    private void Awake()
+    public class GarageDataCollect : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static GarageDataCollect Instance;
+        public PlayerData playerData { get; private set; }
+        public Cargo cargo  { get; private set; }
+        public Location.Location playerLocation  { get; private set; }
+    
+        public ItemShip ship { get; private set; }
 
-    public virtual void InitDataCollector()
-    {
-        saves = GetComponent<SaveLoadData>();
-        playerData = saves.LoadData();
-        if (File.Exists(PlayerDataManager.CurrentLocationFile))
+        public SaveLoadData saves { get; private set; }
+    
+        public static Event OnChangeShip = new Event();
+    
+        public int stationSeed;
+        private void Awake()
         {
-            playerLocation = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
-        }
-        else
-        {
-            World.LoadLevel(Scenes.Location);
-            return;
+            Instance = this;
         }
 
-        stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName, playerLocation.GetSystemCode());
-        cargo = GetComponent<Cargo>();
-        ChangeShip(playerData.Ship.GetShip());
-        cargo.CustomInit(playerData, ship);
-    }
+        public virtual void InitDataCollector()
+        {
+            saves = GetComponent<SaveLoadData>();
+            playerData = saves.LoadData();
+            if (File.Exists(PlayerDataManager.CurrentLocationFile))
+            {
+                playerLocation = JsonConvert.DeserializeObject<Location.Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
+            }
+            else
+            {
+                World.LoadLevel(Scenes.Location);
+                return;
+            }
+
+            stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName, playerLocation.GetSystemCode());
+            cargo = GetComponent<Cargo>();
+            ChangeShip(playerData.Ship.GetShip());
+            cargo.CustomInit(playerData, ship);
+        }
 
 
-    public void ChangeShip(ItemShip newShip)
-    {
-        ship = newShip;
-        cargo.SetShip(newShip);
-        OnChangeShip.Invoke();
-    }
+        public void ChangeShip(ItemShip newShip)
+        {
+            ship = newShip;
+            cargo.SetShip(newShip);
+            OnChangeShip.Invoke();
+        }
 
-    private void OnApplicationQuit()
-    {
-        Save();
-    }
+        private void OnApplicationQuit()
+        {
+            Save();
+        }
 
-    public virtual void Save()
-    {
-        playerData.Ship = ship.SaveShip();
-        playerData.shipsInStations = saves.GetStorageShip();
-        playerData.items = cargo.GetData();
-        playerData.playedTime = saves.GetTime();
-        saves.SaveData(playerData);
+        public virtual void Save()
+        {
+            playerData.Ship = ship.SaveShip();
+            playerData.shipsInStations = saves.GetStorageShip();
+            playerData.items = cargo.GetData();
+            playerData.playedTime = saves.GetTime();
+            saves.SaveData(playerData);
+        }
     }
 }

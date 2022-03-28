@@ -1,155 +1,154 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class DrawNavList : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] protected List<NavItem> items = new List<NavItem>();
-    [SerializeField] protected GameObject item;
-    [SerializeField] protected RectTransform holder;
-    [SerializeField] protected UpDownUI updown;
-
-
-    protected UITabControl tabControl;
-
-    protected float height;
-
-    protected virtual void Awake()
+    public abstract class DrawNavList : MonoBehaviour
     {
-        height = item.GetComponent<RectTransform>().sizeDelta.y;
-        Player.OnSceneChanged += UpdateList;
-        updown.OnChangeSelected += ChangeSelect;
-        updown.OnNavigateChange += UpdateColors;
-    }
+        [SerializeField] protected List<NavItem> items = new List<NavItem>();
+        [SerializeField] protected GameObject item;
+        [SerializeField] protected RectTransform holder;
+        [SerializeField] protected UpDownUI updown;
 
-    protected virtual void Start()
-    {
-        UpdateList();
-    }
 
-    protected void UpdateList()
-    {
-        tabControl = GetComponentInParent<UITabControl>();
-        UITweaks.ClearHolder(holder);
-        GameObject selected = null;
-        if (items.Count != 0)
+        protected UITabControl tabControl;
+
+        protected float height;
+
+        protected virtual void Awake()
         {
-            try
+            height = item.GetComponent<RectTransform>().sizeDelta.y;
+            Player.Player.OnSceneChanged += UpdateList;
+            updown.OnChangeSelected += ChangeSelect;
+            updown.OnNavigateChange += UpdateColors;
+        }
+
+        protected virtual void Start()
+        {
+            UpdateList();
+        }
+
+        protected void UpdateList()
+        {
+            tabControl = GetComponentInParent<UITabControl>();
+            UITweaks.ClearHolder(holder);
+            GameObject selected = null;
+            if (items.Count != 0)
             {
-                selected = items[updown.selectedIndex].SpaceObject.gameObject;
+                try
+                {
+                    selected = items[updown.selectedIndex].SpaceObject.gameObject;
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
             }
-            catch (Exception e)
+
+            items = new List<NavItem>();
+            RedrawList();
+            if (selected != null)
             {
-                // ignored
-            }
-        }
-
-        items = new List<NavItem>();
-        RedrawList();
-        if (selected != null)
-        {
-            updown.selectedIndex = items.FindIndex(x => x.SpaceObject != null && x.SpaceObject.gameObject == selected);
-        }
-        else
-        {
-            updown.selectedIndex = 0;
-        }
-        updown.itemsCount = items.Count;
-        UpdateWithoutLerp();
-    }
-
-    public virtual void RedrawList()
-    {
-       
-    }
-
-
-    public void ChangeSelect()
-    {
-        int selectedIndex = updown.selectedIndex;
-        if (selectedIndex != -1)
-        {
-            if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
-            {
-                Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+                updown.selectedIndex = items.FindIndex(x => x.SpaceObject != null && x.SpaceObject.gameObject == selected);
             }
             else
             {
-                Player.inst.SetTarget(null);
+                updown.selectedIndex = 0;
             }
-
-            UpdateColors();
+            updown.itemsCount = items.Count;
+            UpdateWithoutLerp();
         }
-    }
 
-    public void UpdateColors()
-    {
-        int selectedIndex = updown.selectedIndex;
-        if (selectedIndex != -1)
+        public virtual void RedrawList()
         {
-            for (int i = 0; i < items.Count; i++)
+       
+        }
+
+
+        public void ChangeSelect()
+        {
+            int selectedIndex = updown.selectedIndex;
+            if (selectedIndex != -1)
             {
-                if (items[i].SpaceObject != null)
+                if (items[selectedIndex].SpaceObject != Player.Player.inst.GetTarget())
                 {
-                    if (i == selectedIndex)
+                    Player.Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+                }
+                else
+                {
+                    Player.Player.inst.SetTarget(null);
+                }
+
+                UpdateColors();
+            }
+        }
+
+        public void UpdateColors()
+        {
+            int selectedIndex = updown.selectedIndex;
+            if (selectedIndex != -1)
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].SpaceObject != null)
                     {
-                        items[i].Button.over = ButtonEffect.ActionType.Over;
+                        if (i == selectedIndex)
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.Over;
+                        }
+                        else if (items[i].SpaceObject == Player.Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.Selected;
+                        }
+                        else
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.None;
+                        }
+                        //items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
+                        //items[i].Dist.text = items[i].SpaceObject.dist;
                     }
-                    else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
-                    {
-                        items[i].Button.over = ButtonEffect.ActionType.Selected;
-                    }
-                    else
-                    {
-                        items[i].Button.over = ButtonEffect.ActionType.None;
-                    }
-                    //items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
-                    //items[i].Dist.text = items[i].SpaceObject.dist;
                 }
             }
         }
-    }
 
-    public void UpdateWithoutLerp()
-    {
-        int selectedIndex = updown.selectedIndex;
-        if (selectedIndex != -1)
+        public void UpdateWithoutLerp()
         {
-            for (int i = 0; i < items.Count; i++)
+            int selectedIndex = updown.selectedIndex;
+            if (selectedIndex != -1)
             {
-                if (items[i].SpaceObject != null)
+                for (int i = 0; i < items.Count; i++)
                 {
-                    if (i == selectedIndex)
+                    if (items[i].SpaceObject != null)
                     {
-                        items[i].Button.over = ButtonEffect.ActionType.Over;
+                        if (i == selectedIndex)
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.Over;
+                        }
+                        else if (items[i].SpaceObject == Player.Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.Selected;
+                        }
+                        else
+                        {
+                            items[i].Button.over = ButtonEffect.ActionType.None;
+                        }
+                        items[i].Button.WithoutLerp();
+                        //items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
+                        //items[i].Dist.text = items[i].SpaceObject.dist;
                     }
-                    else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
-                    {
-                        items[i].Button.over = ButtonEffect.ActionType.Selected;
-                    }
-                    else
-                    {
-                        items[i].Button.over = ButtonEffect.ActionType.None;
-                    }
-                    items[i].Button.WithoutLerp();
-                    //items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
-                    //items[i].Dist.text = items[i].SpaceObject.dist;
                 }
             }
         }
-    }
 
-    private void Update()
-    {
-        updown.enabled = tabControl.Active;
-
-        if (tabControl.Active)
+        private void Update()
         {
-            holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (updown.selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
+            updown.enabled = tabControl.Active;
+
+            if (tabControl.Active)
+            {
+                holder.localPosition = Vector3.Lerp(holder.localPosition, new Vector3(holder.localPosition.x, (updown.selectedIndex * height) - height, holder.localPosition.z), 10 * Time.deltaTime);
+            }
         }
     }
 }

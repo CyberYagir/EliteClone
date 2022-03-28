@@ -1,58 +1,61 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Game;
+using Core.Game;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class ShipMeshSlot : MonoBehaviour
+namespace Core.Player
 {
-    [System.Serializable]
-    public class SlotMesh
+    public class ShipMeshSlot : MonoBehaviour
     {
-        public enum WeaponMesh
+        [System.Serializable]
+        public class SlotMesh
         {
-            None, Laser, MineLaser
+            public enum WeaponMesh
+            {
+                None, Laser, MineLaser
+            }
+            public WeaponMesh meshName;
+            public GameObject mesh;
+            public Object weaponScript;
+            public WeaponOptionsItem options;
+            public string weaponScriptName = "Core.Player.Weapon.";
         }
-        public WeaponMesh meshName;
-        public GameObject mesh;
-        public Object weaponScript;
-        public WeaponOptionsItem options;
-    }
     
-    public int slotID;
-    [SerializeField] private List<SlotMesh> meshes;
-    private Weapon currentWeapon;
+        public int slotID;
+        [SerializeField] private List<SlotMesh> meshes;
+        private Weapon.Weapon currentWeapon;
 
-    public void SetMesh(Slot slot)
-    {
-        Destroy(currentWeapon);
-        if (slot.current.IsHaveKeyPair(KeyPairValue.MeshType))
+        public void SetMesh(Slot slot)
         {
             Destroy(currentWeapon);
-            gameObject.SetActive(true);
-            var type = (float)slot.current.GetKeyPair(KeyPairValue.MeshType);
-            foreach (var mesh in meshes)
+            if (slot.current.IsHaveKeyPair(KeyPairValue.MeshType))
             {
-                if (mesh.meshName == (SlotMesh.WeaponMesh) (int) type)
+                Destroy(currentWeapon);
+                gameObject.SetActive(true);
+                var type = (float)slot.current.GetKeyPair(KeyPairValue.MeshType);
+                foreach (var mesh in meshes)
                 {
-                    if (mesh.weaponScript != null)
+                    if (mesh.meshName == (SlotMesh.WeaponMesh) (int) type)
                     {
-                        currentWeapon = (Weapon)gameObject.AddComponent(Type.GetType(mesh.weaponScript.name));
-                        currentWeapon.Init(slot.button, slot.current, mesh.options);
-                    }
+                        if (mesh.weaponScript != null)
+                        {
+                            currentWeapon = (Weapon.Weapon)gameObject.AddComponent(Type.GetType(mesh.weaponScriptName + mesh.weaponScript.name));
+                            currentWeapon.Init(slot.button, slot.current, mesh.options);
+                        }
 
-                    mesh.mesh.SetActive(true);
-                }
-                else
-                {
-                    mesh.mesh.SetActive(false);
+                        mesh.mesh.SetActive(true);
+                    }
+                    else
+                    {
+                        mesh.mesh.SetActive(false);
+                    }
                 }
             }
-        }
-        else
-        {
-            gameObject.SetActive(false);
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -1,19 +1,19 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using Core.Galaxy;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
-[CreateAssetMenu(fileName = "", menuName = "Game/PlanetTextures", order = 1)]
-public class PlanetTextures : ScriptableObject
+namespace Core.Game
 {
-    [System.Serializable]
-    public class PlanetMaterial
+    [CreateAssetMenu(fileName = "", menuName = "Game/PlanetTextures", order = 1)]
+    public class PlanetTextures : ScriptableObject
     {
-        public Planet.PlanetType type;
-        public Material material;
+        [System.Serializable]
+        public class PlanetMaterial
+        {
+            public Planet.PlanetType type;
+            public Material material;
+        }
+        public List<PlanetMaterial> textures = new List<PlanetMaterial>();
     }
-    public List<PlanetMaterial> textures = new List<PlanetMaterial>();
 }

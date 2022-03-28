@@ -1,31 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.Systems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WorldSpaceCanvasItem : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] private Image image, selection;
-    [SerializeField] private TMP_Text text;
-
-    public void Init(WorldSpaceObject wso)
+    public class WorldSpaceCanvasItem : MonoBehaviour
     {
-        image.sprite = wso.icon;
-        text.text = wso.transform.name;
-    }
+        [SerializeField] private Image image, selection;
+        [SerializeField] private TMP_Text text;
 
-    public void SetText(string str)
-    {
-        if (text.text != str)
+        public void Init(WorldSpaceObject wso)
         {
-            text.text = str;
+            image.sprite = wso.icon;
+            text.text = wso.transform.name;
         }
-    }
 
-    public void SetSelect(bool state)
-    {
-        if (state != gameObject.active)
-            selection.gameObject.SetActive(state);
+        public void SetText(string str)
+        {
+            if (text.text != str)
+            {
+                text.text = str;
+            }
+        }
+
+        public void SetSelect(bool state)
+        {
+            if (state != gameObject.active)
+                selection.gameObject.SetActive(state);
+        }
     }
 }

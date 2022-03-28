@@ -1,38 +1,41 @@
 ﻿using System.Collections.Generic;
 
-[System.Serializable]
-public class Planet: SpaceObject
+namespace Core.Galaxy
 {
-    public List<Planet> sattelites = new List<Planet>();
-    public List<OrbitStation> stations = new List<OrbitStation>();
-    public int textureID;
-
-    public PlanetType type;
-    public enum PlanetType
+    [System.Serializable]
+    public class Planet: SpaceObject
     {
-        Rock, Gas
-    }
+        public List<Planet> sattelites = new List<Planet>();
+        public List<OrbitStation> stations = new List<OrbitStation>();
+        public int textureID;
 
-    public Planet()
-    {
-
-    }
-
-    public Planet(System.Random rnd, DVector postion, bool isStattelite = false)
-    {
-        this.position = postion;
-        mass = GalaxyGenerator.NextDecimal(rnd, 0.05f, 0.25f);
-        if (!isStattelite)
+        public PlanetType type;
+        public enum PlanetType
         {
-            type = (PlanetType) rnd.Next(0, 2);
+            Rock, Gas
         }
-        radius = GalaxyGenerator.NextDecimal(rnd, 0.1f, 0.2f);
-        if (type == PlanetType.Gas)
+
+        public Planet()
         {
-            radius *= 2 * ((1 + (float)rnd.NextDouble()) + 0.5f);
-            if (radius <= 0.2f)
+
+        }
+
+        public Planet(System.Random rnd, DVector postion, bool isStattelite = false)
+        {
+            this.position = postion;
+            mass = GalaxyGenerator.NextDecimal(rnd, 0.05f, 0.25f);
+            if (!isStattelite)
             {
-                radius = 0.3f;
+                type = (PlanetType) rnd.Next(0, 2);
+            }
+            radius = GalaxyGenerator.NextDecimal(rnd, 0.1f, 0.2f);
+            if (type == PlanetType.Gas)
+            {
+                radius *= 2 * ((1 + (float)rnd.NextDouble()) + 0.5f);
+                if (radius <= 0.2f)
+                {
+                    radius = 0.3f;
+                }
             }
         }
     }

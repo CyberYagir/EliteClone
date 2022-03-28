@@ -1,24 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.Systems;
 using UnityEngine;
 
-public class WeaponMineLaser : WeaponLaser
+namespace Core.Player.Weapon
 {
-    protected override void InitData()
+    public class WeaponMineLaser : WeaponLaser
     {
-        base.InitData();
-        OnSpawnDecal += DamageAsteroid;
-    }
-
-    public void DamageAsteroid(RaycastHit obj)
-    {
-        var meteor = obj.transform.GetComponent<Meteor>();
-        if (meteor)
+        protected override void InitData()
         {
-            meteor.TakeDamage(options.damage);
-            if (meteor.GetHealth() > 0)
+            base.InitData();
+            OnSpawnDecal += DamageAsteroid;
+        }
+
+        public void DamageAsteroid(RaycastHit obj)
+        {
+            var meteor = obj.transform.GetComponent<Meteor>();
+            if (meteor)
             {
-                meteor.SpawnDrop(obj.normal, obj.point);
+                meteor.TakeDamage(options.damage);
+                if (meteor.GetHealth() > 0)
+                {
+                    meteor.SpawnDrop(obj.normal, obj.point);
+                }
             }
         }
     }

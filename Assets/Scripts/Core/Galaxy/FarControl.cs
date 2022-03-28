@@ -1,19 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FarControl : MonoBehaviour
+namespace Core.Galaxy
 {
-    Camera camera;
-    private void Start()
+    public class FarControl : MonoBehaviour
     {
-        camera = GetComponent<Camera>();
-    }
+        Camera camera;
+        private void Start()
+        {
+            camera = GetComponent<Camera>();
+        }
 
-    void Update()
-    {
-        camera.farClipPlane = 3000 * (transform.position.y / 300);
-        camera.farClipPlane = Mathf.Clamp(camera.farClipPlane, 500, 3000);
+        void Update()
+        {
+            camera.farClipPlane = 3000 * (transform.position.y / 300);
+            camera.farClipPlane = Mathf.Clamp(camera.farClipPlane, 500, 3000);
 
+        }
     }
 }

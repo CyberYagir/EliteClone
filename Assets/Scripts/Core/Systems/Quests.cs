@@ -1,10 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Core.Galaxy;
+using Core.Game;
+using Core.Location;
 using Random = System.Random;
 
-namespace Quests
+namespace Core.Systems
 {
     [System.Serializable]
     public class QuestPath
@@ -160,13 +161,13 @@ namespace Quests
             List<Item> chekedItems = new List<Item>();
             for (int i = 0; i < toTransfer.Count; i++)
             {
-                if (!Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
+                if (!Player.Player.inst.cargo.ContainItem(toTransfer[i].id.idname))
                 {
                     allItemInInventory = false;
                 }
                 else
                 {
-                    var findItem = Player.inst.cargo.FindItem(toTransfer[i].id.idname);
+                    var findItem = Player.Player.inst.cargo.FindItem(toTransfer[i].id.idname);
                     if (!chekedItems.Contains(findItem))
                     {
                         if (findItem.amount.value >= toTransfer[i].amount.value)

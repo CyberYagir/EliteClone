@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Core.Game;
 
-public class GarageMassExplorer : GarageSlotDataExplorer
+namespace Core.Garage
 {
-    public override void AddInFor(Item item, ref AddInForUsed val)
+    public class GarageMassExplorer : GarageSlotDataExplorer
     {
-        base.AddInFor(item, ref val);
-        val.all = GarageDataCollect.Instance.ship.data.maxCargoWeight;
-        val.used += (float)item.GetKeyPair(KeyPairValue.Mass);
+        public override void AddInFor(Item item, ref AddInForUsed val)
+        {
+            base.AddInFor(item, ref val);
+            val.all = GarageDataCollect.Instance.ship.data.maxCargoWeight;
+            val.used += (float)item.GetKeyPair(KeyPairValue.Mass);
+        }
     }
 }

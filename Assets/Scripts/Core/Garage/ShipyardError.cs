@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ShipyardError : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private TMP_Text text;
-    public void ThrowError(string message)
+    public class ShipyardError : MonoBehaviour
     {
-        text.text = message;
-        gameObject.SetActive(true);
+        [SerializeField] private TMP_Text text;
+        public void ThrowError(string message)
+        {
+            text.text = message;
+            gameObject.SetActive(true);
+        }
     }
 }

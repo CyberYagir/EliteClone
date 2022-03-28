@@ -1,14 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game;
 using UnityEngine;
 
-public class GarageGenerator : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private GarageDataCollect dataCollect;
-    private void Start()
+    public class GarageGenerator : MonoBehaviour
     {
-        dataCollect.InitDataCollector();
+        [SerializeField] private GarageDataCollect dataCollect;
+        private void Start()
+        {
+            dataCollect.InitDataCollector();
+        }
     }
 }

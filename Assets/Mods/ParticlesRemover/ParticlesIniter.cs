@@ -1,5 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core;
+using Core.Bot;
+using Core.Player;
+using Core.Systems;
 using UnityEngine;
 
 namespace ParticlesRemover

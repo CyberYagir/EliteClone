@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Core.Player;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Game
+namespace Core.Game
 {
     [System.Serializable]
     public class ShipVariables

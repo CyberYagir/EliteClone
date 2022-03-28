@@ -1,46 +1,49 @@
-using System.Collections;
 using System.Collections.Generic;
+using Core.Systems;
 using UnityEngine;
 
-public class LocationPoint : MonoBehaviour
+namespace Core.Location
 {
-    public enum LocationType
+    public class LocationPoint : MonoBehaviour
     {
-        Station, Belt, Empty
-    }
-    private Camera mainCamera;
-    [SerializeField] float size;
-    public GameObject root;
-    public float minDist;
-    public LocationType locationType;
-    public Dictionary<string, object> data { get; private set; } = new Dictionary<string, object>();
-
-    private void Start()
-    {
-        mainCamera = Camera.main;
-    }
-    void Update()
-    {
-        transform.LookAt(mainCamera.transform);
-        transform.localScale = Vector3.one * Vector3.Distance(transform.position, mainCamera.transform.position) * size;
-
-        SetActiveLocation();
-    }
-
-    public void SetData(Dictionary<string, object> newData)
-    {
-        data = newData;
-    }
-    
-    public void SetActiveLocation()
-    {
-        if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
+        public enum LocationType
         {
-            Player.inst.warp.SetActiveLocation(this);
+            Station, Belt, Empty
         }
-        else
+        private Camera mainCamera;
+        [SerializeField] float size;
+        public GameObject root;
+        public float minDist;
+        public LocationType locationType;
+        public Dictionary<string, object> data { get; private set; } = new Dictionary<string, object>();
+
+        private void Start()
         {
-            Player.inst.warp.RemoveActiveLocation(this);
+            mainCamera = Camera.main;
+        }
+        void Update()
+        {
+            transform.LookAt(mainCamera.transform);
+            transform.localScale = Vector3.one * Vector3.Distance(transform.position, mainCamera.transform.position) * size;
+
+            SetActiveLocation();
+        }
+
+        public void SetData(Dictionary<string, object> newData)
+        {
+            data = newData;
+        }
+    
+        public void SetActiveLocation()
+        {
+            if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
+            {
+                Player.Player.inst.warp.SetActiveLocation(this);
+            }
+            else
+            {
+                Player.Player.inst.warp.RemoveActiveLocation(this);
+            }
         }
     }
 }

@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAttackLaser : WeaponLaser
+namespace Core.Player.Weapon
 {
-    protected override void InitData()
+    public class WeaponAttackLaser : WeaponLaser
     {
-        base.InitData();
-        OnSpawnDecal += DamageShip;
-    }
-
-    public void DamageShip(RaycastHit obj)
-    {
-        var damagable = obj.transform.GetComponent<IDamagable>();
-        if (damagable != null)
+        protected override void InitData()
         {
-            damagable.TakeDamage(options.damage);
+            base.InitData();
+            OnSpawnDecal += DamageShip;
+        }
+
+        public void DamageShip(RaycastHit obj)
+        {
+            var damagable = obj.transform.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                damagable.TakeDamage(options.damage);
+            }
         }
     }
 }

@@ -1,139 +1,142 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
+using Core.Galaxy;
+using Core.Init;
+using Core.Location;
 using UnityEngine;
 
-public class PlayerDataManager : MonoBehaviour
+namespace Core
 {
-    public static PlayerDataManager Instance;
-    public static SolarSystem CurrentSolarSystem;
-
-    public static InitOptions.PlayerConfig PlayerConfig;
-
-    public static int galaxySeed = -1;
-    public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-    public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile;
-    public static float GenerateProgress;
-    private bool loading = false;
-
-    private void Update()
+    public class PlayerDataManager : MonoBehaviour
     {
-        if (World.Scene == Scenes.Init)
+        public static PlayerDataManager Instance;
+        public static SolarSystem CurrentSolarSystem;
+
+        public static InitOptions.PlayerConfig PlayerConfig;
+
+        public static int galaxySeed = -1;
+        public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
+        public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile;
+        public static float GenerateProgress;
+        private bool loading = false;
+
+        private void Update()
         {
-            if (loading)
+            if (World.Scene == Scenes.Init)
             {
-                if (GenerateProgress == 1)
+                if (loading)
                 {
-                    World.LoadLevel(Scenes.Galaxy);
-                    enabled = false;
+                    if (GenerateProgress == 1)
+                    {
+                        World.LoadLevel(Scenes.Galaxy);
+                        enabled = false;
+                    }
                 }
             }
         }
-    }
 
-    private void Awake()
-    {
-        Init();
-    }
-
-    public void Init()
-    {
-        LoadStatic();
-        InitDataManager();
-    }
-
-    public void LoadStatic()
-    {
-        GalaxyGenerator.GetWords();
-        WorldOrbitalStation.InitNames();
-    }
-
-    private void Start()
-    {
-        if (World.Scene != Scenes.Init)
+        private void Awake()
         {
-            LoadScene();
-        }
-    }
-
-    public void InitDataManager()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            FoldersManage();
-        }
-    }
-
-
-    public static void FoldersManage()
-    {
-        if (!Directory.Exists(Directory.GetParent(Application.dataPath).FullName + "/Saves"))
-        {
-            Directory.CreateDirectory(Directory.GetParent(Application.dataPath).FullName + "/Saves");
+            Init();
         }
 
-        RootFolder = Directory.GetParent(Application.dataPath)?.FullName + "/Saves";
-
-        if (!Directory.Exists(RootFolder + "/Player"))
+        public void Init()
         {
-            Directory.CreateDirectory(RootFolder + "/Player/");
+            LoadStatic();
+            InitDataManager();
         }
 
-        PlayerFolder = RootFolder + "/Player/";
-        if (!Directory.Exists(PlayerFolder + "/Global"))
+        public void LoadStatic()
         {
-            Directory.CreateDirectory(PlayerFolder + "/Global");
+            GalaxyGenerator.GetWords();
+            WorldOrbitalStation.InitNames();
         }
 
-        GlobalFolder = PlayerFolder + "/Global/";
-        if (!Directory.Exists(PlayerFolder + "/Locations"))
+        private void Start()
         {
-            Directory.CreateDirectory(PlayerFolder + "/Locations");
-        }
-
-        CacheSystemsFolder = PlayerFolder + "/Locations/";
-
-        GalaxyFile = GlobalFolder + "galaxy.json";
-        CurrentSystemFile = GlobalFolder + "system.json";
-        CurrentLocationFile = GlobalFolder + "location.json";
-        DeadsNPCFile = GlobalFolder + "npcs.json";
-        PlayerDataFile = GlobalFolder + "player.json";
-        ConfigFile = PlayerFolder + "options.config";
-    }
-
-    public void LoadScene()
-    {
-        var haveGalaxy = GalaxyGenerator.LoadSystems();
-        if (File.Exists(CurrentLocationFile) && haveGalaxy)
-        {
-            World.LoadLevel(Scenes.Location);
-        }
-        else if (File.Exists(CurrentSystemFile) && haveGalaxy)
-        {
-            World.LoadLevel(Scenes.System);
-        }
-        else
-        {
-            if (File.Exists(GalaxyFile))
+            if (World.Scene != Scenes.Init)
             {
-                loading = true;
-                GenerateProgress = 1;
+                LoadScene();
+            }
+        }
+
+        public void InitDataManager()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+
             }
             else
             {
-                if (!loading)
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+                FoldersManage();
+            }
+        }
+
+
+        public static void FoldersManage()
+        {
+            if (!Directory.Exists(Directory.GetParent(Application.dataPath).FullName + "/Saves"))
+            {
+                Directory.CreateDirectory(Directory.GetParent(Application.dataPath).FullName + "/Saves");
+            }
+
+            RootFolder = Directory.GetParent(Application.dataPath)?.FullName + "/Saves";
+
+            if (!Directory.Exists(RootFolder + "/Player"))
+            {
+                Directory.CreateDirectory(RootFolder + "/Player/");
+            }
+
+            PlayerFolder = RootFolder + "/Player/";
+            if (!Directory.Exists(PlayerFolder + "/Global"))
+            {
+                Directory.CreateDirectory(PlayerFolder + "/Global");
+            }
+
+            GlobalFolder = PlayerFolder + "/Global/";
+            if (!Directory.Exists(PlayerFolder + "/Locations"))
+            {
+                Directory.CreateDirectory(PlayerFolder + "/Locations");
+            }
+
+            CacheSystemsFolder = PlayerFolder + "/Locations/";
+
+            GalaxyFile = GlobalFolder + "galaxy.json";
+            CurrentSystemFile = GlobalFolder + "system.json";
+            CurrentLocationFile = GlobalFolder + "location.json";
+            DeadsNPCFile = GlobalFolder + "npcs.json";
+            PlayerDataFile = GlobalFolder + "player.json";
+            ConfigFile = PlayerFolder + "options.config";
+        }
+
+        public void LoadScene()
+        {
+            var haveGalaxy = GalaxyGenerator.LoadSystems();
+            if (File.Exists(CurrentLocationFile) && haveGalaxy)
+            {
+                World.LoadLevel(Scenes.Location);
+            }
+            else if (File.Exists(CurrentSystemFile) && haveGalaxy)
+            {
+                World.LoadLevel(Scenes.System);
+            }
+            else
+            {
+                if (File.Exists(GalaxyFile))
                 {
-                    StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
                     loading = true;
+                    GenerateProgress = 1;
+                }
+                else
+                {
+                    if (!loading)
+                    {
+                        StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
+                        loading = true;
+                    }
                 }
             }
         }

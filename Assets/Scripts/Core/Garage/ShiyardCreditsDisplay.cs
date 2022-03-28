@@ -1,21 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ShiyardCreditsDisplay : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private TMP_Text text;
-
-    private void Start()
+    public class ShiyardCreditsDisplay : MonoBehaviour
     {
-        var yard = FindObjectOfType<Shipyard>();
-        yard.OnChange += UpdateText;
-    }
+        [SerializeField] private TMP_Text text;
 
-    public void UpdateText()
-    {
-        text.text = "Credits have: " + GarageDataCollect.Instance.cargo.GetCredits();
+        private void Start()
+        {
+            var yard = FindObjectOfType<Shipyard>();
+            yard.OnChange += UpdateText;
+        }
+
+        public void UpdateText()
+        {
+            text.text = "Credits have: " + GarageDataCollect.Instance.cargo.GetCredits();
+        }
     }
 }

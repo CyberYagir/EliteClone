@@ -1,99 +1,101 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Game;
-using Quests;
+using Core.Location;
+using Core.Systems;
 using TMPro;
 using UnityEngine;
-using static Game.ItemShip.ShipValuesTypes;
+using static Core.Game.ItemShip.ShipValuesTypes;
 
-public class BaseWindow : MonoBehaviour
+namespace Core.UI
 {
-    [System.Serializable]
-    public class IconType
+    public class BaseWindow : MonoBehaviour
     {
-        public Sprite icon;
-        public Fraction fraction;
-    }
-    private RectTransform rect;
-    [SerializeField] private float height = 1400;
-    [SerializeField] private TMP_Text infoText, nameText;
-    [SerializeField] private List<IconType> icons;
-    [SerializeField] private CharacterList characters;
-    [SerializeField] private TMP_Text repairT, fuelT;
-
-    private void Start()
-    {
-        Init();
-        if (World.Scene != Scenes.Location)
+        [System.Serializable]
+        public class IconType
         {
-            gameObject.SetActive(false);
+            public Sprite icon;
+            public Fraction fraction;
         }
-        else
+        private RectTransform rect;
+        [SerializeField] private float height = 1400;
+        [SerializeField] private TMP_Text infoText, nameText;
+        [SerializeField] private List<IconType> icons;
+        [SerializeField] private CharacterList characters;
+        [SerializeField] private TMP_Text repairT, fuelT;
+
+        private void Start()
         {
-            if (WorldOrbitalStation.Instance != null)
+            Init();
+            if (World.Scene != Scenes.Location)
             {
-                ChangeUI();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                if (WorldOrbitalStation.Instance != null)
+                {
+                    ChangeUI();
+                }
             }
         }
-    }
 
-    public void Init()
-    {
-        Player.inst.land.OnLand += RedrawAll;
-        rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
-    }
-
-    public void ChangeUI()
-    {
-        nameText.text = WorldOrbitalStation.Instance.transform.name;
-        UpdateCosts();
-    }
-
-    public void UpdateCosts()
-    {
-        repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().GetValue(Health).max - Player.inst.Ship().GetValue(Health).value));
-        fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().GetValue(Fuel).max - Player.inst.Ship().GetValue(Fuel).value));
-    }
-    private void Update()
-    {
-        Animation();
-        if (Player.inst.land.isLanded)
+        public void Init()
         {
-            var date = DateTime.Now.Date.AddYears(1025);    
-            infoText.text = $"Date: {date:d}\n" +
-                            $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
-                            $"Credits: " + Player.inst.cargo.GetCredits();
+            Player.Player.inst.land.OnLand += RedrawAll;
+            rect = GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         }
-    }
 
-    public void RedrawAll()
-    {
-        if (LocationGenerator.CurrentSave.type == LocationPoint.LocationType.Station)
+        public void ChangeUI()
         {
-            ChangeUI();
-            characters.UpdateList();
+            nameText.text = WorldOrbitalStation.Instance.transform.name;
+            UpdateCosts();
         }
-    }
 
-
-    public IconType GetIcon(Fraction fraction)
-    {
-        return icons.Find(x => x.fraction == fraction);
-    }
-
-    public void Animation()
-    {
-        if (rect)
+        public void UpdateCosts()
         {
-            rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.Player.inst.Ship().GetValue(Health).max - Player.Player.inst.Ship().GetValue(Health).value));
+            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.Player.inst.Ship().GetValue(Fuel).max - Player.Player.inst.Ship().GetValue(Fuel).value));
         }
-    }
+        private void Update()
+        {
+            Animation();
+            if (Player.Player.inst.land.isLanded)
+            {
+                var date = DateTime.Now.Date.AddYears(1025);    
+                infoText.text = $"Date: {date:d}\n" +
+                                $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
+                                $"Credits: " + Player.Player.inst.cargo.GetCredits();
+            }
+        }
 
-    public void Refill(int type)
-    {
-        StationRefiller.Instance.Fill((StationRefiller.Refiller.RefillType)type);
-        ChangeUI(); 
+        public void RedrawAll()
+        {
+            if (LocationGenerator.CurrentSave.type == LocationPoint.LocationType.Station)
+            {
+                ChangeUI();
+                characters.UpdateList();
+            }
+        }
+
+
+        public IconType GetIcon(Fraction fraction)
+        {
+            return icons.Find(x => x.fraction == fraction);
+        }
+
+        public void Animation()
+        {
+            if (rect)
+            {
+                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+            }
+        }
+
+        public void Refill(int type)
+        {
+            StationRefiller.Instance.Fill((StationRefiller.Refiller.RefillType)type);
+            ChangeUI(); 
+        }
     }
 }

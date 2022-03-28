@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class StatsDisplayCanvasRow : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] private TMP_Text text;
-    [SerializeField] private Transform value;
-
-
-    public void SetValue(float _value, float maxValue, string _text = "_")
+    public class StatsDisplayCanvasRow : MonoBehaviour
     {
-        value.localScale = new Vector3(_value / maxValue, 1, 1);
-        if (_text != "_")
+        [SerializeField] private TMP_Text text;
+        [SerializeField] private Transform value;
+
+
+        public void SetValue(float _value, float maxValue, string _text = "_")
         {
-            this.text.text = _text;
+            value.localScale = new Vector3(_value / maxValue, 1, 1);
+            if (_text != "_")
+            {
+                this.text.text = _text;
+            }
         }
     }
 }

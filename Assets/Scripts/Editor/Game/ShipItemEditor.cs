@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
+using Core.Game;
 using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
+using Slot = Core.Game.Slot;
 
 namespace Game.Editor
 {

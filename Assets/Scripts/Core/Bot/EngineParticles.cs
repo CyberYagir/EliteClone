@@ -1,29 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EngineParticles : MonoBehaviour
+namespace Core.Bot
 {
-    private Transform point;
-    private void Start()
+    public class EngineParticles : MonoBehaviour
     {
-        point = new GameObject("EnginePoint").transform;
-        point.parent = transform.parent;
-        point.localPosition = transform.localPosition;
-
-        transform.parent = null;
-    }
-
-
-    private void Update()
-    {
-        if (point == null)
+        private Transform point;
+        private void Start()
         {
-            Destroy(gameObject);
-            return;
+            point = new GameObject("EnginePoint").transform;
+            point.parent = transform.parent;
+            point.localPosition = transform.localPosition;
+
+            transform.parent = null;
         }
-        transform.position = point.position;
-    }
+
+
+        private void Update()
+        {
+            if (point == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            transform.position = point.position;
+        }
     
+    }
 }

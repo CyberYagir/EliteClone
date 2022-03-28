@@ -1,185 +1,185 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Game;
+using Core.Game;
+using Core.Init;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitHandler
+namespace Core.Garage
 {
-    [System.Serializable]
-    private class GarageItemInfoUIData
+    public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitHandler
     {
-        public Image image;
-        public TMP_Text itemName, itemData, itemValue, itemType;
-        public ItemReplacer replacer;
-        public GameObject binder;
-        public TMP_Dropdown binderKey;
-    }
-    
-    [SerializeField] private GarageItemInfoUIData options;
-    
-    private GarageSlotInfo slotInfo;
-    private int inventoryID;
-    private Item currentItem;
-    private Slot currentSlot;
-    private void Awake()
-    {
-        slotInfo = FindObjectOfType<GarageSlotInfo>();
-        slotInfo.OnChangeItem += UpdateAll;
-    }
-
-    private void Start()
-    {
-        Init(); 
-        options.replacer.OnItemDrops += ItemDropped;
-    }
-
-    public void ItemDropped(Item drop)
-    {
-        if (currentSlot != null)
+        [System.Serializable]
+        private class GarageItemInfoUIData
         {
-            if (options.replacer.ReplaceItem(drop, currentSlot))
+            public Image image;
+            public TMP_Text itemName, itemData, itemValue, itemType;
+            public ItemReplacer replacer;
+            public GameObject binder;
+            public TMP_Dropdown binderKey;
+        }
+    
+        [SerializeField] private GarageItemInfoUIData options;
+    
+        private GarageSlotInfo slotInfo;
+        private int inventoryID;
+        private Item currentItem;
+        private Slot currentSlot;
+        private void Awake()
+        {
+            slotInfo = FindObjectOfType<GarageSlotInfo>();
+            slotInfo.OnChangeItem += UpdateAll;
+        }
+
+        private void Start()
+        {
+            Init(); 
+            options.replacer.OnItemDrops += ItemDropped;
+        }
+
+        public void ItemDropped(Item drop)
+        {
+            if (currentSlot != null)
             {
-                UpdateAll();
+                if (options.replacer.ReplaceItem(drop, currentSlot))
+                {
+                    UpdateAll();
+                }
             }
         }
-    }
 
-    public void Update()
-    {
-        if (DragManager.Instance.dragObject != null)
+        public void Update()
         {
-            var dragged = DragManager.Instance.dragObject.GetData();
-            if (currentSlot != null && currentItem != null && dragged.itemType == currentSlot.slotType)
+            if (DragManager.Instance.dragObject != null)
             {
-                options.replacer.enabled = true;
+                var dragged = DragManager.Instance.dragObject.GetData();
+                if (currentSlot != null && currentItem != null && dragged.itemType == currentSlot.slotType)
+                {
+                    options.replacer.enabled = true;
+                }
+                else
+                {
+                    DisableReplacer();
+                }
             }
             else
             {
                 DisableReplacer();
             }
         }
-        else
+
+        public void DisableReplacer()
         {
-            DisableReplacer();
+            options.replacer.Disable();
+            options.replacer.enabled = false;
         }
-    }
 
-    public void DisableReplacer()
-    {
-        options.replacer.Disable();
-        options.replacer.enabled = false;
-    }
-
-    public void SetItem(Item item)
-    {
-        currentItem = item;
-        currentSlot = null;
-        slotInfo.CloseObject();
-        UpdateAll();
-    }
-
-    public void ManageItem()
-    {
-        ItemReplacer.SetSelected(slotInfo.lastItem.slot);
-        currentItem = slotInfo.lastItem.slot.current;
-        currentSlot = slotInfo.lastItem.slot;
-        UpdateAll();
-    }
-
-    public void BindKey()
-    {
-        if (currentSlot != null)
+        public void SetItem(Item item)
         {
-            if (options.binderKey.value == 0)
+            currentItem = item;
+            currentSlot = null;
+            slotInfo.CloseObject();
+            UpdateAll();
+        }
+
+        public void ManageItem()
+        {
+            ItemReplacer.SetSelected(slotInfo.lastItem.slot);
+            currentItem = slotInfo.lastItem.slot.current;
+            currentSlot = slotInfo.lastItem.slot;
+            UpdateAll();
+        }
+
+        public void BindKey()
+        {
+            if (currentSlot != null)
             {
-                currentSlot.button = -1;
+                if (options.binderKey.value == 0)
+                {
+                    currentSlot.button = -1;
+                }
+                else
+                {
+                    currentSlot.button = int.Parse(options.binderKey.options[options.binderKey.value].text);
+                }
+            }
+        }
+
+        public void LoadBindKey()
+        {
+            if (currentSlot.button == -1)
+            {
+                options.binderKey.value = 0;
             }
             else
             {
-                currentSlot.button = int.Parse(options.binderKey.options[options.binderKey.value].text);
+                options.binderKey.value = options.binderKey.options.FindIndex(x => x.text == currentSlot.button.ToString());
             }
         }
-    }
-
-    public void LoadBindKey()
-    {
-        if (currentSlot.button == -1)
-        {
-            options.binderKey.value = 0;
-        }
-        else
-        {
-            options.binderKey.value = options.binderKey.options.FindIndex(x => x.text == currentSlot.button.ToString());
-        }
-    }
     
-    public void UpdateAll()
-    {
-        if (currentSlot != null)
+        public void UpdateAll()
         {
-            if (currentSlot.current != currentItem)
+            if (currentSlot != null)
             {
-                currentItem = currentSlot.current;
+                if (currentSlot.current != currentItem)
+                {
+                    currentItem = currentSlot.current;
+                }
+
+                LoadBindKey();
+            }
+            options.binder.SetActive(currentSlot != null);
+
+            options.itemName.text = currentItem.itemName;
+            if (slotInfo.lastItem != null)
+            {
+                options.itemName.text += $" [Slot {slotInfo.lastItem.slot.uid}]";
+            }
+            options.itemData.text = "Data: \n";
+            if (currentItem.id.idname != "credit")
+            {
+                options.itemValue.text = currentItem.amount.Value + "/" + currentItem.amount.Max;
+            }
+            else
+            {
+                options.itemValue.text = currentItem.amount.Value.ToString("F2");
             }
 
-            LoadBindKey();
-        }
-        options.binder.SetActive(currentSlot != null);
+            if (currentItem.itemType != ItemType.None)
+            {
+                options.itemType.text = currentItem.itemType.ToString();
+            }
+            else
+            {
+                options.itemType.text = "";
+            }
 
-        options.itemName.text = currentItem.itemName;
-        if (slotInfo.lastItem != null)
-        {
-            options.itemName.text += $" [Slot {slotInfo.lastItem.slot.uid}]";
+            options.image.sprite = currentItem.icon;
+            for (int i = 0; i < currentItem.keysData.Count; i++)
+            {
+                var key = currentItem.keysData[i];
+                if (key.KeyPairType != KeyPairType.MeshType)
+                    options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
+            }
         }
-        options.itemData.text = "Data: \n";
-        if (currentItem.id.idname != "credit")
-        {
-            options.itemValue.text = currentItem.amount.Value + "/" + currentItem.amount.Max;
-        }
-        else
-        {
-            options.itemValue.text = currentItem.amount.Value.ToString("F2");
-        }
-
-        if (currentItem.itemType != ItemType.None)
-        {
-            options.itemType.text = currentItem.itemType.ToString();
-        }
-        else
-        {
-            options.itemType.text = "";
-        }
-
-        options.image.sprite = currentItem.icon;
-        for (int i = 0; i < currentItem.keysData.Count; i++)
-        {
-            var key = currentItem.keysData[i];
-            if (key.KeyPairType != KeyPairType.MeshType)
-                options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
-        }
-    }
     
 
    
     
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (slotInfo.lastItem != null && currentItem == slotInfo.lastItem.slot.current)
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            slotInfo.over = true;
+            if (slotInfo.lastItem != null && currentItem == slotInfo.lastItem.slot.current)
+            {
+                slotInfo.over = true;
+            }
         }
-    }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (slotInfo.lastItem == null || currentItem == slotInfo.lastItem.slot.current)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            slotInfo.over = false;
+            if (slotInfo.lastItem == null || currentItem == slotInfo.lastItem.slot.current)
+            {
+                slotInfo.over = false;
+            }
         }
     }
 }

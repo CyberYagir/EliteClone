@@ -1,25 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LocationUIActivator : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] private GameObject baseUI;
-    void Start()
+    public class LocationUIActivator : MonoBehaviour
     {
-        Player.OnSceneChanged += OnAddEvent;
-    }
+        [SerializeField] private GameObject baseUI;
+        void Start()
+        {
+            Player.Player.OnSceneChanged += OnAddEvent;
+        }
 
-    // private void OnDestroy()
-    // {
-    //     Player.OnSceneChanged -= OnAddEvent;
-    // }
+        // private void OnDestroy()
+        // {
+        //     Player.OnSceneChanged -= OnAddEvent;
+        // }
 
-    public void OnAddEvent()
-    {
-        baseUI.SetActive(World.Scene == Scenes.Location);
-    }
+        public void OnAddEvent()
+        {
+            baseUI.SetActive(World.Scene == Scenes.Location);
+        }
     
+    }
 }
                                                                                                                         

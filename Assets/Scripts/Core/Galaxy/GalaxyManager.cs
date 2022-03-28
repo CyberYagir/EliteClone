@@ -1,61 +1,62 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GalaxyManager : MonoBehaviour
+namespace Core.Galaxy
 {
-    public static GalaxyPoint selectedPoint { get; private set; }
-    public static Event onUpdateSelected = new Event();
-
-    private void Awake()
+    public class GalaxyManager : MonoBehaviour
     {
-        onUpdateSelected = new Event();
-    }
+        public static GalaxyPoint selectedPoint { get; private set; }
+        public static Event onUpdateSelected = new Event();
 
-    private void Start()
-    {
-        Application.targetFrameRate = 120;
-    }
-
-    private void Update()
-    {
-        if (selectedPoint != null)
+        private void Awake()
         {
-            selectedPoint.particles.Play();
+            onUpdateSelected = new Event();
         }
-    }
 
-    
-
-    public static bool Select(GalaxyPoint newSel)
-    {
-        var m_PointerEventData = new PointerEventData(EventSystem.current);
-        m_PointerEventData.position = Input.mousePosition;
-        List<RaycastResult> results = new List<RaycastResult>();
-        FindObjectOfType<GraphicRaycaster>().Raycast(m_PointerEventData, results);
-
-        if (results.Count == 0)
+        private void Start()
         {
-            if (newSel != selectedPoint)
+            Application.targetFrameRate = 120;
+        }
+
+        private void Update()
+        {
+            if (selectedPoint != null)
             {
-                selectedPoint = newSel;
-                onUpdateSelected.Run();
-                return true;
+                selectedPoint.particles.Play();
             }
         }
 
-        return false;
+    
+
+        public static bool Select(GalaxyPoint newSel)
+        {
+            var m_PointerEventData = new PointerEventData(EventSystem.current);
+            m_PointerEventData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            FindObjectOfType<GraphicRaycaster>().Raycast(m_PointerEventData, results);
+
+            if (results.Count == 0)
+            {
+                if (newSel != selectedPoint)
+                {
+                    selectedPoint = newSel;
+                    onUpdateSelected.Run();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public static void JumpToSolarSystem()
+        {
+            PlayerDataManager.CurrentSolarSystem = selectedPoint.solarSystem;
+            World.LoadLevel(Scenes.System);
+        }
+
+
     }
-
-
-    public static void JumpToSolarSystem()
-    {
-        PlayerDataManager.CurrentSolarSystem = selectedPoint.solarSystem;
-        World.LoadLevel(Scenes.System);
-    }
-
-
 }

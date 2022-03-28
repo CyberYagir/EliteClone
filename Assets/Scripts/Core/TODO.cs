@@ -1,20 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TODO : MonoBehaviour
+namespace Core
 {
-    [System.Serializable]
-    public class TODORow
+    public class TODO : MonoBehaviour
     {
-        public enum TaskPriority {
-            None, Middle, High
+        [System.Serializable]
+        public class TODORow
+        {
+            public enum TaskPriority {
+                None, Middle, High
             
+            }
+            public string text;
+            public bool isComplited;
+            public TaskPriority priority;
         }
-        public string text;
-        public bool isComplited;
-        public TaskPriority priority;
-    }
-    public List<TODORow> tasks = new List<TODORow>();
+        public List<TODORow> tasks = new List<TODORow>();
     
+    }
 }

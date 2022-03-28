@@ -1,125 +1,130 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Game;
+using Core.Galaxy;
+using Core.Location;
+using Core.Player;
+using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class DeathDataCollector : MonoBehaviour
+namespace Core.Death
 {
-    public static DeathDataCollector Instance;
-    
-    public PlayerData playerData { get; private set; }
-    public SavedSolarSystem savedSolarSystem;
-    public SaveLoadData saves { get; private set; }
-    
-    public OrbitStation findNearStation { get; private set; }
-    public SolarSystem findNear { get; private set; }
-
-    public Event OnInited = new Event();
-
-    private Cargo cargo;
-    
-    private void Awake()
+    public class DeathDataCollector : MonoBehaviour
     {
-        Instance = this;
-        InitDataCollector();
-    }
+        public static DeathDataCollector Instance;
+    
+        public PlayerData playerData { get; private set; }
+        public SavedSolarSystem savedSolarSystem;
+        public SaveLoadData saves { get; private set; }
+    
+        public OrbitStation findNearStation { get; private set; }
+        public SolarSystem findNear { get; private set; }
 
-    public virtual void InitDataCollector()
-    {
-        if (Player.inst != null)
+        public Event OnInited = new Event();
+
+        private Cargo cargo;
+    
+        private void Awake()
         {
-            Destroy(Player.inst.gameObject);
+            Instance = this;
+            InitDataCollector();
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        saves = GetComponent<SaveLoadData>();
-        playerData = saves.LoadData();
-        
-        SystemLoad();
-        CargoManage();
-
-        
-        OnInited.Invoke();
-    }
-
-    public void SystemLoad()
-    {
-        GalaxyGenerator.LoadSystems();
-        savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
-        findNearStation = null;
-        
-        var solar = GalaxyGenerator.systems[savedSolarSystem.systemName.Split('.')[0]];
-        PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(solar);
-        StartCoroutine(FindStation(solar));
-
-    }
-    
-    public void CargoManage()
-    {
-        cargo = GetComponent<Cargo>();
-        cargo.CustomInit(playerData, playerData.Ship.GetShip());
-
-
-    }
-
-    public IEnumerator FindStation(SolarSystem system)
-    {
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < system.stations.Count; i++)
+        public virtual void InitDataCollector()
         {
-            if (findNearStation == null)
+            if (Player.Player.inst != null)
             {
-                findNear = system;
-                findNearStation = system.stations[i];
+                Destroy(Player.Player.inst.gameObject);
             }
-            yield break;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            saves = GetComponent<SaveLoadData>();
+            playerData = saves.LoadData();
+        
+            SystemLoad();
+            CargoManage();
+
+        
+            OnInited.Invoke();
         }
 
-        for (int i = 0; i < system.sibligs.Count; i++)
+        public void SystemLoad()
         {
-            StartCoroutine(FindStation(GalaxyGenerator.systems[system.sibligs[i].solarName]));
+            GalaxyGenerator.LoadSystems();
+            savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
+            findNearStation = null;
+        
+            var solar = GalaxyGenerator.systems[savedSolarSystem.systemName.Split('.')[0]];
+            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(solar);
+            StartCoroutine(FindStation(solar));
+
         }
-    }
-
-
-    public void Back()
-    {
-        PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
-        LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station, new Dictionary<string, object>());
-        if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
+    
+        public void CargoManage()
         {
-            SolarSystemGenerator.SaveSystem();
+            cargo = GetComponent<Cargo>();
+            cargo.CustomInit(playerData, playerData.Ship.GetShip());
+
+
         }
-        SolarSystemGenerator.Load();
 
-        var newShip = ItemsManager.GetShipItem(0).SaveShip();
-        if (newShip.shipName == playerData.Ship.shipName)
+        public IEnumerator FindStation(SolarSystem system)
         {
-            for (int i = 0; i < playerData.Ship.slots.Count; i++)
+            yield return new WaitForSeconds(1);
+            for (int i = 0; i < system.stations.Count; i++)
             {
-                newShip.slots[i].button = playerData.Ship.slots[i].button;
+                if (findNearStation == null)
+                {
+                    findNear = system;
+                    findNearStation = system.stations[i];
+                }
+                yield break;
+            }
+
+            for (int i = 0; i < system.sibligs.Count; i++)
+            {
+                StartCoroutine(FindStation(GalaxyGenerator.systems[system.sibligs[i].solarName]));
             }
         }
 
-        playerData.Ship = newShip;
-        saves.SetKey("loc_start_on_pit", true, false);
-        saves.SetKey("system_start_on", findNearStation.name, false);
-        playerData.Keys = saves.GetKeys();
 
-        var items = new List<Cargo.ItemData>() { };
-        var credits = cargo.items.Find(x => x.id.idname == "credit");
-
-        if (credits != null)
+        public void Back()
         {
-            items.Add(new Cargo.ItemData() { idName = credits.id.idname, value = credits.amount.value});
-        }
+            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
+            LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station, new Dictionary<string, object>());
+            if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
+            {
+                SolarSystemGenerator.SaveSystem();
+            }
+            SolarSystemGenerator.Load();
+
+            var newShip = ItemsManager.GetShipItem(0).SaveShip();
+            if (newShip.shipName == playerData.Ship.shipName)
+            {
+                for (int i = 0; i < playerData.Ship.slots.Count; i++)
+                {
+                    newShip.slots[i].button = playerData.Ship.slots[i].button;
+                }
+            }
+
+            playerData.Ship = newShip;
+            saves.SetKey("loc_start_on_pit", true, false);
+            saves.SetKey("system_start_on", findNearStation.name, false);
+            playerData.Keys = saves.GetKeys();
+
+            var items = new List<Cargo.ItemData>() { };
+            var credits = cargo.items.Find(x => x.id.idname == "credit");
+
+            if (credits != null)
+            {
+                items.Add(new Cargo.ItemData() { idName = credits.id.idname, value = credits.amount.value});
+            }
         
-        playerData.items = items;
-        saves.SaveData(playerData);
-        World.LoadLevel(Scenes.Garage);
+            playerData.items = items;
+            saves.SaveData(playerData);
+            World.LoadLevel(Scenes.Garage);
+        }
     }
 }

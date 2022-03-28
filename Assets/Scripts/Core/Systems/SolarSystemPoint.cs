@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SolarSystemPoint : MonoBehaviour
+namespace Core.Systems
 {
-    public string systemName;
+    public class SolarSystemPoint : MonoBehaviour
+    {
+        public string systemName;
+    }
 }

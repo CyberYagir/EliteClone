@@ -1,45 +1,47 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core.Game;
+using Core.Player;
+using Core.Systems;
 using DG.Tweening;
-using Game;
 using UnityEngine;
 
-public class WorldDrop : MonoBehaviour
+namespace Core
 {
-    [SerializeField] private Item item;
-    private float cooldown = 0;
-    public void Init(Item dropped, float delay = 0)
+    public class WorldDrop : MonoBehaviour
     {
-        item = dropped;
-        cooldown = delay;
-        GetComponent<BoxCollider>().enabled = true;
-        transform.name = "Storage: " + item.itemName + $" [{item.amount.value}]";
-        GetComponent<ContactObject>().Init(true);
-    }
-
-    private void Update()
-    {
-        cooldown -= Time.deltaTime;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (cooldown <= 0)
+        [SerializeField] private Item item;
+        private float cooldown = 0;
+        public void Init(Item dropped, float delay = 0)
         {
-            if (other.GetComponent<ShipMeshManager>())
-            {
-                if (Player.inst.cargo.AddItem(item, true))
-                {
-                    transform.DOMove(other.transform.position, 0.7f);
-                    transform.DOScale(Vector3.zero, 0.4f);
-                    foreach (var col in GetComponents<Collider>())
-                    {
-                        col.enabled = false;
-                    }
+            item = dropped;
+            cooldown = delay;
+            GetComponent<BoxCollider>().enabled = true;
+            transform.name = "Storage: " + item.itemName + $" [{item.amount.value}]";
+            GetComponent<ContactObject>().Init(true);
+        }
 
-                    Destroy(gameObject, 1);
-                    Destroy(this);
+        private void Update()
+        {
+            cooldown -= Time.deltaTime;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (cooldown <= 0)
+            {
+                if (other.GetComponent<ShipMeshManager>())
+                {
+                    if (Player.Player.inst.cargo.AddItem(item, true))
+                    {
+                        transform.DOMove(other.transform.position, 0.7f);
+                        transform.DOScale(Vector3.zero, 0.4f);
+                        foreach (var col in GetComponents<Collider>())
+                        {
+                            col.enabled = false;
+                        }
+
+                        Destroy(gameObject, 1);
+                        Destroy(this);
+                    }
                 }
             }
         }

@@ -1,69 +1,70 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game;
+using Core.Game;
 using UnityEngine;
 
-public class ItemReplacer : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private GameObject icon, replacer;
-
-    public static Slot selectedSlot = null;
-    public Event<Item> OnItemDrops = new Event<Item>();
-
-    private void Start()
+    public class ItemReplacer : MonoBehaviour
     {
-        DragManager.Instance.OnDrop += OnDrop;
-        UpdateVisible();
-    }
+        [SerializeField] private GameObject icon, replacer;
 
-    public void OnDrop(DragManager.DragDropData data)
-    {
-        if (data.hit == gameObject)
+        public static Slot selectedSlot = null;
+        public Event<Item> OnItemDrops = new Event<Item>();
+
+        private void Start()
         {
-            OnItemDrops.Run(data.item);
+            DragManager.Instance.OnDrop += OnDrop;
+            UpdateVisible();
         }
-    }
 
-    private void Update()
-    {
-        UpdateVisible();
-    }
-
-    public bool ReplaceItem(Item drop, Slot currentSlot)
-    {
-        if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= currentSlot.slotLevel)
+        public void OnDrop(DragManager.DragDropData data)
         {
-            var massWithoutSlot = GarageDataCollect.Instance.ship.CalcMass() - (float)currentSlot.current.GetKeyPair(KeyPairValue.Mass);
-            if (massWithoutSlot + (float) drop.GetKeyPair(KeyPairValue.Mass) <= GarageDataCollect.Instance.ship.data.maxCargoWeight)
+            if (data.hit == gameObject)
             {
-                GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, currentSlot.uid, GarageDataCollect.Instance.cargo);
-                return true;
+                OnItemDrops.Run(data.item);
             }
         }
 
-        return false;
-    }
-    
-    public void UpdateVisible()
-    {
-        icon.SetActive(!DragManager.Instance.dragObject);
-        replacer.SetActive(DragManager.Instance.dragObject);
-    }
+        private void Update()
+        {
+            UpdateVisible();
+        }
 
-    public void Disable()
-    {
-        icon.SetActive(true);
-        replacer.SetActive(false);
-    }
-    
-    public static void SetSelected(Slot sel)
-    {
-        selectedSlot = sel;
-    }
+        public bool ReplaceItem(Item drop, Slot currentSlot)
+        {
+            if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= currentSlot.slotLevel)
+            {
+                var massWithoutSlot = GarageDataCollect.Instance.ship.CalcMass() - (float)currentSlot.current.GetKeyPair(KeyPairValue.Mass);
+                if (massWithoutSlot + (float) drop.GetKeyPair(KeyPairValue.Mass) <= GarageDataCollect.Instance.ship.data.maxCargoWeight)
+                {
+                    GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, currentSlot.uid, GarageDataCollect.Instance.cargo);
+                    return true;
+                }
+            }
 
-    public void ResetSelected()
-    {
-        selectedSlot = null;
+            return false;
+        }
+    
+        public void UpdateVisible()
+        {
+            icon.SetActive(!DragManager.Instance.dragObject);
+            replacer.SetActive(DragManager.Instance.dragObject);
+        }
+
+        public void Disable()
+        {
+            icon.SetActive(true);
+            replacer.SetActive(false);
+        }
+    
+        public static void SetSelected(Slot sel)
+        {
+            selectedSlot = sel;
+        }
+
+        public void ResetSelected()
+        {
+            selectedSlot = null;
+        }
     }
 }

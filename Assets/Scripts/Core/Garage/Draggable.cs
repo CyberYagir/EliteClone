@@ -1,75 +1,78 @@
-﻿using System;
+﻿using Core.Game;
+using Core.Init;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Object = UnityEngine.Object;
 
-public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
+namespace Core.Garage
 {
-    [SerializeField] protected bool over, clicked;
-    protected Sprite dragImage;
-    protected Item data;
-
-    private Vector2 startPos;
-
-
-    public Item GetData() => data;
-
-    private void LateUpdate()
+    public abstract class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
-        if (clicked)
-        {
-            if (Vector2.Distance(startPos, Input.mousePosition) > GetComponent<RectTransform>().sizeDelta.y)
-            {
-                DragManager.Instance.SetDrag(this, dragImage);
-            }
+        [SerializeField] protected bool over, clicked;
+        protected Sprite dragImage;
+        protected Item data;
 
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+        private Vector2 startPos;
+
+
+        public Item GetData() => data;
+
+        private void LateUpdate()
+        {
+            if (clicked)
             {
-                clicked = false;
-                CursorManager.ChangeCursor(CursorManager.CursorType.Normal);
+                if (Vector2.Distance(startPos, Input.mousePosition) > GetComponent<RectTransform>().sizeDelta.y)
+                {
+                    DragManager.Instance.SetDrag(this, dragImage);
+                }
+
+                if (Input.GetKeyUp(KeyCode.Mouse0))
+                {
+                    clicked = false;
+                    CursorManager.ChangeCursor(CursorManager.CursorType.Normal);
+                }
             }
         }
-    }
 
-    public virtual void Init(Sprite sprite, Item data)
-    {
-        dragImage = sprite;
-        this.data = data;
-    }
-    
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        over = true;
-        CursorManager.ChangeCursor(CursorManager.CursorType.Action);
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        over = false;
-    }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (over)
+        public virtual void Init(Sprite sprite, Item data)
         {
-            startPos = Input.mousePosition;
-            clicked = true;
+            dragImage = sprite;
+            this.data = data;
         }
-    }
+    
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            over = true;
+            CursorManager.ChangeCursor(CursorManager.CursorType.Action);
+        }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            over = false;
+        }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (over)
+            {
+                startPos = Input.mousePosition;
+                clicked = true;
+            }
+        }
     
     
-    public virtual void StartDrag(){}
+        public virtual void StartDrag(){}
 
-    public virtual void StopDrag()
-    {
-        over = false;
-        clicked = false;
-    }
+        public virtual void StopDrag()
+        {
+            over = false;
+            clicked = false;
+        }
     
-    public virtual void Clicked(){}
+        public virtual void Clicked(){}
 
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (over && clicked && Vector2.Distance(startPos, Input.mousePosition) < 2)
-            Clicked();
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (over && clicked && Vector2.Distance(startPos, Input.mousePosition) < 2)
+                Clicked();
+        }
     }
 }

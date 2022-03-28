@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PosToPlayerPos : MonoBehaviour
+namespace Core.Systems
 {
-    public void Update()
+    public class PosToPlayerPos : MonoBehaviour
     {
-        transform.position = Player.inst.transform.position;
+        public void Update()
+        {
+            transform.position = Player.Player.inst.transform.position;
+        }
     }
 }

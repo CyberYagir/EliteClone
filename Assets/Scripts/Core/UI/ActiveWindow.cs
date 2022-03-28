@@ -1,37 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ActiveWindow : MonoBehaviour
+namespace Core.UI
 {
-    [SerializeField] private bool open;
-    [SerializeField] private Vector2 show, hide;
-    private RectTransform rect;
-
-    public UnityEvent onOpen;
-    public UnityEvent onClose;
-    private void Start()
+    public class ActiveWindow : MonoBehaviour
     {
-        rect = GetComponent<RectTransform>();
-        rect.anchoredPosition = open ? show : hide;
-    }
+        [SerializeField] private bool open;
+        [SerializeField] private Vector2 show, hide;
+        private RectTransform rect;
 
-    private void Update()
-    {
-        rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, open ? show : hide, Time.deltaTime * 5);
-    }
-
-    public void SetOpenClose(bool state)
-    {
-        if (!state && open)
+        public UnityEvent onOpen;
+        public UnityEvent onClose;
+        private void Start()
         {
-            onClose.Invoke();
-        }else
-        if (state && !open)
-        {
-            onOpen.Invoke();
+            rect = GetComponent<RectTransform>();
+            rect.anchoredPosition = open ? show : hide;
         }
-        open = state;
+
+        private void Update()
+        {
+            rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, open ? show : hide, Time.deltaTime * 5);
+        }
+
+        public void SetOpenClose(bool state)
+        {
+            if (!state && open)
+            {
+                onClose.Invoke();
+            }else
+            if (state && !open)
+            {
+                onOpen.Invoke();
+            }
+            open = state;
+        }
     }
 }

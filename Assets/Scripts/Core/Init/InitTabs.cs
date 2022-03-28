@@ -1,38 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InitTabs : MonoBehaviour
+namespace Core.Init
 {
-    [SerializeField] private int tabIndex;
-    [SerializeField] private GameObject[] tabs;
-    [SerializeField] private ButtonEffect[] buttons;
+    public class InitTabs : MonoBehaviour
+    {
+        [SerializeField] private int tabIndex;
+        [SerializeField] private GameObject[] tabs;
+        [SerializeField] private ButtonEffect[] buttons;
 
-    public Event OnChangeTab = new Event();
+        public Event OnChangeTab = new Event();
     
-    private void Start()
-    {
-        ChangeTab(0);
-    }
-
-    private void FixedUpdate()
-    {
-        for (int i = 0; i < buttons.Length; i++)
+        private void Start()
         {
-            buttons[i].over = i == tabIndex ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+            ChangeTab(0);
         }
-    }
 
-    public void ChangeTab(int index)
-    {
-        tabIndex = index;
-        for (int i = 0; i < tabs.Length; i++)
+        private void FixedUpdate()
         {
-            tabs[i].gameObject.SetActive(i == tabIndex);
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].over = i == tabIndex ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+            }
         }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[index].GetComponent<RectTransform>());
-        OnChangeTab.Run();
+
+        public void ChangeTab(int index)
+        {
+            tabIndex = index;
+            for (int i = 0; i < tabs.Length; i++)
+            {
+                tabs[i].gameObject.SetActive(i == tabIndex);
+            }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[index].GetComponent<RectTransform>());
+            OnChangeTab.Run();
+        }
     }
 }

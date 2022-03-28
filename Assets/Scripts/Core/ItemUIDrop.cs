@@ -1,56 +1,57 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core.UI;
 using TMPro;
 using UnityEngine;
 
-public class ItemUIDrop : MonoBehaviour
+namespace Core
 {
-    [SerializeField] private ItemUI itemUI;
-    [SerializeField] private TMP_Text text;
-    private float val, valSpeedAdd;
-    private float speed;
-    public bool isDrop;
-    private float timer;
-    public void ResetText()
+    public class ItemUIDrop : MonoBehaviour
     {
-        isDrop = false;
-        text.text = "";
-        val = 1;
-    }
-
-    public void StartEdit()
-    {
-        isDrop = true;
-    }
-
-
-    public void EditVal()
-    {
-        timer += Time.deltaTime;
-        if (InputM.GetAxisDown(KAction.TabsHorizontal))
+        [SerializeField] private ItemUI itemUI;
+        [SerializeField] private TMP_Text text;
+        private float val, valSpeedAdd;
+        private float speed;
+        public bool isDrop;
+        private float timer;
+        public void ResetText()
         {
-            speed = 0.15f;
-            valSpeedAdd = 0;
+            isDrop = false;
+            text.text = "";
+            val = 1;
         }
-        if (timer >= speed)
-        {
-            var axis = InputM.GetAxisRaw(KAction.TabsHorizontal);
-            val += InputM.GetAxisRaw(KAction.TabsHorizontal) + (valSpeedAdd * axis);
-            val = Mathf.Clamp(val, 1f, itemUI.item.amount.value);
-            text.text = "-" + val;
-            speed -= Time.deltaTime / 2f;
-            if (speed <= 0)
-            {
-                speed = 0.006f;
-                valSpeedAdd++;
-            }
-            timer = 0;
-        } 
-    }
 
-    public void DropItem()
-    {
-        Player.inst.cargo.DropItem(itemUI.item.id.idname, itemUI.item.amount.value, val);
+        public void StartEdit()
+        {
+            isDrop = true;
+        }
+
+
+        public void EditVal()
+        {
+            timer += Time.deltaTime;
+            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            {
+                speed = 0.15f;
+                valSpeedAdd = 0;
+            }
+            if (timer >= speed)
+            {
+                var axis = InputM.GetAxisRaw(KAction.TabsHorizontal);
+                val += InputM.GetAxisRaw(KAction.TabsHorizontal) + (valSpeedAdd * axis);
+                val = Mathf.Clamp(val, 1f, itemUI.item.amount.value);
+                text.text = "-" + val;
+                speed -= Time.deltaTime / 2f;
+                if (speed <= 0)
+                {
+                    speed = 0.006f;
+                    valSpeedAdd++;
+                }
+                timer = 0;
+            } 
+        }
+
+        public void DropItem()
+        {
+            Player.Player.inst.cargo.DropItem(itemUI.item.id.idname, itemUI.item.amount.value, val);
+        }
     }
 }

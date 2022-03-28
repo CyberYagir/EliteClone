@@ -1,41 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game;
+using Core.Game;
 using UnityEngine;
 
-public class ShipShield : MonoBehaviour
+namespace Core.Player
 {
-    private Ship ship;
-
-    private float withoutAttackTime;
-    private float oldShield;
-    private float shieldAdd;
-    private void Start()
+    public class ShipShield : MonoBehaviour
     {
-        ship = GetComponent<Ship>();
-        oldShield = ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value;
-        shieldAdd = (float)ship.GetShip().slots.Find(x => x.slotType == ItemType.Shields).current.GetKeyPair(KeyPairValue.Value);
-    }
+        private Ship ship;
 
-    private void FixedUpdate()
-    {
-        var shields = ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields);
-        if (shields.value != oldShield)
+        private float withoutAttackTime;
+        private float oldShield;
+        private float shieldAdd;
+        private void Start()
         {
-            withoutAttackTime = 0;
-            oldShield = shields.value;
+            ship = GetComponent<Ship>();
+            oldShield = ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value;
+            shieldAdd = (float)ship.GetShip().slots.Find(x => x.slotType == ItemType.Shields).current.GetKeyPair(KeyPairValue.Value);
         }
-        else
+
+        private void FixedUpdate()
         {
-            withoutAttackTime += Time.fixedDeltaTime;
-        }
-        if (withoutAttackTime > 30)
-        {
-            shields.value += (float)shieldAdd * Time.fixedDeltaTime;
-            shields.Clamp();
-            ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value = shields.value;
-            oldShield = shields.value;
+            var shields = ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields);
+            if (shields.value != oldShield)
+            {
+                withoutAttackTime = 0;
+                oldShield = shields.value;
+            }
+            else
+            {
+                withoutAttackTime += Time.fixedDeltaTime;
+            }
+            if (withoutAttackTime > 30)
+            {
+                shields.value += (float)shieldAdd * Time.fixedDeltaTime;
+                shields.Clamp();
+                ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value = shields.value;
+                oldShield = shields.value;
+            }
         }
     }
 }

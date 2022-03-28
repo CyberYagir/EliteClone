@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InitAnimateEnv : MonoBehaviour
+namespace Core.Init
 {
-    [SerializeField] private float rotateSpeed;
-    void Update()
+    public class InitAnimateEnv : MonoBehaviour
     {
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime, Space.Self);
+        [SerializeField] private float rotateSpeed;
+        void Update()
+        {
+            transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime, Space.Self);
+        }
     }
 }

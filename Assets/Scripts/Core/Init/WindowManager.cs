@@ -1,42 +1,43 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowManager : MonoBehaviour
+namespace Core.Init
 {
-    public static WindowManager Instance;
-
-    [SerializeField] private List<CustomAnimate> customAnimate;
-    private void Awake()
+    public class WindowManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static WindowManager Instance;
 
-    public void FixedUpdate()
-    {
-        foreach (var animations in customAnimate)
+        [SerializeField] private List<CustomAnimate> customAnimate;
+        private void Awake()
         {
-            animations.CustomUpdate();
+            Instance = this;
         }
-    }
 
-    public void OpenWindow(CustomAnimate animate)
-    {
-        foreach (var item in customAnimate)
+        public void FixedUpdate()
         {
-            if (item == animate)
+            foreach (var animations in customAnimate)
             {
-                item.reverse = !item.reverse;
-            }
-            else
-            {
-                item.reverse = true;
+                animations.CustomUpdate();
             }
         }
-    }
-    public void CloseWindow(CustomAnimate animate)
-    {
-        animate.reverse = true;
+
+        public void OpenWindow(CustomAnimate animate)
+        {
+            foreach (var item in customAnimate)
+            {
+                if (item == animate)
+                {
+                    item.reverse = !item.reverse;
+                }
+                else
+                {
+                    item.reverse = true;
+                }
+            }
+        }
+        public void CloseWindow(CustomAnimate animate)
+        {
+            animate.reverse = true;
+        }
     }
 }

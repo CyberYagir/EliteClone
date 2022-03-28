@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.Galaxy;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace Core.Player
 {
-    [SerializeField] private FreeCam freeCam;
-    private void Update()
+    public class CameraController : MonoBehaviour
     {
-        freeCam.enabled = InputM.GetPressButton(KAction.Click);
-        Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
-        Cursor.visible = !freeCam.enabled;
+        [SerializeField] private FreeCam freeCam;
+        private void Update()
+        {
+            freeCam.enabled = InputM.GetPressButton(KAction.Click);
+            Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
+            Cursor.visible = !freeCam.enabled;
+        }
     }
 }

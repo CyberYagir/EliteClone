@@ -1,42 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UI;
+using Core.UI;
 using UnityEngine;
 
-public abstract class ShipyardShipsList: MonoBehaviour{
-
-    [SerializeField] protected Shipyard shipyard;
-
-    public void ChangeShipPreview(GameObject shipShipModel, ShipyardItem shipyardItem)
-    {
-        shipyard.ChangeShipPreview(shipShipModel, shipyardItem);
-    }
-}
-
-public class ShipyardStorage : ShipyardShipsList
+namespace Core.Garage
 {
-    [SerializeField] private Transform holder, item;
+    public abstract class ShipyardShipsList: MonoBehaviour{
 
-    private void Start()
-    {
-        shipyard.OnChange += UpdateShips;
-        UpdateShips();
+        [SerializeField] protected Shipyard shipyard;
+
+        public void ChangeShipPreview(GameObject shipShipModel, ShipyardItem shipyardItem)
+        {
+            shipyard.ChangeShipPreview(shipShipModel, shipyardItem);
+        }
     }
 
-    private void UpdateShips()
+    public class ShipyardStorage : ShipyardShipsList
     {
-        UITweaks.ClearHolder(holder);
-        var ships = GarageDataCollect.Instance.saves.GetStorageShip();
+        [SerializeField] private Transform holder, item;
 
-        foreach (var ship in ships)
+        private void Start()
         {
-            if (ship.Key == GarageDataCollect.Instance.playerLocation.locationName)
+            shipyard.OnChange += UpdateShips;
+            UpdateShips();
+        }
+
+        private void UpdateShips()
+        {
+            UITweaks.ClearHolder(holder);
+            var ships = GarageDataCollect.Instance.saves.GetStorageShip();
+
+            foreach (var ship in ships)
             {
-                for (int i = 0; i < ship.Value.Count; i++)
+                if (ship.Key == GarageDataCollect.Instance.playerLocation.locationName)
                 {
-                    var it = Instantiate(item, holder);
-                    it.GetComponent<ShipyardItem>().Init(ship.Value[i].GetShip(), false);
+                    for (int i = 0; i < ship.Value.Count; i++)
+                    {
+                        var it = Instantiate(item, holder);
+                        it.GetComponent<ShipyardItem>().Init(ship.Value[i].GetShip(), false);
+                    }
                 }
             }
         }

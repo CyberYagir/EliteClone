@@ -1,27 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
-using Quests;
+using Core.Systems;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "", menuName = "Game/QuestsData", order = 1)]
-public class QuestDataItem : ScriptableObject
+namespace Core.Game
 {
-    private static QuestDataItem Instance;
-    public static QuestDataItem GetData()
+    [CreateAssetMenu(fileName = "", menuName = "Game/QuestsData", order = 1)]
+    public class QuestDataItem : ScriptableObject
     {
-        if (Instance == null)
+        private static QuestDataItem Instance;
+        public static QuestDataItem GetData()
         {
-            Instance = Resources.LoadAll<QuestDataItem>("")[0];
+            if (Instance == null)
+            {
+                Instance = Resources.LoadAll<QuestDataItem>("")[0];
+            }
+            return Instance;
         }
-        return Instance;
-    }
     
     
-    [System.Serializable]
-    public class MineTypes
-    {
-        public Quest.QuestType type;
-        public Sprite icon;
+        [System.Serializable]
+        public class MineTypes
+        {
+            public Quest.QuestType type;
+            public Sprite icon;
+        }
+        public List<MineTypes> mineType;
     }
-    public List<MineTypes> mineType;
 }

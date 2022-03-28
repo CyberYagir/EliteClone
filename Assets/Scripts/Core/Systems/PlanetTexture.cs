@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TexturingScript: MonoBehaviour{}
-
-
-public class PlanetTexture : TexturingScript
+namespace Core.Systems
 {
-    [SerializeField] private Renderer[] renderers;
-    public int setted;
-    public void SetTexture(int id)
-    {
-        if (SolarSystemGenerator.planetTextures == null)
-        {
-            SolarSystemGenerator.GetPlanetTextures();
-        }
+    public abstract class TexturingScript: MonoBehaviour{}
 
-        setted = id;
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            renderers[i].material = SolarSystemGenerator.planetTextures.textures[id].material;
-        }
-        
-    }
-    public int GetLen()
+
+    public class PlanetTexture : TexturingScript
     {
-        return SolarSystemGenerator.planetTextures.textures.Count;
+        [SerializeField] private Renderer[] renderers;
+        public int setted;
+        public void SetTexture(int id)
+        {
+            if (SolarSystemGenerator.planetTextures == null)
+            {
+                SolarSystemGenerator.GetPlanetTextures();
+            }
+
+            setted = id;
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                renderers[i].material = SolarSystemGenerator.planetTextures.textures[id].material;
+            }
+        
+        }
+        public int GetLen()
+        {
+            return SolarSystemGenerator.planetTextures.textures.Count;
+        }
     }
 }

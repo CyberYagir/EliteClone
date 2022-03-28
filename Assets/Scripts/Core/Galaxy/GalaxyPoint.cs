@@ -1,36 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GalaxyPoint : MonoBehaviour
+namespace Core.Galaxy
 {
-    public SolarSystem solarSystem;
-    public ParticleSystem particles;
-    [SerializeField] ParticleSystemRenderer particlesRenderer;
-    [SerializeField] Texture2D[] textures;
-    int texture;
-    private void Start()
+    public class GalaxyPoint : MonoBehaviour
     {
-        particles.startColor = solarSystem.stars[0].GetColor();
-        texture = Random.Range(0, textures.Length);
-        particlesRenderer.material.mainTexture = textures[texture];
-    }
-    public Texture2D GetTexture()
-    {
-        return textures[texture];
-    }
-
-    private void OnMouseDown()
-    {
-        if (GalaxyManager.Select(this))
+        public SolarSystem solarSystem;
+        public ParticleSystem particles;
+        [SerializeField] ParticleSystemRenderer particlesRenderer;
+        [SerializeField] Texture2D[] textures;
+        int texture;
+        private void Start()
         {
-            if (LineDrawer.instance.stars.Contains(this))
-            {
-                LineDrawer.instance.stars.Remove(this);
-            }
+            particles.startColor = solarSystem.stars[0].GetColor();
+            texture = Random.Range(0, textures.Length);
+            particlesRenderer.material.mainTexture = textures[texture];
+        }
+        public Texture2D GetTexture()
+        {
+            return textures[texture];
+        }
 
-            LineDrawer.instance.stars.Insert(0, this);
-            LineDrawer.instance.UpdateLines();
+        private void OnMouseDown()
+        {
+            if (GalaxyManager.Select(this))
+            {
+                if (LineDrawer.instance.stars.Contains(this))
+                {
+                    LineDrawer.instance.stars.Remove(this);
+                }
+
+                LineDrawer.instance.stars.Insert(0, this);
+                LineDrawer.instance.UpdateLines();
+            }
         }
     }
 }

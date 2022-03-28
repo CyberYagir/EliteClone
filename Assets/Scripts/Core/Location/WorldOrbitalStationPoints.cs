@@ -1,109 +1,114 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Bot;
+using Core.Systems;
 using DG.Tweening;
 using UnityEngine;
 using Random = System.Random;
 
-public class WorldOrbitalStationPoints : MonoBehaviour
+namespace Core.Location
 {
-    [SerializeField] private List<LandPoint> landPoints;
-    [SerializeField] private GameObject botPrefab;
-    [SerializeField] private List<Transform> botPoints;
-
-    private void Start()
+    public class WorldOrbitalStationPoints : MonoBehaviour
     {
-        Init();
-    }
+        [SerializeField] private List<LandPoint> landPoints;
+        [SerializeField] private GameObject botPrefab;
+        [SerializeField] private List<Transform> botPoints;
 
-    private void Init()
-    {
-        Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
-        for (int i = 0; i < landPoints.Count; i++)
+        private void Start()
         {
-            if (rnd.Next(0, 100) <= 30)
-            { 
-                if (!landPoints[i].isFilled)
-                {
-                    var bot = Instantiate(botPrefab, landPoints[i].point.transform.position, landPoints[i].point.transform.rotation);
-                    bot.transform.parent = transform;
-                    var builder = bot.GetComponent<BotBuilder>();
+            Init();
+        }
+
+        private void Init()
+        {
+            Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
+            for (int i = 0; i < landPoints.Count; i++)
+            {
+                if (rnd.Next(0, 100) <= 30)
+                { 
+                    if (!landPoints[i].isFilled)
+                    {
+                        var bot = Instantiate(botPrefab, landPoints[i].point.transform.position, landPoints[i].point.transform.rotation);
+                        bot.transform.parent = transform;
+                        var builder = bot.GetComponent<BotBuilder>();
                     
-                    builder.GetVisual().SetLights(false);
-                    builder.GetShield().isActive = true;
-                    builder.AddContact(false);
-                    builder.InitBot(rnd);
-                    builder.GetVisual().SetVisual(rnd);
-                    builder.SetBehaviour(BotBuilder.BotState.Land);
-                    builder.SetLandPoint(landPoints[i]);
-                    Destroy(bot.GetComponent<WorldSpaceObject>());
-                    landPoints[i].isFilled = true;
+                        builder.GetVisual().SetLights(false);
+                        builder.GetShield().isActive = true;
+                        builder.AddContact(false);
+                        builder.InitBot(rnd);
+                        builder.GetVisual().SetVisual(rnd);
+                        builder.SetBehaviour(BotBuilder.BotState.Land);
+                        builder.SetLandPoint(landPoints[i]);
+                        Destroy(bot.GetComponent<WorldSpaceObject>());
+                        landPoints[i].isFilled = true;
+                    }
                 }
             }
+            StartCoroutine(BotWaiter());
         }
-        StartCoroutine(BotWaiter());
-    }
 
-    IEnumerator BotWaiter()
-    {
-        while (true)
+        IEnumerator BotWaiter()
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(10, 50));
-            yield return StartCoroutine(SpawnNewBot());
-        }
-    }
-
-    public ref List<LandPoint> GetLandPoint()
-    {
-        return ref landPoints;
-    }
-
-    public IEnumerator SpawnNewBot()
-    {
-        bool isEnded = false;
-        int trys = 0;
-        System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
-        while (!isEnded)
-        {
-            var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];
-
-            if (!landPoint.isFilled)
+            while (true)
             {
-                foreach (var spawns in botPoints)
+                yield return new WaitForSeconds(UnityEngine.Random.Range(10, 50));
+                yield return StartCoroutine(SpawnNewBot());
+            }
+        }
+
+        public ref List<LandPoint> GetLandPoint()
+        {
+            return ref landPoints;
+        }
+
+        public IEnumerator SpawnNewBot()
+        {
+            bool isEnded = false;
+            int trys = 0;
+            System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
+            while (!isEnded)
+            {
+                var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];
+
+                if (!landPoint.isFilled)
                 {
-                    if (Physics.Raycast(spawns.position, landPoint.transform.position - spawns.position, out RaycastHit hit))
+                    foreach (var spawns in botPoints)
                     {
-                        if (hit.transform == landPoint.transform)
+                        if (Physics.Raycast(spawns.position, landPoint.transform.position - spawns.position, out RaycastHit hit))
                         {
-                            var bot = Instantiate(botPrefab, spawns.position, spawns.rotation);
-                            var builder = bot.GetComponent<BotBuilder>();
-                            builder.PlayWarp();
-                            builder.GetShield().isActive = true;
-                            landPoint.isFilled = true;
-                            isEnded = true;
-                            builder.InitBot();
-                            builder.GetVisual().SetVisual(rnd);
-                            builder.AddContact(true);
-                            builder.SetLandPoint(landPoint);
-                            bot.transform.DOMove(landPoint.point.position, 5);
-                            bot.transform.DORotate(landPoint.point.eulerAngles, 5);
-                            builder.SetBehaviour(BotBuilder.BotState.Land);
+                            if (hit.transform == landPoint.transform)
+                            {
+                                var bot = Instantiate(botPrefab, spawns.position, spawns.rotation);
+                                var builder = bot.GetComponent<BotBuilder>();
+                                builder.PlayWarp();
+                                builder.GetShield().isActive = true;
+                                landPoint.isFilled = true;
+                                isEnded = true;
+                                builder.InitBot();
+                                builder.GetVisual().SetVisual(rnd);
+                                builder.AddContact(true);
+                                builder.SetLandPoint(landPoint);
+                                bot.transform.DOMove(landPoint.point.position, 5);
+                                bot.transform.DORotate(landPoint.point.eulerAngles, 5);
+                                builder.SetBehaviour(BotBuilder.BotState.Land);
                             
-                            yield return new WaitForSeconds(6);
-                            builder.GetVisual().SetLights(false);
-                            break;
+                                yield return new WaitForSeconds(6);
+                                builder.GetVisual().SetLights(false);
+                                break;
+                            }
+
+                            yield return null;
                         }
 
                         yield return null;
                     }
-
-                    yield return null;
                 }
-            }
 
-            yield return null;
-            trys++;
-            if (trys > 40) break;
+                yield return null;
+                trys++;
+                if (trys > 40) break;
+            }
         }
     }
 }

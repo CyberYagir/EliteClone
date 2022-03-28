@@ -1,82 +1,84 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GarageTradeItem : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private Image image;
-    [SerializeField] private TMP_Text nameT, costT, haveT;
-    private TradeManager.Offer offer;
-    public void Init(TradeManager.Offer item)
+    public class GarageTradeItem : MonoBehaviour
     {
-        offer = item;
-        image.sprite = item.item.icon;
-        nameT.text = item.item.itemName;
-        costT.text = item.cost.ToString();
-        var count = 0;
-        var allItem = GarageDataCollect.Instance.cargo.items.FindAll(x => x.id.idname == item.item.id.idname);
-        for (int i = 0; i < allItem.Count; i++)
+        [SerializeField] private Image image;
+        [SerializeField] private TMP_Text nameT, costT, haveT;
+        private TradeManager.Offer offer;
+        public void Init(TradeManager.Offer item)
         {
-            count += (int)allItem[i].amount.Value;
-        }
-
-        if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
-        {
-            haveT.text = "INV: " + count;
-        }
-        else
-        {
-            haveT.text = "INV: " + (count/100);
-        }
-    }
-
-    public void BuyOne()
-    {
-        if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
-        {
-            if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost))
+            offer = item;
+            image.sprite = item.item.icon;
+            nameT.text = item.item.itemName;
+            costT.text = item.cost.ToString();
+            var count = 0;
+            var allItem = GarageDataCollect.Instance.cargo.items.FindAll(x => x.id.idname == item.item.id.idname);
+            for (int i = 0; i < allItem.Count; i++)
             {
-                if (!GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone()))
-                {
-                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
-                }
+                count += (int)allItem[i].amount.Value;
+            }
+
+            if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
+            {
+                haveT.text = "INV: " + count;
+            }
+            else
+            {
+                haveT.text = "INV: " + (count/100);
             }
         }
-        else
-        {
-            if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost*100))
-            {
-                var item = offer.item.Clone();
-                item.amount.value = item.amount.Max;
-                if (!GarageDataCollect.Instance.cargo.AddItem(item))
-                {
-                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost*100);
-                }
-            }
-        }
-    }
 
-    public void SellOne()
-    {
-        var allItem = GarageDataCollect.Instance.cargo.items.FindAll(x => x.id.idname == offer.item.id.idname);
-        if (allItem.Count > 0)
+        public void BuyOne()
         {
             if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
             {
-                if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 1, true))
+                if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost))
                 {
-                    GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                    if (!GarageDataCollect.Instance.cargo.AddItem(offer.item.Clone()))
+                    {
+                        GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                    }
                 }
             }
             else
             {
-                if (allItem[0].amount.value == allItem[0].amount.Max)
+                if (GarageDataCollect.Instance.cargo.RemoveCredits(offer.cost*100))
                 {
-                    if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 100, true))
+                    var item = offer.item.Clone();
+                    item.amount.value = item.amount.Max;
+                    if (!GarageDataCollect.Instance.cargo.AddItem(item))
                     {
-                        GarageDataCollect.Instance.cargo.AddCredits(offer.cost * 100);
+                        GarageDataCollect.Instance.cargo.AddCredits(offer.cost*100);
+                    }
+                }
+            }
+        }
+
+        public void SellOne()
+        {
+            var allItem = GarageDataCollect.Instance.cargo.items.FindAll(x => x.id.idname == offer.item.id.idname);
+            if (allItem.Count > 0)
+            {
+                if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
+                {
+                    if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 1, true))
+                    {
+                        GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
+                    }
+                }
+                else
+                {
+                    if (allItem[0].amount.value == allItem[0].amount.Max)
+                    {
+                        if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 100, true))
+                        {
+                            GarageDataCollect.Instance.cargo.AddCredits(offer.cost * 100);
+                        }
                     }
                 }
             }

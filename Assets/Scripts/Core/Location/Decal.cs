@@ -1,19 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Decal : MonoBehaviour
+namespace Core.Location
 {
-    [SerializeField] private new Renderer renderer;
-    [SerializeField] private float opacity = 0.5f;
-    private static readonly int DecalBlend = Shader.PropertyToID("_DecalBlend");
-
-    public void AddToOpacity()
+    public class Decal : MonoBehaviour
     {
-        if (opacity < 1)
+        [SerializeField] private Renderer mesh;
+        [SerializeField] private float opacity = 0.5f;
+        private static readonly int DecalBlend = Shader.PropertyToID("_DecalBlend");
+
+        public void AddToOpacity()
         {
-            opacity += 0.1f;
-            renderer.material.SetFloat(DecalBlend, opacity);
+            if (opacity < 1)
+            {
+                opacity += 0.1f;
+                mesh.material.SetFloat(DecalBlend, opacity);
+            }
         }
     }
 }

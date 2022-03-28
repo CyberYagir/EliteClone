@@ -1,155 +1,157 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core.Game;
+using Core.Location;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+namespace Core.Player.Weapon
 {
-    protected int weaponID;
-    protected Item currentItem;
-    protected GameObject cacheHolder;
-    protected WeaponOptionsItem options;
-    protected new Transform camera;
-
-    private float decalTime;
-    private LayerMask decalLayer;
-    protected LayerMask customMask = -1;
-    protected bool isLayerMaskChanged;
-    protected Vector3 pointOffcet;
-    public void Init(int shootKey, Item current, WeaponOptionsItem opt)
+    public abstract class Weapon : MonoBehaviour
     {
-        currentItem = current;
-        weaponID = shootKey;
-        options = opt;
-        decalLayer = LayerMask.GetMask("Decals");
-        camera = transform;
+        protected int weaponID;
+        protected Item currentItem;
+        protected GameObject cacheHolder;
+        protected WeaponOptionsItem options;
+        protected new Transform camera;
 
-        cacheHolder = SpawnCacheHolder();
+        private float decalTime;
+        private LayerMask decalLayer;
+        protected LayerMask customMask = -1;
+        protected bool isLayerMaskChanged;
+        protected Vector3 pointOffcet;
+        public void Init(int shootKey, Item current, WeaponOptionsItem opt)
+        {
+            currentItem = current;
+            weaponID = shootKey;
+            options = opt;
+            decalLayer = LayerMask.GetMask("Decals");
+            camera = transform;
+
+            cacheHolder = SpawnCacheHolder();
         
-        if (Player.inst != null)
-        {
-            Player.inst.attack.OnShoot += CheckIsCurrentWeapon;
-            Player.inst.attack.OnHold += OnHold;
-            Player.inst.attack.OnHold += OnHoldDown;
-        }
-
-        InitData();
-    }
-
-    public float GetDistance()
-    {
-        return options.maxDistance;
-    }
-    
-    public void SetCustomMask(LayerMask mask)
-    {
-        customMask = mask;
-        isLayerMaskChanged = true;
-    }
-
-    public void SetOffcet(Vector3 newOffcet)
-    {
-        pointOffcet = newOffcet;
-    }
-    public void SetCustomCamera(Transform newCamera)
-    {
-        camera = newCamera;
-    }
-    protected virtual void InitData(){}
-    
-    
-    private GameObject SpawnCacheHolder()
-    {
-        var holder = new GameObject("SlotData");
-        holder.transform.parent = transform;
-        holder.transform.localPosition = Vector3.zero;
-        holder.transform.localEulerAngles = Vector3.zero;
-        holder.layer = LayerMask.NameToLayer("Main");
-        return holder;
-    }
-    
-    public void CheckIsCurrentWeapon(int shootKey)
-    {
-        if (shootKey == weaponID)
-        {
-            Attack();
-        }
-    }
-
-    public void OnHold(int shootKey)
-    {
-        decalTime += Time.deltaTime;
-        if (shootKey == weaponID)
-        {
-            NotAttack();
-        }
-    } 
-    public void OnHoldDown(int shootKey)
-    {
-        if (shootKey == weaponID)
-        {
-            AttackDown();
-        }
-    }
-    
-
-    protected virtual void NotAttack()
-    {
-        
-    }
-    protected virtual void AttackDown()
-    {
-    }
-    protected virtual void Attack()
-    {
-    }
-
-    protected virtual void Reload()
-    {
-        
-    }
-
-    protected virtual void ClearData()
-    {
-        
-    }
-
-    protected Event<RaycastHit> OnSpawnDecal = new Event<RaycastHit>();
-    protected void SpawnDecal(GameObject decal, Vector3 start, Vector3 dir, RaycastHit initHit)
-    {
-        if (decalTime >= 1/5f)
-        {
-            if (initHit.transform.GetComponent<WorldDrop>() == null)
+            if (Player.inst != null)
             {
-                bool addToDecal = false;
-                if (Physics.Raycast(start, dir, out RaycastHit hit, options.maxDistance, decalLayer))
+                Player.inst.attack.OnShoot += CheckIsCurrentWeapon;
+                Player.inst.attack.OnHold += OnHold;
+                Player.inst.attack.OnHold += OnHoldDown;
+            }
+
+            InitData();
+        }
+
+        public float GetDistance()
+        {
+            return options.maxDistance;
+        }
+    
+        public void SetCustomMask(LayerMask mask)
+        {
+            customMask = mask;
+            isLayerMaskChanged = true;
+        }
+
+        public void SetOffcet(Vector3 newOffcet)
+        {
+            pointOffcet = newOffcet;
+        }
+        public void SetCustomCamera(Transform newCamera)
+        {
+            camera = newCamera;
+        }
+        protected virtual void InitData(){}
+    
+    
+        private GameObject SpawnCacheHolder()
+        {
+            var holder = new GameObject("SlotData");
+            holder.transform.parent = transform;
+            holder.transform.localPosition = Vector3.zero;
+            holder.transform.localEulerAngles = Vector3.zero;
+            holder.layer = LayerMask.NameToLayer("Main");
+            return holder;
+        }
+    
+        public void CheckIsCurrentWeapon(int shootKey)
+        {
+            if (shootKey == weaponID)
+            {
+                Attack();
+            }
+        }
+
+        public void OnHold(int shootKey)
+        {
+            decalTime += Time.deltaTime;
+            if (shootKey == weaponID)
+            {
+                NotAttack();
+            }
+        } 
+        public void OnHoldDown(int shootKey)
+        {
+            if (shootKey == weaponID)
+            {
+                AttackDown();
+            }
+        }
+    
+
+        protected virtual void NotAttack()
+        {
+        
+        }
+        protected virtual void AttackDown()
+        {
+        }
+        protected virtual void Attack()
+        {
+        }
+
+        protected virtual void Reload()
+        {
+        
+        }
+
+        protected virtual void ClearData()
+        {
+        
+        }
+
+        protected Event<RaycastHit> OnSpawnDecal = new Event<RaycastHit>();
+        protected void SpawnDecal(GameObject decal, Vector3 start, Vector3 dir, RaycastHit initHit)
+        {
+            if (decalTime >= 1/5f)
+            {
+                if (initHit.transform.GetComponent<WorldDrop>() == null)
                 {
-                    var findedDecal = hit.collider.GetComponent<Decal>();
-                    if (findedDecal)
+                    bool addToDecal = false;
+                    if (Physics.Raycast(start, dir, out RaycastHit hit, options.maxDistance, decalLayer))
                     {
-                        findedDecal.AddToOpacity();
+                        var findedDecal = hit.collider.GetComponent<Decal>();
+                        if (findedDecal)
+                        {
+                            findedDecal.AddToOpacity();
+                            OnSpawnDecal.Run(initHit);
+                            addToDecal = true;
+                        }
+                    }
+
+                    if (!addToDecal)
+                    {
+                        var d = Instantiate(decal, initHit.point, Quaternion.identity);
+                        d.transform.rotation = Quaternion.FromToRotation(Vector3.forward, initHit.normal);
+                        d.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+                        d.transform.parent = initHit.transform;
                         OnSpawnDecal.Run(initHit);
-                        addToDecal = true;
                     }
                 }
 
-                if (!addToDecal)
-                {
-                    var d = Instantiate(decal, initHit.point, Quaternion.identity);
-                    d.transform.rotation = Quaternion.FromToRotation(Vector3.forward, initHit.normal);
-                    d.transform.localRotation *= Quaternion.Euler(90, 0, 0);
-                    d.transform.parent = initHit.transform;
-                    OnSpawnDecal.Run(initHit);
-                }
+                decalTime = 0;
             }
-
-            decalTime = 0;
         }
-    }
     
-    private void OnDestroy()
-    {
-        Destroy(cacheHolder.gameObject);
-        ClearData();
+        private void OnDestroy()
+        {
+            Destroy(cacheHolder.gameObject);
+            ClearData();
+        }
     }
 }

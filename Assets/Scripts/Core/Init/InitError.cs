@@ -1,25 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class InitError : MonoBehaviour
+namespace Core.Init
 {
-    [SerializeField] private CustomAnimate animate;
-    [SerializeField] private TMP_Text text;
-    private void Start()
+    public class InitError : MonoBehaviour
     {
-        if (PlayerPrefs.HasKey("Error"))
+        [SerializeField] private CustomAnimate animate;
+        [SerializeField] private TMP_Text text;
+        private void Start()
         {
-            text.text = "Error: " + PlayerPrefs.GetString("Error");
-            WindowManager.Instance.OpenWindow(animate);
-            PlayerPrefs.DeleteKey("Error");
+            if (PlayerPrefs.HasKey("Error"))
+            {
+                text.text = "Error: " + PlayerPrefs.GetString("Error");
+                WindowManager.Instance.OpenWindow(animate);
+                PlayerPrefs.DeleteKey("Error");
+            }
         }
-    }
 
-    public void Close()
-    {
-        animate.reverse = true;
+        public void Close()
+        {
+            animate.reverse = true;
+        }
     }
 }

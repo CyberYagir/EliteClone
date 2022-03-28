@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GarageShipRotator : MonoBehaviour
+namespace Core.Garage
 {
-    [SerializeField] private float speed = 5, gravity = 1;
-    private float velocity;
-    void Update()
+    public class GarageShipRotator : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        [SerializeField] private float speed = 5, gravity = 1;
+        private float velocity;
+        void Update()
         {
-            velocity = 0;
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                velocity = 0;
+            }
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                velocity -= Input.GetAxis("Mouse X") * speed * Time.deltaTime;
+            }
+            transform.Rotate(Vector3.up * velocity);
+            velocity = Mathf.Lerp(velocity, 0, gravity * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            velocity -= Input.GetAxis("Mouse X") * speed * Time.deltaTime;
-        }
-        transform.Rotate(Vector3.up * velocity);
-        velocity = Mathf.Lerp(velocity, 0, gravity * Time.deltaTime);
     }
 }

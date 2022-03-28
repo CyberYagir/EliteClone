@@ -3,38 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public abstract class GalaxyObject : MonoBehaviour
+namespace Core.Systems
 {
-    public Sprite icon;
-}
-
-public class WorldSpaceObject : GalaxyObject
-{
-    public bool isVisible;    
-    [HideInInspector]
-    public string dist;
-    private Transform camera;
-    private void Start()
+    public abstract class GalaxyObject : MonoBehaviour
     {
-        camera = Camera.main.transform;
+        public Sprite icon;
     }
 
-    private void Update()
+    public class WorldSpaceObject : GalaxyObject
     {
-        UpdateVisibility();
-    }
-
-    public void UpdateVisibility()
-    {
-        isVisible =  Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
-    }
-
-    private void OnDestroy()
-    {
-        if (SolarSystemGenerator.objects != null)
+        public bool isVisible;    
+        [HideInInspector]
+        public string dist;
+        private Transform camera;
+        private void Start()
         {
-            SolarSystemGenerator.objects.Remove(this);
+            camera = Camera.main.transform;
+        }
+
+        private void Update()
+        {
+            UpdateVisibility();
+        }
+
+        public void UpdateVisibility()
+        {
+            isVisible =  Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
+        }
+
+        private void OnDestroy()
+        {
+            if (SolarSystemGenerator.objects != null)
+            {
+                SolarSystemGenerator.objects.Remove(this);
+            }
         }
     }
 }

@@ -1,113 +1,114 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core.Location;
 using DG.Tweening;
 using UnityEngine;
 
-public class LandManager : MonoBehaviour
+namespace Core.Player
 {
-    public bool isLanded;
-    private Vector3 landPoint;
-    private Quaternion landRot;
-
-    public Event OnLand = new Event();
-    public Event OnUnLand = new Event();
-
-    private void Awake()
+    public class LandManager : MonoBehaviour
     {
-        OnLand = new Event();
-        OnUnLand = new Event();
-    }
+        public bool isLanded;
+        private Vector3 landPoint;
+        private Quaternion landRot;
 
-    public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
-    {
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
+        public Event OnLand = new Event();
+        public Event OnUnLand = new Event();
+
+        private void Awake()
         {
-            if (hit.transform.GetComponent<LandPoint>())
+            OnLand = new Event();
+            OnUnLand = new Event();
+        }
+
+        public void SetLand(bool land, Vector3 point = default, Quaternion rot = default)
+        {
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
             {
-                hit.transform.GetComponent<LandPoint>().isFilled = land;
+                if (hit.transform.GetComponent<LandPoint>())
+                {
+                    hit.transform.GetComponent<LandPoint>().isFilled = land;
+                }
             }
-        }
 
-        landPoint = point;
-        landRot = rot;
-        isLanded = land;
-        var rb = Player.inst.GetComponent<Rigidbody>();
-        rb.isKinematic = isLanded;
+            landPoint = point;
+            landRot = rot;
+            isLanded = land;
+            var rb = Player.inst.GetComponent<Rigidbody>();
+            rb.isKinematic = isLanded;
 
-        if (isLanded)
-        {
-            Player.inst.StopAxis();
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            OnLand.Run();
-        }
-        else
-        {
-            transform.DOMove(transform.position + (transform.up * 10), 1f);
-            OnUnLand.Run();
-        }
-    }
-
-    public void SetLand(LandLocation landLocation)
-    {
-        if (landLocation != null)
-        {
-            SetLand(true, landLocation.pos, landLocation.rot);
-        }
-    }
-
-    public LandLocation GetLand()
-    {
-        if (isLanded)
-        {
-            return new LandLocation() {pos = landPoint, rot = landRot};
-        }
-        else
-        {
-            return null;
-        }
-    }
-    
-    private void Update()
-    {
-        Player.inst.control.enabled = !isLanded;
-        if (World.Scene == Scenes.Location)
-        {
-            if (!isLanded)
+            if (isLanded)
             {
-                CheckLand();
+                Player.inst.StopAxis();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                OnLand.Run();
             }
             else
             {
-                if (InputM.GetAxisDown(KAction.JumpIn))
-                {
-                    SetLand(false);
-                }
-
-                LandAnimation();
+                transform.DOMove(transform.position + (transform.up * 10), 1f);
+                OnUnLand.Run();
             }
         }
-    }
 
-    public void LandAnimation()
-    {
-        transform.position = Vector3.Lerp(transform.position, landPoint, Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, landRot, Time.deltaTime);
-    }
-    public void CheckLand()
-    {
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
+        public void SetLand(LandLocation landLocation)
         {
-            var land = hit.transform.GetComponent<LandPoint>();
-            if (land)
+            if (landLocation != null)
             {
-                if (!land.isFilled)
+                SetLand(true, landLocation.pos, landLocation.rot);
+            }
+        }
+
+        public LandLocation GetLand()
+        {
+            if (isLanded)
+            {
+                return new LandLocation() {pos = landPoint, rot = landRot};
+            }
+            else
+            {
+                return null;
+            }
+        }
+    
+        private void Update()
+        {
+            Player.inst.control.enabled = !isLanded;
+            if (World.Scene == Scenes.Location)
+            {
+                if (!isLanded)
                 {
-                    WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
+                    CheckLand();
+                }
+                else
+                {
                     if (InputM.GetAxisDown(KAction.JumpIn))
                     {
-                        SetLand(true, land.point.position, land.point.rotation);
+                        SetLand(false);
+                    }
+
+                    LandAnimation();
+                }
+            }
+        }
+
+        public void LandAnimation()
+        {
+            transform.position = Vector3.Lerp(transform.position, landPoint, Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, landRot, Time.deltaTime);
+        }
+        public void CheckLand()
+        {
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 10))
+            {
+                var land = hit.transform.GetComponent<LandPoint>();
+                if (land)
+                {
+                    if (!land.isFilled)
+                    {
+                        WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
+                        if (InputM.GetAxisDown(KAction.JumpIn))
+                        {
+                            SetLand(true, land.point.position, land.point.rotation);
+                        }
                     }
                 }
             }

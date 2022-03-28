@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Core.Game;
+using Core.Player;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,31 +1,33 @@
-using System.Collections;
 using System.Collections.Generic;
-using Game;
+using Core.Game;
 using UnityEngine;
 
-public class ShipMeshManager : MonoBehaviour
+namespace Core.Player
 {
-    public List<ShipMeshSlot> slots;
-    private ItemShip currentShip;
-    public void InitSlots(ItemShip itemShip)
+    public class ShipMeshManager : MonoBehaviour
     {
-        for (int i = 0; i < itemShip.slots.Count; i++)
+        public List<ShipMeshSlot> slots;
+        private ItemShip currentShip;
+        public void InitSlots(ItemShip itemShip)
         {
-            var findWithID = slots.Find(x => x.slotID == itemShip.slots[i].uid);
-            if (findWithID != null)
+            for (int i = 0; i < itemShip.slots.Count; i++)
             {
-                findWithID.SetMesh(itemShip.slots[i]);
+                var findWithID = slots.Find(x => x.slotID == itemShip.slots[i].uid);
+                if (findWithID != null)
+                {
+                    findWithID.SetMesh(itemShip.slots[i]);
+                }
             }
         }
-    }
 
-    public void SetCurrentShip(ItemShip itemShip)
-    {
-        currentShip = itemShip;
-    }
+        public void SetCurrentShip(ItemShip itemShip)
+        {
+            currentShip = itemShip;
+        }
     
-    public void SetInitSlotsWithoutArgs()
-    {
-        InitSlots(currentShip);
+        public void SetInitSlotsWithoutArgs()
+        {
+            InitSlots(currentShip);
+        }
     }
 }

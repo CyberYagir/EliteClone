@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class ShieldActivator : MonoBehaviour
+namespace Core.Player
 {
-    [SerializeField] private Transform shield;
-
-    private bool active;
-
-    public bool isActive
+    public class ShieldActivator : MonoBehaviour
     {
-        set
+        [SerializeField] private Transform shield;
+
+        private bool active;
+
+        public bool isActive
         {
-            active = value;
-            shield.DOScale(active ? Vector3.one : Vector3.zero, 0.5f);
+            set
+            {
+                active = value;
+                shield.DOScale(active ? Vector3.one : Vector3.zero, 0.5f);
+            }
+            get => active;
         }
-        get => active;
     }
 }
