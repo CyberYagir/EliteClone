@@ -18,8 +18,13 @@ public class UpDownUI : MonoBehaviour
     {
         if (gameObject.active && itemsCount != 0)
         {
+            
             if (InputM.GetAxisDown(KAction.TabsVertical))
             {
+                if (selectedIndex == -1)
+                {
+                    selectedIndex = 0;
+                }
                 selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
                 if (selectedIndex < 0) selectedIndex = itemsCount - 1;
                 if (selectedIndex >= itemsCount) selectedIndex = 0;
@@ -28,6 +33,11 @@ public class UpDownUI : MonoBehaviour
 
             if (InputM.GetAxisDown(KAction.Select))
             {
+                if (selectedIndex == -1)
+                {
+                    selectedIndex = 0;
+                }
+
                 if (itemsCount <= selectedIndex)
                 {
                     selectedIndex = itemsCount - 1;

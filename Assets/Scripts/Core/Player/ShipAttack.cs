@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShipAttack : MonoBehaviour
@@ -7,7 +9,9 @@ public class ShipAttack : MonoBehaviour
     public Event<int> OnShoot = new Event<int>();
     public Event<int> OnHold = new Event<int>();
     public Event<int> OnShootDown = new Event<int>();
-    void Update()
+
+    
+    void LateUpdate()
     {
         if (Player.inst != null && !Player.inst.land.isLanded)
         {
@@ -19,7 +23,6 @@ public class ShipAttack : MonoBehaviour
                     {
                         OnShootDown.Run(i);
                     }
-
                     OnShoot.Run(i);
 
                 }

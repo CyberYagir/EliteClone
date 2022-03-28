@@ -18,21 +18,13 @@ public class BotBuilder : MonoBehaviour, IDamagable
     [SerializeField] private Ship ship;
     [SerializeField] private GameObject explodePrefab, dropPrefab;
     private Damager damager;
-    private void Start()
+
+    private void Awake()
     {
         damager = GetComponent<Damager>();
-        if (World.Scene == Scenes.Location)
-        {
-            attackControl.enabled = false;
-            landControl.enabled = true;
-        }
-        else
-        {
-            attackControl.enabled = true;
-            landControl.enabled = false;
-        }
-        
     }
+
+    public Damager GetDamager() => damager;
 
     public void SetShip(ItemShip shipData)
     {
@@ -160,5 +152,11 @@ public class BotBuilder : MonoBehaviour, IDamagable
     public void SetLandPoint(LandPoint landPoint)
     {
         landControl.SetLandPoint(landPoint);
+    }
+
+    public void AttackPlayer()
+    {
+        attackControl.SetTarget(Player.inst.transform);
+        SetBehaviour(BotState.Attack);
     }
 }

@@ -14,6 +14,7 @@ public class Damager : MonoBehaviour
     public void TakeDamage(ref float health, float damage)
     {
         health -= damage;
+        OnDamaged.Invoke();
     }
 
 }

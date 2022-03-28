@@ -9,7 +9,7 @@ public abstract class Weapon : MonoBehaviour
     protected Item currentItem;
     protected GameObject cacheHolder;
     protected WeaponOptionsItem options;
-    protected Transform camera;
+    protected new Transform camera;
 
     private float decalTime;
     private LayerMask decalLayer;

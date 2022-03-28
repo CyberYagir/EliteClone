@@ -17,7 +17,17 @@ public class ShipMeshSlotRotate : MonoBehaviour
         weapon = GetComponent<Weapon>();
     }
 
-    private void LateUpdate()
+    private void Update()
+    {
+        Rotate();
+    }
+
+    public void LateUpdate()
+    {
+        Rotate();
+    }
+
+    public void Rotate()
     {
         if (Player.inst)
         {

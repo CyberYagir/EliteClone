@@ -165,12 +165,14 @@ public class LocationGenerator : MonoBehaviour
     public GameObject MoveWorld()
     {
         var location = GameObject.Find(CurrentSave.locationName);
-        foreach (Transform item in transform)
+        if (location != null)
         {
-            item.position -= location.transform.position;
+            foreach (Transform item in transform)
+            {
+                item.position -= location.transform.position;
+            }
+            location.transform.parent = null;
         }
-
-        location.transform.parent = null;
 
         return location;
     }

@@ -54,7 +54,7 @@ public class ModDataObjectEditor : Editor
     {
         EditorGUI.BeginChangeCheck();
         {
-            currentIcon = (Texture2D) EditorGUILayout.ObjectField("Mod Icon: ", currentIcon, typeof(Texture2D));
+            currentIcon = (Texture2D) EditorGUILayout.ObjectField("Mod Icon: ", currentIcon, typeof(Texture2D), allowSceneObjects: false);
         }
         if (EditorGUI.EndChangeCheck())
         {

@@ -41,6 +41,11 @@ public class LocationBotPoint : MonoBehaviour
     public void CreateBots()
     {
         var mainBot = SpawnMainBot();
+        BotBuilder mainBuilder = null;
+        if (mainBot)
+        {
+            mainBuilder = mainBot.GetComponent<BotBuilder>();
+        }
         var rnd = new Random(uniqID);
         if (mainBot != null)
         {
@@ -48,15 +53,27 @@ public class LocationBotPoint : MonoBehaviour
             {
                 for (int i = 0; i < rnd.Next(2, 5); i++)
                 {
-                    SpawnRandomBot(2, rnd);
+                    var bot = SpawnRandomBot(2, rnd).GetComponent<BotBuilder>();
+                    bot.GetDamager().OnDamaged += mainBuilder.AttackPlayer;
                 }
             }
 
             if (type == LocationBotType.OCG)
             {
+                List<BotBuilder> bots = new List<BotBuilder>();
+                bots.Add(mainBuilder);
                 for (int i = 0; i < rnd.Next(1, 8); i++)
                 {
-                    SpawnRandomBot(rnd.Next(0, 2), rnd);
+                    var bot = SpawnRandomBot(rnd.Next(0, 2), rnd).GetComponent<BotBuilder>();
+                    bots.Add(bot);
+                }
+
+                for (int i = 0; i < bots.Count; i++)
+                {
+                    for (int j = 0; j < bots.Count; j++)
+                    {
+                        bots[i].GetDamager().OnDamaged += bots[j].AttackPlayer;
+                    }
                 }
             }
         }
@@ -70,7 +87,6 @@ public class LocationBotPoint : MonoBehaviour
         bot.InitBot(rnd);
         bot.GetVisual().SetVisual(visuals);
         bot.SetName();
-
         return bot.gameObject;
     }
     

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParticlesFromSpeed : MonoBehaviour
 {
-    private ParticleSystem particleSystem;
+    private new ParticleSystem particleSystem;
     private void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class WorldSpaceObjectCanvas : MonoBehaviour
 {
     [SerializeField] private GameObject pointPrefab, contactPrefab;
+    [SerializeField] private TMP_Text contactText;
     private List<DisplaySpaceObject> spaceObjects = new List<DisplaySpaceObject>();
     
     public static WorldSpaceObjectCanvas Instance;
@@ -103,14 +104,17 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
         var pointer = new PointerEventData(EventSystem.current);
         if (SetActiveObjects())
         {
-            if (Player.inst.GetTarget() != null && Player.inst.GetTarget().TryGetComponent(out ContactObject contact))
+            var target = Player.inst.GetTarget();
+            if (target != null && target.TryGetComponent(out ContactObject contact))
             {
-                var angle = Vector3.Angle(camera.transform.position - transform.position, camera.transform.forward);
+                var angle = Vector3.Angle(target.transform.position - camera.transform.position, camera.transform.forward);
                 if (angle < 60)
                 {
                     contactPrefab.SetActive(true);
-                    contactPrefab.transform.position = (Vector2) camera.WorldToScreenPoint(Player.inst.GetTarget().transform.position, Camera.MonoOrStereoscopicEye.Mono);
-                    contactPrefab.transform.position = new Vector3(contactPrefab.transform.position.x, contactPrefab.transform.position.y, 0);
+                    var position = target.transform.position;
+                    var pos = (Vector2) camera.WorldToScreenPoint(position, Camera.MonoOrStereoscopicEye.Mono);
+                    contactPrefab.transform.position = new Vector3(pos.x, pos.y, 0);
+                    contactText.text = target.transform.name + $"[{Vector3.Distance(position, Player.inst.transform.position).ToString("F5")}]";
                 }
                 else
                 {
@@ -122,7 +126,6 @@ public class WorldSpaceObjectCanvas : MonoBehaviour
                 contactPrefab.SetActive(false);
             }
             
-            var target = Player.inst.GetTarget();
             foreach (var wsp in spaceObjects)
             {
                 if (wsp.Obj.isVisible)

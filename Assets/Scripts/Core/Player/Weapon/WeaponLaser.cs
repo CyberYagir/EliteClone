@@ -89,6 +89,7 @@ public class WeaponLaser : Weapon
                 hitted = true;
             }
         }
+        
         if (options.maxDistance >= lastHit.distance)
         {
             if (line.enabled)

@@ -95,7 +95,17 @@ public class DeathDataCollector : MonoBehaviour
             SolarSystemGenerator.SaveSystem();
         }
         SolarSystemGenerator.Load();
-        playerData.Ship = ItemsManager.GetShipItem(0).SaveShip();
+
+        var newShip = ItemsManager.GetShipItem(0).SaveShip();
+        if (newShip.shipName == playerData.Ship.shipName)
+        {
+            for (int i = 0; i < playerData.Ship.slots.Count; i++)
+            {
+                newShip.slots[i].button = playerData.Ship.slots[i].button;
+            }
+        }
+
+        playerData.Ship = newShip;
         saves.SetKey("loc_start_on_pit", true, false);
         saves.SetKey("system_start_on", findNearStation.name, false);
         playerData.Keys = saves.GetKeys();

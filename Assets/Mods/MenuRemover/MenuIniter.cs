@@ -6,9 +6,8 @@ namespace MenuRemover
 {
     public class MenuIniter : ModInit
     {
-        public void Start()
+        public override void Start()
         {
-            
             Destroy(GameObject.Find("Env").gameObject);
         }
     }

@@ -225,7 +225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -406,7 +405,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.6039216, b: 1, a: 1}
   noneColor: {r: 1, g: 0.5176471, b: 0, a: 1}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1524,7 +1522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -1767,7 +1764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0.000091552734}
+  m_AnchoredPosition: {x: -8, y: -0.85717773}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3353435076824703547
@@ -1909,7 +1906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0}
+  m_AnchoredPosition: {x: -8, y: -3.8140564}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5933543484969003683
@@ -2389,7 +2386,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4859107748629430011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,7 +2845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: -0.000061035156}
+  m_AnchoredPosition: {x: -8, y: -0.99334717}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &4859107749374313798
@@ -3147,7 +3144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: 0
-  notPPUM: 0
   overColor: {r: 0, g: 0.67058825, b: 1, a: 0.60784316}
   noneColor: {r: 1, g: 0.5058824, b: 0, a: 0.4745098}
   selectedColor: {r: 0.43529412, g: 1, b: 0, a: 0.56078434}
@@ -4000,7 +3996,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8, y: 0.000091552734}
+  m_AnchoredPosition: {x: -8, y: -1.569519}
   m_SizeDelta: {x: 1005.23114, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1027141013950773319

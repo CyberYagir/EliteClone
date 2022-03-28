@@ -132,9 +132,9 @@ public class Player : MonoBehaviour, IDamagable
     }
     
     
-    public GalaxyObject GetTarget()
+    public  GalaxyObject GetTarget()
     {
-        return targets.target;
+        return  targets.target;
     }
     public void SetTarget(GalaxyObject target)
     {
