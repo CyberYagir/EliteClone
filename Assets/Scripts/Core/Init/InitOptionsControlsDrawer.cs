@@ -8,7 +8,7 @@ namespace Core.Init
     {
         [SerializeField] private GameObject item, holder;
 
-        public Axis chageAxis;
+        public InputM.Axis chageAxis;
         public bool plus;
         public bool isChange;
     
@@ -30,7 +30,7 @@ namespace Core.Init
             }
         }
 
-        public void ChangeAxis(Axis axis, bool isplus)
+        public void ChangeAxis(InputM.Axis axis, bool isplus)
         {
             if (!isChange)
             {

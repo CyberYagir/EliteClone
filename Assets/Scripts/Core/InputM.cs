@@ -5,21 +5,23 @@ using UnityEngine;
 namespace Core
 {
     public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop}
-    [System.Serializable]
-    public class Axis
-    {
-        public string name;
-        public KAction action;
-        public KeyCode plus, minus;
-        public float value;
-        public float transitionSpeed = 5;
-        public int rawvalue;
-        public bool down;
-        public bool up;
-    }
 
     public class InputM : MonoBehaviour
     {
+        [System.Serializable]
+        public class Axis
+        {
+            public string name;
+            public KAction action;
+            public KeyCode plus, minus;
+            public float value;
+            public float transitionSpeed = 5;
+            public int rawvalue;
+            public bool down;
+            public bool up;
+        }
+        
+        
         public List<Axis> axes;
         public static Dictionary<KAction, Axis> keys = new Dictionary<KAction, Axis>();
 

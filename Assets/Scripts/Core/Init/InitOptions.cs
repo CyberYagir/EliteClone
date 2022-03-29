@@ -12,7 +12,7 @@ namespace Core.Init
     {
         public class PlayerConfig
         {
-            public List<Axis> axes = new List<Axis>();
+            public List<InputM.Axis> axes = new List<InputM.Axis>();
             public int quality = 0;
             public bool showFPS = false;
 
