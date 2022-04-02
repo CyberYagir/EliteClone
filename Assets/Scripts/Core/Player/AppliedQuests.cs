@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Location;
 using Core.Systems;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ namespace Core.Player
 {
     public class AppliedQuests : MonoBehaviour
     {
-    
         public static AppliedQuests Instance;
         public List<Quest> quests { get; private set; } = new List<Quest>();
         public Event OnChangeQuests = new Event();
@@ -54,21 +54,24 @@ namespace Core.Player
             }
         }
 
-        public void FinishQuest(int questID)
+        public bool FinishQuest(int questID)
         {
             var quest = quests.Find(x => x.questID == questID);
             if (quest != null)
             {
-                quest.questState = Quest.QuestComplited.Rewarded;
+                quest.questState = Quest.QuestComplited.Rewarded; 
                 quest.quester.Reset();
+                return true;
             }
 
             OnChangeQuests.Run();
+
+            return false;
         }
     
         public void ApplyQuest(Quest quest)
         {
-            if (quest.questType == Quest.QuestType.Transfer)
+            if (quest.IsTypeQuest("Transfer"))
             {
                 if (Player.inst.cargo.AddItems(quest.toTransfer))
                 {
@@ -76,7 +79,7 @@ namespace Core.Player
                 }
             }
 
-            if (quest.questType == Quest.QuestType.Mine)
+            if (quest.IsTypeQuest("Mine"))
             {
                 quests.Add(quest);
             }
@@ -85,7 +88,7 @@ namespace Core.Player
 
         public void CancelQuest(Quest quest)
         {
-            if (quest.questType == Quest.QuestType.Transfer)
+            if (quest.IsTypeQuest("Transfer"))
             {
                 if (Player.inst.cargo.RemoveItems(quest.toTransfer))
                 {
@@ -93,7 +96,7 @@ namespace Core.Player
                 }
             }
 
-            if (quest.questType == Quest.QuestType.Mine)
+            if (quest.IsTypeQuest("Mine"))
             {
                 quests.RemoveAll(x => x.questID == quest.questID);
             }

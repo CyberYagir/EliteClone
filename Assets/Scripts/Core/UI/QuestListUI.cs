@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Game;
+using Core.Location;
 using Core.Player;
 using Core.Systems;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Core.UI
     {
         [SerializeField] private Transform item, holder;
         [SerializeField] private List<ButtonEffect> items = new List<ButtonEffect>();
-        [SerializeField] private BaseTabUI characterList, questInfo;
+        [SerializeField] public BaseTabUI characterList, questInfo;
 
         private List<Quest> questsList;
         public Event<Quest> OnChangeSelected = new Event<Quest>();
@@ -71,7 +72,7 @@ namespace Core.UI
                 if (findQuest == null || findQuest.questState != Quest.QuestComplited.Complited)
                 {
                     var questItem = Instantiate(item, holder);
-                    questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, quests[i].questType.ToString(), count);
+                    questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, Quest.GetNameByID(quests[i].questType), count);
                     questItem.gameObject.SetActive(true);
                     items.Add(questItem.GetComponent<ButtonEffect>());
                     count++;

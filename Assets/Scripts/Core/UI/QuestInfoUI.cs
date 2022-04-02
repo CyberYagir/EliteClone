@@ -57,22 +57,15 @@ namespace Core.UI
                 {
                     if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
                     {
-                        if (currentQuest.questType == Quest.QuestType.Transfer)
+                        if (currentQuest.questState != Quest.QuestComplited.Complited)
                         {
-                            if (currentQuest.questState != Quest.QuestComplited.Complited)
-                            {
-                                AddQuest();
-                            }
-                        }else if (currentQuest.questType == Quest.QuestType.Mine)
-                        {
-                            if (currentQuest.questState == Quest.QuestComplited.Complited || currentQuest.questState == Quest.QuestComplited.None)
-                            {
-                                AddQuest();
-                            }
+                            AddQuest();
                         }
                     }
-                    else
+                    else //Applied Quest
                     {
+                        currentQuest.CheckIsQuestCompleted();
+                        print("Check");
                         if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
                         {
                             AppliedQuests.Instance.CancelQuest(currentQuest);
@@ -80,21 +73,19 @@ namespace Core.UI
                         }
                         else if (currentQuest.questState == Quest.QuestComplited.Complited)
                         {
-                            if (currentQuest.questType == Quest.QuestType.Transfer || currentQuest.questType == Quest.QuestType.Mine)
+                            print("Completed");
+                            if (currentQuest.FinishQuest())
                             {
-                                if (Player.Player.inst.cargo.ContainItems(currentQuest.toTransfer))
+                                print("Finish: " + currentQuest.questState);
+                                if (currentQuest.questState == Quest.QuestComplited.Rewarded)
                                 {
-                                    Player.Player.inst.cargo.RemoveItems(currentQuest.toTransfer);
-                                    if (Player.Player.inst.cargo.AddItems(currentQuest.reward.rewardItems))
-                                    {
-                                        AppliedQuests.Instance.FinishQuest(currentQuest.questID);
-                                        UpdateData(currentQuest);
-                                        GetComponentInParent<BaseWindow>().RedrawAll();
-                                    }
-                                    else
-                                    {
-                                        Player.Player.inst.cargo.AddItems(currentQuest.toTransfer);
-                                    }
+                                    print("Rewarded");
+                                    UpdateData(currentQuest);
+                                    GetComponentInParent<BaseWindow>().RedrawAll();
+                                    Player.Player.inst.quests.OnChangeQuests.Run();
+                                    var list = (questList as QuestListUI);
+                                    (list.characterList as CharacterList).RedrawQuests();
+                                    Clear();
                                 }
                             }
                         }
@@ -144,16 +135,14 @@ namespace Core.UI
                 it.gameObject.SetActive(true);
             }
         }
-        public void UpdateData(Quest quest)
+
+        public void SetTexts(QuestPath last, Quest quest)
         {
-            currentQuest = quest;
-            var last = quest.GetLastQuestPath();
-            quest.CheckIsQuestCompleted();
             targetName.text = "Target: " + last.targetName;
             targetSystem.text = "System: " + last.solarName;
             rewardTypeText.text = "Reward: " + quest.reward.type;
         
-            if (quest.questType == Quest.QuestType.Transfer)
+            if (currentQuest.IsTypeQuest("Transfer"))
             {
                 jumpsCount.enabled = true;
                 jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
@@ -164,10 +153,12 @@ namespace Core.UI
             }
             rewardText.text = "Reward: " + quest.reward.rewardItems.Count + " Items";
 
+        }
+
+        public void ReformUI(Quest quest)
+        {
             DrawItems(rewardsHolder, rewardItem, quest.reward.rewardItems);
-            transferFullInfo.gameObject.SetActive(quest.questType == Quest.QuestType.Transfer || quest.questType == Quest.QuestType.Mine);
-        
-        
+            transferFullInfo.gameObject.SetActive(currentQuest.IsTypeQuest("Transfer") || currentQuest.IsTypeQuest("Mine"));
             if (transferFullInfo.gameObject.active)
             {
                 DrawItems(transferHolder, rewardItem, quest.toTransfer);
@@ -178,13 +169,25 @@ namespace Core.UI
                 jumpsCount.text += names + ">\n";
             }
             buttonText.transform.parent.gameObject.SetActive(true);
+
+        }
+        
+        public void UpdateData(Quest quest)
+        {
+            currentQuest = quest;
+            var last = quest.GetLastQuestPath();
+            quest.CheckIsQuestCompleted();
+            SetTexts(last, quest);
+            ReformUI(quest);
+            
+            
             if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
             {
                 if (quest.questState == Quest.QuestComplited.None)
                 {
                     buttonText.text = "";
-                    TransferButton(quest);
-                    MineButton(quest);
+                    quest.GetButtonText();
+                    buttonText.text = quest.buttonText;
                 }
                 else
                 {
@@ -204,49 +207,6 @@ namespace Core.UI
             }
         }
 
-        public void TransferButton(Quest quest)
-        {
-            if (quest.questType == Quest.QuestType.Transfer)
-            {
-                if (WorldOrbitalStation.Instance.transform.name == quest.GetLastQuestPath().targetName)
-                {
-                    buttonText.text = "Items to transfer missing";
-                }
-                else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
-                {
-                    if (quest.IsHaveAllItems())
-                    {
-                        buttonText.text = "Cancel";
-                    }
-                    else
-                    {
-                        buttonText.text = "Items to transfer missing [cant cancel]";
-                    }
-                }
-                else
-                {
-                    buttonText.transform.parent.gameObject.SetActive(false);
-                }
-            }
 
-        }
-
-        public void MineButton(Quest quest)
-        {
-            if (quest.questType == Quest.QuestType.Mine)
-            {
-                if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
-                {
-                    if (quest.IsHaveAllItems() && quest.questState == Quest.QuestComplited.Complited)
-                    {
-                        buttonText.text = "Finish";// хуй, после выполнения квеста с майн он остаётся и его можно взять
-                    }
-                    else
-                    {
-                        buttonText.text = "Cancel";
-                    }
-                }
-            }
-        }
     }
 }

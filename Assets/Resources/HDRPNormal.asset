@@ -344,14 +344,14 @@ MonoBehaviour:
       DoFResolution: 040000000200000001000000
       DoFHighQualityFiltering: 000101
       DoFPhysicallyBased: 000000
-      MotionBlurSampleCount: 04000000080000000c000000
+      MotionBlurSampleCount: 020000000400000008000000
       BloomRes: 040000000200000002000000
       BloomHighQualityFiltering: 000101
       BloomHighQualityPrefiltering: 000001
       ChromaticAberrationMaxSamples: 03000000060000000c000000
     lightSettings:
       useContactShadow:
-        m_Values: 010000
+        m_Values: 000000
         m_SchemaId:
           m_Id: With3Levels
     maximumLODLevel:
@@ -366,12 +366,12 @@ MonoBehaviour:
       m_SchemaId:
         m_Id: With3Levels
     lightingQualitySettings:
-      AOStepCount: 040000000600000010000000
+      AOStepCount: 000000000000000000000000
       AOFullRes: 000001
       AOMaximumRadiusPixels: 200000002800000050000000
       AOBilateralUpsample: 000101
       AODirectionCount: 010000000200000004000000
-      ContactShadowSampleCount: 030000000500000008000000
+      ContactShadowSampleCount: 000000000200000005000000
       SSRMaxRaySteps: 100000002000000040000000
       RTAORayLength:
       - 0.5

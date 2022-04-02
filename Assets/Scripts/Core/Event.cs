@@ -40,4 +40,21 @@ namespace Core
             this.Invoke(data);
         }
     }
+    [System.Serializable]
+    public class Event<T,TK> : UnityEvent<T,TK>
+    {
+        public static Event<T, TK> operator+ (Event<T, TK> b, UnityAction<T, TK> c) {
+            b.AddListener(c);
+            return b;
+        }
+        public static Event<T, TK> operator- (Event<T, TK>  b, UnityAction<T, TK> c) {
+            b.RemoveListener(c);
+            return b;
+        }
+    
+        public void Run(T data, TK data2)
+        {
+            this.Invoke(data, data2);
+        }
+    }
 }

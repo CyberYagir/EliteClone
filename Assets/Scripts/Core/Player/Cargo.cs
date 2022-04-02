@@ -116,14 +116,19 @@ namespace Core.Player
             OnChangeInventory.Run();
         }
 
-        public Item FindItem(string itemName)
+        public Item FindItem(string idName)
         {
-            return items.Find(x => x.id.idname == itemName);
+            return items.Find(x => x.id.idname == idName);
+        }
+        public List<Item> FindItems(string idName)
+        {
+            return items.FindAll(x => x.id.idname == idName);
         }
         public bool ContainItem(string itemName)
         {
             return FindItem(itemName) != null;
         }
+
         public bool ContainItem(string itemName, float value)
         {
             var item = FindItem(itemName);
@@ -137,17 +142,37 @@ namespace Core.Player
 
             return false;
         }
-
         public bool ContainItems(List<Item> its)
         {
-            foreach (var item in its)
+            var list = new List<Item>(its);
+            var cheked = new List<Item>();
+            foreach (var item in list)
             {
-                if (!ContainItem(item.id.idname, item.amount.Value))
+                if (ContainItem(item.id.idname, item.amount.Value))
+                {
+                    var finded = FindItems(item.id.idname);
+                    if (finded.Count == 0) return false;
+                    for (int i = 0; i < finded.Count; i++)
+                    {
+                        if (!cheked.Contains(finded[i]))
+                        {
+                            cheked.Add(finded[i]);
+                        }
+                    }
+                }
+                else
                 {
                     return false;
                 }
             }
-            return true;
+            if (cheked.Count >= list.Count)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     
         public bool AddItems(List<Item> its, bool add = true)
@@ -191,7 +216,7 @@ namespace Core.Player
                 {
                     item.amount.SetMinZero();
                 }
-                for (int i = 0; i < findedItem.Count; i++)
+                for (int i = 0; i < findedItem.Count; i++) 
                 {
                     if (findedItem[i].amount.value == findedItem[i].amount.Max) continue;
                 
@@ -249,11 +274,12 @@ namespace Core.Player
 
         public Item RemoveItem(Item item, float value = 1, bool callEvent = false)
         {
+            if (item == null) return null;
+            
             var removed = item.Clone();
             removed.amount.SetValue(0);
             if (item)
             {
-
                 var itemMass = (float) item.GetKeyPair(KeyPairValue.Mass);
                 for (int i = 0; i < value; i++)
                 {

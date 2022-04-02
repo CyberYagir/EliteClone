@@ -68,6 +68,10 @@ namespace Core.Location
                 {
                     data.value++;
                 }
+                else
+                {
+                    break;
+                }
             }
             data.Clamp();
             Player.Player.inst.cargo.UpdateInventory();

@@ -21,7 +21,7 @@ namespace Core.Game
         [System.Serializable]
         public class MineTypes
         {
-            public Quest.QuestType type;
+            public int type;
             public Sprite icon;
         }
         public List<MineTypes> mineType;
