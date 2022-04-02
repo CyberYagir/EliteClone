@@ -109,10 +109,13 @@ namespace Core.Galaxy
         {
             foreach (var sys in systems)
             {
-                var point = Instantiate(prefab, holder.transform);
-                point.transform.position = sys.Value.position.ToVector() / scale;
-                var gpoint = point.GetComponent<GalaxyPoint>();
-                gpoint.solarSystem = sys.Value;
+                if (sys.Value.sibligs.Count != 0)
+                {
+                    var point = Instantiate(prefab, holder.transform);
+                    point.transform.position = sys.Value.position.ToVector() / scale;
+                    var gpoint = point.GetComponent<GalaxyPoint>();
+                    gpoint.solarSystem = sys.Value;
+                }
             }
         }
 

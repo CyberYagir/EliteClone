@@ -69,7 +69,7 @@ namespace Core.Systems
                 var item = Instantiate(mineralDrop, point, Quaternion.identity);
                 var drop = item.GetComponent<WorldDrop>();
                 var itemData = resource.Clone();
-                itemData.amount.SetValue(new System.Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(1, 10));
+                itemData.amount.SetValue(new System.Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(10, 25));
                 drop.Init(itemData);
                 item.GetComponent<Rigidbody>().AddForce((normal + UnityEngine.Random.insideUnitSphere) * 0.5f, ForceMode.Impulse);
             }

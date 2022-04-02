@@ -73,13 +73,10 @@ namespace Core.UI
                         }
                         else if (currentQuest.questState == Quest.QuestComplited.Complited)
                         {
-                            print("Completed");
                             if (currentQuest.FinishQuest())
                             {
-                                print("Finish: " + currentQuest.questState);
                                 if (currentQuest.questState == Quest.QuestComplited.Rewarded)
                                 {
-                                    print("Rewarded");
                                     UpdateData(currentQuest);
                                     GetComponentInParent<BaseWindow>().RedrawAll();
                                     Player.Player.inst.quests.OnChangeQuests.Run();

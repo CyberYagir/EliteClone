@@ -829,14 +829,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262257212}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -6229,7 +6229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569529271}
   m_LocalRotation: {x: -0, y: -0.6765816, z: -0, w: 0.73636776}
-  m_LocalPosition: {x: -12.8272705, y: 23.380798, z: -33.699585}
+  m_LocalPosition: {x: -12.8272705, y: 45.3808, z: -33.699585}
   m_LocalScale: {x: 0.7086399, y: 0.70864, z: 0.7086399}
   m_Children: []
   m_Father: {fileID: 1178496134}
@@ -6309,14 +6309,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569529271}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -11550,7 +11550,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 3000
+  far clip plane: 500
   field of view: 69
   orthographic: 0
   orthographic size: 5
@@ -11566,7 +11566,7 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &892928875
@@ -11703,7 +11703,7 @@ MonoBehaviour:
   xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
-  customRenderingSettings: 0
+  customRenderingSettings: 1
   invertFaceCulling: 0
   probeLayerMask:
     serializedVersion: 2
@@ -11712,8 +11712,8 @@ MonoBehaviour:
   exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
-      data1: 72198262773251917
-      data2: 13763000468760363032
+      data1: 72198081085279309
+      data2: 13763000466567921688
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -11726,8 +11726,8 @@ MonoBehaviour:
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
-      data1: 0
-      data2: 0
+      data1: 181687972608
+      data2: 2192441344
   defaultFrameSettings: 0
 --- !u!114 &892928879
 MonoBehaviour:
@@ -11863,14 +11863,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913757719}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -17582,14 +17582,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302043882}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -23312,8 +23312,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 81367183}
   m_HandleRect: {fileID: 81367182}
   m_Direction: 2
-  m_Value: 0.9999997
-  m_Size: 0.6553131
+  m_Value: 1.0000002
+  m_Size: 0.65531313
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23694,14 +23694,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929470328}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

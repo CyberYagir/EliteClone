@@ -185,7 +185,12 @@ namespace Core.Player
 
         public bool CheckFuel()
         {
-            if (Player.inst.Ship().GetValue(Fuel).value <= 0)
+            var fuel = Player.inst.Ship().GetValue(Fuel);
+            if (fuel.value < fuel.max * 0.3f)
+            { 
+                WarningManager.AddWarning("Not enough fuel in the tank.", WarningTypes.Fuel);
+            }
+            if (fuel.value <= 0)
             {
                 return false;
             }

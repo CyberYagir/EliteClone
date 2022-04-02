@@ -179,7 +179,7 @@ namespace OmniSARTechnologies.LiteFPSCounter {
         }
 
         private void OnEnable() {
-            Initialize();
+            //Initialize();
         }
 
         public void UpdateInternals() {
@@ -215,17 +215,18 @@ namespace OmniSARTechnologies.LiteFPSCounter {
             }
 
             staticInfoText.text = string.Format(
-                "{0} {1}" + Environment.NewLine +
-                "{2} MB VRAM" + Environment.NewLine +
-                "{3}" + Environment.NewLine +
-                "{4} MB RAM" + Environment.NewLine +
-                "{5}",
-                ColorHelper.ColorText(SystemInfo.graphicsDeviceName, m_GPUFieldsColor),
-                ColorHelper.ColorText("[" + SystemInfo.graphicsDeviceType.ToString() + "]", m_GPUDetailFieldsColor),
+                //"{0} {1}" + Environment.NewLine +
+                "{0} MB VRAM" + Environment.NewLine +
+                //"{1}" + Environment.NewLine +
+                "{1} MB RAM" + Environment.NewLine +
+                "{2} Mods Loaded" + Environment.NewLine, 
+                //"{5}",
+                //ColorHelper.ColorText(SystemInfo.graphicsDeviceName, m_GPUFieldsColor),
+                //ColorHelper.ColorText("[" + SystemInfo.graphicsDeviceType.ToString() + "]", m_GPUDetailFieldsColor),
                 ColorHelper.ColorText(SystemInfo.graphicsMemorySize.ToString(), m_GPUFieldsColor),
-                ColorHelper.ColorText(SystemInfo.processorType, m_CPUFieldsColor),
+                //ColorHelper.ColorText(SystemInfo.processorType, m_CPUFieldsColor),
                 ColorHelper.ColorText(SystemInfo.systemMemorySize.ToString(), m_CPUFieldsColor),
-                ColorHelper.ColorText(SystemInfo.operatingSystem, m_SysFieldsColor)
+                ColorHelper.ColorText(ModsManager.Instance.modLoader.mods.Count.ToString(), m_SysFieldsColor)
             );
         }
 

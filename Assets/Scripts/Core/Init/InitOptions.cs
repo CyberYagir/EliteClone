@@ -23,15 +23,13 @@ namespace Core.Init
         [SerializeField] private GameObject fpsHolder;
         [SerializeField] private InitOptionsControlsDrawer controlsDrawer;
 
-        private void Start()
+        public void Awake()
         {
             if (fpsHolder.gameObject == null)
             {
                 fpsHolder = FindObjectOfType<LiteFPSCounter>().gameObject;
             }
-
             LoadConfig();
-            UILoad(PlayerDataManager.PlayerConfig);
         }
 
         public void ChangeQuality(TMP_Dropdown dropdown)
@@ -77,13 +75,10 @@ namespace Core.Init
             }
 
             PlayerConfig cfg = JsonConvert.DeserializeObject<PlayerConfig>(File.ReadAllText(PlayerDataManager.ConfigFile));
-
             FindObjectOfType<InputM>().SetAxesList(cfg.axes);
             QualitySettings.SetQualityLevel(cfg.quality);
             FPSCounterToggle(cfg.showFPS);
-
             PlayerDataManager.PlayerConfig = cfg;
-        
             UILoad(PlayerDataManager.PlayerConfig);
         }
     

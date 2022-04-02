@@ -14,10 +14,15 @@ namespace Core.Init
     {
         public string hostURL;
         public CustomAnimate dowloadDialog;
+        [SerializeField] private InitOptions options;
         [SerializeField] private DOTweenAnimation menuback;
         [SerializeField] private DOTweenAnimation loading;
         [SerializeField] private TMP_Text loadingText;
-    
+
+        private void Awake()
+        {
+            options.Awake();
+        }
 
         public void Play()
         {

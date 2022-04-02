@@ -203,7 +203,8 @@ namespace Core.Player
             var oldItems = items;
         
             var mass = (float) item.GetKeyPair(KeyPairValue.Mass);
-            var canAddByWeight = tons + (mass * item.amount.value) <= currentShip.data.maxCargoWeight;
+            
+            var canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
             if (!canAddByWeight)
             {
                 return false;
@@ -232,13 +233,17 @@ namespace Core.Player
                         var startItemCount = item.amount.value;
                         for (int j = 0; j < startItemCount; j++)
                         {
-                            canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
-                            if (!canAddByWeight) break;
                             if (findedItem[i].amount.Value + 1 <= findedItem[i].amount.Max && canAddByWeight)
                             {
                                 findedItem[i].amount.AddValue(1);
                                 item.amount.SubValue(1);
                                 tons += mass;
+                            }
+                            canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
+                            if (!canAddByWeight)
+                            {
+                                if (callEvent) OnChangeInventory.Run();
+                                break;
                             }
                         }
                         if (item.amount.value == 0)

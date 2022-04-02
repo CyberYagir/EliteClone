@@ -44,6 +44,7 @@ namespace Core.Location
             public int uniqID;
             public int shipID;
             public string firstName, lastName;
+            public Fraction fraction;
 
             public HumanShip(Random rnd, int maxID, int uid)
             {
@@ -52,6 +53,7 @@ namespace Core.Location
                 firstName = NamesHolder.GetFirstName(rnd);
                 lastName = NamesHolder.GetLastName(rnd);
                 uniqID = uid;
+                fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
             }
         }
 
@@ -324,7 +326,19 @@ namespace Core.Location
 
                         var data = new Dictionary<string, object>();
                         data.Add("tag", "ships");
-                        data.Add("tag-type", (LocationBotType) rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length));
+
+                        LocationBotType type;
+                        do
+                        {
+                            type = (LocationBotType) rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length);
+                            if (type != LocationBotType.OCG)
+                            {
+                                break;
+                            }
+                        } while (type == LocationBotType.OCG && (ships[i].fraction != Fraction.Pirates || ships[i].fraction != Fraction.OCG));
+
+
+                        data.Add("tag-type", type);
                         data.Add("uniqID", ships[i].uniqID);
 
 
