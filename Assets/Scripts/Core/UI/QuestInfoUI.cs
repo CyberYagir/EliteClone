@@ -15,7 +15,7 @@ namespace Core.UI
         [Space] [SerializeField] private TMP_Text targetName;
         [SerializeField] private TMP_Text targetSystem;
         [SerializeField] private TMP_Text rewardText, rewardTypeText, jumpsCount;
-        [SerializeField] private TMP_Text buttonText;
+        [SerializeField] private TMP_Text buttonText, keysText;
         [SerializeField] private Transform rewardsHolder, rewardItem;
         [SerializeField] private Transform transferHolder, transferFullInfo;
     
@@ -53,7 +53,7 @@ namespace Core.UI
         {
             if (Player.Player.inst.land.isLanded)
             {
-                if (upDownUI.selectedIndex == 0)
+                if (upDownUI.selectedIndex == 0 && currentQuest != null)
                 {
                     if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
                     {
@@ -65,7 +65,6 @@ namespace Core.UI
                     else //Applied Quest
                     {
                         currentQuest.CheckIsQuestCompleted();
-                        print("Check");
                         if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
                         {
                             AppliedQuests.Instance.CancelQuest(currentQuest);
@@ -73,17 +72,15 @@ namespace Core.UI
                         }
                         else if (currentQuest.questState == Quest.QuestComplited.Complited)
                         {
-                            if (currentQuest.FinishQuest())
+                            currentQuest.OnFinish();
+                            if (currentQuest.questState == Quest.QuestComplited.Rewarded)
                             {
-                                if (currentQuest.questState == Quest.QuestComplited.Rewarded)
-                                {
-                                    UpdateData(currentQuest);
-                                    GetComponentInParent<BaseWindow>().RedrawAll();
-                                    Player.Player.inst.quests.OnChangeQuests.Run();
-                                    var list = (questList as QuestListUI);
-                                    (list.characterList as CharacterList).RedrawQuests();
-                                    Clear();
-                                }
+                                UpdateData(currentQuest);
+                                GetComponentInParent<BaseWindow>().RedrawAll();
+                                Player.Player.inst.quests.OnChangeQuests.Run();
+                                var list = (questList as QuestListUI);
+                                (list.characterList as CharacterList).RedrawQuests();
+                                Clear();
                             }
                         }
                     }
@@ -119,6 +116,7 @@ namespace Core.UI
             rewardText.text = "";
             jumpsCount.text = "";
             rewardTypeText.text = "";
+            keysText.text = "";
         }
 
         public void DrawItems(Transform holder, Transform item, List<Item> items)
@@ -138,7 +136,17 @@ namespace Core.UI
             targetName.text = "Target: " + last.targetName;
             targetSystem.text = "System: " + last.solarName;
             rewardTypeText.text = "Reward: " + quest.reward.type;
-        
+
+            if (quest.keyValues.Count != 0 && quest.toTransfer.Count == 0 && quest.keyValues.ContainsKey("Text"))
+            {
+                keysText.gameObject.SetActive(true);
+                keysText.text = "Quest Data: \n" + quest.keyValues["Text"].ToString();
+            }
+            else
+            {
+                keysText.gameObject.SetActive(false);
+            }
+            
             if (currentQuest.IsTypeQuest("Transfer"))
             {
                 jumpsCount.enabled = true;

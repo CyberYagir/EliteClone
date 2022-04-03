@@ -1245,10 +1245,14 @@ MonoBehaviour:
   QuestsMethods:
   - questType: 0
     script: {fileID: 3023727576613223236}
-    initEvents: []
-    isCompliteEvents: []
-    OnButtonDisplay: []
-    OnComplitedEvents: []
+    initEvents:
+    - InitKill
+    isCompliteEvents:
+    - IsKillIsComplete
+    OnButtonDisplay:
+    - KillButtonDisplay
+    OnComplitedEvents:
+    - IsKillCompleted
   - questType: 1
     script: {fileID: 3023727576613223236}
     initEvents:

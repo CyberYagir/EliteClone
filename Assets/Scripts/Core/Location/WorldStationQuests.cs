@@ -28,7 +28,7 @@ namespace Core.Location
         {
             public enum ExecuteType
             {
-                Init, IsCompleteCheck, isComplete, ButtonDisplay
+                Init, IsCompleteCheck, isCompleted, ButtonDisplay
             }
             public int questType;
             public MonoBehaviour script;
@@ -54,7 +54,7 @@ namespace Core.Location
                             script.GetType().GetMethod(isCompliteEvents[i])?.Invoke(script, new object[] {quest});
                         }
                         break;
-                    case ExecuteType.isComplete:
+                    case ExecuteType.isCompleted:
                         for (int i = 0; i < OnComplitedEvents.Count; i++)
                         {
                             script.GetType().GetMethod(OnComplitedEvents[i])?.Invoke(script, new object[] {quest});

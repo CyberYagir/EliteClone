@@ -6960,8 +6960,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tasks:
-  - text: "\u041A\u0432\u0435\u0441\u0442\u044B \u043D\u0430 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043E"
+  - text: "\u0417\u0430\u0434\u0438\u0437\u0430\u0439\u043D\u0438\u0442\u044C \u043A\u0432\u0435\u0441\u0442\u044B
+      \u043D\u0430 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043E \u0432 \u0438\u043D\u0444\u043E"
     isComplited: 0
+    priority: 0
+  - text: "\u041A\u0432\u0435\u0441\u0442\u044B \u043D\u0430 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043E"
+    isComplited: 1
     priority: 0
   - text: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0447\u0442\u043E\u0431\u044B
       \u043D\u0430 \u043A\u043E\u043D\u0432\u043E\u044F\u0445 \u0432\u0441\u0435
@@ -24994,6 +24998,18 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 625520
       objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_ShadowResolution.m_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3722400511945617157, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_Range
       value: 99.94
@@ -29076,6 +29092,18 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 625520
       objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_ShadowResolution.m_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3576175623389114292, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -29255,9 +29283,9 @@ RectTransform:
   m_Father: {fileID: 469981784}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.575, y: -85.115}
   m_SizeDelta: {x: 441.15, y: 170.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616919264
@@ -32801,6 +32829,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_ShadowUpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_ShadowResolution.m_UseOverride
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8234116790062088336, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
     - {fileID: 8851093569356764973, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
@@ -34279,6 +34323,18 @@ PrefabInstance:
     - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_Intensity
       value: 105326
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_ShadowResolution.m_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3576175623389114292, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -40611,6 +40667,18 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 625520
       objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_ShadowResolution.m_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3722400511945617157, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_Range
       value: 99.94
@@ -41494,6 +41562,22 @@ PrefabInstance:
     - target: {fileID: 4245797369203916154, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_ShadowUpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_ShadowResolution.m_UseOverride
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690755153834512315, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8234116790062088336, guid: 37ff120ee2d690d4098b867f10c35276, type: 3}
@@ -44070,6 +44154,18 @@ PrefabInstance:
     - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_Intensity
       value: 625520
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_ShadowResolution.m_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444879471327453805, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
+      propertyPath: m_UseContactShadow.m_UseOverride
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3576175623389114292, guid: 25e7637b49af2ae44bf3c50055e3b8d2, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -15,7 +15,7 @@ namespace Core.Location
     {
         public static SolarSystemShips Instance;
 
-        public Dictionary<string, List<HumanShipDead>> deadList { get; private set; } = new Dictionary<string, List<HumanShipDead>>();
+        public static Dictionary<string, List<HumanShipDead>> deadList { get; private set; } = new Dictionary<string, List<HumanShipDead>>();
     
     
         [SerializeField] private GameObject botPrefab, botLocation, garbageContact;
@@ -69,9 +69,9 @@ namespace Core.Location
             Instance = this;
         }
 
-        public void LoadDeads()
+        public static void LoadDeads()
         {
-            if (File.Exists(PlayerDataManager.DeadsNPCFile))
+            if (File.Exists(PlayerDataManager.DeadsNPCFile) && deadList.Count == 0)
             {
                 deadList = JsonConvert.DeserializeObject<Dictionary<string, List<HumanShipDead>>>(File.ReadAllText(PlayerDataManager.DeadsNPCFile));
             }
@@ -90,15 +90,20 @@ namespace Core.Location
 
             deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead() {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
 
+            ExplodeShip(builder);
+        
+            SaveDeads();
+        }
+
+        public void ExplodeShip(BotBuilder builder)
+        {
             var garbage = CreateGarbage(builder.transform.name, builder.GetShip().shipName, builder.transform.position, true);
             foreach (Rigidbody item in garbage.GetComponentsInChildren<Rigidbody>())
             {
                 item.AddExplosionForce(20, builder.transform.position, 10);   
             }
-        
-            SaveDeads();
         }
-
+        
         public GameObject CreateGarbage(string botName,string shipName, Vector3 pos, bool triggerContactEvent = false)
         {
             var ship = ItemsManager.GetShipItem(shipName);
@@ -143,15 +148,16 @@ namespace Core.Location
             return wreckage;
         }
 
-        public int GetSeed()
+       
+        public static int GetSeed(Vector3 pos)
         {
-            var seed = (int) (PlayerDataManager.CurrentSolarSystem.position.x + PlayerDataManager.CurrentSolarSystem.position.y + PlayerDataManager.CurrentSolarSystem.position.z);
+            var seed = (int) (pos.x + pos.y + pos.z);
             return seed;
         }
 
-        public int GetShipsCount()
+        public static int GetShipsCount(Vector3 pos, int stationsCount)
         {
-            return new Random(GetSeed()).Next(PlayerDataManager.CurrentSolarSystem.stations.Count, PlayerDataManager.CurrentSolarSystem.stations.Count * 6);
+            return new Random(GetSeed(pos)).Next(stationsCount, stationsCount * 6);
         }
 
 
@@ -159,6 +165,7 @@ namespace Core.Location
         {
             allships = new List<HumanShip>();
             ships = new List<HumanShip>();
+            locations = new List<LocationHolder>();
             for (int i = 0; i < PlayerDataManager.CurrentSolarSystem.stations.Count; i++)
             {
                 locations.Add(new LocationHolder(PlayerDataManager.CurrentSolarSystem.stations[i].name));
@@ -168,31 +175,55 @@ namespace Core.Location
             {
                 locations.Add(new LocationHolder(PlayerDataManager.CurrentSolarSystem.belts[i].name));
             }
-
-            var rnd = new Random(GetSeed());
-            var count = GetShipsCount();
+            var count = GetShipsCount(PlayerDataManager.CurrentSolarSystem.position.ToVector(), PlayerDataManager.CurrentSolarSystem.stations.Count);
             if (locations.Count < 2)
             {
                 count = Mathf.Clamp(count, 2, 10);
             }
-            var positionsRnd = new Random(GetSeed() + SaveLoadData.GetCurrentSaveSeed());
-            for (int i = 0; i < count; i++)
+
+            var seed = GetSeed(PlayerDataManager.CurrentSolarSystem.position.ToVector());
+            var positionsRnd = new Random(seed + SaveLoadData.GetCurrentSaveSeed());
+            var shipsGened = GetShips(PlayerDataManager.CurrentSolarSystem);
+            
+            
+            for (int i = 0; i < shipsGened.Count; i++)
             {
                 var locID = positionsRnd.Next(-1, locations.Count);
-                var ship = new HumanShip(rnd, botPrefabVisuals.ships.Count, GetSeed() + i);
                 if (locID >= 0)
                 {
                     if (locations[locID].humans.Count < 3)
                     {
-                        locations[locID].humans.Add(ship);
-                        allships.Add(ship);
+                        locations[locID].humans.Add(shipsGened[i]);
+                        allships.Add(shipsGened[i]);
                         continue;
                     }
                 }
-                allships.Add(ship);
+                allships.Add(shipsGened[i]);
+                ships.Add(shipsGened[i]);
+            }
+
+        }
+
+        public static List<HumanShip> GetShips(SolarSystem solar)
+        {
+            var ships = new List<HumanShip>();
+            var count = GetShipsCount(solar.position.ToVector(), solar.stations.Count);
+            if (solar.stations.Count + solar.belts.Count < 2)
+            {
+                count = Mathf.Clamp(count, 2, 10);
+            }
+            
+            var seed = GetSeed(solar.position.ToVector());
+            var rnd = new Random(seed);
+            
+            
+            for (int i = 0; i < count; i++)
+            {
+                var ship = new HumanShip(rnd, ItemsManager.GetShisList().Count, seed + i);
                 ships.Add(ship);
             }
 
+            return ships;
         }
 
 

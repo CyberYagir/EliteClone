@@ -38,6 +38,7 @@ namespace Core.Location
         public Reward reward = new Reward();
         public string appliedStation, appliedSolar;
         public List<Item> toTransfer = new List<Item>();
+        public Dictionary<string, object> keyValues = new Dictionary<string, object>();
         public string buttonText;
 
         public Quest(int questSeed , Character character, string stationName, string appliedSolar)
@@ -197,28 +198,9 @@ namespace Core.Location
         {
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.ButtonDisplay);
         }
-
-        public bool FinishQuest()
+        public void OnFinish()
         {
-            if (Player.Player.inst.cargo.ContainItems(toTransfer))
-            {
-                Player.Player.inst.cargo.RemoveItems(toTransfer);
-                if (Player.Player.inst.cargo.AddItems(reward.rewardItems))
-                {
-                    if (AppliedQuests.Instance.FinishQuest(questID))
-                    {
-                        questState = QuestComplited.Rewarded;
-                        return true;
-                    }
-                }
-                else
-                {
-                    Player.Player.inst.cargo.AddItems(toTransfer);
-                    return false;
-                }
-            }
-
-            return false;
+            WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.isCompleted);
         }
     }
 }

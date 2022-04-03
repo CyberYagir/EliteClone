@@ -18,7 +18,7 @@ namespace Core.Bot
         [SerializeField] private ContactObject contactManager;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private Ship ship;
-        [SerializeField] private GameObject explodePrefab, dropPrefab;
+        [SerializeField] private GameObject dropPrefab;
         private Damager damager;
 
         private void Awake()
@@ -125,7 +125,7 @@ namespace Core.Bot
 
             Drop();
         
-            Destroy(Instantiate(explodePrefab, transform.position, transform.rotation), 120);
+            SolarSystemShips.Instance.ExplodeShip(this);
             Destroy(gameObject);
         }
 

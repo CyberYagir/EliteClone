@@ -71,32 +71,25 @@ namespace Core.Player
     
         public void ApplyQuest(Quest quest)
         {
-            if (quest.IsTypeQuest("Transfer"))
-            {
-                if (Player.inst.cargo.AddItems(quest.toTransfer))
-                {
-                    quests.Add(quest);
-                }
-            }
-
-            if (quest.IsTypeQuest("Mine"))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.AddItems(quest.toTransfer))
             {
                 quests.Add(quest);
             }
+            else
+            {
+                quests.Add(quest);
+            }
+            
             OnChangeQuests.Run();
         }
 
         public void CancelQuest(Quest quest)
         {
-            if (quest.IsTypeQuest("Transfer"))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.RemoveItems(quest.toTransfer))
             {
-                if (Player.inst.cargo.RemoveItems(quest.toTransfer))
-                {
-                    quests.RemoveAll(x => x.questID == quest.questID);
-                }
+                quests.RemoveAll(x => x.questID == quest.questID);
             }
-
-            if (quest.IsTypeQuest("Mine"))
+            else
             {
                 quests.RemoveAll(x => x.questID == quest.questID);
             }

@@ -13,6 +13,9 @@ namespace Core.Location
     public class QuestsStandardMethods : MonoBehaviour
     {
 
+        #region Inits
+
+        
         public void InitTransfer(Quest quest)
         {
             System.Random rnd = new Random(quest.questID);
@@ -38,7 +41,7 @@ namespace Core.Location
             }
 
             quest.pathToTarget = new QuestPath() {solarName = quest.appliedSolar, targetName = quest.appliedStation};
-
+            quest.keyValues.Add("NoAddTransfer", true);
             var cost = 0;
             for (int i = 0; i < quest.toTransfer.Count; i++)
             {
@@ -48,8 +51,36 @@ namespace Core.Location
             quest.reward.Init(quest.questID, cost);
         }
 
+        public void InitKill(Quest quest)
+        {
+            System.Random rnd = new Random(quest.questID);
+            quest.pathToTarget = new QuestPath() {solarName = quest.appliedSolar, targetName = quest.appliedStation};
+            var ships = SolarSystemShips.GetShips(PlayerDataManager.CurrentSolarSystem).FindAll(x => x.fraction != quest.quester.fraction);
+            if (ships.Count != 0)
+            {
+                var id = rnd.Next(0, ships.Count);
+                var target = ships[id];
+                quest.keyValues.Add("BotTarget", target.uniqID);
+                var text = "Your goal is to destroy a man named ";
+                text += "<color=orange>" + NamesHolder.ToUpperFist(ships[id].firstName) + " " + NamesHolder.ToUpperFist(ships[id].lastName) + "</color>.\n";
+                text += "Vehicle: " + ItemsManager.GetShipItem(ships[id].shipID)?.shipName + "\n";
+                text += "Fraction: " + ships[id].fraction;
+                quest.keyValues.Add("Text", text);
+                quest.reward.Init(quest.questID, 5000);
+            }
+            else
+            {
+                quest.questState = Quest.QuestComplited.BrokeQuest;
+            }
+        }
+        
+
+        #endregion
 
 
+        #region IsComplete
+
+        
         public void IsMinerTransferIsComplete(Quest quest)
         {
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
@@ -69,8 +100,48 @@ namespace Core.Location
             }
         }
 
+        public void IsKillIsComplete(Quest quest)
+        {
+            if (quest.IsTypeQuest("Kill"))
+            {
+                SolarSystemShips.LoadDeads();
+                foreach (var deads in SolarSystemShips.deadList)
+                {
+                    foreach (var ship in deads.Value)
+                    {
+                        if (ship.uniqID == (int)quest.keyValues["BotTarget"])
+                        {
+                            quest.questState = Quest.QuestComplited.Complited;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
 
 
+        #region Display
+
+        public void MineButtonDisplay(Quest quest)
+        {
+            if (quest.IsTypeQuest("Mine"))
+            {
+                if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+                {
+                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestComplited.Complited)
+                    {
+                        quest.buttonText = "Finish";
+                    }
+                    else
+                    {
+                        quest.buttonText = "Cancel";
+                    }
+                }
+            }
+        }
+        
         public void TransferButtonDisplay(Quest quest)
         {
             if (quest.IsTypeQuest("Transfer"))
@@ -91,28 +162,28 @@ namespace Core.Location
                     }
                 }
             }
-
         }
 
-        public void MineButtonDisplay(Quest quest)
+        public void KillButtonDisplay(Quest quest)
         {
-            if (quest.IsTypeQuest("Mine"))
+            if (quest.IsTypeQuest("Kill"))
             {
-                if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+                if (quest.questState == Quest.QuestComplited.Complited)
                 {
-                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestComplited.Complited)
-                    {
-                        quest.buttonText = "Finish";
-                    }
-                    else
-                    {
-                        quest.buttonText = "Cancel";
-                    }
+                    quest.buttonText = "Finish";
+                }
+                else
+                {
+                    quest.buttonText = "Cancel";
                 }
             }
+
         }
+        
+        #endregion
 
 
+        #region EndQuest
 
         public void IsMinerTransferIsCompleted(Quest quest)
         {
@@ -135,5 +206,25 @@ namespace Core.Location
                 }
             }
         }
+        
+        public void IsKillCompleted(Quest quest)
+        {
+            if (quest.IsTypeQuest("Kill"))
+            { 
+                if (quest.questState == Quest.QuestComplited.Complited)
+                {
+                    if (Player.Player.inst.cargo.AddItems(quest.reward.rewardItems))
+                    {
+                        if (AppliedQuests.Instance.FinishQuest(quest.questID))
+                        {
+                            quest.questState = Quest.QuestComplited.Rewarded;
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
+
     }
 }
