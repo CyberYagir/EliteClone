@@ -144,6 +144,11 @@ namespace Core.Systems
             return PlayerDataManager.CacheSystemsFolder + "/" + PlayerDataManager.CurrentSolarSystem.name + "." + PlayerDataManager.CurrentSolarSystem.position.Log() + ".solar";
         }
 
+        public static string GetSystemName()
+        {
+            return PlayerDataManager.CurrentSolarSystem.name + "." + PlayerDataManager.CurrentSolarSystem.position.Log();
+        }
+
         public static float scale = 15;
 
         public static void GetPlanetTextures()

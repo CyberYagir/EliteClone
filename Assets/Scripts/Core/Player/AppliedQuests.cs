@@ -65,7 +65,6 @@ namespace Core.Player
             }
 
             OnChangeQuests.Run();
-
             return false;
         }
     

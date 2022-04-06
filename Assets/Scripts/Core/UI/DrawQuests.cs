@@ -2,6 +2,7 @@ using Core.Location;
 using Core.Player;
 using Core.Systems;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Core.UI
 {
@@ -33,7 +34,7 @@ namespace Core.UI
             int count = 0;
             for (int i = 0; i < quests.quests.Count; i++)
             {
-                if (quests.quests[i].questState != Quest.QuestComplited.Rewarded)
+                if (quests.quests[i].questState == Quest.QuestComplited.None || quests.quests[i].questState == Quest.QuestComplited.Complited)
                 {
                     var newItem = Instantiate(item, holder);
                     var q = newItem.GetComponent<QuestTabItem>();
@@ -43,6 +44,7 @@ namespace Core.UI
                 }
             }
             upDownUI.itemsCount = count;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(holder.GetComponent<RectTransform>());
         }
     }
 }

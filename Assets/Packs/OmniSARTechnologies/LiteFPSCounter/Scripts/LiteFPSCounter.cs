@@ -226,7 +226,7 @@ namespace OmniSARTechnologies.LiteFPSCounter {
                 ColorHelper.ColorText(SystemInfo.graphicsMemorySize.ToString(), m_GPUFieldsColor),
                 //ColorHelper.ColorText(SystemInfo.processorType, m_CPUFieldsColor),
                 ColorHelper.ColorText(SystemInfo.systemMemorySize.ToString(), m_CPUFieldsColor),
-                ColorHelper.ColorText(ModsManager.Instance.modLoader.mods.Count.ToString(), m_SysFieldsColor)
+                ColorHelper.ColorText(ModsManager.Instance?.modLoader.mods.Count.ToString(), m_SysFieldsColor)
             );
         }
 

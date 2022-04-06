@@ -1,3 +1,4 @@
+using System;
 using Core.Game;
 using Core.Location;
 using Core.Systems;
@@ -10,9 +11,9 @@ namespace Core.UI
     public class QuestTabItem : MonoBehaviour
     {
         [SerializeField] private Image icon;
-        [SerializeField] private TMP_Text targetT, jumpToT;
+        [SerializeField] private TMP_Text targetT, jumpToT, QuestTextT;
         [SerializeField] private Transform rewardHolder, rewardItem;
-        [SerializeField] private Transform requireHolder;
+        [SerializeField] private Transform requireHolder, requireItemList, questTextHolder;
 
         public void Init(Quest questsQuest)
         {
@@ -55,6 +56,19 @@ namespace Core.UI
                 var it = Instantiate(rewardItem, requireHolder).GetComponent<ItemUI>();
                 it.Init(questsQuest.toTransfer[i]);
                 it.gameObject.SetActive(true);
+            }
+
+            requireItemList.gameObject.SetActive(questsQuest.toTransfer.Count != 0);
+            questTextHolder.gameObject.SetActive(!requireItemList.gameObject.active);
+            if (!requireItemList.gameObject.active)
+            {
+                try
+                {
+                    QuestTextT.text = questsQuest.keyValues["Text"].ToString();
+                }
+                catch (Exception e)
+                {
+                }
             }
         }
     }

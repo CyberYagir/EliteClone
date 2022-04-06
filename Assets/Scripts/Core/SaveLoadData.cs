@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Core.Game;
 using Core.Player;
+using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace Core
         public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
         public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
         public Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
+        public List<string> systemsHistory = new List<string>();
         public decimal playedTime = 0;
         public int startSaveTime = 0;
     }
@@ -38,12 +40,14 @@ namespace Core
     {
         private Dictionary<string, object> keys = new Dictionary<string, object>();
         private Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
+        private List<string> systemsHistory = new List<string>();
         private static decimal startTime, playedTime;
         private static int startSaveTime;
         private void Awake()
         {
             if (Player.Player.inst)
             {
+                Player.Player.OnSceneChanged += AddCurrentToHistory;
                 Load();
             }
         }
@@ -56,6 +60,28 @@ namespace Core
         private void Update()
         {
             playedTime += (decimal)Time.deltaTime;
+        }
+
+        public ref List<string> GetHistory()
+        {
+            return ref systemsHistory;
+        }
+
+        public bool IsContainsInHistory(string solarName)
+        {
+            return systemsHistory.Contains(solarName);
+        }
+        public void AddToHistory(string solarName)
+        {
+            if (!IsContainsInHistory(solarName))
+            {
+                systemsHistory.Add(solarName);
+            }
+        }
+
+        public void AddCurrentToHistory()
+        {
+            AddToHistory(SolarSystemGenerator.GetSystemName());
         }
 
         #region Keys
@@ -169,6 +195,8 @@ namespace Core
                     startTime = playerData.playedTime;
 
                     startSaveTime = playerData.startSaveTime;
+
+                    systemsHistory = playerData.systemsHistory;
                 }
             }
             else
@@ -182,9 +210,13 @@ namespace Core
             {
                 var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
                 var playerData = JsonConvert.DeserializeObject<PlayerData>(json);
-                keys = playerData.Keys;
-                shipsInStations = playerData.shipsInStations;
-                return playerData;
+                if (playerData != null)
+                {
+                    keys = playerData.Keys;
+                    systemsHistory = playerData.systemsHistory;
+                    shipsInStations = playerData.shipsInStations;
+                    return playerData;
+                }
             }
             return null;
         }
@@ -209,7 +241,8 @@ namespace Core
                 items = p.cargo.GetData(),
                 shipsInStations = shipsInStations,
                 playedTime = GetTime(),
-                startSaveTime = startSaveTime
+                startSaveTime = startSaveTime,
+                systemsHistory = systemsHistory
             };
             SaveData(playerData);
         }
