@@ -46,9 +46,10 @@ namespace Core.Systems
         }
     
     
-        public static void Load()
+        public static SavedSolarSystem Load()
         {
             savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
+            return savedSolarSystem;
         }
 
         public void InitSystem()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,13 @@ namespace Core
 {
     public class MapLooker : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        [SerializeField] private Camera camera;
+        [SerializeField] private float scale;
 
-        // Update is called once per frame
         void Update()
         {
-        
+            transform.LookAt(camera.transform);
+            transform.localScale = Vector3.one * Vector3.Distance(transform.position, camera.transform.position) * scale;
         }
     }
 }
