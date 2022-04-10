@@ -1,3 +1,4 @@
+using Core.Player;
 using Core.Systems;
 using TMPro;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Core.UI
 {
     public class QuesterItemUI : MonoBehaviour
     {
-        private Fraction fraction;
+        private int fraction;
     
         [Space] 
         [SerializeField] private Image image;
@@ -16,13 +17,13 @@ namespace Core.UI
         private Character character;
         private int itemIndex;
 
-        public void InitQuesterItem(Fraction _fraction, Sprite _frationImage, string _questerName, Character _character, int itemID)
+        public void InitQuesterItem(int _fraction, Sprite _frationImage, string _questerName, Character _character, int itemID)
         {
             fraction = _fraction;
             image.sprite = _frationImage;
 
             questerNameT.text = _questerName;
-            fractionNameT.text = fraction.ToString();
+            fractionNameT.text = ReputationManager.IDToName(fraction);
 
             character = _character;
 

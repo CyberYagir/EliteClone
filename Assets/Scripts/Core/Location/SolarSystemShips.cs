@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Core.Bot;
 using Core.Galaxy;
+using Core.Player;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -44,7 +45,7 @@ namespace Core.Location
             public int uniqID;
             public int shipID;
             public string firstName, lastName;
-            public Fraction fraction;
+            public int fraction;
 
             public HumanShip(Random rnd, int maxID, int uid)
             {
@@ -53,7 +54,7 @@ namespace Core.Location
                 firstName = NamesHolder.GetFirstName(rnd);
                 lastName = NamesHolder.GetLastName(rnd);
                 uniqID = uid;
-                fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
+                fraction = rnd.Next(0, ReputationManager.fractions.Count);
             }
         }
 
@@ -366,7 +367,7 @@ namespace Core.Location
                             {
                                 break;
                             }
-                        } while (type == LocationBotType.OCG && (ships[i].fraction != Fraction.Pirates || ships[i].fraction != Fraction.OCG));
+                        } while (type == LocationBotType.OCG && (ships[i].fraction != ReputationManager.NameToID("Pirates") || ships[i].fraction != ReputationManager.NameToID("OCG")));
 
 
                         data.Add("tag-type", type);

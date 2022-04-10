@@ -14,7 +14,7 @@ namespace Core.UI
         public class IconType
         {
             public Sprite icon;
-            public Fraction fraction;
+            public int fraction;
         }
         private RectTransform rect;
         [SerializeField] private float height = 1400;
@@ -79,7 +79,7 @@ namespace Core.UI
         }
 
 
-        public IconType GetIcon(Fraction fraction)
+        public IconType GetIcon(int fraction)
         {
             return icons.Find(x => x.fraction == fraction);
         }

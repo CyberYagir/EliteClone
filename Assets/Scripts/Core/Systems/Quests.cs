@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Game;
 using Core.Location;
+using Core.Player;
 using Random = System.Random;
 
 namespace Core.Systems
@@ -80,14 +81,7 @@ namespace Core.Systems
         }
     }
 
-    public enum Fraction
-    {
-        Pirates,
-        Libertarians,
-        Communists,
-        Anarchists,
-        OCG
-    }
+
     [System.Serializable]
     public class Character
     {
@@ -96,7 +90,7 @@ namespace Core.Systems
         public int characterID;
         
         
-        public Fraction fraction;
+        public int fraction;
 
         public Character(System.Random rnd)
         {
@@ -119,7 +113,7 @@ namespace Core.Systems
             NamesHolder.Init();
             firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
             lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
-            fraction = (Fraction)rnd.Next(0, Enum.GetNames(typeof(Fraction)).Length);
+            fraction = rnd.Next(0, ReputationManager.fractions.Count);
         }
     }
 }

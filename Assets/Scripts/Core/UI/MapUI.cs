@@ -12,12 +12,17 @@ namespace Core.UI
     {
         private void Start()
         {
+            Player.Player.OnSceneChanged += Set;
+            Set();
+        }
+
+        private void Set()
+        {
             if (!MapGenerator.Set)
             {
                 MapGenerator.Set = true;
                 SceneManager.LoadScene("Map", LoadSceneMode.Additive);
             }
         }
-        
     }
 }
