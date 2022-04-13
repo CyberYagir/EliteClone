@@ -150,7 +150,7 @@ namespace Core.Location
         {
             foreach (var chr in characters)
             {
-                if (quests.FindAll(x => x.quester.characterID == chr.characterID && x.questState != Quest.QuestComplited.Rewarded).Count == 0) 
+                if (quests.FindAll(x => x.quester.characterID == chr.characterID && x.questState != Quest.QuestCompleted.Rewarded).Count == 0) 
                 {
                     characters.Remove(chr);
                     RemoveCharactersWithoutQuests();
@@ -165,7 +165,7 @@ namespace Core.Location
         
             foreach (var quest in AppliedQuests.Instance.quests)
             {
-                if (quest.questState == Quest.QuestComplited.Rewarded) continue;
+                if (quest.questState == Quest.QuestCompleted.Rewarded) continue;
             
                 if (quest.GetLastQuestPath().targetName == transform.name)
                 {
@@ -190,7 +190,7 @@ namespace Core.Location
             {
                 var questid = rnd.Next(-9999999, 9999999);
                 var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name);
-                if (q.questState != Quest.QuestComplited.BrokeQuest)
+                if (q.questState != Quest.QuestCompleted.BrokeQuest)
                 {
                     list.Add(q);
                 }

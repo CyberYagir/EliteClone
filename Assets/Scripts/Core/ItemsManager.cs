@@ -22,7 +22,7 @@ namespace Core
         {
             itemList = Resources.LoadAll<ItemList>("").ToList().First();
             itemRewards = Resources.LoadAll<QuestsRewards>("").ToList().First();
-            shipList = Resources.LoadAll<ShipList>("").ToList().First();
+            shipList = ShipList.GetData();
         }
 
         public static bool IsInited()

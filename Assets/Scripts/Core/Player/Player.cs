@@ -28,6 +28,7 @@ namespace Core.Player
         public Damager damager { get; private set; }
 
         public TargetManager targets { get; private set; }
+        public ReputationManager rep { get; private set; }
 
         public static Event OnSceneChanged = new Event();
         public static Event OnPreSceneChanged = new Event();
@@ -117,7 +118,8 @@ namespace Core.Player
                 models = GetComponent<ShipModels>();
                 attack = GetComponent<ShipAttack>();
                 damager = GetComponent<Damager>();
-
+                rep = GetComponent<ReputationManager>();
+                
                 spaceShip.OnChangeShip += models.InitShip;
                 spaceShip.SetShip(spaceShip.CloneShip());
             }

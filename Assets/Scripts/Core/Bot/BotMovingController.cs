@@ -12,17 +12,17 @@ namespace Core.Bot
             currentRot = -transform.position;
         }
 
-        void FixedUpdate()
+        void Update()
         {
             time += Time.deltaTime;
-            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
             if (transform.position.magnitude > 1000 && time > 30)
             {
                 currentRot = -transform.position;
                 time = 0;
             }
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(currentRot), 5 * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(currentRot), 5 * Time.deltaTime);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Core.UI
         private RectTransform rect;
         [SerializeField] private float height = 1400;
         [SerializeField] private TMP_Text infoText, nameText;
-        [SerializeField] private List<IconType> icons;
         [SerializeField] private CharacterList characters;
         [SerializeField] private TMP_Text repairT, fuelT;
 
@@ -77,13 +76,7 @@ namespace Core.UI
                 characters.UpdateList();
             }
         }
-
-
-        public IconType GetIcon(int fraction)
-        {
-            return icons.Find(x => x.fraction == fraction);
-        }
-
+        
         public void Animation()
         {
             if (rect)

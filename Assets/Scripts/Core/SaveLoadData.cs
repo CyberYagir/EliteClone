@@ -19,6 +19,7 @@ namespace Core
         public float Speed;
         public ShipData Ship;
         public Dictionary<string, object> Keys;
+        public Dictionary<string, int> Reputations;
         public LandLocation IsLanded;
         public List<AppliedQuests.QuestData> quests = new List<AppliedQuests.QuestData>();
         public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
@@ -62,9 +63,9 @@ namespace Core
             playedTime += (decimal)Time.deltaTime;
         }
 
-        public ref List<string> GetHistory()
+        public List<string> GetHistory()
         {
-            return ref systemsHistory;
+            return systemsHistory;
         }
 
         public bool IsContainsInHistory(string solarName)
@@ -76,6 +77,7 @@ namespace Core
             if (!IsContainsInHistory(solarName))
             {
                 systemsHistory.Add(solarName);
+                Save();
             }
         }
 
@@ -187,6 +189,8 @@ namespace Core
                     p.land.SetLand(playerData.IsLanded);
                     p.quests.LoadList(playerData.quests);
                     p.cargo.LoadData(playerData.items);
+                    
+                    p.rep.ratings = playerData.Reputations;
                 
                     startTime = playerData.playedTime;
                 
@@ -197,6 +201,7 @@ namespace Core
                     startSaveTime = playerData.startSaveTime;
 
                     systemsHistory = playerData.systemsHistory;
+                    
                 }
             }
             else
@@ -242,7 +247,8 @@ namespace Core
                 shipsInStations = shipsInStations,
                 playedTime = GetTime(),
                 startSaveTime = startSaveTime,
-                systemsHistory = systemsHistory
+                systemsHistory = systemsHistory,
+                Reputations = p.rep.ratings
             };
             SaveData(playerData);
         }

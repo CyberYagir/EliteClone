@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -29,6 +30,10 @@ namespace Core.Init
             {
                 fpsHolder = FindObjectOfType<LiteFPSCounter>().gameObject;
             }
+        }
+
+        private void Start()
+        {
             LoadConfig();
         }
 

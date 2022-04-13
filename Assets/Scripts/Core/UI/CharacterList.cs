@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Game;
 using Core.Location;
 using Core.Player;
 using Core.Systems;
@@ -27,7 +28,7 @@ namespace Core.UI
                 {
                     var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
                     var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
-                    quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestComplited.Rewarded && y.questID == x.questID) != null);
+                    quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestCompleted.Rewarded && y.questID == x.questID) != null);
                     questList.UpdateQuests(quests);
                 }
             }
@@ -95,7 +96,7 @@ namespace Core.UI
             foreach (var character in WorldOrbitalStation.Instance.characters)
             {
                 var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
-                it.InitQuesterItem(character.fraction, baseWindow.GetIcon(character.fraction).icon, character.firstName + " " + character.lastName, character, id);
+                it.InitQuesterItem(character.fraction, WorldDataItem.Fractions.IconByID(character.fraction), character.firstName + " " + character.lastName, character, id);
                 it.gameObject.SetActive(true);
                 var bEffect = it.GetComponent<ButtonEffect>();
                 items.Add(bEffect);

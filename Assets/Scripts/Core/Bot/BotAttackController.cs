@@ -44,12 +44,6 @@ namespace Core.Bot
             StartCoroutine(BlockCircleFly());
             GetComponent<BotVisual>().ActiveLights();
         }
-
-        private void FixedUpdate()
-        {
-            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);// = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        }
-
         public void SetTarget(Transform target)
         {
             targetShip = target;
@@ -58,6 +52,7 @@ namespace Core.Bot
         {
             Vector3 dir = target - transform.position;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 1.5f);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);// = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
 
             var targetAngle = Mathf.PerlinNoise((transform.position.x + transform.position.z) * 0.01f, (transform.position.y + transform.position.z) * 0.01f);

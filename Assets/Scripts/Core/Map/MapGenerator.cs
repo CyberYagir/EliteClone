@@ -1,12 +1,13 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Core.Galaxy;
 using Core.Systems;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -31,6 +32,12 @@ namespace Core.Map
             Instance = this;
             Reload();
             Set = true;
+        }
+        
+
+        private void Start()
+        {
+            StartCoroutine(WaitForDisableCamera());
         }
 
         private void OnDestroy()
@@ -100,16 +107,24 @@ namespace Core.Map
                 names[i].transform.position = selector.CalcPos(spawned[i].transform.position);
                 names[i].transform.localScale = Vector3.one * (Mathf.Abs((Vector2.Distance(names[i].transform.position, camera.transform.position) / 40))) * 0.2f;
                 texts[i].fontSize = 30 - Mathf.Abs((Vector2.Distance(names[i].transform.position, camera.transform.position) / 40));
+            } 
+        }
+
+        IEnumerator WaitForDisableCamera()
+        {
+            if (SceneManager.GetActiveScene().name != "Map")
+            {
+                yield return null;
+                yield return null;
+                yield return null;
+                camera.enabled = false;
             }
-
-
-            
         }
 
         public void ChangeSelected(GameObject select)
         {
             selected = select;
-            camera.transform.DOMove((select.transform.position) + new Vector3(0, 5, -5), 1);
+            camera.transform.position = (select.transform.position) + new Vector3(0, 5, -5);
         }
     }
 }

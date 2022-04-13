@@ -16,15 +16,18 @@ namespace Core.Map
 
         void Update()
         {
-            point.transform.position = CalcPos(MapGenerator.selected.transform.position);
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (MapGenerator.selected != null)
             {
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                point.transform.position = CalcPos(MapGenerator.selected.transform.position);
+
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    if (hit.collider != null)
-                        MapGenerator.Instance.ChangeSelected(hit.transform.gameObject);
+                    var ray = camera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        if (hit.collider != null)
+                            MapGenerator.Instance.ChangeSelected(hit.transform.gameObject);
+                    }
                 }
             }
         }

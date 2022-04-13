@@ -113,7 +113,7 @@ namespace Core.Systems
             NamesHolder.Init();
             firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
             lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
-            fraction = rnd.Next(0, ReputationManager.fractions.Count);
+            fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
         }
     }
 }

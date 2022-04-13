@@ -69,10 +69,11 @@ namespace Core.UI
             for (int i = 0; i < quests.Count; i++)
             {
                 var findQuest = AppliedQuests.Instance.quests.Find(x => x.questID == quests[i].questID);
-                if (findQuest == null || findQuest.questState != Quest.QuestComplited.Complited)
+                if (findQuest == null || findQuest.questState != Quest.QuestCompleted.Completed)
                 {
                     var questItem = Instantiate(item, holder);
-                    questItem.GetComponent<QuestItemUI>().Init(QuestDataItem.GetData().mineType.Find(x => x.type == quests[i].questType).icon, Quest.GetNameByID(quests[i].questType), count);
+                    var questData = WorldDataItem.Quests.ByID(quests[i].questType);
+                    questItem.GetComponent<QuestItemUI>().Init(questData.icon, questData.typeName, count);
                     questItem.gameObject.SetActive(true);
                     items.Add(questItem.GetComponent<ButtonEffect>());
                     count++;

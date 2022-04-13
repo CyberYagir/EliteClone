@@ -34,7 +34,7 @@ namespace Core.UI
             int count = 0;
             for (int i = 0; i < quests.quests.Count; i++)
             {
-                if (quests.quests[i].questState == Quest.QuestComplited.None || quests.quests[i].questState == Quest.QuestComplited.Complited)
+                if (quests.quests[i].questState == Quest.QuestCompleted.None || quests.quests[i].questState == Quest.QuestCompleted.Completed)
                 {
                     var newItem = Instantiate(item, holder);
                     var q = newItem.GetComponent<QuestTabItem>();

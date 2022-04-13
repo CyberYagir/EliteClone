@@ -16,7 +16,7 @@ namespace Core.Player
             public int seed;
             public Character character;
             public string stationName, solarName;
-            public Quest.QuestComplited state;
+            public Quest.QuestCompleted state;
         }
     
         private void Awake()
@@ -59,7 +59,8 @@ namespace Core.Player
             var quest = quests.Find(x => x.questID == questID);
             if (quest != null)
             {
-                quest.questState = Quest.QuestComplited.Rewarded; 
+                quest.questState = Quest.QuestCompleted.Rewarded; 
+                ReputationManager.Instance.AddRating(quest.quester.fraction, quest.questCost);
                 quest.quester.Reset();
                 return true;
             }

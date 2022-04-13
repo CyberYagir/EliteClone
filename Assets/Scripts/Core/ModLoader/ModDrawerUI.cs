@@ -20,9 +20,12 @@ namespace Core.ModLoader
             var mods = ModsManager.Instance.modLoader.mods;
             for (int i = 0; i < ModsManager.Instance.modLoader.loadChain.mods.Count; i++)
             {
-                var modItem = Instantiate(item, holder).GetComponent<ModItemUI>();
-                modItem.Init(mods.Find(x=>x.data.modName == Path.GetFileNameWithoutExtension(ModsManager.Instance.modLoader.loadChain.mods[i])));
-                modItem.gameObject.SetActive(true);
+                if (mods[i].data != null)
+                {
+                    var modItem = Instantiate(item, holder).GetComponent<ModItemUI>();
+                    modItem.Init(mods.Find(x => x.data.modName == Path.GetFileNameWithoutExtension(ModsManager.Instance.modLoader.loadChain.mods[i])));
+                    modItem.gameObject.SetActive(true);
+                }
             }
         }
 

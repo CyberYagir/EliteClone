@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Core.Bot;
 using Core.Galaxy;
+using Core.Game;
 using Core.Player;
 using Core.Systems;
 using Newtonsoft.Json;
@@ -54,7 +55,7 @@ namespace Core.Location
                 firstName = NamesHolder.GetFirstName(rnd);
                 lastName = NamesHolder.GetLastName(rnd);
                 uniqID = uid;
-                fraction = rnd.Next(0, ReputationManager.fractions.Count);
+                fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
             }
         }
 
@@ -367,7 +368,7 @@ namespace Core.Location
                             {
                                 break;
                             }
-                        } while (type == LocationBotType.OCG && (ships[i].fraction != ReputationManager.NameToID("Pirates") || ships[i].fraction != ReputationManager.NameToID("OCG")));
+                        } while (type == LocationBotType.OCG && (ships[i].fraction != WorldDataItem.Fractions.NameToID("Pirates") || ships[i].fraction != WorldDataItem.Fractions.NameToID("OCG")));
 
 
                         data.Add("tag-type", type);

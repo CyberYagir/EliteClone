@@ -1,27 +1,55 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Game;
 using UnityEngine;
 
 namespace Core.Player
 {
     public class ReputationManager : MonoBehaviour
     {
-        public static List<string> fractions = new List<string>()
+        public static ReputationManager Instance;
+        public Dictionary<string, int> ratings = new Dictionary<string, int>();
+        public Event OnChangeRating = new Event();
+        
+        private void Awake()
         {
-            "Pirates",
-            "Libertarians",
-            "Communists",
-            "Anarchists",
-            "OCG"
-        };
-
-        public static int NameToID(string _name)
-        {
-            return fractions.FindIndex(x => x == _name);
+            Instance = this;
         }
-        public static string IDToName(int id)
+        
+        public void AddRating(int fractionID, int scores)
         {
-            return fractions[id];
+            var fractionName = WorldDataItem.Fractions.NameByID(fractionID);
+            AddRating(fractionName, scores);
+        }
+
+        public void AddRating(string fractionName, int scores)
+        {
+            if (ratings == null)
+                ratings = new Dictionary<string, int>();
+            if (!ratings.ContainsKey(fractionName))
+            {
+                ratings.Add(fractionName, 0);
+            }
+            ratings[fractionName] += scores;
+            OnChangeRating.Run();
+        }
+
+        public int GetMax()
+        {
+            if (ratings == null)
+                ratings = new Dictionary<string, int>();
+            var max = 0;
+
+            foreach (var rt in ratings)
+            {
+                if (rt.Value > max)
+                {
+                    max = rt.Value;
+                }
+            }
+
+            return max;
         }
     }
 }

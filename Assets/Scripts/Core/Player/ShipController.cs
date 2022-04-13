@@ -197,6 +197,7 @@ namespace Core.Player
             return true;
         }
 
+        private const float locationSpeedUp = 5;
         public void ForwardBackward()
         {
             ForwardBackwardMove();
@@ -209,7 +210,8 @@ namespace Core.Player
                 if (!IsStoping())
                 {
                     Moving();
-                    rigidbody.velocity = transform.forward * (speed + player.warp.warpSpeed);
+                    var calcSpeed = (World.Scene == Scenes.Location && !player.warp.isWarp ? speed * locationSpeedUp : speed);
+                    rigidbody.velocity = transform.forward * (calcSpeed + player.warp.warpSpeed);
                 }
             }
         }

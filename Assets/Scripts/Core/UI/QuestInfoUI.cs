@@ -57,7 +57,7 @@ namespace Core.UI
                 {
                     if (!AppliedQuests.Instance.IsQuestApplied(currentQuest.questID))
                     {
-                        if (currentQuest.questState != Quest.QuestComplited.Complited)
+                        if (currentQuest.questState != Quest.QuestCompleted.Completed)
                         {
                             AddQuest();
                         }
@@ -65,15 +65,15 @@ namespace Core.UI
                     else //Applied Quest
                     {
                         currentQuest.CheckIsQuestCompleted();
-                        if (currentQuest.questState != Quest.QuestComplited.Complited && currentQuest.questState != Quest.QuestComplited.Rewarded)
+                        if (currentQuest.questState != Quest.QuestCompleted.Completed && currentQuest.questState != Quest.QuestCompleted.Rewarded)
                         {
                             AppliedQuests.Instance.CancelQuest(currentQuest);
                             UpdateData(currentQuest);
                         }
-                        else if (currentQuest.questState == Quest.QuestComplited.Complited)
+                        else if (currentQuest.questState == Quest.QuestCompleted.Completed)
                         {
                             currentQuest.OnFinish();
-                            if (currentQuest.questState == Quest.QuestComplited.Rewarded)
+                            if (currentQuest.questState == Quest.QuestCompleted.Rewarded)
                             {
                                 UpdateData(currentQuest);
                                 GetComponentInParent<BaseWindow>().RedrawAll();
@@ -188,7 +188,7 @@ namespace Core.UI
             
             if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
             {
-                if (quest.questState == Quest.QuestComplited.None)
+                if (quest.questState == Quest.QuestCompleted.None)
                 {
                     buttonText.text = "";
                     quest.GetButtonText();
@@ -196,7 +196,7 @@ namespace Core.UI
                 }
                 else
                 {
-                    if (quest.questState != Quest.QuestComplited.Rewarded)
+                    if (quest.questState != Quest.QuestCompleted.Rewarded)
                     {
                         buttonText.text = "Finish";
                     }

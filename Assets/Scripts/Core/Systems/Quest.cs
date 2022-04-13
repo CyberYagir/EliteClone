@@ -15,31 +15,31 @@ namespace Core.Location
     [System.Serializable]
     public class Quest
     {
-
-        public static List<string> QuestTypes = new List<string>() {"Kill", "Mine", "Transfer"};
-
-        public static string GetNameByID(int id)
+        public enum QuestCompleted
         {
-            return QuestTypes[id];
+            None, BrokeQuest, Completed, Rewarded
         }
         
         
-        public enum QuestComplited
-        {
-            None, BrokeQuest, Complited, Rewarded
-        }
-        
-        public Character quester;
-        public int questType;
-        public int questID;
-        public QuestPath pathToTarget = new QuestPath();
-        public QuestComplited questState;
+        public Character quester { get; private set; }
+        public int questType { get; private set; }
+        public int questID { get; private set; }
 
-        public Reward reward = new Reward();
-        public string appliedStation, appliedSolar;
-        public List<Item> toTransfer = new List<Item>();
+        public int questCost { get; private set; }
+
+        public string appliedStation { get; private set; }
+        public string appliedSolar { get; private set; }
+        public List<Item> toTransfer { get; private set; } = new List<Item>();
+        public Reward reward { get; private set; } = new Reward();
+        
+        
         public Dictionary<string, object> keyValues = new Dictionary<string, object>();
+        public QuestPath pathToTarget = new QuestPath();
+        public QuestCompleted questState;
         public string buttonText;
+
+
+
 
         public Quest(int questSeed , Character character, string stationName, string appliedSolar)
         {
@@ -49,15 +49,9 @@ namespace Core.Location
             Init(questSeed, character);
         }
 
-        public Quest()
-        {
+        public Quest(){}
 
-        }
-
-        public bool IsTypeQuest(string str)
-        {
-            return questType == QuestTypes.FindIndex(x => String.Equals(x.Trim(), str.Trim(), StringComparison.CurrentCultureIgnoreCase));
-        }
+        public bool IsTypeQuest(string str) => questType == WorldDataItem.Quests.NameToID(str);
         
         public QuestPath GetLastQuestPath()
         {
@@ -101,9 +95,9 @@ namespace Core.Location
         {
             var rnd = new Random(questSeed);
             quester = character;
-            questType = rnd.Next(0, QuestTypes.Count);
+            questType = rnd.Next(0, WorldDataItem.Quests.Count);
             questID = questSeed;
-
+            questCost = rnd.Next(1, 5);
             if (WorldStationQuests.Instance != null)
             {
                 WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
@@ -188,7 +182,7 @@ namespace Core.Location
             }
             else
             {
-                questState = QuestComplited.BrokeQuest;
+                questState = QuestCompleted.BrokeQuest;
             }
 
             return first;

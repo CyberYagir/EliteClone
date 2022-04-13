@@ -17,7 +17,7 @@ namespace Core.UI
 
         public void Init(Quest questsQuest)
         {
-            icon.sprite = QuestDataItem.GetData().mineType.Find(x => x.type == questsQuest.questType).icon;
+            icon.sprite = WorldDataItem.Quests.IconByID(questsQuest.questType);
             targetT.text = questsQuest.GetLastQuestPath().targetName;
             QuestPath first = questsQuest.pathToTarget;
             QuestPath questPath = first;

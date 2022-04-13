@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14fdc9ae516cbd4db6a064f7c753aab, type: 3}
+  m_Name: WorldData
+  m_EditorClassIdentifier: 
+  quests:
+    types:
+    - typeName: Kill
+      icon: {fileID: 21300000, guid: a607f8c36f890fc48962f16f7b32d54b, type: 3}
+    - typeName: Mine
+      icon: {fileID: 21300000, guid: cbe644722e8bacd48bca5fb47fc31f2e, type: 3}
+    - typeName: Transfer
+      icon: {fileID: 21300000, guid: 9ad9f842ebc4eb14f940450c20d29b60, type: 3}
+  fractions:
+    types:
+    - typeName: Pirates
+      icon: {fileID: 21300000, guid: 092db353e2e79384e84542da1033196e, type: 3}
+    - typeName: Libertarians
+      icon: {fileID: 21300000, guid: 1dd04911e65ad294eb054b8f19e73cde, type: 3}
+    - typeName: Communists
+      icon: {fileID: 21300000, guid: 08f9d5721a4710b45bf8d3630faa0135, type: 3}
+    - typeName: Anarchists
+      icon: {fileID: 21300000, guid: 4254c2200aa25034a9a17055657a28ea, type: 3}
+    - typeName: OCG
+      icon: {fileID: 21300000, guid: 9b134be6eaa1dfa4aab83432852fc79c, type: 3}

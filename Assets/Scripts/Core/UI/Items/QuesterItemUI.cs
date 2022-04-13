@@ -1,3 +1,4 @@
+using Core.Game;
 using Core.Player;
 using Core.Systems;
 using TMPro;
@@ -23,7 +24,7 @@ namespace Core.UI
             image.sprite = _frationImage;
 
             questerNameT.text = _questerName;
-            fractionNameT.text = ReputationManager.IDToName(fraction);
+            fractionNameT.text = WorldDataItem.Fractions.NameByID(fraction);
 
             character = _character;
 

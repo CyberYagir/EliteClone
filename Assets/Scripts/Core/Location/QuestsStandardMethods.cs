@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Game;
 using Core.Player;
 using Core.Systems;
 using UnityEngine;
@@ -64,13 +65,13 @@ namespace Core.Location
                 var text = "Your goal is to destroy a man named ";
                 text += "<color=orange>" + NamesHolder.ToUpperFist(ships[id].firstName) + " " + NamesHolder.ToUpperFist(ships[id].lastName) + "</color>.\n";
                 text += "Vehicle: " + ItemsManager.GetShipItem(ships[id].shipID)?.shipName + "\n";
-                text += "Fraction: " + ships[id].fraction;
+                text += "Fraction: " + WorldDataItem.Fractions.NameByID(ships[id].fraction);
                 quest.keyValues.Add("Text", text);
                 quest.reward.Init(quest.questID, 5000);
             }
             else
             {
-                quest.questState = Quest.QuestComplited.BrokeQuest;
+                quest.questState = Quest.QuestCompleted.BrokeQuest;
             }
         }
         
@@ -93,7 +94,7 @@ namespace Core.Location
                     {
                         if (WorldOrbitalStation.Instance.transform.name == last.targetName)
                         {
-                            quest.questState = Quest.QuestComplited.Complited;
+                            quest.questState = Quest.QuestCompleted.Completed;
                         }
                     }
                 }
@@ -111,7 +112,7 @@ namespace Core.Location
                     {
                         if (ship.uniqID == (int)quest.keyValues["BotTarget"])
                         {
-                            quest.questState = Quest.QuestComplited.Complited;
+                            quest.questState = Quest.QuestCompleted.Completed;
                             return;
                         }
                     }
@@ -130,7 +131,7 @@ namespace Core.Location
             {
                 if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
                 {
-                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestComplited.Complited)
+                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
                     {
                         quest.buttonText = "Finish";
                     }
@@ -168,7 +169,7 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Kill"))
             {
-                if (quest.questState == Quest.QuestComplited.Complited)
+                if (quest.questState == Quest.QuestCompleted.Completed)
                 {
                     quest.buttonText = "Finish";
                 }
@@ -196,7 +197,7 @@ namespace Core.Location
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {
-                            quest.questState = Quest.QuestComplited.Rewarded;
+                            quest.questState = Quest.QuestCompleted.Rewarded;
                         }
                     }
                     else
@@ -211,13 +212,13 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Kill"))
             { 
-                if (quest.questState == Quest.QuestComplited.Complited)
+                if (quest.questState == Quest.QuestCompleted.Completed)
                 {
                     if (Player.Player.inst.cargo.AddItems(quest.reward.rewardItems))
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {
-                            quest.questState = Quest.QuestComplited.Rewarded;
+                            quest.questState = Quest.QuestCompleted.Rewarded;
                         }
                     }
                 }
