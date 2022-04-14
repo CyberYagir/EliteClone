@@ -5,7 +5,7 @@ namespace Core.Galaxy
     [System.Serializable]
     public class Star: SpaceObject
     {
-        public enum StarType { M, K, G, F, A, B, O}
+        public enum StarType { M, K, G, F, A, B, O, Hole}
         public StarType starType;
 
         public Star(StarType starType, System.Random rnd)
@@ -41,6 +41,10 @@ namespace Core.Galaxy
                 case StarType.O:
                     mass = GalaxyGenerator.NextDecimal(rnd, 55f, 120f);
                     radius = GalaxyGenerator.NextDecimal(rnd, 15f, 40f);
+                    break;
+                case StarType.Hole:
+                    mass = GalaxyGenerator.NextDecimal(rnd, 100f, 220f);
+                    radius = GalaxyGenerator.NextDecimal(rnd, 30f, 70f);
                     break;
                 default:
                     mass = -1;

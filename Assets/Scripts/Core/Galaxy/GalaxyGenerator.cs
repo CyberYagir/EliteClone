@@ -158,22 +158,7 @@ namespace Core.Galaxy
 
             return system;
         }
-
-        public static Star GetFirstStar(DVector pos, System.Random rnd)
-        {
-            var rnd1 = new System.Random((int)(pos.x + pos.y + pos.z));
-
-            var starTypes = System.Enum.GetNames(typeof(Star.StarType)).Length;
-
-            float xCoord = (float)pos.x / (float)GalaxyGenerator.maxRadius * 20f;
-            float yCoord = (float)pos.y / (float)GalaxyGenerator.maxRadius * 20f;
-            float sample = Mathf.PerlinNoise(xCoord, yCoord);
-
-            Star.StarType type = (Star.StarType)System.Math.Round(starTypes * sample);
-
-            return new Star(type, rnd1);
-        }
-
+        
         public static void GetSiblings(SolarSystem system)
         {
             foreach (var sys in systems)
@@ -225,7 +210,7 @@ namespace Core.Galaxy
             for (int i = 0; i < systemsCount; i++)
             {
                 var system = GetBaseSystem(rnd);
-                system.stars.Add(GetFirstStar(system.position, rnd));
+                system.stars.Add(SolarSystemGenerator.GenStars(1, system.name, system.position)[0]);
                 system.SetName();
                 system.stations = GetStaions(system);
                 GetSiblings(system);

@@ -27,10 +27,13 @@ namespace Core.Systems
                         wsp.UpdateVisibility();
                     }
                     WorldSpaceObjectCanvas.Instance.SkipFrame();
+                    print("Moved");
                 }
 
                 transform.position = new Vector3(Mathf.Clamp(transform.position.x, -100000, 100000),
                     Mathf.Clamp(transform.position.y, -100000, 100000), Mathf.Clamp(transform.position.z, -100000, 100000));
+                
+                
             }
         }
     }

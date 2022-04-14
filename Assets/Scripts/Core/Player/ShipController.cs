@@ -98,7 +98,8 @@ namespace Core.Player
                         if (Vector3.Distance(obj.transform.position, transform.position) <
                             obj.transform.localScale.magnitude * 0.9f)
                         {
-                            if (Physics.Raycast(transform.position, transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical)), out RaycastHit hit))
+                            var dir = transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical));
+                            if (Physics.Raycast(transform.position, dir, float.MaxValue, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
                             {
                                 player.HardStop();
                             }
