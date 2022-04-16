@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using Core.Game;
 using Core.Location;
-using Core.Player;
-using Random = System.Random;
 
 namespace Core.Systems
 {
-    [System.Serializable]
+    [Serializable]
     public class QuestPath
     {
         public string solarName = "", targetName = "";
         public QuestPath prevPath, nextPath;
-        public QuestPath()
-        {
-            
-        }
-        
+
         public bool isFirst
         {
             get
@@ -82,7 +76,7 @@ namespace Core.Systems
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public class Character
     {
         public string firstName;
@@ -92,7 +86,7 @@ namespace Core.Systems
         
         public int fraction;
 
-        public Character(System.Random rnd)
+        public Character(Random rnd)
         {
             Init(rnd);
         }
@@ -107,7 +101,7 @@ namespace Core.Systems
             firstName = null;
             lastName = null;
         }
-        public void Init(System.Random rnd)
+        public void Init(Random rnd)
         {
             characterID = rnd.Next(-9999999, 9999999);
             NamesHolder.Init();

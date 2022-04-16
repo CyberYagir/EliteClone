@@ -1,17 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Core.Galaxy;
 using Core.Game;
 using Core.Location;
+using Core.PlayerScripts;
 using Newtonsoft.Json;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Systems
 {
-    [System.Serializable]
+    [Serializable]
     public class SavedSolarSystem
     {
         public string systemName;
@@ -32,9 +33,9 @@ namespace Core.Systems
         
             var system = new SavedSolarSystem();
             system.systemName = Path.GetFileNameWithoutExtension(GetSystemFileName());
-            if (Player.Player.inst)
+            if (Player.inst)
             {
-                system.playerPos = Player.Player.inst.transform.position;
+                system.playerPos = Player.inst.transform.position;
             }
             if (objects.Count != 0)
             {
@@ -42,7 +43,7 @@ namespace Core.Systems
             }
             
             File.WriteAllText(GetSystemFileName(), JsonConvert.SerializeObject(PlayerDataManager.CurrentSolarSystem));
-            File.WriteAllText(PlayerDataManager.CurrentSystemFile, JsonConvert.SerializeObject(system, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+            File.WriteAllText(PlayerDataManager.CurrentSystemFile, JsonConvert.SerializeObject(system, new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
         }
     
     
@@ -93,12 +94,12 @@ namespace Core.Systems
         {
             if (PlayerDataManager.CurrentSolarSystem != null)
             {
-                if (FindObjectOfType<Player.Player>() == null)
+                if (FindObjectOfType<Player>() == null)
                 {
-                    Instantiate(player.gameObject).GetComponent<Player.Player>().Init();
+                    Instantiate(player.gameObject).GetComponent<Player>().Init();
                 }
 
-                var playerInst = Player.Player.inst.transform;
+                var playerInst = Player.inst.transform;
                 playerInst.parent = transform;
                 playerInst.parent = null;
                 playerInst.position = Vector3.zero; 
@@ -128,13 +129,13 @@ namespace Core.Systems
 
         private void Update()
         {
-            if (Player.Player.inst.saves.ExKey("system_start_on"))
+            if (Player.inst.saves.ExKey("system_start_on"))
             {
-                Player.Player.inst.transform.position = GameObject.Find((string) Player.Player.inst.saves.GetKeys()["system_start_on"]).transform.position;
-                Player.Player.inst.saves.DelKey("system_start_on");
+                Player.inst.transform.position = GameObject.Find((string) Player.inst.saves.GetKeys()["system_start_on"]).transform.position;
+                Player.inst.saves.DelKey("system_start_on");
             }
 
-            this.enabled = false;
+            enabled = false;
         }
 
         public static string GetSystemFileName()
@@ -160,9 +161,9 @@ namespace Core.Systems
         public static List<Star> GenStars(int starsCount, string systemName, DVector pos)
         {
             List<Star> stars = new List<Star>();
-            System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+            Random rnd = new Random((int)(pos.x + pos.y + pos.z));
             var fullStarsCount = GetStarsCount(pos);
-            var starTypes = System.Enum.GetNames(typeof(Star.StarType)).Length;
+            var starTypes = Enum.GetNames(typeof(Star.StarType)).Length;
             for (int i = 0; i < starsCount; i++)
             {
                 Star.StarType type = Star.StarType.M;
@@ -173,7 +174,7 @@ namespace Core.Systems
                     float xCoord = pos.x / GalaxyGenerator.maxRadius * 20f;
                     float yCoord = pos.y / GalaxyGenerator.maxRadius * 20f;
                     float sample = Mathf.PerlinNoise(xCoord, yCoord);
-                    type = (Star.StarType) System.Math.Round(starTypes * sample);
+                    type = (Star.StarType) Math.Round(starTypes * sample);
 
                 }
                 else
@@ -204,7 +205,7 @@ namespace Core.Systems
 
         public static int GetStarsCount(DVector pos)
         {
-            var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+            var rnd = new Random((int) (pos.x + pos.y + pos.z));
             return rnd.Next(1, 4);
         }
         public static SolarSystem Generate(SolarSystem solarSystem)
@@ -212,7 +213,7 @@ namespace Core.Systems
             GetPlanetTextures();
             var system = solarSystem;
             var pos = solarSystem.position;
-            var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+            var rnd = new Random((int) (pos.x + pos.y + pos.z));
             var starsCount = GetStarsCount(system.position);
             var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
             var basesCount = rnd.Next(0, planetsCount+1);
@@ -323,7 +324,7 @@ namespace Core.Systems
         private static List<Belt> GenerateBelts(int beltsCount, string systemName, DVector pos)
         {
             List<Belt> belts = new List<Belt>();
-            System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+            Random rnd = new Random((int)(pos.x + pos.y + pos.z));
 
             for (int i = 0; i < beltsCount; i++)
             {
@@ -341,7 +342,7 @@ namespace Core.Systems
         public static List<OrbitStation> GenerateOrbitStations(int stationsCount, string systemName, DVector pos)
         {
             List<OrbitStation> stations = new List<OrbitStation>();
-            System.Random rnd = new System.Random((int)(pos.x + pos.y + pos.z));
+            Random rnd = new Random((int)(pos.x + pos.y + pos.z));
             for (int i = 0; i < stationsCount; i++)
             {
                 var station = new OrbitStation();
@@ -361,7 +362,7 @@ namespace Core.Systems
             suns = new List<WorldSpaceObject>();
             objects = new List<WorldSpaceObject>();
             var pos = system.position;
-            var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+            var rnd = new Random((int) (pos.x + pos.y + pos.z));
             Vector3 center = new Vector3(0, 0, 0);
             foreach (var star in PlayerDataManager.CurrentSolarSystem.stars)
             {
@@ -376,7 +377,7 @@ namespace Core.Systems
             for (int i = 0; i < masses.Count; i++)
             {
                 center = Vector3.Lerp(center, masses[i].position.ToVector() * _scale,
-                    (float) masses[i].mass / (float) masses[0].mass);
+                    masses[i].mass / masses[0].mass);
             }
             GameObject attractor = new GameObject("Attractor");
             attractor.transform.position = center;
@@ -389,7 +390,7 @@ namespace Core.Systems
 
                 sun.transform.name = item.name;
                 sun.transform.position = item.position.ToVector() * _scale;
-                sun.transform.localScale *= (float) item.radius * _scale;
+                sun.transform.localScale *= item.radius * _scale;
         
                 sun.GetComponent<SunTexture>().SetMaterials(item, ((int)item.starType+1) * 50);
             
@@ -409,7 +410,7 @@ namespace Core.Systems
                 var planet = Instantiate(planetPrefab, transform);
                 planet.transform.name = item.name;
                 planet.transform.position = item.position.ToVector() * _scale;
-                planet.transform.localScale *= (float) item.radius * _scale;
+                planet.transform.localScale *= item.radius * _scale;
 
                 var rotate = planet.GetComponent<RotateAround>();
                 rotate.InitOrbit(attractor.transform, (float) rnd.NextDouble() * 0.001f, objects.Count);
@@ -447,9 +448,9 @@ namespace Core.Systems
             startPoint = center + Vector3.one * (masses[0].radius * _scale * 4);
             if (setPos)
             {
-                print("SetPos");
-                FindObjectOfType<Player.Player>().transform.position = startPoint;
-                FindObjectOfType<Player.Player>().transform.LookAt(objects[0].transform);
+                //print("SetPos");
+                FindObjectOfType<Player>().transform.position = startPoint;
+                FindObjectOfType<Player>().transform.LookAt(objects[0].transform);
             }
 
             var systemsParent = new GameObject("SystemsHolder");
@@ -468,7 +469,7 @@ namespace Core.Systems
             var orbital = Instantiate(prefab);
             orbital.transform.name = item.name;
             orbital.transform.position = item.position.ToVector() * _scale;
-            orbital.transform.localScale *= (float) item.radius * _scale;
+            orbital.transform.localScale *= item.radius * _scale;
 
             if (orbital.transform.localScale == Vector3.zero)
             {

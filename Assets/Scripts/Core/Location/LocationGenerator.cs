@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Core.Galaxy;
+using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 using Random = UnityEngine.Random;
 
 namespace Core.Location
 {
-    [System.Serializable]
+    [Serializable]
     public class Location
     {
         public string systemName;
@@ -25,10 +24,8 @@ namespace Core.Location
             {
                 return strings[1];
             }
-            else
-            {
-                return systemName;
-            }
+
+            return systemName;
         }
     }
     public class LocationGenerator : MonoBehaviour
@@ -45,9 +42,9 @@ namespace Core.Location
         {
             CurrentSave = null;
             WorldOrbitalStation.ClearEvent();
-            if (FindObjectOfType<Player.Player>() == null)
+            if (FindObjectOfType<Player>() == null)
             {
-                Instantiate(player.gameObject).GetComponent<Player.Player>().Init();
+                Instantiate(player.gameObject).GetComponent<Player>().Init();
             }
 
 
@@ -63,8 +60,8 @@ namespace Core.Location
             InitFirstFrame();
         
         
-            Player.Player.inst.transform.parent = transform;
-            Player.Player.inst.transform.parent = null;
+            Player.inst.transform.parent = transform;
+            Player.inst.transform.parent = null;
         
             GetComponent<SolarSystemShips>().Init();
         }
@@ -107,33 +104,36 @@ namespace Core.Location
 
             OnSetSystemToLocation.Invoke();
         }
-    
+
 
         private void Update()
         {
-            transform.position = Player.Player.inst.transform.position;
+            if (Player.inst)
+            {
+                transform.position = Player.inst.transform.position;
+            }
         }
 
         public void InitFirstFrame()
         {
             var location = MoveWorld();
             var locationObject = location.GetComponent<WorldInteractivePoint>();
-            if (Player.Player.inst.saves.ExKey("loc_start"))
+            if (Player.inst.saves.ExKey("loc_start"))
             {
-                Player.Player.inst.transform.position = locationObject.spawnPoint.position;
-                Player.Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
+                Player.inst.transform.position = locationObject.spawnPoint.position;
+                Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
             }
-            else if (Player.Player.inst.saves.ExKey("loc_start_on_pit"))
+            else if (Player.inst.saves.ExKey("loc_start_on_pit"))
             {
                 WorldOrbitalStation.OnInit.AddListener(delegate
                 {
                     var allPoints = WorldOrbitalStation.Instance.GetComponent<WorldOrbitalStationPoints>().GetLandPoint();
                     var point = allPoints[Random.Range(0, allPoints.Count)];
             
-                    Player.Player.inst.transform.position = point.point.position;
-                    Player.Player.inst.transform.rotation = point.point.rotation;
+                    Player.inst.transform.position = point.point.position;
+                    Player.inst.transform.rotation = point.point.rotation;
             
-                    Player.Player.inst.land.SetLand(true, point.point.position, point.point.rotation);
+                    Player.inst.land.SetLand(true, point.point.position, point.point.rotation);
 
                     point.isFilled = true;
                 });
@@ -148,19 +148,19 @@ namespace Core.Location
 
         public void SetSpaceObjectDistance()
         {
-            if (Player.Player.inst.saves.ExKey("loc_start"))
+            if (Player.inst.saves.ExKey("loc_start"))
             {   
-                Player.Player.inst.saves.DelKey("loc_start");
+                Player.inst.saves.DelKey("loc_start");
             }else
-            if (Player.Player.inst.saves.ExKey("loc_start_on_pit"))
+            if (Player.inst.saves.ExKey("loc_start_on_pit"))
             {
-                Player.Player.inst.saves.DelKey("loc_start_on_pit");
+                Player.inst.saves.DelKey("loc_start_on_pit");
             }
             else
             {
                 foreach (Transform spaceObject in transform)
                 {
-                    spaceObject.transform.position += Player.Player.inst.transform.position;
+                    spaceObject.transform.position += Player.inst.transform.position;
                 } 
             }
         }
@@ -185,14 +185,14 @@ namespace Core.Location
     
         public static void SaveLocationFile(string locName, LocationPoint.LocationType type, Dictionary<string, object> otherData = default)
         {
-            var n = new Location()
+            var n = new Location
             {
                 systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
                 locationName = locName,
                 type = type,
                 otherKeys = otherData
             };
-            File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
+            File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
         }
 
         public static void RemoveLocationFile()

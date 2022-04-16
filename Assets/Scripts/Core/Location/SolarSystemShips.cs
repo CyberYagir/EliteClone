@@ -4,7 +4,7 @@ using System.IO;
 using Core.Bot;
 using Core.Galaxy;
 using Core.Game;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -28,7 +28,7 @@ namespace Core.Location
         private bool spawnEnviroment;
     
 
-        [System.Serializable]
+        [Serializable]
         public class LocationHolder
         {
             public string locationName;
@@ -40,7 +40,7 @@ namespace Core.Location
             }
         }
 
-        [System.Serializable]
+        [Serializable]
         public class HumanShip
         {
             public int uniqID;
@@ -63,7 +63,7 @@ namespace Core.Location
         {
             public int uniqID;
             public string locationName, botFullName;
-            public DVector deadPos = new DVector();
+            public DVector deadPos;
         }
 
         private void Awake()
@@ -90,7 +90,7 @@ namespace Core.Location
                 deadList.Add(PlayerDataManager.CurrentSolarSystem.name, new List<HumanShipDead>());
             }
 
-            deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead() {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
+            deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
 
             ExplodeShip(builder);
         
@@ -348,7 +348,7 @@ namespace Core.Location
                 var botName = NamesHolder.ToUpperFist(ships[i].firstName) + " " + NamesHolder.ToUpperFist(ships[i].lastName);
                 if (!IsDead(ships[i].uniqID) || (World.Scene == Scenes.Location && LocationGenerator.CurrentSave.locationName == botName))
                 {
-                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) Player.Player.inst.saves.GetTime() / 60f / 60f));
+                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) Player.inst.saves.GetTime() / 60f / 60f));
                     var pos = (new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100)) / 100f) * 10000f;
                     var worldBot = Instantiate(prefab.gameObject, pos, Quaternion.identity);
                     worldBot.name = botName;

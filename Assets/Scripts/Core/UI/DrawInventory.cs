@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Player;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -13,7 +13,7 @@ namespace Core.UI
         private float height;
         private void Awake()
         {
-            cargo = Player.Player.inst.cargo;
+            cargo = Player.inst.cargo;
             cargo.OnChangeInventory += OnChangeItems;
             height = item.sizeDelta.y;
             upDownUI.OnNavigateChange += ChangeButtonColors;
@@ -21,7 +21,7 @@ namespace Core.UI
 
         private void Start()
         {
-            tonsRow.SetValue(Player.Player.inst.cargo.tons, Player.Player.inst.Ship().data.maxCargoWeight, "_");
+            tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight);
         }
 
         private void Update()
@@ -82,7 +82,7 @@ namespace Core.UI
                 drops.Add(newItem.GetComponent<ItemUIDrop>());
             }
             upDownUI.itemsCount = cargo.items.Count;
-            tonsRow.SetValue(Player.Player.inst.cargo.tons, Player.Player.inst.Ship().data.maxCargoWeight, "_");
+            tonsRow.SetValue(Player.inst.cargo.tons, Player.inst.Ship().data.maxCargoWeight);
         }
     }
 }

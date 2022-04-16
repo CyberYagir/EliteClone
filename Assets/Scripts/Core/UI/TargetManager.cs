@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
 
@@ -11,14 +13,40 @@ namespace Core.UI
         public List<ContactObject> contacts { get; private set; } = new List<ContactObject>();
 
         public Event ContactsChanges = new Event();
+        public Event OnChangeTarget = new Event();
 
         private Camera camera;
 
+        private string lastTarget;
+        
         private void Start()
         {
             camera = Camera.main;
+            Player.OnPreSceneChanged += SaveLastSelected;
+            Player.OnSceneChanged += LoadLastSelected;
         }
 
+        public void SaveLastSelected()
+        {
+            if (target != null)
+            {
+                lastTarget = target.transform.name;
+            }
+            else
+            {
+                lastTarget = null;
+            }
+        }
+
+        public void LoadLastSelected()
+        {
+            if (lastTarget != null)
+            {
+                SetTarget(GameObject.Find(lastTarget)?.GetComponent<GalaxyObject>());
+                OnChangeTarget.Run();
+            }
+        }
+        
         private void Update()
         {
             if (InputM.GetAxisDown(KAction.SetTarget))
@@ -27,7 +55,6 @@ namespace Core.UI
                 {
                     var worldBody = TargetFromArray(SolarSystemGenerator.objects.Cast<GalaxyObject>().ToList());
                     var contactBody = TargetFromArray(contacts.Cast<GalaxyObject>().ToList());
-
                     if (worldBody == null && contactBody == null)
                     {
                         SetTarget(null);

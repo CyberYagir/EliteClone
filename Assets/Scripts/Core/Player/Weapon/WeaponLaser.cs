@@ -1,7 +1,7 @@
 using Core.Systems;
 using UnityEngine;
 
-namespace Core.Player.Weapon
+namespace Core.PlayerScripts.Weapon
 {
     public class WeaponLaser : Weapon
     {

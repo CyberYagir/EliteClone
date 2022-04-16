@@ -2,7 +2,6 @@ using System.Collections;
 using Core.Location;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Core.Bot
 {
@@ -10,7 +9,7 @@ namespace Core.Bot
     {
         public bool isLandProcess;
 
-        private float time = 0;
+        private float time;
         private float inLandTime;
         private bool unLand;
         private void Start()

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
 	public class CameraShake : MonoBehaviour
 	{
 		public static CameraShake Instance;
 	
 		[SerializeField] private Transform camTransform;
-		[SerializeField] private float shakeDuration = 0f;
+		[SerializeField] private float shakeDuration;
 		[SerializeField] private float shakeAmount = 0.7f;
 		[SerializeField] private float decreaseFactor = 1.0f;
 
@@ -18,7 +18,7 @@ namespace Core.Player
 			Instance = this;
 			if (camTransform == null)
 			{
-				camTransform = GetComponent(typeof(Transform)) as Transform;
+				camTransform = transform;
 			}
 		}
 		public static void Shake(float time = 0.1f)
@@ -34,7 +34,7 @@ namespace Core.Player
 		{
 			if (shakeDuration > 0)
 			{
-				camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+				camTransform.localPosition = originalPos + Random.insideUnitSphere * Mathf.CeilToInt(Time.deltaTime) * shakeAmount;
 				shakeDuration -= Time.deltaTime * decreaseFactor;
 			}
 			else

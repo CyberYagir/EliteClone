@@ -5,7 +5,7 @@ namespace Core.Init
     public class InitCameraAnim : MonoBehaviour
     {
         [SerializeField] private float maxLeft, speed, maxAngle;
-        public float percent = 0;
+        public float percent;
 
         private void Update()
         {

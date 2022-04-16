@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Core.Game;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class Cargo : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace Core.Player
     
         private ItemShip currentShip;
         public List<Item> items { get; private set; } = new List<Item>();
-        public float tons { get; private set; } = 0;
+        public float tons { get; private set; }
         public Event OnChangeInventory = new Event();
     
     
@@ -58,17 +58,15 @@ namespace Core.Player
             {
                 return (int)credit.amount.Value;
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
         }
 
         public void AddCredits(float count)
         {
             var credits = ItemsManager.GetCredits().Clone();
             credits.amount.SetValue(count);
-            AddItem(credits, true);
+            AddItem(credits);
             OnChangeInventory.Run();
         }
         public bool RemoveCredits(float remove, bool updateInventory = false)
@@ -100,7 +98,7 @@ namespace Core.Player
             List<ItemData> itemDatas = new List<ItemData>();
             for (int i = 0; i < items.Count; i++)
             {
-                itemDatas.Add(new ItemData() {idName = items[i].id.idname, value = items[i].amount.Value});
+                itemDatas.Add(new ItemData {idName = items[i].id.idname, value = items[i].amount.Value});
             }
             return itemDatas;
         }
@@ -169,10 +167,8 @@ namespace Core.Player
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     
         public bool AddItems(List<Item> its, bool add = true)
@@ -228,29 +224,27 @@ namespace Core.Player
                         if (callEvent) OnChangeInventory.Run();
                         return true;
                     }
-                    else
+
+                    var startItemCount = item.amount.value;
+                    for (int j = 0; j < startItemCount; j++)
                     {
-                        var startItemCount = item.amount.value;
-                        for (int j = 0; j < startItemCount; j++)
+                        if (findedItem[i].amount.Value + 1 <= findedItem[i].amount.Max && canAddByWeight)
                         {
-                            if (findedItem[i].amount.Value + 1 <= findedItem[i].amount.Max && canAddByWeight)
-                            {
-                                findedItem[i].amount.AddValue(1);
-                                item.amount.SubValue(1);
-                                tons += mass;
-                            }
-                            canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
-                            if (!canAddByWeight)
-                            {
-                                if (callEvent) OnChangeInventory.Run();
-                                break;
-                            }
+                            findedItem[i].amount.AddValue(1);
+                            item.amount.SubValue(1);
+                            tons += mass;
                         }
-                        if (item.amount.value == 0)
+                        canAddByWeight = tons + mass <= currentShip.data.maxCargoWeight;
+                        if (!canAddByWeight)
                         {
                             if (callEvent) OnChangeInventory.Run();
-                            return true;
+                            break;
                         }
+                    }
+                    if (item.amount.value == 0)
+                    {
+                        if (callEvent) OnChangeInventory.Run();
+                        return true;
                     }
                 }
             }
@@ -309,11 +303,9 @@ namespace Core.Player
                 if (callEvent) OnChangeInventory.Run();
                 return null;
             }
-            else
-            {
-                if (callEvent) OnChangeInventory.Run();
-                return removed;
-            }
+
+            if (callEvent) OnChangeInventory.Run();
+            return removed;
         }
 
         public bool RemoveItems(List<Item> its)
@@ -322,7 +314,7 @@ namespace Core.Player
             {
                 for (int i = 0; i < its.Count; i++)
                 {
-                    RemoveItem(its[i].id.idname, its[i].amount.Value, false);
+                    RemoveItem(its[i].id.idname, its[i].amount.Value);
                 }
                 OnChangeInventory.Run();
                 return true;

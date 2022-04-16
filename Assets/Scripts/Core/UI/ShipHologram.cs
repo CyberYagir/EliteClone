@@ -1,5 +1,6 @@
 using Core.Game;
 using Core.Location;
+using Core.PlayerScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace Core.UI
     public class ShipHologram : MonoBehaviour
     {
         private Quaternion startRotation;
-        private Player.Player player;
+        private Player player;
 
         public static ShipHologram Instance;
     
@@ -25,7 +26,7 @@ namespace Core.UI
         private void Start()
         {
             startRotation = transform.localRotation;
-            player = Player.Player.inst;
+            player = Player.inst;
             shipModel.sharedMesh = player.Ship().shipModel.GetComponent<MeshFilter>().sharedMesh;
 
             var matsCount = new Material[10];

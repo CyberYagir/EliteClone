@@ -2,7 +2,7 @@ using Core.Game;
 using Core.Location;
 using UnityEngine;
 
-namespace Core.Player.Weapon
+namespace Core.PlayerScripts.Weapon
 {
     public abstract class Weapon : MonoBehaviour
     {

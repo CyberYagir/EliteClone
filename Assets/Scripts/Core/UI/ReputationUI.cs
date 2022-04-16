@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Core.Player;
-using Core.UI;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI

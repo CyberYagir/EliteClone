@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class Planet: SpaceObject
     {
         public List<Planet> sattelites = new List<Planet>();
@@ -20,9 +21,9 @@ namespace Core.Galaxy
 
         }
 
-        public Planet(System.Random rnd, DVector postion, bool isStattelite = false)
+        public Planet(Random rnd, DVector postion, bool isStattelite = false)
         {
-            this.position = postion;
+            position = postion;
             mass = GalaxyGenerator.NextDecimal(rnd, 0.05f, 0.25f);
             if (!isStattelite)
             {

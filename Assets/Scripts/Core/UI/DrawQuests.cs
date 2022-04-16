@@ -1,6 +1,5 @@
 using Core.Location;
-using Core.Player;
-using Core.Systems;
+using Core.PlayerScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +13,9 @@ namespace Core.UI
         private float height;
         private void Awake()
         {
-            quests = Player.Player.inst.GetComponent<AppliedQuests>();
+            quests = Player.inst.GetComponent<AppliedQuests>();
             quests.OnChangeQuests += OnChangeQuests;
-            Player.Player.OnSceneChanged += OnChangeQuests;
+            Player.OnSceneChanged += OnChangeQuests;
             height = item.sizeDelta.y;
         }
 

@@ -1,5 +1,7 @@
-﻿namespace Core.Galaxy
+﻿using System;
+
+namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class OrbitStation : SpaceObject { }
 }

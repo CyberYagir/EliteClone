@@ -8,7 +8,7 @@ namespace Core.Garage
     {
         [SerializeField] private GameObject icon, replacer;
 
-        public static Slot selectedSlot = null;
+        public static Slot selectedSlot;
         public Event<Item> OnItemDrops = new Event<Item>();
 
         private void Start()

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,21 @@ namespace Core
 
     public class InputM : MonoBehaviour
     {
-        [System.Serializable]
+
+        private static InputM Instance;
+
+
+        public static InputM GetData()
+        {
+            if (Instance == null)
+            {
+                Instance = FindObjectOfType<InputM>();
+            }
+            return Instance;
+        }
+        
+        
+        [Serializable]
         public class Axis
         {
             public string name;
@@ -21,22 +35,29 @@ namespace Core
             public bool up;
         }
         
-        
         public List<Axis> axes;
+        public List<Axis> startAxes;
         public static Dictionary<KAction, Axis> keys = new Dictionary<KAction, Axis>();
 
         private void Awake()
+        {
+            startAxes = axes;
+        }
+
+        private void Start()
         {
             LoadControls();
         }
 
         public void LoadControls()
         {
+            
             keys = new Dictionary<KAction, Axis>();
             foreach (var ax in axes)
             {
                 keys.Add(ax.action, ax);
             }
+            
         }
     
         public List<Axis> GetAxesList()

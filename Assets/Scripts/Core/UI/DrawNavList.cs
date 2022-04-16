@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -19,7 +20,7 @@ namespace Core.UI
         protected virtual void Awake()
         {
             height = item.GetComponent<RectTransform>().sizeDelta.y;
-            Player.Player.OnSceneChanged += UpdateList;
+            Player.OnSceneChanged += UpdateList;
             updown.OnChangeSelected += ChangeSelect;
             updown.OnNavigateChange += UpdateColors;
         }
@@ -48,14 +49,7 @@ namespace Core.UI
 
             items = new List<NavItem>();
             RedrawList();
-            if (selected != null)
-            {
-                updown.selectedIndex = items.FindIndex(x => x.SpaceObject != null && x.SpaceObject.gameObject == selected);
-            }
-            else
-            {
-                updown.selectedIndex = 0;
-            }
+            updown.selectedIndex = selected != null ? items.FindIndex(x => x.SpaceObject != null && x.SpaceObject.gameObject == selected) : 0;
             updown.itemsCount = items.Count;
             UpdateWithoutLerp();
         }
@@ -71,13 +65,13 @@ namespace Core.UI
             int selectedIndex = updown.selectedIndex;
             if (selectedIndex != -1)
             {
-                if (items[selectedIndex].SpaceObject != Player.Player.inst.GetTarget())
+                if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
                 {
-                    Player.Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+                    Player.inst.SetTarget(items[selectedIndex].SpaceObject);
                 }
                 else
                 {
-                    Player.Player.inst.SetTarget(null);
+                    Player.inst.SetTarget(null);
                 }
 
                 UpdateColors();
@@ -97,7 +91,7 @@ namespace Core.UI
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Over;
                         }
-                        else if (items[i].SpaceObject == Player.Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Selected;
                         }
@@ -125,7 +119,7 @@ namespace Core.UI
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Over;
                         }
-                        else if (items[i].SpaceObject == Player.Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Selected;
                         }

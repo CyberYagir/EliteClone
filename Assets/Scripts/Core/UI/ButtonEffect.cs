@@ -42,17 +42,17 @@ namespace Core.UI
             {
                 if (over == ActionType.None)
                 {
-                    alpha = Mathf.Lerp(alpha, 0, Time.deltaTime * TransitionSpeed);
+                    alpha = Mathf.Lerp(alpha, 0, Time.unscaledDeltaTime * TransitionSpeed);
                 }
                 else
                 {
-                    alpha = Mathf.Lerp(alpha, 1, Time.deltaTime * TransitionSpeed);
+                    alpha = Mathf.Lerp(alpha, 1, Time.unscaledDeltaTime * TransitionSpeed);
                 }
 
                 backImage.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
             }
 
-            image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), TransitionSpeed * Time.deltaTime);
+            image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), TransitionSpeed * Time.unscaledDeltaTime);
         }
 
         public void WithoutLerp()

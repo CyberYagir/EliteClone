@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Core.Game;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace Core
         public Vector3 WorldPos;
         public Vector3 Pos;
         public Vector3 Rot;
-        public float Speed;
         public ShipData Ship;
         public Dictionary<string, object> Keys;
         public Dictionary<string, int> Reputations;
@@ -25,12 +23,12 @@ namespace Core
         public List<Cargo.ItemData> items = new List<Cargo.ItemData>();
         public Dictionary<string, List<ShipData>> shipsInStations = new Dictionary<string, List<ShipData>>();
         public List<string> systemsHistory = new List<string>();
-        public decimal playedTime = 0;
-        public int startSaveTime = 0;
+        public decimal playedTime;
+        public int startSaveTime;
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public class LandLocation
     {
         public Vector3 pos;
@@ -46,9 +44,9 @@ namespace Core
         private static int startSaveTime;
         private void Awake()
         {
-            if (Player.Player.inst)
+            if (Player.inst)
             {
-                Player.Player.OnSceneChanged += AddCurrentToHistory;
+                Player.OnSceneChanged += AddCurrentToHistory;
                 Load();
             }
         }
@@ -173,7 +171,7 @@ namespace Core
             if (playerData != null)
             {
                 var world = GameObject.FindGameObjectWithTag("WorldHolder");
-                var p = Player.Player.inst;
+                var p = Player.inst;
 
                 if (playerData != null)
                 {
@@ -184,7 +182,6 @@ namespace Core
 
                     p.LoadShip(playerData.Ship);
 
-                    p.control.speed = playerData.Speed;
                     keys = playerData.Keys;
                     p.land.SetLand(playerData.IsLanded);
                     p.quests.LoadList(playerData.quests);
@@ -228,15 +225,14 @@ namespace Core
         public void Save()
         {
             var world = GameObject.FindGameObjectWithTag("WorldHolder");
-            var p = Player.Player.inst;
+            var p = Player.inst;
             if (startSaveTime == 0)
             {
                 startSaveTime = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour * DateTime.Now.Minute * DateTime.Now.Millisecond;
             }
-            var playerData = new PlayerData()
+            var playerData = new PlayerData
             {
                 Ship = p.Ship().SaveShip(),
-                Speed = p.control.speed,
                 Pos = p.transform.position,
                 Rot = p.transform.eulerAngles,
                 WorldPos = world.transform.position,
@@ -255,14 +251,14 @@ namespace Core
 
         public void SaveData(PlayerData playerData)
         {
-            var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+            var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
             File.WriteAllText(PlayerDataManager.PlayerDataFile, data);
         }
     
     
         private void OnApplicationQuit()
         {
-            if (Player.Player.inst)
+            if (Player.inst)
             {
                 Save();
             }

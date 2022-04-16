@@ -20,7 +20,7 @@ namespace Core.Galaxy
                 }
             }
 
-            this.systemPoint = p1;
+            systemPoint = p1;
             gameObject.SetActive(true);
             lineRenderer.SetPosition(1, Vector3.Lerp(lineRenderer.GetPosition(1), middle, 1));
             lineRenderer.SetPosition(2, Vector3.Lerp(lineRenderer.GetPosition(2), endPoint, 1));

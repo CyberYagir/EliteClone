@@ -55,7 +55,7 @@ namespace Core.Garage
                 mainCanvas.Raycast(new PointerEventData(EventSystem.current){position = Input.mousePosition}, hits);
                 if (hits.Count != 0)
                 {
-                    OnDrop.Run(new DragDropData(){ hit = hits[0].gameObject, item = dragObject.GetData()});
+                    OnDrop.Run(new DragDropData { hit = hits[0].gameObject, item = dragObject.GetData()});
                 }
 
                 dragObject.StopDrag();

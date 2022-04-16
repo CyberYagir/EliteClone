@@ -1,4 +1,5 @@
 using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Systems
 {
@@ -23,7 +24,7 @@ namespace Core.Systems
 
         public void Rotate()
         {
-            var rnd = new System.Random(orbitID);
+            var rnd = new Random(orbitID);
             transform.RotateAround(point.position, orbitRotation, rnd.Next(0, 360));
             transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
         }

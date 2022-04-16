@@ -1,4 +1,5 @@
 using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Garage
 {
@@ -58,7 +59,7 @@ namespace Core.Garage
             if (selectedItem != null)
             {
                 var cost = 0f;
-                var rnd = new System.Random(GarageDataCollect.Instance.stationSeed);
+                var rnd = new Random(GarageDataCollect.Instance.stationSeed);
                 var item = ItemsManager.GetShipCost(selectedItem.GetShip());
                 cost += rnd.Next((int) item.Cost.Min, (int) item.Cost.Max);
                 var slots = selectedItem.GetShip().slots;

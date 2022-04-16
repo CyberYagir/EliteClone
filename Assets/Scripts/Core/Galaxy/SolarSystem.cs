@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class NeighbourSolarSytem
     {
         public string solarName;
         public DVector position;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class SolarSystem:SpaceObject
     {
         public List<Star> stars = new List<Star>();

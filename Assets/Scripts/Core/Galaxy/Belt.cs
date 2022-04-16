@@ -1,20 +1,17 @@
-﻿using Random = System.Random;
+﻿using System;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class Belt : SpaceObject
     {    
-        public enum ClasterType { Stones, Metals, Crystals, Mixed };
+        public enum ClasterType { Stones, Metals, Crystals, Mixed }
 
-        [System.Serializable]
+        [Serializable]
         public class BeltData
         {
             public ClasterType clasterType;
             public int meteorsCount;
-            public BeltData()
-            {
-            }
         }
 
         public BeltData beltData;

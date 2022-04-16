@@ -7,7 +7,7 @@ namespace Core.Init
     public class InitOptionsControlsDrawer : MonoBehaviour
     {
         [SerializeField] private GameObject item, holder;
-
+        [HideInInspector]
         public InputM.Axis chageAxis;
         public bool plus;
         public bool isChange;
@@ -21,7 +21,7 @@ namespace Core.Init
         public void DrawControls()
         {
             UITweaks.ClearHolder(holder.transform);
-            var input = FindObjectOfType<InputM>();
+            var input = InputM.GetData();
             foreach (var axis in input.GetAxesList())
             {
                 var it = Instantiate(item, holder.transform).GetComponent<InitAxieItem>();
@@ -77,6 +77,8 @@ namespace Core.Init
                         chageAxis.minus = finalKey;
                     }
 
+                    var input = InputM.GetData();
+                    input.LoadControls();
                     DrawControls();
                     isChange = false;
                 }

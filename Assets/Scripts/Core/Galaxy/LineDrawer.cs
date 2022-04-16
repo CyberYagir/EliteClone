@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Core.Galaxy
 {
@@ -17,7 +15,7 @@ namespace Core.Galaxy
 
         public GameObject linePrefab, holder;
 
-        public float time = 0;
+        public float time;
 
         public List<GalaxyPoint> stars = new List<GalaxyPoint>();
         private List<GalaxyPoint> oldStars = new List<GalaxyPoint>();

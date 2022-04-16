@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class ShieldActivator : MonoBehaviour
     {

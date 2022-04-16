@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core.Game;
 using Core.UI;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Garage
 {
@@ -12,7 +13,7 @@ namespace Core.Garage
         public List<ItemShip> GetShips()
         {
             List<ItemShip> newList = new List<ItemShip>();
-            var rnd = new System.Random(GarageDataCollect.Instance.stationSeed);
+            var rnd = new Random(GarageDataCollect.Instance.stationSeed);
             var list = ItemsManager.GetShisList();
             for (int i = 0; i < list.Count; i++)
             {

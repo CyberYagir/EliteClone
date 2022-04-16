@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Core.UI
 {
-    [System.Serializable]
+    [Serializable]
     public class Tab
     {
         public ButtonEffect buttonEffect;

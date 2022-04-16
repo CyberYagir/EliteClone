@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -10,14 +11,14 @@ namespace Core.UI
         private float alpha;
         private void Update()
         {
-            if (Player.Player.inst.GetTarget() == null)
+            if (Player.inst.GetTarget() == null)
             {
                 alpha -= Time.deltaTime;
             }
             else
             {
                 alpha += Time.deltaTime;
-                arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(Player.Player.inst.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
+                arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(Player.inst.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
             }
 
             alpha = Mathf.Clamp(alpha, 0, 0.2f);

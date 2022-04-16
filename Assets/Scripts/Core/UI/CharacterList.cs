@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Core.Game;
 using Core.Location;
-using Core.Player;
-using Core.Systems;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -42,7 +41,7 @@ namespace Core.UI
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
-            Player.Player.inst.land.OnLand += Enable;
+            Player.inst.land.OnLand += Enable;
         }
 
         // private void OnDestroy()

@@ -3,7 +3,7 @@ using Core.Location;
 using Core.Systems;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class WarpManager : MonoBehaviour
     {

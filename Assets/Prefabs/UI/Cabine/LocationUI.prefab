@@ -4914,17 +4914,6 @@ MonoBehaviour:
   height: 1400
   infoText: {fileID: 5975358690855273408}
   nameText: {fileID: 3593959259550599303}
-  icons:
-  - icon: {fileID: 21300000, guid: 4254c2200aa25034a9a17055657a28ea, type: 3}
-    fraction: 3
-  - icon: {fileID: 21300000, guid: 08f9d5721a4710b45bf8d3630faa0135, type: 3}
-    fraction: 2
-  - icon: {fileID: 21300000, guid: 9b134be6eaa1dfa4aab83432852fc79c, type: 3}
-    fraction: 4
-  - icon: {fileID: 21300000, guid: 1dd04911e65ad294eb054b8f19e73cde, type: 3}
-    fraction: 1
-  - icon: {fileID: 21300000, guid: 092db353e2e79384e84542da1033196e, type: 3}
-    fraction: 0
   characters: {fileID: 1469917542893604067}
   repairT: {fileID: 3418464984002403563}
   fuelT: {fileID: 353804672497854292}
@@ -5577,7 +5566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsCount: 1
-  selectedIndex: 0
+  selectedIndex: -1
   OnChangeSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -6141,10 +6130,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4668465403804008687}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 5098800406241735250}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
@@ -6152,15 +6149,31 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ForceChangeSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SelectButton
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: QuestInfoUI, Assembly-CSharp
+      value: Core.UI.UpDownUI, CoreDef
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Core.UI.QuestInfoUI, CoreDef
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185739836914921841, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5185739836914921842, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}

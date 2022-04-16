@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Player;
-using Core.Player.Weapon;
+using Core.PlayerScripts;
+using Core.PlayerScripts.Weapon;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Core.Bot
 {
@@ -131,9 +130,9 @@ namespace Core.Bot
 
         public void SetPlayerPoint()
         {
-            if (Player.Player.inst != null && targetShip != null)
+            if (Player.inst != null && targetShip != null)
             {
-                target = targetShip.position + Player.Player.inst.transform.up * 5 + -targetShip.forward * Random.Range(100, 600);
+                target = targetShip.position + Player.inst.transform.up * 5 + -targetShip.forward * Random.Range(100, 600);
             }
         }
 

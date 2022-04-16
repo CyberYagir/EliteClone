@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Core.Game;
 using Core.Location;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using TMPro;
 using UnityEngine;
@@ -26,8 +26,8 @@ namespace Core.UI
         {
             (questList as QuestListUI).OnChangeSelected += UpdateData;
             upDownUI.OnChangeSelected += SelectButton;
-            Player.Player.OnSceneChanged += UpdateQuestInfo;
-            Player.Player.inst.land.OnUnLand += Disable;
+            Player.OnSceneChanged += UpdateQuestInfo;
+            Player.inst.land.OnUnLand += Disable;
         }
 
         // private void OnDestroy()
@@ -51,7 +51,7 @@ namespace Core.UI
 
         public void SelectButton()
         {
-            if (Player.Player.inst.land.isLanded)
+            if (Player.inst.land.isLanded)
             {
                 if (upDownUI.selectedIndex == 0 && currentQuest != null)
                 {
@@ -77,7 +77,7 @@ namespace Core.UI
                             {
                                 UpdateData(currentQuest);
                                 GetComponentInParent<BaseWindow>().RedrawAll();
-                                Player.Player.inst.quests.OnChangeQuests.Run();
+                                Player.inst.quests.OnChangeQuests.Run();
                                 var list = (questList as QuestListUI);
                                 (list.characterList as CharacterList).RedrawQuests();
                                 Clear();
@@ -90,7 +90,7 @@ namespace Core.UI
 
         private void Update()
         {
-            if (Player.Player.inst.land.isLanded)
+            if (Player.inst.land.isLanded)
             {
                 if (InputM.GetAxisDown(KAction.TabsHorizontal))
                 {
@@ -140,7 +140,7 @@ namespace Core.UI
             if (quest.keyValues.Count != 0 && quest.toTransfer.Count == 0 && quest.keyValues.ContainsKey("Text"))
             {
                 keysText.gameObject.SetActive(true);
-                keysText.text = "Quest Data: \n" + quest.keyValues["Text"].ToString();
+                keysText.text = "Quest Data: \n" + quest.keyValues["Text"];
             }
             else
             {

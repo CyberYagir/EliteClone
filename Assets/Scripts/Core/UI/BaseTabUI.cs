@@ -9,7 +9,7 @@ namespace Core.UI
     
         public void Enable()
         {
-            this.enabled = true;
+            enabled = true;
             upDownUI.enabled = true;
         }
         public void Disable()

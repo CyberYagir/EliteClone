@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Core.Game;
 using Core.Location;
-using Core.Player;
-using Core.Systems;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -21,13 +20,13 @@ namespace Core.UI
         {
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
-            Player.Player.OnSceneChanged += () =>
+            Player.OnSceneChanged += () =>
             {
                 characterList.Enable();
                 Disable();
             };
 
-            Player.Player.inst.land.OnUnLand += Disable;
+            Player.inst.land.OnUnLand += Disable;
         }
 
 

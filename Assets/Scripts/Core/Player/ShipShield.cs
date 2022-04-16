@@ -1,7 +1,7 @@
 using Core.Game;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class ShipShield : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace Core.Player
             }
             if (withoutAttackTime > 30)
             {
-                shields.value += (float)shieldAdd * Time.fixedDeltaTime;
+                shields.value += shieldAdd * Time.fixedDeltaTime;
                 shields.Clamp();
                 ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value = shields.value;
                 oldShield = shields.value;

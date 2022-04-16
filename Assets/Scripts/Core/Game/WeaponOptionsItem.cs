@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Core.Game
@@ -5,7 +6,7 @@ namespace Core.Game
     [CreateAssetMenu(fileName = "", menuName = "Game/Weapon Options", order = 1)]
     public class WeaponOptionsItem : ScriptableObject
     {
-        [System.Serializable]
+        [Serializable]
         public class LaserOptions
         {
             public AnimationCurve width;

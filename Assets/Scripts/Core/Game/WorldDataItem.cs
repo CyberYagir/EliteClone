@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using Core.Systems;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace Core.Game
      
         
         
-        [System.Serializable]
+        [Serializable]
         public class Data
         {
             [SerializeField]
@@ -43,7 +43,7 @@ namespace Core.Game
                 return types[fractionID].typeName;
             }
         }
-        [System.Serializable]
+        [Serializable]
         public class IconName
         {    
             public string typeName;
@@ -51,7 +51,7 @@ namespace Core.Game
 
             public IconName([NotNull] Sprite icon, [NotNull] string name)
             {
-                this.typeName = name;
+                typeName = name;
                 this.icon = icon;
             }
         }

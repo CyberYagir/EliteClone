@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Core.Location
 {
@@ -23,7 +21,7 @@ namespace Core.Location
             }
         }
         
-        [System.Serializable]
+        [Serializable]
         public class QuestFunction
         {
             public enum ExecuteType

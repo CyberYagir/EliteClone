@@ -1,9 +1,10 @@
+using System;
 using Core.Game;
 using UnityEngine;
 
 namespace Core.Init
 {
-    [System.Serializable]
+    [Serializable]
     public class CursorManager: MonoBehaviour
     {
         public enum CursorType

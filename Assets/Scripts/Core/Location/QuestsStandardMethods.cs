@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Core.Game;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
 using Random = System.Random;
@@ -19,7 +17,7 @@ namespace Core.Location
         
         public void InitTransfer(Quest quest)
         {
-            System.Random rnd = new Random(quest.questID);
+            Random rnd = new Random(quest.questID);
             int transfersCount = rnd.Next(1, 3);
             for (int i = 0; i < transfersCount; i++)
             {
@@ -32,7 +30,7 @@ namespace Core.Location
 
         public void InitMine(Quest quest)
         {
-            System.Random rnd = new Random(quest.questID);
+            Random rnd = new Random(quest.questID);
             int transfersCount = rnd.Next(1, 3);
             for (int i = 0; i < transfersCount; i++)
             {
@@ -41,7 +39,7 @@ namespace Core.Location
                 quest.toTransfer.Add(mineral);
             }
 
-            quest.pathToTarget = new QuestPath() {solarName = quest.appliedSolar, targetName = quest.appliedStation};
+            quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
             quest.keyValues.Add("NoAddTransfer", true);
             var cost = 0;
             for (int i = 0; i < quest.toTransfer.Count; i++)
@@ -54,8 +52,8 @@ namespace Core.Location
 
         public void InitKill(Quest quest)
         {
-            System.Random rnd = new Random(quest.questID);
-            quest.pathToTarget = new QuestPath() {solarName = quest.appliedSolar, targetName = quest.appliedStation};
+            Random rnd = new Random(quest.questID);
+            quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
             var ships = SolarSystemShips.GetShips(PlayerDataManager.CurrentSolarSystem).FindAll(x => x.fraction != quest.quester.fraction);
             if (ships.Count != 0)
             {
@@ -86,7 +84,7 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
             {
-                bool allItemInInventory = Player.Player.inst.cargo.ContainItems(quest.toTransfer);
+                bool allItemInInventory = Player.inst.cargo.ContainItems(quest.toTransfer);
                 var last = quest.GetLastQuestPath();
                 if (allItemInInventory)
                 {
@@ -131,7 +129,7 @@ namespace Core.Location
             {
                 if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
                 {
-                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
+                    if (Player.inst.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
                     {
                         quest.buttonText = "Finish";
                     }
@@ -153,7 +151,7 @@ namespace Core.Location
                 }
                 else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
                 {
-                    if (Player.Player.inst.cargo.ContainItems(quest.toTransfer))
+                    if (Player.inst.cargo.ContainItems(quest.toTransfer))
                     {
                         quest.buttonText = "Cancel";
                     }
@@ -190,10 +188,10 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
             {
-                if (Player.Player.inst.cargo.ContainItems(quest.toTransfer))
+                if (Player.inst.cargo.ContainItems(quest.toTransfer))
                 {
-                    Player.Player.inst.cargo.RemoveItems(quest.toTransfer);
-                    if (Player.Player.inst.cargo.AddItems(quest.reward.rewardItems))
+                    Player.inst.cargo.RemoveItems(quest.toTransfer);
+                    if (Player.inst.cargo.AddItems(quest.reward.rewardItems))
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {
@@ -202,7 +200,7 @@ namespace Core.Location
                     }
                     else
                     {
-                        Player.Player.inst.cargo.AddItems(quest.toTransfer);
+                        Player.inst.cargo.AddItems(quest.toTransfer);
                     }
                 }
             }
@@ -214,7 +212,7 @@ namespace Core.Location
             { 
                 if (quest.questState == Quest.QuestCompleted.Completed)
                 {
-                    if (Player.Player.inst.cargo.AddItems(quest.reward.rewardItems))
+                    if (Player.inst.cargo.AddItems(quest.reward.rewardItems))
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {

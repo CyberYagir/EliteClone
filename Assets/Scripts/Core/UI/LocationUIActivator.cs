@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -7,7 +8,7 @@ namespace Core.UI
         [SerializeField] private GameObject baseUI;
         void Start()
         {
-            Player.Player.OnSceneChanged += OnAddEvent;
+            Player.OnSceneChanged += OnAddEvent;
         }
 
         // private void OnDestroy()

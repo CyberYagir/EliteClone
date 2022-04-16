@@ -1,14 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = System.Random;
 
 namespace Core.Game
 {
-    [System.Serializable]
+    [Serializable]
     public class ValueLimit
     {
         [SerializeField] public float value;
@@ -75,7 +74,7 @@ namespace Core.Game
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class IDTruple
     {
         public int id;
@@ -94,7 +93,7 @@ namespace Core.Game
             {
                 uniqSeed += ch;
             }
-            id = int.Parse(new System.Random(uniqSeed).Next(-999999, 999999).ToString("0000000"));
+            id = int.Parse(new Random(uniqSeed).Next(-999999, 999999).ToString("0000000"));
         }
     }
 
@@ -117,7 +116,7 @@ namespace Core.Game
         Al, Fe, Au, Mg, Mn, Cu, Ni, Sn, Pt, Ag, Cr, Zn, Rock, Slag, Dust
     }
 
-    [System.Serializable]
+    [Serializable]
     public class KeyPair
     {
         public KeyPairValue KeyPairValue;

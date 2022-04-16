@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 using UnityEngine.Events;
 
 namespace Core
 {
-    [System.Serializable]
+    [Serializable]
     public class Event : UnityEvent
     {
         public static Event operator+ (Event b, UnityAction c) {
@@ -19,11 +17,11 @@ namespace Core
 
         public void Run()
         {
-            this.Invoke();
+            Invoke();
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Event<T> : UnityEvent<T>
     {
         public static Event<T> operator+ (Event<T> b, UnityAction<T> c) {
@@ -37,10 +35,10 @@ namespace Core
     
         public void Run(T data)
         {
-            this.Invoke(data);
+            Invoke(data);
         }
     }
-    [System.Serializable]
+    [Serializable]
     public class Event<T,TK> : UnityEvent<T,TK>
     {
         public static Event<T, TK> operator+ (Event<T, TK> b, UnityAction<T, TK> c) {
@@ -54,7 +52,7 @@ namespace Core
     
         public void Run(T data, TK data2)
         {
-            this.Invoke(data, data2);
+            Invoke(data, data2);
         }
     }
 }

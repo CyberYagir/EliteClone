@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Core.Galaxy;
 using Core.Game;
@@ -7,7 +5,7 @@ using Core.Systems;
 using Core.UI;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     interface IDamagable
     {

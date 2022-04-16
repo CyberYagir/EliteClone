@@ -66,7 +66,7 @@ namespace Core.Location
         {
             bool isEnded = false;
             int trys = 0;
-            System.Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
+            Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
             while (!isEnded)
             {
                 var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];

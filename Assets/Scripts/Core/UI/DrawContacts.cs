@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using Core.Systems;
 using TMPro;
 using UnityEngine.UI;
@@ -9,13 +10,13 @@ namespace Core.UI
         protected override void Start()
         {
             base.Start();
-            Player.Player.inst.targets.ContactsChanges += UpdateList;
+            Player.inst.targets.ContactsChanges += UpdateList;
         }
 
         public override void RedrawList()
         {
             base.RedrawList();
-            var objects = Player.Player.inst.targets.contacts;
+            var objects = Player.inst.targets.contacts;
             for (int i = 0; i < objects.Count; i++)
             {
                 if (!objects[i].transform.CompareTag("Player"))

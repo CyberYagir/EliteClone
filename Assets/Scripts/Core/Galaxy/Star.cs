@@ -1,14 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class Star: SpaceObject
     {
         public enum StarType { M, K, G, F, A, B, O, Hole}
         public StarType starType;
 
-        public Star(StarType starType, System.Random rnd)
+        public Star(StarType starType, Random rnd)
         {
             name = GenerateName(rnd);
             this.starType = starType;
@@ -57,21 +59,21 @@ namespace Core.Galaxy
         {
             switch (starType)
             {
-                case Star.StarType.M:
+                case StarType.M:
                     return Color.red;
-                case Star.StarType.K:
+                case StarType.K:
                     return new Color32(245, 140, 4, 255);
-                case Star.StarType.G:
+                case StarType.G:
                     return Color.yellow;
-                case Star.StarType.F:
+                case StarType.F:
                     return new Color32(249, 255, 155, 255);
                     break;
-                case Star.StarType.A:
+                case StarType.A:
                     return Color.white;
                     break;
-                case Star.StarType.B:
+                case StarType.B:
                     return new Color32(110, 235, 255, 255);
-                case Star.StarType.O:
+                case StarType.O:
                     return new Color32(0, 182, 255, 255);
                 default:
                     return Color.white;
@@ -83,7 +85,7 @@ namespace Core.Galaxy
 
         }
 
-        public static string GenerateName(System.Random rnd)
+        public static string GenerateName(Random rnd)
         {
             if (GalaxyGenerator.words == null)
             {

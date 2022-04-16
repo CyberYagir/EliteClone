@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Core.Game
 {
     [CreateAssetMenu(fileName = "", menuName = "Game/Rewards", order = 1)]

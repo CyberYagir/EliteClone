@@ -59,8 +59,8 @@ namespace Core.UI
             }
 
             requireItemList.gameObject.SetActive(questsQuest.toTransfer.Count != 0);
-            questTextHolder.gameObject.SetActive(!requireItemList.gameObject.active);
-            if (!requireItemList.gameObject.active)
+            questTextHolder.gameObject.SetActive(questsQuest.toTransfer.Count == 0);
+            if (questsQuest.toTransfer.Count == 0)
             {
                 try
                 {
@@ -70,6 +70,11 @@ namespace Core.UI
                 {
                 }
             }
+        }
+
+        private void Start()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetChild(0).GetComponent<RectTransform>());
         }
     }
 }

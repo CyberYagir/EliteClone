@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Game;
+using Core.PlayerScripts;
 using UnityEngine;
 using Random = System.Random;
 
@@ -39,7 +40,7 @@ namespace Core.Location
             return refillers.Find(x => x.refillType == type).valueLimit.Value;
         }
     
-        public float NextFloat(System.Random rnd, float min, float max)
+        public float NextFloat(Random rnd, float min, float max)
         {
             return min + (max - min) * (float)rnd.NextDouble();
         }
@@ -51,20 +52,20 @@ namespace Core.Location
             {
                 case Refiller.RefillType.Fuel:
                     cost = GetRefillerValue(Refiller.RefillType.Fuel);
-                    ApplyType(Player.Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel), cost);
+                    ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel), cost);
                     break;
                 case Refiller.RefillType.Curpus:
                     cost = GetRefillerValue(Refiller.RefillType.Curpus);
-                    ApplyType(Player.Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health), cost);
+                    ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health), cost);
                     break;
             }
         }
 
         public void ApplyType(ShipClaped data, float cost)
         {
-            while (Player.Player.inst.cargo.GetCredits() > 0 && data.value < data.max)
+            while (Player.inst.cargo.GetCredits() > 0 && data.value < data.max)
             {
-                if(Player.Player.inst.cargo.RemoveCredits(cost))
+                if(Player.inst.cargo.RemoveCredits(cost))
                 {
                     data.value++;
                 }
@@ -74,7 +75,7 @@ namespace Core.Location
                 }
             }
             data.Clamp();
-            Player.Player.inst.cargo.UpdateInventory();
+            Player.inst.cargo.UpdateInventory();
         }
     }
 }

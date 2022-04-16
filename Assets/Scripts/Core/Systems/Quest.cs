@@ -3,16 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Galaxy;
 using Core.Game;
-using Core.Location;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
-using Core.UI;
-using UnityEngine;
-using Random = System.Random;
 
 namespace Core.Location
 {
-    [System.Serializable]
+    [Serializable]
     public class Quest
     {
         public enum QuestCompleted
@@ -104,7 +100,7 @@ namespace Core.Location
             }
             else
             {
-                Player.Player.inst.StartCoroutine(Wait());
+                Player.inst.StartCoroutine(Wait());
             }
         }
 
@@ -116,7 +112,7 @@ namespace Core.Location
                 WorldStationQuests.SetInstance();
             }
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-            Player.Player.inst.quests.OnChangeQuests.Run();
+            Player.inst.quests.OnChangeQuests.Run();
         }
         
         public void CheckIsQuestCompleted()
@@ -128,7 +124,7 @@ namespace Core.Location
         {
             int pathLength = rnd.Next(0, 7);
             List<string> pathNames = new List<string>();
-            QuestPath last = new QuestPath() {solarName = solarName};
+            QuestPath last = new QuestPath {solarName = solarName};
             QuestPath first = last;
             pathNames.Add(last.solarName);
             pathToTarget = last;
@@ -154,7 +150,7 @@ namespace Core.Location
                     if (stopPath) break;
 
                     pathNames.Add(sibling.solarName);
-                    var newPath = new QuestPath() {prevPath = last, solarName = sibling.solarName};
+                    var newPath = new QuestPath {prevPath = last, solarName = sibling.solarName};
                     last.nextPath = newPath;
                     last = newPath;
                 }

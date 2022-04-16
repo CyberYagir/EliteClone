@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using Core.UI;
 using TMPro;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace Core
 
         public void DropItem()
         {
-            Player.Player.inst.cargo.DropItem(itemUI.item.id.idname, itemUI.item.amount.value, val);
+            Player.inst.cargo.DropItem(itemUI.item.id.idname, itemUI.item.amount.value, val);
         }
     }
 }

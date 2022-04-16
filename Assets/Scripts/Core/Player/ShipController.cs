@@ -2,7 +2,7 @@ using Core.Systems;
 using UnityEngine;
 using static Core.Game.ItemShip.ShipValuesTypes;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class ShipController : MonoBehaviour
     {
@@ -40,7 +40,7 @@ namespace Core.Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.timeScale != 0)
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -178,10 +178,8 @@ namespace Core.Player
                 StopPlayer();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool CheckFuel()

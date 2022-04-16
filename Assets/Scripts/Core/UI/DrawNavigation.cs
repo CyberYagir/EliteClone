@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using Core.PlayerScripts;
 using Core.Systems;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.UI
@@ -20,7 +17,12 @@ namespace Core.UI
 
     public class DrawNavigation : DrawNavList
     {
-    
+        protected override void Start()
+        {
+            base.Start();
+            Player.inst.targets.OnChangeTarget += UpdateList;
+        }
+
         public override void RedrawList()
         {
             base.RedrawList(); 

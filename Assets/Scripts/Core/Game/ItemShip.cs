@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
-using Core.Player;
+using Core.PlayerScripts;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
 namespace Core.Game
 {
-    [System.Serializable]
+    [Serializable]
     public class ShipVariables
     {
         public float ZRotSpeed, XRotSpeed, YRotSpeed;
         public float maxSpeedUnits, speedUpMultiplier;
         public int maxCargoWeight;
     }
-    [System.Serializable]
+    [Serializable]
     public class ShipClaped
     {
         public ItemShip.ShipValuesTypes name;
@@ -42,7 +42,7 @@ namespace Core.Game
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Slot
     {
         public int uid;
@@ -53,18 +53,13 @@ namespace Core.Game
 
         public int button = -1;
 
-        public Cargo.ItemData itemData = null;
+        public Cargo.ItemData itemData;
 
-        public Slot()
-        {
-            
-        }
-        
         public void Save()
         {
             if (current != null)
             {
-                itemData = new Cargo.ItemData() {idName = current.id.idname, value = current.amount.Value};
+                itemData = new Cargo.ItemData {idName = current.id.idname, value = current.amount.Value};
             }
         }
 

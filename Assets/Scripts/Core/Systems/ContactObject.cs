@@ -1,11 +1,13 @@
+using Core.PlayerScripts;
+
 namespace Core.Systems
 {
     public class ContactObject : GalaxyObject
     {
         public void Init(bool triggerEvent = true)
         {
-            Player.Player.inst.targets.AddContact(this, triggerEvent);
-            Player.Player.OnPreSceneChanged += RemoveContact;
+            Player.inst.targets.AddContact(this, triggerEvent);
+            Player.OnPreSceneChanged += RemoveContact;
         }
 
         private void OnDisable()
@@ -15,7 +17,7 @@ namespace Core.Systems
 
         public void RemoveContact()
         {
-            Player.Player.inst.targets.RemoveContact(this);
+            Player.inst.targets.RemoveContact(this);
         }
     }
 }

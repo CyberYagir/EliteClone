@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core
@@ -6,7 +7,7 @@ namespace Core
     {
         void Start()
         {
-            Player.Player.ChangeScene(); //Есть на каждой локе чтобы триггерить эвент смены локации
+            Player.ChangeScene(); //Есть на каждой локе чтобы триггерить эвент смены локации
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Core.Game;
 using Core.UI;
 using DG.Tweening;
@@ -10,7 +11,7 @@ namespace Core.Garage
 {
     public class GarageSlotInfo : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
-        [System.Serializable]
+        [Serializable]
         private class GarageSlotInfoUIData
         {
             public TMP_Text slotText, slotLevel, slotType;
@@ -162,8 +163,8 @@ namespace Core.Garage
             time = 0;
             close = false;
             options.slotText.text = $"Slot [{slot.uid}]";
-            options.slotLevel.text = "Level: " + slot.slotLevel.ToString();
-            options.slotType.text = "Type: " + slot.slotType.ToString();
+            options.slotLevel.text = "Level: " + slot.slotLevel;
+            options.slotType.text = "Type: " + slot.slotType;
             options.preview.sprite = slot.current.icon;
             last = item.GetPoint();
             lastItem = item;

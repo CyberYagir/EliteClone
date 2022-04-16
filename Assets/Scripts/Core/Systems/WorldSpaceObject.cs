@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Systems
@@ -28,7 +25,10 @@ namespace Core.Systems
 
         public void UpdateVisibility()
         {
-            isVisible =  Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
+            if (camera)
+            {
+                isVisible = Vector3.Angle(transform.position - camera.transform.position, camera.forward) < 60;
+            }
         }
 
         private void OnDestroy()

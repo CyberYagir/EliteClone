@@ -1,3 +1,4 @@
+using System;
 using Core.Game;
 using Core.Init;
 using TMPro;
@@ -9,7 +10,7 @@ namespace Core.Garage
 {
     public class GarageItemInfo : CustomAnimate, IPointerEnterHandler, IPointerExitHandler
     {
-        [System.Serializable]
+        [Serializable]
         private class GarageItemInfoUIData
         {
             public Image image;

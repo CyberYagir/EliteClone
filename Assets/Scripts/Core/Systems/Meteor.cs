@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Game;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.UI;
 using UnityEngine;
 using Random = System.Random;
@@ -64,12 +64,12 @@ namespace Core.Systems
 
         public void SpawnDrop(Vector3 normal, Vector3 point)
         {
-            if (new System.Random().Next(1, 50) == 5)
+            if (new Random().Next(1, 50) == 5)
             {
                 var item = Instantiate(mineralDrop, point, Quaternion.identity);
                 var drop = item.GetComponent<WorldDrop>();
                 var itemData = resource.Clone();
-                itemData.amount.SetValue(new System.Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(10, 25));
+                itemData.amount.SetValue(new Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(10, 25));
                 drop.Init(itemData);
                 item.GetComponent<Rigidbody>().AddForce((normal + UnityEngine.Random.insideUnitSphere) * 0.5f, ForceMode.Impulse);
             }

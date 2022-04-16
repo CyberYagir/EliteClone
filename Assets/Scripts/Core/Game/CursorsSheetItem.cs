@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Init;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Core.Game
     [CreateAssetMenu(fileName = "", menuName = "Game/Cursors", order = 1)]
     public class CursorsSheetItem : ScriptableObject
     {
-        [System.Serializable]
+        [Serializable]
         public class CursorTexture
         {
             public CursorManager.CursorType type;

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Core.Game;
 using Core.UI;
 using DG.Tweening;
@@ -17,7 +14,7 @@ namespace Core.Garage
         [SerializeField] private RectTransform holder;
         [SerializeField] private RectTransform header, mask;
         [SerializeField] private KeyPairValue key;
-        private bool isAddChange = false;
+        private bool isAddChange;
 
         private bool over;
         private void Awake()
@@ -35,8 +32,8 @@ namespace Core.Garage
 
         public class AddInForUsed
         {
-            public float used = 0f;
-            public float all = 0f;
+            public float used;
+            public float all;
         }
         public virtual void AddInFor(Item item, ref AddInForUsed val)
         {

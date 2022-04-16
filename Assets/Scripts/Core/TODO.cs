@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace Core
 {
     public class TODO : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         public class TODORow
         {
             public enum TaskPriority {

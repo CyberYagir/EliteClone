@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
 using Random = System.Random;
@@ -48,8 +47,7 @@ namespace Core.Location
         {
             if (str.Length == 1)
                 return char.ToUpper(str[0]).ToString();
-            else
-                return (char.ToUpper(str[0]) + str.Substring(1).ToLower()).ToString();
+            return (char.ToUpper(str[0]) + str.Substring(1).ToLower());
         }
     }
 

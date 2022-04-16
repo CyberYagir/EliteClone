@@ -1,9 +1,9 @@
 using Core.Game;
 using Core.Location;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
 namespace Core.Bot
 {
@@ -34,7 +34,7 @@ namespace Core.Bot
             SetName();
         }
     
-        public void InitBot(System.Random rnd = null)
+        public void InitBot(Random rnd = null)
         {
             NamesHolder.Init();
             var firstName = "";
@@ -98,7 +98,7 @@ namespace Core.Bot
         public void TakeDamage(float damage)
         {
             SetBehaviour(BotState.Attack);
-            attackControl.SetTarget(Player.Player.inst.transform);
+            attackControl.SetTarget(Player.inst.transform);
             var ship = this.ship.GetShip();
             if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
             {
@@ -131,10 +131,10 @@ namespace Core.Bot
 
         public void Drop()
         {
-            var rnd = new System.Random(uniqID);
+            var rnd = new Random(uniqID);
             if (uniqID == -1)
             {
-                rnd = new System.Random();
+                rnd = new Random();
             }
             var dropCount = rnd.Next(0, 6);
             for (int i = 0; i < dropCount; i++)
@@ -142,7 +142,7 @@ namespace Core.Bot
                 var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
                 drop.GetComponent<BoxCollider>().isTrigger = true;
                 drop.Init(ItemsManager.GetRewardItem(rnd));
-                drop.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere, ForceMode.Impulse);
+                drop.GetComponent<Rigidbody>().AddForce(UnityEngine.Random.insideUnitSphere, ForceMode.Impulse);
             }   
         }
     
@@ -158,7 +158,7 @@ namespace Core.Bot
 
         public void AttackPlayer()
         {
-            attackControl.SetTarget(Player.Player.inst.transform);
+            attackControl.SetTarget(Player.inst.transform);
             SetBehaviour(BotState.Attack);
         }
     }

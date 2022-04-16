@@ -1,15 +1,13 @@
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Galaxy;
+using Core.PlayerScripts;
 using Core.Systems;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace Core.Map
 {
@@ -53,8 +51,8 @@ namespace Core.Map
             }
 
             GalaxyGenerator.LoadSystems();
-            Player.Player.inst.saves.LoadData();
-            var historyList = Player.Player.inst.saves.GetHistory();
+            Player.inst.saves.LoadData();
+            var historyList = Player.inst.saves.GetHistory();
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];

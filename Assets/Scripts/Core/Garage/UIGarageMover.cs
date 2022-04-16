@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.Garage
@@ -9,10 +10,10 @@ namespace Core.Garage
     
         public void LoadLocation()
         {
-            Player.Player.inst.saves.Save();
+            Player.inst.saves.Save();
             var fd = Instantiate(fader).GetComponent<Fader>();
             fd.SetColor(0);
-            fd.Fade(1);
+            fd.Fade();
             StartCoroutine(WaitForFader());
         }
 

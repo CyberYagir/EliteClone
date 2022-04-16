@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class ShipMeshSlotRotate : MonoBehaviour
     {

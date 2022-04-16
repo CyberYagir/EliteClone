@@ -17,7 +17,7 @@ namespace Core
         public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
         public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile;
         public static float GenerateProgress;
-        private bool loading = false;
+        private bool loading;
 
         private void Update()
         {
@@ -41,6 +41,11 @@ namespace Core
 
         public void Init()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             LoadStatic();
             InitDataManager();
         }
@@ -67,12 +72,10 @@ namespace Core
                 return;
 
             }
-            else
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-                FoldersManage();
-            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            FoldersManage();
         }
 
 

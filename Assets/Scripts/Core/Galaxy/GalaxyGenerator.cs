@@ -5,6 +5,7 @@ using System.IO;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Galaxy
 {
@@ -65,23 +66,21 @@ namespace Core.Galaxy
                     {
                         var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(PlayerDataManager.GalaxyFile));
 
-                        if (saved.version == Application.version.ToString())
+                        if (saved.version == Application.version)
                         {
                             systems = saved.systems;
                             return true;
                         }
-                        else
-                        {
-                            File.Delete(PlayerDataManager.GalaxyFile);
-                            Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
-                            ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
-                        }
+
+                        File.Delete(PlayerDataManager.GalaxyFile);
+                        Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
+                        ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
                     }
                     catch (Exception e)
                     {
                         Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
                         Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
-                        ThrowLoadError($"Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
+                        ThrowLoadError("Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                     }
                 }
             }
@@ -119,7 +118,7 @@ namespace Core.Galaxy
             }
         }
 
-        public static DVector GetSpawnPos(System.Random rnd)
+        public static DVector GetSpawnPos(Random rnd)
         {
             bool canSpawn = false;
             var pos = new DVector(NextDecimal(rnd, -maxRadius, maxRadius), NextDecimal(rnd, minY, maxY), NextDecimal(rnd, -maxRadius, maxRadius));
@@ -145,7 +144,7 @@ namespace Core.Galaxy
             return pos;
         }
 
-        public static SolarSystem GetBaseSystem(System.Random rnd)
+        public static SolarSystem GetBaseSystem(Random rnd)
         {
             var system = new SolarSystem();
 
@@ -165,14 +164,13 @@ namespace Core.Galaxy
             {
                 if (sys.Value.position.Dist(system.position) < siblingDist)
                 {
-                    var curr = new NeighbourSolarSytem() {position = system.position, solarName = system.name};
+                    var curr = new NeighbourSolarSytem {position = system.position, solarName = system.name};
                     if (!sys.Value.sibligs.Contains(curr))
                     {
                         sys.Value.sibligs.Add(curr);
                     }
 
-                    system.sibligs.Add(new NeighbourSolarSytem()
-                        {position = sys.Value.position, solarName = sys.Value.name});
+                    system.sibligs.Add(new NeighbourSolarSytem {position = sys.Value.position, solarName = sys.Value.name});
                 }
             }
         }
@@ -188,7 +186,7 @@ namespace Core.Galaxy
         public static List<OrbitStation> GetStaions(SolarSystem system)
         {
             var pos = system.position;
-            var rnd = new System.Random((int) (pos.x + pos.y + pos.z));
+            var rnd = new Random((int) (pos.x + pos.y + pos.z));
 
             var starsCount = rnd.Next(1, 4);
             var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
@@ -203,7 +201,7 @@ namespace Core.Galaxy
 
             systems = new Dictionary<string, SolarSystem>();
         
-            var rnd = new System.Random(seed);
+            var rnd = new Random(seed);
         
             var systemsCount = rnd.Next(minSystemsCount, maxSystemsCount);
 
@@ -223,8 +221,6 @@ namespace Core.Galaxy
                 }
             }
             SaveGalaxy();
-        
-            yield break;
         }
 
     
@@ -232,18 +228,15 @@ namespace Core.Galaxy
         {
             public Dictionary<string, SolarSystem> systems = new Dictionary<string, SolarSystem>();
             public string version = "";
-        
-            public SavedGalaxy(){}
-        
         }
         public static void SaveGalaxy()
         {
-            var galaxy = new SavedGalaxy() {systems = systems, version = Application.version};
+            var galaxy = new SavedGalaxy {systems = systems, version = Application.version};
             File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
             PlayerDataManager.GenerateProgress = 1f;
         }
 
-        public static float NextDecimal(System.Random rnd, float min, float max)
+        public static float NextDecimal(Random rnd, float min, float max)
         {
             return min + (max - min) * (float)rnd.NextDouble();
         }

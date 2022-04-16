@@ -21,6 +21,7 @@ namespace Core.Init
 
         private void Awake()
         {
+            PlayerDataManager.CurrentSolarSystem = null;
             options.Awake();
         }
 

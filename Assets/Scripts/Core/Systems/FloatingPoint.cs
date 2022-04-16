@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using Core.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,9 +14,9 @@ namespace Core.Systems
 
         void Update()
         {
-            if (Player.Player.inst)
+            if (Player.inst)
             {
-                Vector3 cameraPos = Player.Player.inst.transform.position;
+                Vector3 cameraPos = Player.inst.transform.position;
                 if (cameraPos.magnitude > threshold)
                 {
                     foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
@@ -27,7 +28,7 @@ namespace Core.Systems
                         wsp.UpdateVisibility();
                     }
                     WorldSpaceObjectCanvas.Instance.SkipFrame();
-                    print("Moved");
+                    //print("Moved");
                 }
 
                 transform.position = new Vector3(Mathf.Clamp(transform.position.x, -100000, 100000),

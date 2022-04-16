@@ -2,7 +2,7 @@ using Core.Location;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class LandManager : MonoBehaviour
     {
@@ -61,12 +61,10 @@ namespace Core.Player
         {
             if (isLanded)
             {
-                return new LandLocation() {pos = landPoint, rot = landRot};
+                return new LandLocation {pos = landPoint, rot = landRot};
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     
         private void Update()

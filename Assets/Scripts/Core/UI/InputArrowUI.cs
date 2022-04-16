@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ namespace Core.UI
 
         private void Update()
         {
-            rect.anchoredPosition = new Vector2(Player.Player.inst.control.horizontal, Player.Player.inst.control.vertical) * 100;
+            rect.anchoredPosition = new Vector2(Player.inst.control.horizontal, Player.inst.control.vertical) * 100;
 
             Vector3 diff = rect.anchoredPosition - Vector2.zero;
             diff.Normalize();

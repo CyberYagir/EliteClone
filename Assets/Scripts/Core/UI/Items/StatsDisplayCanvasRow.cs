@@ -14,7 +14,7 @@ namespace Core.UI
             value.localScale = new Vector3(_value / maxValue, 1, 1);
             if (_text != "_")
             {
-                this.text.text = _text;
+                text.text = _text;
             }
         }
     }

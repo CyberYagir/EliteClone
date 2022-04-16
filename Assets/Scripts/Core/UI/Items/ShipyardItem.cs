@@ -1,3 +1,4 @@
+using System;
 using Core.Game;
 using TMPro;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Core.Garage
 
 
         public bool isMarket;
-        [System.Serializable]
+        [Serializable]
         class ShipyardItemStats
         {
             [SerializeField] private TMP_Text fuel, health, temperature, shieds;
@@ -44,7 +45,7 @@ namespace Core.Garage
             }
         }
 
-        [System.Serializable]
+        [Serializable]
         class ShipyardItemMoving
         {
             [SerializeField] private TMP_Text yaw, pitch, roll, speed, speedUp;
@@ -81,7 +82,7 @@ namespace Core.Garage
             {
                 var slot = Instantiate(slotItem.gameObject, slotsHolder);
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = ship.slots[i].current.icon;
-                slot.transform.GetChild(1).GetComponent<TMP_Text>().text = "L" + ship.slots[i].slotLevel.ToString();
+                slot.transform.GetChild(1).GetComponent<TMP_Text>().text = "L" + ship.slots[i].slotLevel;
                 slot.gameObject.SetActive(true);
             }
 

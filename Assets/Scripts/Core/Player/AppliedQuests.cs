@@ -3,7 +3,7 @@ using Core.Location;
 using Core.Systems;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class AppliedQuests : MonoBehaviour
     {
@@ -34,7 +34,8 @@ namespace Core.Player
             List<QuestData> data = new List<QuestData>();
             for (int i = 0; i < quests.Count; i++)
             {
-                data.Add(new QuestData(){
+                data.Add(new QuestData
+                {
                     seed = quests[i].questID, 
                     character = quests[i].quester, 
                     stationName = quests[i].appliedStation, 

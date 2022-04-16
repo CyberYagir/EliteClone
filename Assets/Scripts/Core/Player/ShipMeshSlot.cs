@@ -4,11 +4,11 @@ using Core.Game;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class ShipMeshSlot : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         public class SlotMesh
         {
             public enum WeaponMesh

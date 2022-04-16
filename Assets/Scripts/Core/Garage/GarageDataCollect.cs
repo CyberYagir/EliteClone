@@ -1,7 +1,7 @@
 using System.IO;
 using Core.Game;
 using Core.Location;
-using Core.Player;
+using Core.PlayerScripts;
 using Newtonsoft.Json;
 using UnityEngine;
 

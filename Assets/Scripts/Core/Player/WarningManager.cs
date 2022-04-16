@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public enum WarningTypes
     {

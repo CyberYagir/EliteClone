@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.Systems
@@ -6,7 +7,10 @@ namespace Core.Systems
     {
         public void Update()
         {
-            transform.position = Player.Player.inst.transform.position;
+            if (Player.inst)
+            {
+                transform.position = Player.inst.transform.position;
+            }
         }
     }
 }

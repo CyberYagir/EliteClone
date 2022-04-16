@@ -1,5 +1,4 @@
 using Core.Game;
-using Core.Player;
 using Core.Systems;
 using TMPro;
 using UnityEngine;

@@ -1,3 +1,4 @@
+using System;
 using Core.Game;
 using DG.Tweening;
 using TMPro;
@@ -9,7 +10,7 @@ namespace Core.Garage
 {
     public class GarageSlotItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [System.Serializable]
+        [Serializable]
         public class GarageSlotItemUIData
         {
             public RectTransform mover;

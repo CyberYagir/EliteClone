@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Core.Game
             return Instance;
         }
         
-        [System.Serializable]
+        [Serializable]
         public class ShipListData
         {
             [SerializeField] private ItemShip ship;

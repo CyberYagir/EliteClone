@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Core.Map;
+using Core.PlayerScripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +9,7 @@ namespace Core.UI
     {
         private void Start()
         {
-            Player.Player.OnSceneChanged += Set;
+            Player.OnSceneChanged += Set;
             Set();
         }
 

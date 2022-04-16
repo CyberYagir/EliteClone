@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace Core.UI
 {
     public class DataToDisplay : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         public class DataLabel
         {
             public string name, info;
@@ -15,7 +16,7 @@ namespace Core.UI
 
         public void AddLabel(string name, string label)
         {
-            lables.Add(new DataLabel() {name = name, info = label});
+            lables.Add(new DataLabel {name = name, info = label});
         }
 
         public string GetText()

@@ -1,7 +1,7 @@
 using Core.Game;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class Ship : MonoBehaviour
     {

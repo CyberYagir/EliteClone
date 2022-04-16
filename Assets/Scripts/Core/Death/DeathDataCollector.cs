@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Core.Galaxy;
 using Core.Location;
-using Core.Player;
+using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -33,9 +33,9 @@ namespace Core.Death
 
         public virtual void InitDataCollector()
         {
-            if (Player.Player.inst != null)
+            if (Player.inst != null)
             {
-                Destroy(Player.Player.inst.gameObject);
+                Destroy(Player.inst.gameObject);
             }
 
             Cursor.lockState = CursorLockMode.None;
@@ -114,12 +114,12 @@ namespace Core.Death
             saves.SetKey("system_start_on", findNearStation.name, false);
             playerData.Keys = saves.GetKeys();
 
-            var items = new List<Cargo.ItemData>() { };
+            var items = new List<Cargo.ItemData>();
             var credits = cargo.items.Find(x => x.id.idname == "credit");
 
             if (credits != null)
             {
-                items.Add(new Cargo.ItemData() { idName = credits.id.idname, value = credits.amount.value});
+                items.Add(new Cargo.ItemData { idName = credits.id.idname, value = credits.amount.value});
             }
         
             playerData.items = items;

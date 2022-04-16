@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public class FreeCam : MonoBehaviour
     {
         [Header("Constants")]

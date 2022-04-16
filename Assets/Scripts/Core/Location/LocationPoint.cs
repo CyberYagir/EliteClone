@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
 
@@ -38,11 +39,11 @@ namespace Core.Location
         {
             if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
             {
-                Player.Player.inst.warp.SetActiveLocation(this);
+                Player.inst.warp.SetActiveLocation(this);
             }
             else
             {
-                Player.Player.inst.warp.RemoveActiveLocation(this);
+                Player.inst.warp.RemoveActiveLocation(this);
             }
         }
     }

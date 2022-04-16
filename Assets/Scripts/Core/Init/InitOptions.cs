@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -14,8 +13,8 @@ namespace Core.Init
         public class PlayerConfig
         {
             public List<InputM.Axis> axes = new List<InputM.Axis>();
-            public int quality = 0;
-            public bool showFPS = false;
+            public int quality;
+            public bool showFPS;
 
         }
 
@@ -86,7 +85,14 @@ namespace Core.Init
             PlayerDataManager.PlayerConfig = cfg;
             UILoad(PlayerDataManager.PlayerConfig);
         }
-    
+
+        public void ResetKeys()
+        {
+            var input = InputM.GetData();
+            input.SetAxesList(input.startAxes);
+            controlsDrawer.DrawControls();
+        }
+        
         public void RemoveSave()
         {
             Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);

@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Core.Game;
+using Core.PlayerScripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.UI
 {
-    [System.Serializable]
+    [Serializable]
     public class WarpDisplayCanvasRow
     {
         [SerializeField] private Image background;
@@ -19,7 +19,7 @@ namespace Core.UI
         public void UpdateColor()
         {
             warpActiveColor = Color.Lerp(warpActiveColor,
-                Player.Player.inst.warp.isWarp ? active : desactive,
+                Player.inst.warp.isWarp ? active : desactive,
                 10 * Time.deltaTime);
             warpText.color = warpActiveColor;
             warpSpeedText.color = warpActiveColor;
@@ -36,11 +36,11 @@ namespace Core.UI
         [SerializeField] private StatsDisplayCanvasRow heatValue;
         [SerializeField] private WarpDisplayCanvasRow warpDisplayRow;
     
-        private Player.Player player;
+        private Player player;
         private Color warpActiveColor;
         private void Start()
         {
-            player = Player.Player.inst;
+            player = Player.inst;
         }
 
         private void Update()

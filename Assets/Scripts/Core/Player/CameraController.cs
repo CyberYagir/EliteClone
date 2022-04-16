@@ -1,7 +1,7 @@
 using Core.Galaxy;
 using UnityEngine;
 
-namespace Core.Player
+namespace Core.PlayerScripts
 {
     public class CameraController : MonoBehaviour
     {

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Core.Galaxy
 {
-    [System.Serializable]
+    [Serializable]
     public struct DVector
     {
         public float x, y, z;
@@ -41,7 +42,7 @@ namespace Core.Galaxy
 
         public float Dist(DVector second)
         {
-            return Vector3.Distance(this.ToVector(), second.ToVector());
+            return Vector3.Distance(ToVector(), second.ToVector());
         }
     }
 }
