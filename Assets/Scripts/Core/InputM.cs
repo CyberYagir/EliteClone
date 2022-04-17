@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map}
+    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate}
 
     public class InputM : MonoBehaviour
     {
@@ -36,8 +36,10 @@ namespace Core
         }
         
         public List<Axis> axes;
+        [HideInInspector]
         public List<Axis> startAxes;
-        public static Dictionary<KAction, Axis> keys = new Dictionary<KAction, Axis>();
+
+        private static Dictionary<KAction, Axis> keys = new Dictionary<KAction, Axis>();
 
         private void Awake()
         {

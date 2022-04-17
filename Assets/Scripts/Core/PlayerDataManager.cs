@@ -1,7 +1,10 @@
 using System.IO;
 using Core.Galaxy;
+using Core.Garage;
 using Core.Init;
 using Core.Location;
+using Core.PlayerScripts;
+using Core.Systems;
 using UnityEngine;
 
 namespace Core
@@ -140,6 +143,23 @@ namespace Core
                         StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
                         loading = true;
                     }
+                }
+            }
+        }
+
+        public static void SaveAll()
+        {
+            if (GarageDataCollect.Instance != null)
+            {
+                GarageDataCollect.Instance.Save();
+            }
+
+            if (Player.inst != null)
+            {
+                Player.inst.saves.Save();
+                if (World.Scene == Scenes.System)
+                {
+                    SolarSystemGenerator.SaveSystem();
                 }
             }
         }

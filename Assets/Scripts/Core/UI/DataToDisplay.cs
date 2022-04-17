@@ -26,7 +26,7 @@ namespace Core.UI
             {
                 if (i != 0)
                 {
-                    data += "<color=#FF7100>|</color>";
+                    data += ">";
                 }
                 data += lables[i].name + ": " + lables[i].info + "\n";
             }

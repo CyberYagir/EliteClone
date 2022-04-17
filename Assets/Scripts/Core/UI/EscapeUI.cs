@@ -1,3 +1,4 @@
+using Core.Game;
 using Core.Garage;
 using Core.PlayerScripts;
 using Core.Systems;
@@ -13,6 +14,7 @@ namespace Core.UI
         [SerializeField] private RectTransform holder;
         [SerializeField] private Image background, pausePlay;
         [SerializeField] private Sprite playS, pauseS;
+        [SerializeField] private GameObject selfDestructionButton;
         [SerializeField] private bool isPause;
 
         private void Awake()
@@ -40,6 +42,15 @@ namespace Core.UI
             isPause = pause;
             if (isPause)
             {
+                if (Player.inst != null)
+                {
+                    selfDestructionButton.SetActive(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).value <= 0);
+                }
+                else
+                {
+                    selfDestructionButton.SetActive(false);
+                }
+
                 background.raycastTarget = true;
                 background.DOFade(0.95f, speed).SetUpdate(true);
                 holder.DOAnchorPosX(max, speed).SetUpdate(true);
@@ -64,22 +75,20 @@ namespace Core.UI
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
         }
 
-        public void GoToMenu()
+        public void SelfDestruct()
         {
-            
-            if (GarageDataCollect.Instance != null)
-            {
-                GarageDataCollect.Instance.Save();
-            }
             if (Player.inst != null)
             {
-                Player.inst.saves.Save();
-                if (World.Scene == Scenes.System)
-                {
-                    SolarSystemGenerator.SaveSystem();
-                }
-                Destroy(Player.inst.gameObject);
+                Player.inst.TakeDamageHeath(Mathf.Infinity);
+                PlayerDataManager.SaveAll();
+                SetPause(false);
             }
+        }
+
+        public void GoToMenu()
+        {
+            PlayerDataManager.SaveAll();
+            Destroy(Player.inst.gameObject);
             SetPause(false);
             World.LoadLevel(Scenes.Init);
         }

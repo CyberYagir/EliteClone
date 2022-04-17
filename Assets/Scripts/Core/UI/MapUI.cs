@@ -1,3 +1,5 @@
+using System;
+using Core.Garage;
 using Core.Map;
 using Core.PlayerScripts;
 using UnityEngine;
@@ -19,6 +21,16 @@ namespace Core.UI
             {
                 MapGenerator.Set = true;
                 SceneManager.LoadScene("Map", LoadSceneMode.Additive);
+            }
+        }
+
+        private void Update()
+        {
+            if (InputM.GetAxisDown(KAction.Map))
+            {
+                Player.inst.saves.SetKey("MapActive", (int) World.Scene);
+                PlayerDataManager.SaveAll();
+                GetComponent<UIGarageMover>().LoadLocation();
             }
         }
     }

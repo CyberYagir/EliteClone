@@ -1,13 +1,18 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Galaxy;
 using Core.PlayerScripts;
 using Core.Systems;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Core.Map
 {
@@ -15,44 +20,117 @@ namespace Core.Map
     {
         public static bool Set;
         public static MapGenerator Instance;
-        public const float size = 2000;
+        public const float size = 1500;
+        
         [SerializeField] private Camera camera;
         [SerializeField] private GameObject star;
         [SerializeField] private GraphicRaycaster raycaster;
         [SerializeField] private GameObject galaxyLine;
         [SerializeField] private MapSelect selector;
-        public static GameObject selected;
-        public List<GameObject> spawned = new List<GameObject>();
-        public List<GameObject> names = new List<GameObject>();
-        public List<TMP_Text> texts = new List<TMP_Text>();
+        [SerializeField] private GameObject dataManager;
+        [SerializeField] private GameObject volume, exitCanvas;
+        
+        private List<GameObject> spawned = new List<GameObject>();
+        private List<GameObject> names = new List<GameObject>();
+        private List<TMP_Text> texts = new List<TMP_Text>();
+
+        public static MapSelect.MapMode mode;
+        
+        private SaveLoadData saves = null;
+
+
+        public Event OnInited;
         private void Awake()
         {
             Instance = this;
-            Reload();
             Set = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
-        
+
 
         private void Start()
         {
-            StartCoroutine(WaitForDisableCamera());
+            Init();
+            Reload();
+            OnInited.Run();
         }
+
+        public void Init()
+        {
+            if (World.Scene == Scenes.Map || SceneManager.GetActiveScene().name == "Map")
+            {
+                mode = MapSelect.MapMode.Active;
+                ActiveInit();
+            }else
+            {
+                mode = MapSelect.MapMode.Frame;     
+                FrameInit();
+            }
+        }
+
+
+        public void ActiveInit()
+        {
+            camera.targetTexture = null;
+            camera.GetComponent<HDAdditionalCameraData>().clearColorMode = HDAdditionalCameraData.ClearColorMode.Sky;
+            Destroy(camera.GetComponent<HDCameraUI>());
+            exitCanvas.SetActive(true);
+            if (PlayerDataManager.Instance == null)
+            {
+                var playerData = Instantiate(dataManager.gameObject).GetComponent<PlayerDataManager>();
+            }
+        }
+
+        public void FrameInit()
+        {
+            StartCoroutine(WaitForDisableCamera());
+            
+            Destroy(volume.gameObject);
+        }
+        
 
         private void OnDestroy()
         {
             Set = false;
         }
 
-        public void Reload()
+        public void Clear()
         {
             foreach (var sp in spawned)
             {
                 Destroy(sp.gameObject);
             }
 
-            GalaxyGenerator.LoadSystems();
-            Player.inst.saves.LoadData();
-            var historyList = Player.inst.saves.GetHistory();
+            foreach (var t in names)
+            {
+                if (t != null)
+                {
+                    Destroy(t.gameObject);
+                }   
+            }
+
+            names.Clear();
+            spawned.Clear();
+            spawned.Clear();
+        }
+
+        public List<string> GetHistory()
+        {
+            if (mode == MapSelect.MapMode.Frame && Player.inst)
+            {
+                saves = Player.inst.saves;
+            }
+            else
+            {
+                saves = gameObject.AddComponent<SaveLoadData>();
+            }
+            saves.LoadData();
+            return saves.GetHistory();
+        }
+
+        public void DrawWorld(List<string> historyList)
+        {
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];
@@ -63,6 +141,7 @@ namespace Core.Map
                 {
                     var line = Instantiate(galaxyLine).GetComponent<LineRenderer>();
                     Destroy(line.GetComponent<GalaxyLine>());
+                    line.transform.parent = spawn.transform;
                     line.gameObject.layer = LayerMask.NameToLayer("Map");
                     var firstPos = system.position.ToVector() / size;
                     var secondPos = GalaxyGenerator.systems[system.sibligs[i].solarName].position.ToVector() / size;
@@ -71,17 +150,16 @@ namespace Core.Map
                     line.SetPosition(1, Vector3.Lerp(firstPos, secondPos, 0.5f));
                     line.widthMultiplier = 0.1f;
                 }
-                
+
                 var saved = SolarSystemGenerator.Load();
                 var name = saved.systemName.Split('.')[0];
                 if (system.name == name)
                 {
                     camera.transform.position = (system.position.ToVector() / size) + new Vector3(0, 5, -5);
-                    selected = spawn.gameObject;
+                    selector.ChangeSelected(spawn.gameObject);
                 }
 
                 spawn.transform.parent = transform;
-                spawn.GetComponentInChildren<Renderer>().material.color += new Color(Random.value, Random.value, Random.value) / 5;
                 spawn.transform.name = system.name;
                 spawn.SetActive(true);
 
@@ -89,6 +167,7 @@ namespace Core.Map
                 var textParent = text.transform.parent;
 
                 text.text = system.name;
+
                 textParent.parent = raycaster.transform;
                 textParent.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
                 textParent.localRotation = Quaternion.identity;
@@ -97,15 +176,70 @@ namespace Core.Map
                 spawned.Add(spawn.gameObject);
                 texts.Add(text);
             }
-            
+
+            if (mode == MapSelect.MapMode.Active)
+            {
+                PlayerDataManager.CurrentSolarSystem = null;
+            }
+        }
+        
+        public void DrawCanvas()
+        {
+            float maxSize = 2;
+            Dictionary<int, float> ids = new Dictionary<int, float>();
             for (int i = 0; i < names.Count; i++)
             {
-                names[i].transform.localPosition += new Vector3(60, 80);
-                names[i].transform.localEulerAngles += new Vector3(0, 0, -Vector2.Distance(names[i].transform.position, camera.transform.position));
+                var dirToTarget = Vector3.Normalize(spawned[i].transform.position - camera.transform.position);
+                var dot = Vector3.Dot(camera.transform.forward, dirToTarget);
+                var dist = Vector3.Distance(camera.transform.position, spawned[i].transform.position);
+                if (dot > 0 && dist < 100)
+                {
+                    names[i].SetActive(true);
+                }
+                else
+                {
+                    names[i].SetActive(false);
+                    continue;
+                }
+                var distToSelected = Vector2.Distance(MapSelect.selected.transform.position, spawned[i].transform.position);
+                names[i].transform.localEulerAngles = new Vector3(0, 0, 25 + distToSelected);
                 names[i].transform.position = selector.CalcPos(spawned[i].transform.position);
-                names[i].transform.localScale = Vector3.one * (Mathf.Abs((Vector2.Distance(names[i].transform.position, camera.transform.position) / 40))) * 0.2f;
-                texts[i].fontSize = 30 - Mathf.Abs((Vector2.Distance(names[i].transform.position, camera.transform.position) / 40));
-            } 
+                ids.Add(i, dist);
+                var scale = Vector3.one * maxSize / ((distToSelected / 2f) + 1);
+                if (mode == MapSelect.MapMode.Frame)
+                {
+                    names[i].transform.localScale = scale;
+                }
+                else
+                {
+                    names[i].transform.localScale = Vector3.Lerp(names[i].transform.localScale, scale, Time.deltaTime * 20f);
+                }
+                texts[i].fontSize = 30 - (Vector2.Distance(MapSelect.selected.transform.position, camera.transform.position) / 40);
+            }
+
+            var dictionary = ids.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            foreach (var el in dictionary)
+            {
+                names[el.Key].transform.SetAsFirstSibling();
+            }
+        }
+        public void Reload()
+        {
+            Clear();
+            var historyList = GetHistory();
+            GalaxyGenerator.LoadSystems();
+            DrawWorld(historyList);
+            DrawCanvas();
+            selector.UpdatePoint();
+        }
+
+
+        private void Update()
+        {
+            if (mode == MapSelect.MapMode.Active)
+            {
+                DrawCanvas();
+            }
         }
 
         IEnumerator WaitForDisableCamera()
@@ -113,16 +247,16 @@ namespace Core.Map
             if (SceneManager.GetActiveScene().name != "Map")
             {
                 yield return null;
-                yield return null;
+                DrawCanvas();//Skip Frames And Wait For Canvas Init
                 yield return null;
                 camera.enabled = false;
             }
         }
 
-        public void ChangeSelected(GameObject select)
+
+        public SaveLoadData GetSaves()
         {
-            selected = select;
-            camera.transform.position = (select.transform.position) + new Vector3(0, 5, -5);
+            return saves;
         }
     }
 }

@@ -7,7 +7,9 @@ namespace Core.Garage
     public class UIGarageMover : MonoBehaviour
     {
         [SerializeField] private GameObject fader;
-    
+
+        [SerializeField] private Scenes scene = Scenes.Garage;
+        
         public void LoadLocation()
         {
             Player.inst.saves.Save();
@@ -20,7 +22,7 @@ namespace Core.Garage
         IEnumerator WaitForFader()
         {
             yield return new WaitForSeconds(1);
-            World.LoadLevelAsync(Scenes.Garage);
+            World.LoadLevelAsync(scene);
         }
     }
 }

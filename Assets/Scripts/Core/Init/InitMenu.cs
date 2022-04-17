@@ -21,6 +21,7 @@ namespace Core.Init
 
         private void Awake()
         {
+            Application.targetFrameRate = 120;
             PlayerDataManager.CurrentSolarSystem = null;
             options.Awake();
         }

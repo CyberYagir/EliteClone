@@ -50,6 +50,7 @@ namespace Core.Systems
         public void UpdateLine()
         {
             var curve = new AnimationCurve();
+            if (!camera) return;
             var camPos = camera.transform.position;
             var current = transform;
             var count = (float) lineRenderer.positionCount;

@@ -24,10 +24,12 @@ namespace Core.Location
         }
         void Update()
         {
-            transform.LookAt(mainCamera.transform);
-            transform.localScale = Vector3.one * Vector3.Distance(transform.position, mainCamera.transform.position) * size;
-
-            SetActiveLocation();
+            if (mainCamera != null)
+            {
+                transform.LookAt(mainCamera.transform);
+                transform.localScale = Vector3.one * Vector3.Distance(transform.position, mainCamera.transform.position) * size;
+                SetActiveLocation();
+            }
         }
 
         public void SetData(Dictionary<string, object> newData)

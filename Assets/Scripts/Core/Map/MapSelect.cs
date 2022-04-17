@@ -1,29 +1,40 @@
+using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.Map
 {
     public class MapSelect : MonoBehaviour
     {
+        public enum  MapMode
+        {
+            Frame, Active
+        }
         [SerializeField] private Camera camera;
         [SerializeField] private GameObject point;
+        public static GameObject selected;
         public RectTransform rect;
 
         void Update()
         {
-            if (MapGenerator.selected != null)
+            if (selected != null)
             {
-                point.transform.position = CalcPos(MapGenerator.selected.transform.position);
-
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
+                    UpdatePoint();
                     var ray = camera.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
                         if (hit.collider != null)
-                            MapGenerator.Instance.ChangeSelected(hit.transform.gameObject);
+                            ChangeSelected(hit.transform.gameObject);
                     }
                 }
             }
+        }
+
+        public void UpdatePoint()
+        {
+            point.transform.position = CalcPos(selected.transform.position);
         }
 
         public Vector3 CalcPos(Vector3 worldPos)
@@ -33,6 +44,31 @@ namespace Core.Map
             return rect.TransformPoint(pos);
         }
 
+        public void ChangeSelected(GameObject select)
+        {
+            var targetPos = new Vector3();
+            if (selected == null)
+            {
+                targetPos = (select.transform.position) + new Vector3(0, 5, -5);
+                camera.transform.position = targetPos;
+                selected = select;
+                return;
+            }
+            else
+            {
+                targetPos = select.transform.position + (camera.transform.position - selected.transform.position);
+            }
 
+            selected = select;
+            if (MapGenerator.mode == MapMode.Frame)
+            {
+                camera.transform.position = targetPos;
+            }
+            else
+            {
+                camera.transform.DOMove(targetPos, 0.5f);
+                camera.transform.DORotate(camera.transform.eulerAngles, 0.5f);
+            }
+        }
     }
 }

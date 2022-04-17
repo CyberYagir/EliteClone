@@ -90,6 +90,15 @@ namespace Core
         {
             return keys.ContainsKey(name);
         }
+        public object GetKey(string name)
+        {
+            if (keys.ContainsKey(name))
+            {
+                return keys[name];
+            }
+            
+            return null;
+        }
         public void SetKey(string name, object value, bool save = true)
         {
             if (keys.ContainsKey(name))

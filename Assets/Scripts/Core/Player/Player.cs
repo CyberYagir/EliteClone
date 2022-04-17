@@ -133,6 +133,7 @@ namespace Core.PlayerScripts
             spaceShip.LoadShip(data);
             spaceShip.GetShip().ValuesToDictionary();
             TakeDamage(0);
+            TakeDamageHeath(0);
         }
     
     

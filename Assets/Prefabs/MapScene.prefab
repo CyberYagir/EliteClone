@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 38232729}
   - component: {fileID: 38232727}
   - component: {fileID: 38232728}
+  - component: {fileID: 7936867460275766186}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -29,9 +30,10 @@ Transform:
   m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
   m_LocalPosition: {x: -64.15167, y: 169.08025, z: -173.51767}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8105557174656751592}
   m_Father: {fileID: 7884266887433183862}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!20 &38232729
 Camera:
@@ -213,6 +215,20 @@ MonoBehaviour:
   renderInCameraBuffer: 0
   showAdvancedSettings: 0
   blitWithBlending: {fileID: 4800000, guid: 2f9f3f4f146daca4aa6c50c9507f4b3e, type: 3}
+--- !u!114 &7936867460275766186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38232726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1401ed34993b51846a41e98ff65292d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 180
+  select: {fileID: 8105557174606585768}
 --- !u!1 &118623462389332410
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +258,6 @@ Transform:
   m_Children:
   - {fileID: 3988158112564865060}
   - {fileID: 8105557174606585771}
-  - {fileID: 8105557174656751592}
   - {fileID: 7697358796834079540}
   - {fileID: 38232730}
   m_Father: {fileID: 0}
@@ -259,6 +274,7 @@ GameObject:
   - component: {fileID: 8263726348001461689}
   - component: {fileID: 6112706304329680022}
   - component: {fileID: 471044376393784221}
+  - component: {fileID: 2096861641}
   m_Layer: 31
   m_Name: Quad
   m_TagString: Untagged
@@ -329,6 +345,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2096861641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352464924570183344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1be329c3339e7049a61f7faf7b03f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 471044376393784221}
+  textures:
+  - {fileID: 2800000, guid: adedb08c806cb6a419417d3e1a74940d, type: 3}
+  - {fileID: 2800000, guid: 7640e87872022db448a0d2f186fa55c2, type: 3}
+  - {fileID: 2800000, guid: 030512c9ccb67b44089945a158dc2208, type: 3}
 --- !u!1 &4856836092455848029
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,9 +808,24 @@ MonoBehaviour:
   raycaster: {fileID: 8105557174656751597}
   galaxyLine: {fileID: 8144951039825309215}
   selector: {fileID: 8105557174606585768}
-  spawned: []
-  names: []
-  texts: []
+  dataManager: {fileID: 5275611199331377784, guid: 88df4fef97124f045af3228e92936e37, type: 3}
+  volume: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  OnInited:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Core.MapButtonLocation, CoreDef
+        m_MethodName: Init
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8105557174606585768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,8 +873,8 @@ RectTransform:
   m_Children:
   - {fileID: 8105557174552360630}
   - {fileID: 8105557174294023360}
-  m_Father: {fileID: 7884266887433183862}
-  m_RootOrder: 2
+  m_Father: {fileID: 38232730}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -844,7 +892,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 38232729}
-  m_PlaneDistance: 500
+  m_PlaneDistance: 2
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -923,7 +971,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7884266887433183862}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &3374396239668448467
 LineRenderer:
@@ -964,7 +1012,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -20
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

@@ -5,7 +5,8 @@ namespace Core
     public class MapLooker : MonoBehaviour
     {
         [SerializeField] private Camera camera;
-
+        
+        
 
         void Update()
         {
