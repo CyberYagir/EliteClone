@@ -42,14 +42,7 @@ namespace Core.UI
             isPause = pause;
             if (isPause)
             {
-                if (Player.inst != null)
-                {
-                    selfDestructionButton.SetActive(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).value <= 0);
-                }
-                else
-                {
-                    selfDestructionButton.SetActive(false);
-                }
+                selfDestructionButton.SetActive(Player.inst != null);
 
                 background.raycastTarget = true;
                 background.DOFade(0.95f, speed).SetUpdate(true);

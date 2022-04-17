@@ -9,6 +9,7 @@ namespace Core.UI
 {
     public class MapUI : MonoBehaviour
     {
+        [SerializeField] private GameObject fader;
         private void Start()
         {
             Player.OnSceneChanged += Set;
@@ -30,7 +31,9 @@ namespace Core.UI
             {
                 Player.inst.saves.SetKey("MapActive", (int) World.Scene);
                 PlayerDataManager.SaveAll();
-                GetComponent<UIGarageMover>().LoadLocation();
+                var fd = Instantiate(fader.gameObject).GetComponent<FaderMultiScenes>();
+                fd.SetScene((int)Scenes.Map);
+                fd.LoadLocation();
             }
         }
     }

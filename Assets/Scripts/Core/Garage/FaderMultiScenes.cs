@@ -39,7 +39,7 @@ namespace Core.Garage
                 yield return null;
             }
         
-            image.DOFade(1, 0f);
+            image.DOFade(0, 1f);
             yield return new WaitForSeconds(1);
         
             Destroy(gameObject);

@@ -4,7 +4,7 @@ using Core.Garage;
 using Core.Map;
 using UnityEngine;
 
-namespace Core
+namespace Core.Map
 {
     public class MapButtonLocation : MonoBehaviour
     {
