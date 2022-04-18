@@ -90,7 +90,7 @@ public class TradeWindow : EditorWindow
                                 manager.staticOffers[i].costLevel = EditorGUILayout.CurveField("Cost Curve: ", manager.staticOffers[i].costLevel, GUILayout.Height(60), GUILayout.Width(300));
                                 GUILayout.BeginVertical();
                                 {
-                                    EditorGUILayout.MinMaxSlider("Cost",ref manager.staticOffers[i].minCost, ref manager.staticOffers[i].maxCost, 1, 100);
+                                    EditorGUILayout.MinMaxSlider("Cost",ref manager.staticOffers[i].minCost, ref manager.staticOffers[i].maxCost, 1, 1000);
                                     manager.staticOffers[i].minCost = Mathf.RoundToInt(manager.staticOffers[i].minCost);
                                     manager.staticOffers[i].maxCost = Mathf.RoundToInt(manager.staticOffers[i].maxCost);
                                     GUILayout.Label("Cost: " + manager.staticOffers[i].minCost + "/" + manager.staticOffers[i].maxCost);

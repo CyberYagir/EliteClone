@@ -153,5 +153,10 @@ namespace Core.PlayerScripts.Weapon
             Destroy(cacheHolder.gameObject);
             ClearData();
         }
+
+        public WeaponOptionsItem GetOptions()
+        {
+            return options;
+        }
     }
 }

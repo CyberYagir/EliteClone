@@ -159,8 +159,7 @@ namespace Core.Garage
             for (int i = 0; i < currentItem.keysData.Count; i++)
             {
                 var key = currentItem.keysData[i];
-                if (key.KeyPairType != KeyPairType.MeshType)
-                    options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
+                options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
             }
         }
     

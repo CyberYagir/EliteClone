@@ -99,7 +99,7 @@ namespace Core.Game
 
     public enum KeyPairValue
     {
-        Damage, Cooldown, Mass, Level, Value, Energy, MeshType, Mineral
+        Damage, Cooldown, Mass, Level, Value, Energy, Mineral
     }
 
     public enum ItemType
@@ -108,7 +108,7 @@ namespace Core.Game
     }
     public enum KeyPairType
     {
-        Int, String, Float, MeshType, MineralType, Object
+        Int, String, Float, MineralType, Object
     }
 
     public enum MineralType

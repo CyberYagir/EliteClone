@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24eab1ea9f9f5147a4ca07d5d653862, type: 3}
+  m_Name: Weapon_Machinegun1
+  m_EditorClassIdentifier: 
+  laserOptions:
+    width:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    materal: {fileID: 0}
+  maxDistance: -1
+  attackParticles: {fileID: 0}
+  attackDecal: {fileID: 0}
+  damage: 0.6
+  cooldown: 0.02
+  objects:
+  - name: Bullets
+    obj: {fileID: 1482811654934178776, guid: e0daadc940792de44a11410fc7e0824e, type: 3}

@@ -11,11 +11,6 @@ namespace Core.PlayerScripts
         [Serializable]
         public class SlotMesh
         {
-            public enum WeaponMesh
-            {
-                None, Laser, MineLaser
-            }
-            public WeaponMesh meshName;
             public GameObject mesh;
             public Object weaponScript;
             public WeaponOptionsItem options;
@@ -29,28 +24,26 @@ namespace Core.PlayerScripts
         public void SetMesh(Slot slot)
         {
             Destroy(currentWeapon);
-            if (slot.current.IsHaveKeyPair(KeyPairValue.MeshType))
+            if (slot.current.itemType == ItemType.Weapon)
             {
                 Destroy(currentWeapon);
                 gameObject.SetActive(true);
-                var type = (float)slot.current.GetKeyPair(KeyPairValue.MeshType);
-                foreach (var mesh in meshes)
+
+                var meshID = int.Parse(slot.current.GetKeyPair(KeyPairValue.Value).ToString());
+                for (var i = 0; i < meshes.Count; i++)
                 {
-                    if (mesh.meshName == (SlotMesh.WeaponMesh) (int) type)
+                    if (meshID == i)
                     {
+                        var mesh = meshes[i];
                         if (mesh.weaponScript != null)
                         {
-                            currentWeapon = (Weapon.Weapon)gameObject.AddComponent(Type.GetType(mesh.weaponScriptName + mesh.weaponScript.name));
+                            currentWeapon = (Weapon.Weapon) gameObject.AddComponent(Type.GetType(mesh.weaponScriptName + mesh.weaponScript.name));
                             currentWeapon.Init(slot.button, slot.current, mesh.options);
                         }
-
-                        mesh.mesh.SetActive(true);
                     }
-                    else
-                    {
-                        mesh.mesh.SetActive(false);
-                    }
+                    meshes[i].mesh.SetActive(meshID == i);
                 }
+
             }
             else
             {

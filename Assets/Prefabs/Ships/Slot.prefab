@@ -1,5 +1,86 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &792823740097279654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8113916726014217703}
+  - component: {fileID: 5892034027569771171}
+  - component: {fileID: 3608734169701891467}
+  m_Layer: 7
+  m_Name: Cannon1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8113916726014217703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792823740097279654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0.001878}
+  m_LocalScale: {x: 0.49825, y: 0.49825, z: 0.49825}
+  m_Children: []
+  m_Father: {fileID: 9120856572781020683}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5892034027569771171
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792823740097279654}
+  m_Mesh: {fileID: 6255687079079774844, guid: 8864d350823d3f244ae7b46f900a709d, type: 3}
+--- !u!23 &3608734169701891467
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792823740097279654}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 238e618eb0cd31a43a7ff92171749969, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1157518193270084154
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +112,8 @@ Transform:
   m_Children:
   - {fileID: 7422388420238148883}
   - {fileID: 7785569081829251070}
+  - {fileID: 4306108448953807942}
+  - {fileID: 8113916726014217703}
   m_Father: {fileID: 2842824252779102225}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -212,15 +295,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   meshes:
-  - meshName: 1
-    mesh: {fileID: 5469253189075104888}
+  - mesh: {fileID: 5469253189075104888}
     weaponScript: {fileID: 11500000, guid: 937080ce5e8c9d6499d73ea80b08aa40, type: 3}
     options: {fileID: 11400000, guid: b355a0af1933ee6439ac2d8fef4ad22d, type: 2}
     weaponScriptName: Core.PlayerScripts.Weapon.
-  - meshName: 2
-    mesh: {fileID: 6491464588191120172}
+  - mesh: {fileID: 6491464588191120172}
     weaponScript: {fileID: 11500000, guid: 06f360732926bb8478cae122656f9f59, type: 3}
     options: {fileID: 11400000, guid: 2c9b9658d3223b24faa769cde27fb8c0, type: 2}
+    weaponScriptName: Core.PlayerScripts.Weapon.
+  - mesh: {fileID: 7738914921012248531}
+    weaponScript: {fileID: 11500000, guid: ca4929ea86a420540b24861c8dfbff1d, type: 3}
+    options: {fileID: 11400000, guid: 4178788d2fa58c7438a43cb7c28de3bd, type: 2}
     weaponScriptName: Core.PlayerScripts.Weapon.
 --- !u!114 &-3298143249773742108
 MonoBehaviour:
@@ -362,6 +447,87 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6491464588191120172}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 238e618eb0cd31a43a7ff92171749969, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7738914921012248531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4306108448953807942}
+  - component: {fileID: 774529560248488235}
+  - component: {fileID: 2538748678615855965}
+  m_Layer: 7
+  m_Name: Machinegun1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4306108448953807942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738914921012248531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.001496}
+  m_LocalScale: {x: 0.49825, y: 0.49825, z: 0.49825}
+  m_Children: []
+  m_Father: {fileID: 9120856572781020683}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &774529560248488235
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738914921012248531}
+  m_Mesh: {fileID: 8691780276856062721, guid: 8864d350823d3f244ae7b46f900a709d, type: 3}
+--- !u!23 &2538748678615855965
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738914921012248531}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1

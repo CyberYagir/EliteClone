@@ -99,9 +99,6 @@ namespace Game.Editor
                                 case KeyPairType.String:    
                                     item.keysData[i].str = EditorGUILayout.TextField(item.keysData[i].str).Trim();
                                     break;
-                                case KeyPairType.MeshType:
-                                    item.keysData[i].num = (int)((ShipMeshSlot.SlotMesh.WeaponMesh)EditorGUILayout.EnumPopup((ShipMeshSlot.SlotMesh.WeaponMesh)((int)item.keysData[i].num)));
-                                    break;
                                 case KeyPairType.MineralType:
                                     item.keysData[i].num = (int)((MineralType)EditorGUILayout.EnumPopup((MineralType)((int)item.keysData[i].num)));
                                     break;
