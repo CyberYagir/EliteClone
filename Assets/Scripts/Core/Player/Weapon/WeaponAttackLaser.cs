@@ -15,7 +15,7 @@ namespace Core.PlayerScripts.Weapon
             var damagable = obj.transform.GetComponent<IDamagable>();
             if (damagable != null)
             {
-                damagable.TakeDamage(options.damage);
+                damagable.TakeDamage(damage);
             }
         }
     }

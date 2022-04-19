@@ -129,8 +129,9 @@ namespace Core.Garage
 
                 LoadBindKey();
             }
-            options.binder.SetActive(currentSlot != null);
 
+            if (currentItem == null) return;
+            options.binder.SetActive(currentSlot != null);
             options.itemName.text = currentItem.itemName;
             if (slotInfo.lastItem != null)
             {
@@ -159,7 +160,10 @@ namespace Core.Garage
             for (int i = 0; i < currentItem.keysData.Count; i++)
             {
                 var key = currentItem.keysData[i];
-                options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
+                if (!(currentItem.itemType == ItemType.Weapon && key.KeyPairValue == KeyPairValue.Value))
+                {
+                    options.itemData.text += (key.customName == "" ? key.KeyPairValue.ToString() : key.customName) + ": " + (key.KeyPairType == KeyPairType.String ? key.str : key.num.ToString(key.KeyPairType == KeyPairType.Int ? "" : "F2")) + "\n";
+                }
             }
         }
     

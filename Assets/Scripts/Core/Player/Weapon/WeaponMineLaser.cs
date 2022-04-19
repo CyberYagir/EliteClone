@@ -16,7 +16,7 @@ namespace Core.PlayerScripts.Weapon
             var meteor = obj.transform.GetComponent<Meteor>();
             if (meteor)
             {
-                meteor.TakeDamage(options.damage);
+                meteor.TakeDamage(damage);
                 if (meteor.GetHealth() > 0)
                 {
                     meteor.SpawnDrop(obj.normal, obj.point);

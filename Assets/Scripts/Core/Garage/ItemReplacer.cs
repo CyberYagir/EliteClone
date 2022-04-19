@@ -32,7 +32,7 @@ namespace Core.Garage
 
         public bool ReplaceItem(Item drop, Slot currentSlot)
         {
-            if (Convert.ToInt32(drop.GetKeyPair(KeyPairValue.Level)) <= currentSlot.slotLevel)
+            if ((float)drop.GetKeyPair(KeyPairValue.Level) <= currentSlot.slotLevel)
             {
                 var massWithoutSlot = GarageDataCollect.Instance.ship.CalcMass() - (float)currentSlot.current.GetKeyPair(KeyPairValue.Mass);
                 if (massWithoutSlot + (float) drop.GetKeyPair(KeyPairValue.Mass) <= GarageDataCollect.Instance.ship.data.maxCargoWeight)

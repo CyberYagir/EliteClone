@@ -8,6 +8,7 @@ namespace Core.PlayerScripts
     {
         public List<ShipMeshSlot> slots;
         private ItemShip currentShip;
+        public Event OnInit = new Event();
         public void InitSlots(ItemShip itemShip)
         {
             for (int i = 0; i < itemShip.slots.Count; i++)
@@ -18,6 +19,8 @@ namespace Core.PlayerScripts
                     findWithID.SetMesh(itemShip.slots[i]);
                 }
             }
+            
+            OnInit.Run();
         }
 
         public void SetCurrentShip(ItemShip itemShip)

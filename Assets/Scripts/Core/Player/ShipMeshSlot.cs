@@ -29,7 +29,7 @@ namespace Core.PlayerScripts
                 Destroy(currentWeapon);
                 gameObject.SetActive(true);
 
-                var meshID = int.Parse(slot.current.GetKeyPair(KeyPairValue.Value).ToString());
+                var meshID = (int)((float)slot.current.GetKeyPair(KeyPairValue.Value));
                 for (var i = 0; i < meshes.Count; i++)
                 {
                     if (meshID == i)

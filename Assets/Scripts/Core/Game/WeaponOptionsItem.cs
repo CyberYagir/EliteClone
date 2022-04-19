@@ -26,8 +26,6 @@ namespace Core.Game
         public float maxDistance;
         public GameObject attackParticles;
         public GameObject attackDecal;
-        public float damage;
-        public float cooldown;
         public List<NameToObject> objects;
 
         public Object GetObject(string objectName)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Game;
 using UnityEngine;
 
 
@@ -14,7 +15,7 @@ namespace Core.PlayerScripts.Weapon
         private void Awake()
         {
             weapon = GetComponentInParent<Weapon>();
-            damage = weapon.GetOptions().damage;
+            damage = (float)weapon.Current().GetKeyPair(KeyPairValue.Damage);
         }
 
         private void OnParticleCollision(GameObject other)

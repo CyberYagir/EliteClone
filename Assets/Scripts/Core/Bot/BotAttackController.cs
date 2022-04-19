@@ -47,6 +47,10 @@ namespace Core.Bot
         {
             targetShip = target;
         }
+        public Transform GetTarget()
+        {
+            return targetShip;
+        }
         private void Update()
         {
             Vector3 dir = target - transform.position;

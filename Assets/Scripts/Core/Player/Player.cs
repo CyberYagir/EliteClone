@@ -35,6 +35,7 @@ namespace Core.PlayerScripts
         Ship spaceShip;
     
         private float heatTime;
+
         private void Awake()
         {
             OnSceneChanged = new Event();

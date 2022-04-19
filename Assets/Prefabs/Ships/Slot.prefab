@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8113916726014217703
 Transform:
   m_ObjectHideFlags: 0
@@ -306,6 +306,10 @@ MonoBehaviour:
   - mesh: {fileID: 7738914921012248531}
     weaponScript: {fileID: 11500000, guid: ca4929ea86a420540b24861c8dfbff1d, type: 3}
     options: {fileID: 11400000, guid: 4178788d2fa58c7438a43cb7c28de3bd, type: 2}
+    weaponScriptName: Core.PlayerScripts.Weapon.
+  - mesh: {fileID: 792823740097279654}
+    weaponScript: {fileID: 11500000, guid: 47e4b1d4242f0c348b4a336f468aa3f5, type: 3}
+    options: {fileID: 11400000, guid: 0a0528c8e86de654cbc186634fba2e82, type: 2}
     weaponScriptName: Core.PlayerScripts.Weapon.
 --- !u!114 &-3298143249773742108
 MonoBehaviour:

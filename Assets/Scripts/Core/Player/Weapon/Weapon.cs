@@ -17,6 +17,13 @@ namespace Core.PlayerScripts.Weapon
         protected LayerMask customMask = -1;
         protected bool isLayerMaskChanged;
         protected Vector3 pointOffcet;
+        
+        
+        protected float cooldown;
+        protected float damage;
+        
+        protected float time;
+        
         public void Init(int shootKey, Item current, WeaponOptionsItem opt)
         {
             currentItem = current;
@@ -34,7 +41,20 @@ namespace Core.PlayerScripts.Weapon
                 Player.inst.attack.OnHold += OnHoldDown;
             }
 
+            damage = (float)currentItem.GetKeyPair(KeyPairValue.Damage);
+            cooldown = (float)currentItem.GetKeyPair(KeyPairValue.Cooldown);
+            
+            
             InitData();
+        }
+
+        public float GetReload()
+        {
+            if (cooldown == -1)
+            {
+                return 1;
+            }
+            return Mathf.Clamp01(time/cooldown);
         }
 
         public float GetDistance()
@@ -153,10 +173,13 @@ namespace Core.PlayerScripts.Weapon
             Destroy(cacheHolder.gameObject);
             ClearData();
         }
-
-        public WeaponOptionsItem GetOptions()
+        public Item Current()
         {
-            return options;
+            return currentItem;
+        }
+        public int CurrentID()
+        {
+            return weaponID;
         }
     }
 }

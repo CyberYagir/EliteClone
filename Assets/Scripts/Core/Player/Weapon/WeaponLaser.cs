@@ -1,3 +1,4 @@
+using Core.Game;
 using Core.Systems;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace Core.PlayerScripts.Weapon
             {
                 light.color = options.laserOptions.materal.color;
             }
+
+            
             particles.SetActive(false);
         }
 
