@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Game;
 using Core.Init;
 using Core.UI;
@@ -35,6 +36,7 @@ namespace Core.Garage
             }
             row.SetValue(GarageDataCollect.Instance.cargo.tons, GarageDataCollect.Instance.ship.data.maxCargoWeight, $"Weight {GarageDataCollect.Instance.cargo.tons:F1}/{GarageDataCollect.Instance.ship.data.maxCargoWeight}");
         }
+
 
         public void OnPointerEnter(PointerEventData eventData)
         {

@@ -94,6 +94,10 @@ namespace Core.Game
         {
             var clone = Instantiate(this);
             clone.ValuesToDictionary();
+            foreach (var vals in clone.shipValues)
+            {
+                vals.Value.value = vals.Value.max;
+            }
             clone.shipID = new Random(DateTime.Now.Millisecond * DateTime.Now.Second * DateTime.Now.Hour * DateTime.Now.Day).Next(100000000, 999999999);
             return clone;
         }
@@ -123,7 +127,7 @@ namespace Core.Game
                     mass += (float) slots[i].current.GetKeyPair(KeyPairValue.Mass);
                 }
             }
-
+            
             return mass;
         }
         public void ValuesToDictionary()
@@ -133,7 +137,24 @@ namespace Core.Game
             {
                 if (!shipValues.ContainsKey(shipValuesList[i].name))
                 {
-                    shipValues.Add(shipValuesList[i].name, shipValuesList[i]);
+                    shipValues.Add(shipValuesList[i].name, new ShipClaped(shipValuesList[i].name, shipValuesList[i].value, shipValuesList[i].max));
+                }
+            }
+
+            foreach (var slot in slots)
+            {
+                var value = (float)slot.current.GetKeyPair(KeyPairValue.Value);
+                if (slot.slotType == ItemType.Armor)
+                {
+                    shipValues[ShipValuesTypes.Health].max = shipValuesList.Find(x=>x.name == ShipValuesTypes.Health).max + value;
+                }
+                if (slot.slotType == ItemType.Shields)
+                {
+                    shipValues[ShipValuesTypes.Shields].max = shipValuesList.Find(x=>x.name == ShipValuesTypes.Shields).max + value;
+                }
+                if (slot.slotType == ItemType.Cooler)
+                {
+                    shipValues[ShipValuesTypes.Temperature].max = shipValuesList.Find(x=>x.name == ShipValuesTypes.Temperature).max + value;
                 }
             }
         }
@@ -172,7 +193,8 @@ namespace Core.Game
             shipName = item.shipName;
             foreach (var value in item.shipValues)
             {
-                valuesList.Add(value.Value);
+                var standard = item.shipValuesList.Find(x => x.name == value.Key).max;
+                valuesList.Add(new ShipClaped(value.Key, value.Value.value, standard));
             }
 
             foreach (var slot in item.slots)

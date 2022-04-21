@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Location;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
@@ -88,11 +89,7 @@ namespace Core.Game
         public IDTruple(string nameID)
         {
             idname = nameID;
-            int uniqSeed = 0;
-            foreach (var ch in Encoding.ASCII.GetBytes(nameID))
-            {
-                uniqSeed += ch;
-            }
+            int uniqSeed = NamesHolder.StringToSeed(nameID);
             id = int.Parse(new Random(uniqSeed).Next(-999999, 999999).ToString("0000000"));
         }
     }

@@ -49,6 +49,17 @@ namespace Core.Location
                 return char.ToUpper(str[0]).ToString();
             return (char.ToUpper(str[0]) + str.Substring(1).ToLower());
         }
+
+        public static int StringToSeed(string name)
+        {
+            int seed = 0;
+            foreach (var ch in Encoding.ASCII.GetBytes(name))
+            {
+                seed += ch;
+            }
+
+            return seed;
+        }
     }
 
     public class WorldOrbitalStation : MonoBehaviour
@@ -103,12 +114,7 @@ namespace Core.Location
 
         public static int CalcSeed(string stationName, string systemName)
         {
-            int uniqSeed = 0;
-            foreach (var ch in Encoding.ASCII.GetBytes(stationName + systemName))
-            {
-                uniqSeed += ch;
-            }
-
+            int uniqSeed = NamesHolder.StringToSeed(stationName + systemName);
             uniqSeed *= uniqSeed;
             return uniqSeed;
         }

@@ -38,7 +38,7 @@ namespace Core.Map
         
         private SaveLoadData saves = null;
 
-
+        public List<string> systems = new List<string>();
         public Event OnInited;
         private void Awake()
         {
@@ -129,26 +129,32 @@ namespace Core.Map
             return saves.GetHistory();
         }
 
+        public static LineRenderer DrawLine(LineRenderer line, Transform parent, NeighbourSolarSytem system)
+        {
+            Destroy(line.GetComponent<GalaxyLine>());
+            line.transform.parent = parent;
+            line.gameObject.layer = LayerMask.NameToLayer("Map");
+            var firstPos = parent.position;
+            var secondPos = GalaxyGenerator.systems[system.solarName].position.ToVector() / size;
+            line.SetPosition(0, firstPos);
+            line.SetPosition(2, secondPos);
+            line.SetPosition(1, Vector3.Lerp(firstPos, secondPos, 0.5f));
+            line.widthMultiplier = 0.1f;
+            return line;
+        }
+        
         public void DrawWorld(List<string> historyList)
         {
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];
-
+                systems.Add(system.name);
                 var spawn = Instantiate(star.gameObject, system.position.ToVector() / size, Quaternion.identity);
 
                 for (int i = 0; i < system.sibligs.Count; i++)
                 {
                     var line = Instantiate(galaxyLine).GetComponent<LineRenderer>();
-                    Destroy(line.GetComponent<GalaxyLine>());
-                    line.transform.parent = spawn.transform;
-                    line.gameObject.layer = LayerMask.NameToLayer("Map");
-                    var firstPos = system.position.ToVector() / size;
-                    var secondPos = GalaxyGenerator.systems[system.sibligs[i].solarName].position.ToVector() / size;
-                    line.SetPosition(0, firstPos);
-                    line.SetPosition(2, secondPos);
-                    line.SetPosition(1, Vector3.Lerp(firstPos, secondPos, 0.5f));
-                    line.widthMultiplier = 0.1f;
+                    DrawLine(line, spawn.transform, system.sibligs[i]);
                 }
 
                 var saved = SolarSystemGenerator.Load();

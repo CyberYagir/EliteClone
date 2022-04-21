@@ -1,3 +1,4 @@
+using System.Text;
 using Core.Game;
 using Core.Location;
 using Core.PlayerScripts;
@@ -13,6 +14,7 @@ namespace Core.Bot
         [SerializeField] private BotAttackController attackControl;
         [SerializeField] private BotLandController landControl;
         [SerializeField] private BotMovingController movingControl;
+        [SerializeField] private BotWeapons weapons;
         [SerializeField] private ShieldActivator shield;
         [SerializeField] private BotVisual visual;
         [SerializeField] private ContactObject contactManager;
@@ -30,10 +32,20 @@ namespace Core.Bot
 
         public void SetShip(ItemShip shipData)
         {
+            int weaponsSeed = NamesHolder.StringToSeed(transform.name);
+            foreach (var slt in shipData.slots)
+            {
+                if (slt.slotType == ItemType.Weapon)
+                {
+                    slt.current = weapons.GetWeapon(weaponsSeed);
+                }
+            }
+
             ship.SetShip(shipData);
             SetName();
         }
-    
+        
+
         public void InitBot(Random rnd = null)
         {
             NamesHolder.Init();

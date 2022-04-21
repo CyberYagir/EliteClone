@@ -1,4 +1,5 @@
 using System;
+using Core.Bot;
 using Core.Game;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ namespace Core.PlayerScripts.Weapon
         {
             bullets = Instantiate(options.GetObject("Bullets") as GameObject, cacheHolder.transform).GetComponent<ParticleSystem>();
             bullets.transform.localPosition = Vector3.zero;
+            if (GetComponentInParent<BotBuilder>())
+            {
+                bullets.GetComponent<ParticleCollision>().SetBot();
+            }
         }
 
         private void Update()

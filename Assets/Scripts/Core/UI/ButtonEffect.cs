@@ -68,5 +68,11 @@ namespace Core.UI
         {
             noneColor = color;
         }
+
+
+        public void Deselect()
+        {
+            over = ActionType.None;
+        }
     }
 }

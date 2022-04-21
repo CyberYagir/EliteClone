@@ -10,10 +10,17 @@ namespace Core.Map
         {
             Frame, Active
         }
+
+        public static MapSelect Instance;
         [SerializeField] private Camera camera;
         [SerializeField] private GameObject point;
         public static GameObject selected;
         public RectTransform rect;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         void Update()
         {

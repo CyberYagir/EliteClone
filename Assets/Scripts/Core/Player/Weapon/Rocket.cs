@@ -15,11 +15,13 @@ namespace Core.PlayerScripts.Weapon
         [SerializeField] private GameObject explode;
         [SerializeField] private float speed, rotSpeed;
         [SerializeField] private float maxTime = 30;
+        private float maxSpeed;
         private float damage;
         private bool isVisible;
         private bool player;
         public void Init(Transform damagable, float dmg, bool isPlayer)
         {
+            maxSpeed = speed;
             target = damagable;
             damage = dmg;
             player = isPlayer;
@@ -38,6 +40,20 @@ namespace Core.PlayerScripts.Weapon
         private void Update()
         {
             time += Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, target.transform.position) < speed)
+            {
+                if (target.GetComponent<Rigidbody>().velocity.magnitude < speed)
+                {
+                    speed -= Time.deltaTime * 20;
+                }
+                else
+                {
+                    speed += Time.deltaTime * 20;
+                    speed = Mathf.Clamp(speed, 0, maxSpeed);
+                }
+            }
+            
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
             if (target != null && isVisible)
             {

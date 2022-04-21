@@ -10,6 +10,11 @@ namespace Core.Garage
         [SerializeField] private Image image;
         [SerializeField] private TMP_Text nameT, costT, haveT;
         private TradeManager.Offer offer;
+
+        public void ReInit()
+        {
+            Init(offer);
+        }
         public void Init(TradeManager.Offer item)
         {
             offer = item;
@@ -83,5 +88,21 @@ namespace Core.Garage
                 }
             }
         }
+        
+        public bool Compare(ItemType key)
+        {
+            return offer.item.itemType == key;
+        }
+
+        public bool IsHavePair(KeyPairValue key)
+        {
+            return offer.item.IsHaveKeyPair(key);
+        }
+
+        public int GetKeysCount()
+        {
+            return offer.item.keysData.Count;
+        }
+
     }
 }

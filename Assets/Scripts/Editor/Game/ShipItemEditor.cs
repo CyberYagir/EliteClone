@@ -87,16 +87,34 @@ namespace Game.Editor
             drawStats = EditorGUILayout.Foldout(drawStats, "Stats", true);
             if (drawStats)
             {
-                for (int i = 0; i < ship.shipValuesList.Count; i++)
+                if (ship.shipValues == null)
                 {
-                    var res = DrawEditor(ship.shipValuesList[i]);
-                    if (res != null)
+                    for (int i = 0; i < ship.shipValuesList.Count; i++)
                     {
-                        ship.shipValuesList[i] = res;
+                        var res = DrawEditor(ship.shipValuesList[i]);
+                        if (res != null)
+                        {
+                            ship.shipValuesList[i] = res;
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    foreach (var it in ship.shipValues)
                     {
-                        return;
+                        var res = DrawEditor(it.Value);
+                        // if (res != null)
+                        // {
+                        //     ship.shipValues[it.Key] = res;
+                        // }
+                        // else
+                        // {
+                        //     return;
+                        // }   
                     }
                 }
 

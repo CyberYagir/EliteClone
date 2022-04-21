@@ -552,7 +552,7 @@ MonoBehaviour:
   m_text: Sample text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 662e4e8bff7a1d649a0546b2b5c9251e, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: cc58e09575128d74198f9bc3401823c2, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ee31244ac9c11b8498ea9879bfc5fe29, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -711,7 +711,7 @@ RectTransform:
   m_GameObject: {fileID: 8105557174552360649}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.47858, y: 1.47858, z: 1.47858}
   m_Children: []
   m_Father: {fileID: 8105557174656751592}
   m_RootOrder: 0
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.44148105, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.5758667, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -770,6 +770,7 @@ GameObject:
   - component: {fileID: 8105557174606585771}
   - component: {fileID: 8105557174606585773}
   - component: {fileID: 8105557174606585768}
+  - component: {fileID: 8105557174119257849}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -811,6 +812,7 @@ MonoBehaviour:
   dataManager: {fileID: 5275611199331377784, guid: 88df4fef97124f045af3228e92936e37, type: 3}
   volume: {fileID: 0}
   exitCanvas: {fileID: 0}
+  systems: []
   OnInited:
     m_PersistentCalls:
       m_Calls:
@@ -841,6 +843,74 @@ MonoBehaviour:
   camera: {fileID: 38232729}
   point: {fileID: 8105557174552360649}
   rect: {fileID: 8105557174656751592}
+--- !u!114 &8105557174119257849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105557174606585772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede32f2f024d24140b199db2ee5af56b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: []
+  linePrefab: {fileID: 8144951039825309215}
+  pathMat: {fileID: 2100000, guid: 64fe69e6cd7bf4343b1140de0ff94724, type: 2}
+  selectedWidth:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.491539
+      inSlope: 14.27239
+      outSlope: 14.27239
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.054549996
+      value: 1.2700979
+      inSlope: 1.2221367
+      outSlope: 1.2221367
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21241727
+    - serializedVersion: 3
+      time: 0.50419104
+      value: 1.4971477
+      inSlope: 0.017219856
+      outSlope: 0.017219856
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9728749
+      value: 1.2766234
+      inSlope: -1.1872209
+      outSlope: -1.1872209
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19600973
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0083313
+      value: 0.4944458
+      inSlope: -22.060253
+      outSlope: -22.060253
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  start: Filling 0776934
+  end: Permitted 0225748
 --- !u!1 &8105557174656751596
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,11 +9,12 @@ namespace Core.Garage
     {
         [SerializeField] private Image image;
         [SerializeField] private TMP_Text nameT, levelT;
-
+        private Item current;
         public void SetSprite(Item item)
         {
             image.sprite = item.icon;
             nameT.text = item.itemName;
+            current = item;
             var level = (float) item.GetKeyPair(KeyPairValue.Level);
             if (level != 0f)
                 levelT.text = "Level: " + (int)level;
@@ -38,5 +39,6 @@ namespace Core.Garage
             base.Clicked();
             GetComponentInParent<GarageExplorer>().SetItem(data);
         }
+
     }
 }

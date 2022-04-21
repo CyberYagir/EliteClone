@@ -76,12 +76,17 @@ namespace Core.PlayerScripts
             DownHeat();
         }
 
+        private float coolerValue = -1;
         public void DownHeat()
         {
             heatTime += Time.deltaTime;
             if (heatTime > 2)
             {
-                AddHeat(-10);
+                if (coolerValue == -1)
+                {
+                    coolerValue = (float)Ship().slots.Find(x => x.slotType == ItemType.Cooler).current.GetKeyPair(KeyPairValue.Value);
+                }
+                AddHeat(-coolerValue);
             }
         }
 
