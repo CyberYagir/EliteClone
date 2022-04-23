@@ -1,3 +1,5 @@
+using System.Linq;
+using Core.Init;
 using UnityEngine;
 using Random = System.Random;
 
@@ -8,6 +10,7 @@ namespace Core.Garage
         [SerializeField] private ShipyardItem selectedItem;
         [SerializeField] private Transform previewHolder;
         [SerializeField] private ShipyardError throwError;
+        [SerializeField] private InitTabs tabs;
         private TradeManager tradeManager;
 
         public Event OnChange = new Event();
@@ -23,9 +26,9 @@ namespace Core.Garage
         public void SelectItem(ShipyardItem item)
         {
             selectedItem = item;
-            OnReselect.Run(item);
             if (item == null || item.isMarket)
                 OnChange.Run();
+            OnReselect.Run(item);
         }
 
         public void ChangeShipPreview(GameObject shipMesh, ShipyardItem shipItem)
@@ -83,8 +86,15 @@ namespace Core.Garage
             if (GarageDataCollect.Instance.cargo.RemoveCredits(item))
             {
                 GarageDataCollect.Instance.saves.AddStorageShip(GarageDataCollect.Instance.playerLocation.locationName, selectedItem.GetShip());
+                tabs.ChangeTab(1);
+                OnChange.Run();
+                var storage = tabs.GetComponentInChildren<ShipyardStorage>(true);
+                storage.UpdateShips();
+                var btn = storage.GetComponentsInChildren<ShipyardItem>(true).ToList().Find(x => x.GetShip().shipName == selectedItem.GetShip().shipName);
+                SelectItem(btn);
             }
             OnChange.Run();
+            
         }
 
         public void Sell()

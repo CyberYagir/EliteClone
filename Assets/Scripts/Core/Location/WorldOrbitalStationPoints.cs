@@ -75,8 +75,9 @@ namespace Core.Location
                 {
                     foreach (var spawns in botPoints)
                     {
-                        if (Physics.Raycast(spawns.position, landPoint.transform.position - spawns.position, out RaycastHit hit))
+                        if (Physics.Raycast(spawns.position, landPoint.transform.GetChild(0).position - spawns.position, out RaycastHit hit))
                         {
+                            Debug.DrawRay(spawns.position, landPoint.transform.GetChild(0).position - spawns.position, Color.cyan, 999999);
                             if (hit.transform == landPoint.transform)
                             {
                                 var bot = Instantiate(botPrefab, spawns.position, spawns.rotation);

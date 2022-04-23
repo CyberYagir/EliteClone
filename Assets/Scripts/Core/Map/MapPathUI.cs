@@ -42,6 +42,7 @@ namespace Core.Map
 
         public void Cancel()
         {
+            MapPathfinder.Instance.Clear();
             type = PathType.None;
             text.text = "Path";
             cancel.SetActive(false);

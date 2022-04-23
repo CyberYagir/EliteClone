@@ -10,41 +10,53 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: Armor_Plate_Titan
+  m_Name: Mine_Laser_V2
   m_EditorClassIdentifier: 
   id:
-    id: -444370
-    idname: titan_armor
-  itemName: Titan Armor
-  icon: {fileID: 21300000, guid: b7283706d3e05eb49bdfe7dc1620c874, type: 3}
+    id: -635368
+    idname: mine_laser_v2:1
+  itemName: Mine Laser V2
+  icon: {fileID: 21300000, guid: 802eeaedb18615b429d260d68b0bb24f, type: 3}
   amount:
     value: 1
     minValue: 1
     maxValue: 1
     MaxCount: 10
-  itemType: 3
+  itemType: 1
   keysData:
   - KeyPairValue: 3
     KeyPairType: 0
     customName: 
-    num: 1
+    num: 3
     str: 
     obj: {fileID: 0}
   - KeyPairValue: 2
     KeyPairType: 2
     customName: 
-    num: 2
+    num: 5
     str: 
     obj: {fileID: 0}
-  - KeyPairValue: 4
+  - KeyPairValue: 1
     KeyPairType: 2
-    customName: Armor
-    num: 20
+    customName: 
+    num: -1
+    str: 
+    obj: {fileID: 0}
+  - KeyPairValue: 0
+    KeyPairType: 2
+    customName: 
+    num: 0.5
     str: 
     obj: {fileID: 0}
   - KeyPairValue: 5
-    KeyPairType: 0
+    KeyPairType: 2
     customName: 
     num: -1
+    str: 
+    obj: {fileID: 0}
+  - KeyPairValue: 4
+    KeyPairType: 0
+    customName: 
+    num: 1
     str: 
     obj: {fileID: 0}

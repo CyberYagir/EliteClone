@@ -145,7 +145,12 @@ namespace Core.Systems
 
         public static string GetSystemName()
         {
-            return PlayerDataManager.CurrentSolarSystem.name + "." + PlayerDataManager.CurrentSolarSystem.position.Log();
+            if (PlayerDataManager.CurrentSolarSystem != null)
+            {
+                return PlayerDataManager.CurrentSolarSystem.name + "." + PlayerDataManager.CurrentSolarSystem.position.Log();
+            }
+
+            return "";
         }
 
         public static float scale = 15;

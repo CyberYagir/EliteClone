@@ -81,7 +81,11 @@ namespace Core
 
         public void AddCurrentToHistory()
         {
-            AddToHistory(SolarSystemGenerator.GetSystemName());
+            var solarName = SolarSystemGenerator.GetSystemName();
+            if (solarName != "")
+            {
+                AddToHistory(solarName);
+            }
         }
 
         #region Keys

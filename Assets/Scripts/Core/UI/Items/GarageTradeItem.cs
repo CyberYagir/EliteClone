@@ -7,7 +7,7 @@ namespace Core.Garage
 {
     public class GarageTradeItem : MonoBehaviour
     {
-        [SerializeField] private Image image;
+        [SerializeField] private Image image, border;
         [SerializeField] private TMP_Text nameT, costT, haveT;
         private TradeManager.Offer offer;
 
@@ -36,6 +36,11 @@ namespace Core.Garage
             {
                 haveT.text = "INV: " + (count/100);
             }
+        }
+
+        public void SetBorderColor(Color cl)
+        {
+            border.color = cl;
         }
 
         public void BuyOne()
@@ -102,6 +107,11 @@ namespace Core.Garage
         public int GetKeysCount()
         {
             return offer.item.keysData.Count;
+        }
+
+        public void ItemInfo()
+        {
+            GetComponentInParent<GarageExplorer>().SetItem(offer.item);
         }
 
     }

@@ -23,7 +23,7 @@ namespace Core.Garage
             UpdateShips();
         }
 
-        private void UpdateShips()
+        public void UpdateShips()
         {
             UITweaks.ClearHolder(holder);
             var ships = GarageDataCollect.Instance.saves.GetStorageShip();

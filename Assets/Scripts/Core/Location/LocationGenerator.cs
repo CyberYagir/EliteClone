@@ -120,12 +120,15 @@ namespace Core.Location
             var locationObject = location.GetComponent<WorldInteractivePoint>();
             if (Player.inst.saves.ExKey("loc_start"))
             {
-                Player.inst.transform.position = locationObject.spawnPoint.position;
-                Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
+                locationObject.initEvent.AddListener(delegate
+                {
+                    Player.inst.transform.position = locationObject.spawnPoint.position;
+                    Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
+                });
             }
             else if (Player.inst.saves.ExKey("loc_start_on_pit"))
             {
-                WorldOrbitalStation.OnInit.AddListener(delegate
+                locationObject.initEvent.AddListener(delegate
                 {
                     var allPoints = WorldOrbitalStation.Instance.GetComponent<WorldOrbitalStationPoints>().GetLandPoint();
                     var point = allPoints[Random.Range(0, allPoints.Count)];

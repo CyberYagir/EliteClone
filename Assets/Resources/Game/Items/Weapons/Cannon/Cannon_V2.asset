@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: Armor_Plate_Kevlar
+  m_Name: Cannon_V2
   m_EditorClassIdentifier: 
   id:
-    id: -914456
-    idname: kevlar_armor
-  itemName: Kevlar Armor
-  icon: {fileID: 21300000, guid: b7283706d3e05eb49bdfe7dc1620c874, type: 3}
+    id: 818051
+    idname: cannon_v2
+  itemName: Cannon V2
+  icon: {fileID: 21300000, guid: d5ff974437dfc4943b4a92da3a363bed, type: 3}
   amount:
     value: 1
     minValue: 1
     maxValue: 1
     MaxCount: 10
-  itemType: 3
+  itemType: 1
   keysData:
   - KeyPairValue: 3
     KeyPairType: 0
     customName: 
-    num: 2
+    num: 3
     str: 
     obj: {fileID: 0}
   - KeyPairValue: 2
@@ -36,15 +36,27 @@ MonoBehaviour:
     num: 2
     str: 
     obj: {fileID: 0}
-  - KeyPairValue: 4
+  - KeyPairValue: 1
     KeyPairType: 2
-    customName: Armor
-    num: 40
+    customName: 
+    num: 4
+    str: 
+    obj: {fileID: 0}
+  - KeyPairValue: 0
+    KeyPairType: 2
+    customName: 
+    num: 65
     str: 
     obj: {fileID: 0}
   - KeyPairValue: 5
-    KeyPairType: 0
+    KeyPairType: 2
     customName: 
     num: -2
+    str: 
+    obj: {fileID: 0}
+  - KeyPairValue: 4
+    KeyPairType: 0
+    customName: 
+    num: 3
     str: 
     obj: {fileID: 0}

@@ -34,12 +34,13 @@ namespace Core.Garage
         {
             if ((float)drop.GetKeyPair(KeyPairValue.Level) <= currentSlot.slotLevel)
             {
-                var massWithoutSlot = GarageDataCollect.Instance.ship.CalcMass() - (float)currentSlot.current.GetKeyPair(KeyPairValue.Mass);
-                if (massWithoutSlot + (float) drop.GetKeyPair(KeyPairValue.Mass) <= GarageDataCollect.Instance.ship.data.maxCargoWeight)
-                {
-                    GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, currentSlot.uid, GarageDataCollect.Instance.cargo);
-                    return true;
-                }
+                //var massWithoutSlot = GarageDataCollect.Instance.ship.CalcMass() - (float)currentSlot.current.GetKeyPair(KeyPairValue.Mass);
+                // if (massWithoutSlot + (float) drop.GetKeyPair(KeyPairValue.Mass) <= GarageDataCollect.Instance.ship.data.maxCargoWeight)
+                // {
+                // }
+                
+                GarageDataCollect.Instance.ship.ReplaceSlotItem(drop, currentSlot.uid, GarageDataCollect.Instance.cargo);
+                return true;
             }
 
             return false;

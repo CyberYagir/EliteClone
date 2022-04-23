@@ -64,7 +64,14 @@ namespace Core.Location
 
     public class WorldOrbitalStation : MonoBehaviour
     {
+        [System.Serializable]
+        public class OrbitalStationMesh
+        {
+            public GameObject worldObject;
+            public Transform spawnPoint;
+        }
         public static WorldOrbitalStation Instance;
+        public List<OrbitalStationMesh> meshList;
         [SerializeField] private int uniqSeed;
         [SerializeField] private StationRefiller refiller;
         public List<Quest> quests;
@@ -88,6 +95,21 @@ namespace Core.Location
             Instance = this;
             InitNames();
             uniqSeed = CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
+
+            int meshType = new Random(uniqSeed).Next(0, meshList.Count);
+            for (int i = 0; i < meshList.Count; i++)
+            {
+                if (i == meshType)
+                {
+                    meshList[i].worldObject.SetActive(true);
+                    GetComponent<WorldInteractivePoint>().spawnPoint = meshList[i].spawnPoint;
+                }
+                else
+                {
+                    meshList[i].worldObject.SetActive(false);
+                }
+            }
+            
             refiller.InitRefiller(uniqSeed);
             characters = InitCharacters(uniqSeed);
             quests = InitQuests(uniqSeed, characters);

@@ -32,12 +32,12 @@ namespace Core.UI
 
         public void ChangeSelected()
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
-            }
+                for (int i = 0; i < items.Count; i++)
+                {
+                    items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+                }
 
-            OnChangeSelected.Run(questsList[upDownUI.selectedIndex]);
+                OnChangeSelected.Run(questsList[upDownUI.selectedIndex]);
         }
 
         private void Update()

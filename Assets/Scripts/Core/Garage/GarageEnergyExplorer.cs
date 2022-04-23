@@ -9,6 +9,7 @@ namespace Core.Garage
 {
     public abstract class GarageSlotDataExplorer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private Image background;
         [SerializeField] private Image allPowerI, usedPowerI;
         [SerializeField] private GarageDrawEnergyItem item;
         [SerializeField] private RectTransform holder;
@@ -16,12 +17,16 @@ namespace Core.Garage
         [SerializeField] private KeyPairValue key;
         private bool isAddChange;
 
+        private Color startColor;
+        
         private bool over;
         private void Awake()
         {
             GarageDataCollect.OnChangeShip += CalculatePower;
             GarageDataCollect.OnChangeShip += AddEventsOnShip;
-        
+
+            startColor = background.color;
+
         }
 
         public void AddEventsOnShip()
@@ -39,7 +44,24 @@ namespace Core.Garage
         {
         
         }
-    
+
+
+        public bool IsAllOk()
+        {
+            var power = new AddInForUsed();
+            var ship = GarageDataCollect.Instance.ship;
+        
+            for (int i = 0; i < ship.slots.Count; i++)
+            {
+                if (ship.slots[i].current)
+                {
+                    AddInFor(ship.slots[i].current, ref power);
+                }
+            }
+
+            return power.all >= power.used;
+        }
+        
         public void CalculatePower()
         {
             if (!isAddChange)
@@ -85,6 +107,15 @@ namespace Core.Garage
             {
                 allPowerI.transform.DOScale(Vector3.one, 1f);
                 usedPowerI.transform.DOScale(Vector3.one, 1f);
+            }
+
+            if (power.all < power.used)
+            {
+                background.DOColor(new Color(1, 0, 0, 0.75f), 0.5f);
+            }
+            else
+            {
+                background.DOColor(startColor, 0.5f);
             }
         }
 

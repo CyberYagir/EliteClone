@@ -9,12 +9,6 @@ namespace Core.UI
 {
     public class BaseWindow : MonoBehaviour
     {
-        [Serializable]
-        public class IconType
-        {
-            public Sprite icon;
-            public int fraction;
-        }
         private RectTransform rect;
         [SerializeField] private float height = 1400;
         [SerializeField] private TMP_Text infoText, nameText;

@@ -102,6 +102,18 @@ namespace Core.UI
                         //items[i].Dist.gameObject.SetActive(items[i].SpaceObject.isVisible);
                         //items[i].Dist.text = items[i].SpaceObject.dist;
                     }
+                    else
+                    {
+                        items[i].Button.over = ButtonEffect.ActionType.None;
+                        if (i != selectedIndex)
+                        {
+                            items[i].Button.SetNoneColor(Color.gray / 2);
+                        }
+                        else
+                        {
+                            items[i].Button.SetNoneColor(Color.gray);
+                        }
+                    }
                 }
             }
         }

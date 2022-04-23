@@ -62,26 +62,30 @@ namespace Core.UI
     
         private void Update()
         {
-            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            if (Player.inst.land.isLanded)
             {
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                if (InputM.GetAxisDown(KAction.TabsHorizontal))
                 {
-                    questList.ChangeSelected();
-                    questList.Enable();
-                    Disable();
-                }
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
-                {
-                    buttonsUI.enabled = true;
-                    buttonsUI.SkipFrame();
-                    Disable();
-                }
-            }
+                    if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                    {
+                        questList.ChangeSelected();
+                        questList.Enable();
+                        Disable();
+                    }
 
-            if (upDownUI.itemsCount != 0)
-            {
-                var rect = holder.GetComponent<RectTransform>();
-                rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(0, upDownUI.selectedIndex * 255f), 10 * Time.deltaTime);  //255 - Высота итема магическим числом так как лень
+                    if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                    {
+                        buttonsUI.enabled = true;
+                        buttonsUI.SkipFrame();
+                        Disable();
+                    }
+                }
+
+                if (upDownUI.itemsCount != 0)
+                {
+                    var rect = holder.GetComponent<RectTransform>();
+                    rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(0, upDownUI.selectedIndex * 255f), 10 * Time.deltaTime); //255 - Высота итема магическим числом так как лень
+                }
             }
         }
 

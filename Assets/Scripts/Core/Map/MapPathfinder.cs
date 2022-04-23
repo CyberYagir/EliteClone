@@ -14,6 +14,7 @@ namespace Core.Map
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private Material pathMat;
         [SerializeField] private AnimationCurve selectedWidth;
+        public bool skipFrames = true;
         private List<GameObject> lines = new List<GameObject>();
         private bool isEnd = false;
 
@@ -75,6 +76,18 @@ namespace Core.Map
             }
         }
 
+        public void Clear()
+        {
+            start = "";
+            end = "";
+            foreach (var line in lines)
+            {
+                Destroy(line.gameObject);
+            }
+
+            lines = new List<GameObject>();
+        }
+        
         IEnumerator Find(List<string> prevSteps, SolarSystem system, string target)
         {
             if (isEnd) yield break;
@@ -87,14 +100,16 @@ namespace Core.Map
                 var sorted = system.sibligs.ToList().OrderBy(x => x.solarName == target).Reverse().ToList();
                 for (int i = 0; i < sorted.Count; i++)
                 {
-                    if (from != sorted[i].solarName && 
-                        MapGenerator.Instance.systems.Contains(sorted[i].solarName) && 
+                    if (from != sorted[i].solarName &&
+                        MapGenerator.Instance.systems.Contains(sorted[i].solarName) &&
                         !nextSteps.Contains(sorted[i].solarName))
                     {
                         StartCoroutine(Find(nextSteps, GalaxyGenerator.systems[sorted[i].solarName], target));
-                    }                      
-                }  
-                yield return null;
+                    }
+                }
+
+                if (skipFrames)
+                    yield return null;
             }
             else
             {
@@ -104,8 +119,9 @@ namespace Core.Map
                 DrawLines();
                 yield break;
             }
-            
-            yield return null;
+
+            if (skipFrames)
+                yield return null;
         }
     }
 }

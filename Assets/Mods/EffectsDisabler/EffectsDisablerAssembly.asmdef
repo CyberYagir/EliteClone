@@ -1,0 +1,21 @@
+{
+    "name": "EffectsDisablerAssembly",
+    "rootNamespace": "EffectsDisabler",
+    "references": [
+        "ModsLoader",
+        "CoreDef",
+        "Unity.RenderPipelines.HighDefinition.Runtime",
+        "Unity.RenderPipelines.Core.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Mono.Cecil.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

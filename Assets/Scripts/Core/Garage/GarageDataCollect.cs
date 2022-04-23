@@ -54,13 +54,9 @@ namespace Core.Garage
             OnChangeShip.Invoke();
         }
 
-        private void OnApplicationQuit()
-        {
-            Save();
-        }
-
         public virtual void Save()
         {
+            print("Save Garage");
             playerData.Ship = ship.SaveShip();
             playerData.shipsInStations = saves.GetStorageShip();
             playerData.items = cargo.GetData();

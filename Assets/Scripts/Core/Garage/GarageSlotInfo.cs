@@ -26,8 +26,8 @@ namespace Core.Garage
     
         private RectTransform rect;
         private float time;
-        private bool close;
-    
+        [SerializeField] private bool close;
+     
     
     
         public bool over;
@@ -186,6 +186,12 @@ namespace Core.Garage
             close = true;
         }
 
+        public void HardClose()
+        {
+            over = false;
+            close = true;
+        }
+        
         public void OnPointerExit(PointerEventData eventData)
         {
             over = false;

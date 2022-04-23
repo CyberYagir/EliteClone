@@ -11,10 +11,13 @@ namespace Core.Garage
         private TradeManager manager;
         [SerializeField] private Transform holder, item;
         private List<GarageTradeItem> items = new List<GarageTradeItem>();
+
+        private Dictionary<ItemType, int> slotLevels = new Dictionary<ItemType, int>();
         private void Awake()
         {
             manager = FindObjectOfType<TradeManager>();
             manager.OnUpdateOffers += UpdateAll;
+            GarageDataCollect.OnChangeShip += UpdateAll;
         }
 
         private void Start()
@@ -29,9 +32,31 @@ namespace Core.Garage
                 items[i].ReInit();
             }
         }
+
+        public void CalcMaxes()
+        {
+            slotLevels = new Dictionary<ItemType, int>();
+            if (GarageDataCollect.Instance.ship)
+            {
+                foreach (var slot in GarageDataCollect.Instance.ship.slots)
+                {
+                    if (!slotLevels.ContainsKey(slot.slotType))
+                    {
+                        slotLevels.Add(slot.slotType, slot.slotLevel);
+                    }
+
+                    if (slotLevels[slot.slotType] > slot.slotLevel)
+                    {
+                        slotLevels[slot.slotType] = slot.slotLevel;
+                    }
+                }
+            }
+        }
         
         void UpdateAll()
         {
+            CalcMaxes();
+            
             for (int i = 0; i < items.Count; i++)
             {
                 items[i].gameObject.SetActive(true);
@@ -45,9 +70,21 @@ namespace Core.Garage
                 if (isIn == 0 || manager.offers[i].item.IsHaveKeyPair(KeyPairValue.Mineral))
                 {
                     var it = Instantiate(item.gameObject, holder);
-                    it.GetComponent<GarageTradeItem>().Init(manager.offers[i]);
+                    var gti = it.GetComponent<GarageTradeItem>();
+                    gti.Init(manager.offers[i]);
                     it.gameObject.SetActive(true);
-                    items.Add(it.GetComponent<GarageTradeItem>());
+                    items.Add(gti);
+
+                    if (!manager.offers[i].item.IsHaveKeyPair(KeyPairValue.Mineral))
+                    {
+                        if (slotLevels.ContainsKey(manager.offers[i].item.itemType))
+                        {
+                            if ((float) manager.offers[i].item.GetKeyPair(KeyPairValue.Level) > slotLevels[manager.offers[i].item.itemType])
+                            {
+                                gti.SetBorderColor(Color.gray);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -55,6 +92,7 @@ namespace Core.Garage
         
         public void SetSorting(int type)
         {
+            holder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
             var key = (ItemType) type;
 
             for (int i = 0; i < items.Count; i++)

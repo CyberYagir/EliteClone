@@ -18,7 +18,7 @@ namespace Core
 
         public static int galaxySeed = -1;
         public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-        public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile;
+        public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile, MapFile;
         public static float GenerateProgress;
         private bool loading;
 
@@ -114,6 +114,7 @@ namespace Core
             CurrentSystemFile = GlobalFolder + "system.json";
             CurrentLocationFile = GlobalFolder + "location.json";
             DeadsNPCFile = GlobalFolder + "npcs.json";
+            MapFile = GlobalFolder + "map.json";
             PlayerDataFile = GlobalFolder + "player.json";
             ConfigFile = PlayerFolder + "options.config";
         }

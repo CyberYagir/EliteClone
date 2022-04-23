@@ -25,14 +25,28 @@ namespace Core.Init
             }
         }
 
-        public void ChangeTab(int index)
+        public Transform ChangeTab(int index)
         {
             tabIndex = index;
+            Transform tab = null;
+            for (int i = 0; i < tabs.Length; i++)
+            {
+                tabs[i].gameObject.SetActive(i == tabIndex);
+                if (i == tabIndex) tab = tabs[i].transform;
+            }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[index].GetComponent<RectTransform>());
+            OnChangeTab.Run();
+            return tab;
+        }
+        
+        public void ChangeTab(float index)
+        {
+            tabIndex = (int)index;
             for (int i = 0; i < tabs.Length; i++)
             {
                 tabs[i].gameObject.SetActive(i == tabIndex);
             }
-            LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[index].GetComponent<RectTransform>());
+            LayoutRebuilder.ForceRebuildLayoutImmediate(tabs[tabIndex].GetComponent<RectTransform>());
             OnChangeTab.Run();
         }
     }

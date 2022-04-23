@@ -12,7 +12,10 @@ namespace Core.Garage
 
         public void LoadLocation()
         {
-            GarageDataCollect.Instance?.Save();
+            if (GarageDataCollect.Instance != null)
+            {
+                GarageDataCollect.Instance?.Save();
+            }
             LoadScene(Scenes.Location);
         }
     

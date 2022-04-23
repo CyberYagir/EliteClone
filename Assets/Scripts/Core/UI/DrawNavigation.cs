@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
+    [System.Serializable]
     public class NavItem
     {
         public ButtonEffect Button;
@@ -17,6 +18,7 @@ namespace Core.UI
 
     public class DrawNavigation : DrawNavList
     {
+        
         protected override void Start()
         {
             base.Start();

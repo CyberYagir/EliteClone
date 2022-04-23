@@ -9,10 +9,11 @@ namespace Core.Garage
         [SerializeField] private TMP_Text costT;
         private Shipyard shipyard;
     
-        public void Start()
+        public void Awake()
         {
             shipyard = GetComponentInParent<Shipyard>();
             shipyard.OnReselect += ChangePreviewData;
+            //print("ADD ChangeShipPreview");
         }
 
         private void ChangePreviewData(ShipyardItem selectedItem)
@@ -21,8 +22,6 @@ namespace Core.Garage
             {
                 buy.SetActive(selectedItem.isMarket);
                 sell.SetActive(!selectedItem.isMarket);
-            
-            
                 var cost = 0f;
                 if (selectedItem.isMarket)
                     cost = shipyard.GetCost(shipyard.percent);

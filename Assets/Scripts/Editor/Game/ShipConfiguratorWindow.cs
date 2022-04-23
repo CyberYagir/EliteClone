@@ -28,6 +28,11 @@ public class ShipConfiguratorWindow : EditorWindow
         items = Resources.LoadAll<Item>("").ToList();
     }
 
+    public void ReloadItems()
+    {
+        items = Resources.LoadAll<Item>("").ToList();
+    }
+    
     private void OnGUI()
     {
         int newSelection = 0;
@@ -77,6 +82,11 @@ public class ShipConfiguratorWindow : EditorWindow
                 mass += (float)slotsSelected[i].GetKeyPair(KeyPairValue.Mass);
             }
             GUILayout.Label($"Mass: " + mass + "/" + selected.data.maxCargoWeight);
+
+            if (GUILayout.Button("Reload Button"))
+            {
+                ReloadItems();
+            }
         }
     }
 

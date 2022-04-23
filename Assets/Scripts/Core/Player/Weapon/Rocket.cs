@@ -41,19 +41,22 @@ namespace Core.PlayerScripts.Weapon
         {
             time += Time.deltaTime;
 
-            if (Vector3.Distance(transform.position, target.transform.position) < speed)
+            if (target != null && target.GetComponent<Rigidbody>() != null)
             {
-                if (target.GetComponent<Rigidbody>().velocity.magnitude < speed)
+                if (Vector3.Distance(transform.position, target.transform.position) < speed)
                 {
-                    speed -= Time.deltaTime * 20;
-                }
-                else
-                {
-                    speed += Time.deltaTime * 20;
-                    speed = Mathf.Clamp(speed, 0, maxSpeed);
+                    if (target.GetComponent<Rigidbody>().velocity.magnitude < speed)
+                    {
+                        speed -= Time.deltaTime * 20;
+                    }
+                    else
+                    {
+                        speed += Time.deltaTime * 20;
+                        speed = Mathf.Clamp(speed, 0, maxSpeed);
+                    }
                 }
             }
-            
+
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
             if (target != null && isVisible)
             {

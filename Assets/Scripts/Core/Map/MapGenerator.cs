@@ -72,6 +72,7 @@ namespace Core.Map
 
         public void ActiveInit()
         {
+            World.SetScene(Scenes.Map);
             camera.targetTexture = null;
             camera.GetComponent<HDAdditionalCameraData>().clearColorMode = HDAdditionalCameraData.ClearColorMode.Sky;
             Destroy(camera.GetComponent<HDCameraUI>());
