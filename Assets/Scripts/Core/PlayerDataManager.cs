@@ -152,7 +152,7 @@ namespace Core
         {
             if (GarageDataCollect.Instance != null)
             {
-                GarageDataCollect.Instance.Save();
+                FindObjectOfType<GarageExitButton>().SaveIfCan();
             }
 
             if (Player.inst != null)

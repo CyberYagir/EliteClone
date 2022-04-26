@@ -13,6 +13,7 @@ namespace Core.Game
         public float ZRotSpeed, XRotSpeed, YRotSpeed;
         public float maxSpeedUnits, speedUpMultiplier;
         public int maxCargoWeight;
+        public bool outsideGarage;
     }
     [Serializable]
     public class ShipClaped

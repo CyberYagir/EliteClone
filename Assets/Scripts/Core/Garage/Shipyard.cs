@@ -54,6 +54,7 @@ namespace Core.Garage
         
             centerHolder.transform.localPosition = Vector3.zero;
         
+            previewHolder.GetComponentInParent<GaragePreviewShip>().CheckIsMesh(!shipItem.GetShip().data.outsideGarage);
             SelectItem(shipItem);
         }
 

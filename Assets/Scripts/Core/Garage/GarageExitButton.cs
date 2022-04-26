@@ -24,5 +24,20 @@ namespace Core.Garage
             
             OnClick.Run();
         }
+
+
+        public void SaveIfCan()
+        {
+            for (int i = 0; i < explorers.Count; i++)
+            {
+                if (explorers[i].IsAllOk() == false)
+                {
+                    ShipyardError.Instance.ThrowError("Ship data exceeds limits");
+                    return;
+                }
+            }
+            
+            GarageDataCollect.Instance.Save();
+        }
     }
 }
