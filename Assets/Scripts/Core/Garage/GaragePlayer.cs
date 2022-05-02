@@ -7,6 +7,8 @@ namespace Core.Garage
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private float speed;
         [SerializeField] private Transform forward;
+
+        [SerializeField] private bool raycast = true;
         void FixedUpdate()
         {
             var oldY = rigidbody.velocity.y;
@@ -20,9 +22,12 @@ namespace Core.Garage
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 20 * Time.fixedDeltaTime);
             }
 
-            if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit))
+            if (raycast)
             {
-                transform.parent = hit.transform;
+                if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit))
+                {
+                    transform.parent = hit.transform;
+                }
             }
         }
     }
