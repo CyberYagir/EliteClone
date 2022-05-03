@@ -20,6 +20,5 @@ namespace Core.TDS
         }
         public GameObject bullet;
         public IKPointPos leftH, rightH;
-        
     }
 }

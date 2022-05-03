@@ -7,18 +7,18 @@ using Core.TDS.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-namespace Core
+namespace Core.TDS
 {
     public class ShooterWeaponSelect : MonoBehaviour
     {
         [SerializeField] private ShooterWeaponList weaponsData;
         [SerializeField] private int currentWeapon;
-        [SerializeField] private List<Item> weapons;
+        [SerializeField] private ShooterInventory weapons;
         [SerializeField] private Transform leftH, rightH;
 
         private void Update()
         {
-            for (int i = 0; i < weapons.Count; i++)
+            for (int i = 0; i < weapons.items.Count; i++)
             {
                 if (Input.GetKeyDown((i+1).ToString()))
                 {
@@ -39,18 +39,18 @@ namespace Core
 
         public void ActiveWeapon()
         {
-            var data = weaponsData.weapons[(int) (float) weapons[currentWeapon].GetKeyPair(KeyPairValue.Value)];
+            var data = weaponsData.weapons[(int) (float) weapons.items[currentWeapon].GetKeyPair(KeyPairValue.Value)];
             var weapon = (TDSWeapon)gameObject.AddComponent(Type.GetType(data.weaponScript + data.script.name));
             data.mesh.SetActive(true);
             data.options.leftH.Set(leftH);
             data.options.rightH.Set(rightH);
-            weapon.Init(weapons[currentWeapon].Clone());
+            weapon.Init(weapons.items[currentWeapon].Clone(), data.options, data.bulletPoint);
         }
         public void RemoveWeapon(){
             ShooterPlayer.Instance.animator.SetLayerValue(1, 0);
             if (currentWeapon != -1)
             {
-                var data = weaponsData.weapons[(int) (float) weapons[currentWeapon].GetKeyPair(KeyPairValue.Value)];
+                var data = weaponsData.weapons[(int) (float) weapons.items[currentWeapon].GetKeyPair(KeyPairValue.Value)];
                 data.mesh.SetActive(false);
             }
 

@@ -40,4 +40,14 @@ public class ShooterAnimator : MonoBehaviour
     {
         animator.SetLayerWeight(id, value);
     }
+
+    public void Disable()
+    {
+        animator.enabled = false;
+    }
+
+    public ref Animator Get()
+    {
+        return ref animator;
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.TDS.Weapons;
@@ -7,10 +8,18 @@ namespace Core.TDS.Weapons
 {
     public class TDSRifle : TDSWeapon
     {
+        private void Update()
+        {
+            time += Time.deltaTime;
+        }
+
         public override void Attack()
         {
-            base.Attack();
-            print("Attack");
+            if (time > coodown)
+            {
+                bullets.Emit(1);
+                time = 0;
+            }
         }
     }
 }

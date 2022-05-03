@@ -9,6 +9,7 @@ namespace Core.TDS
         public class Weapon
         {
             public GameObject mesh;
+            public Transform bulletPoint;
             public Object script;
             public string weaponScript;
             public TDSWeaponOptions options;

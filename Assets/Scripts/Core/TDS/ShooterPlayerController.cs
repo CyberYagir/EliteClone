@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
@@ -9,7 +10,19 @@ public class ShooterPlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform forward;
     [SerializeField] private Camera camera;
-    [SerializeField] private Transform IKPoint; 
+    [SerializeField] private Transform IKPoint;
+    [SerializeField] private Transform IKhandsRotator;
+
+
+    private Vector3 startPointL, startPointR;
+    [SerializeField] private Transform LHand, RHand;
+
+    private void Start()
+    {
+        startPointL = LHand.localPosition;
+        startPointR = RHand.localPosition;
+    }
+
     void FixedUpdate()
     {
         var oldY = rigidbody.velocity.y;
@@ -22,13 +35,26 @@ public class ShooterPlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
         {
             if (hit.transform != transform)
             {
                 var targetRotation = Quaternion.LookRotation(new Vector3(hit.point.x, 0, hit.point.z) - new Vector3(transform.position.x, 0, transform.position.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 20 * Time.fixedDeltaTime);
                 IKPoint.transform.position = hit.point + Vector3.up;
+
+                IKhandsRotator.localEulerAngles = Vector3.zero;
+                LHand.localPosition = startPointL;
+                RHand.localPosition = startPointR;
+
+                IKhandsRotator.LookAt(IKPoint.transform.position);
+                var lpos = LHand.position;
+                var rpos = RHand.position;
+
+                IKhandsRotator.localEulerAngles = Vector3.zero;
+
+                LHand.position = lpos;
+                RHand.position = rpos;
             }
         }
     }

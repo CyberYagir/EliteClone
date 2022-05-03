@@ -5,31 +5,15 @@ using UnityEngine;
 
 namespace Core.TDS
 {
-    public class ShooterPlayer : MonoBehaviour
+    public class ShooterPlayer : Shooter
     {
         public static ShooterPlayer Instance;
-        public ShooterPlayerActions attack { get; private set; }
-        public ShooterAnimator animator { get; private set; }
+        public Camera followCamera;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Init();
-        }
-
-        public void Init()
-        {
+            base.Awake();
             Instance = this;
-            attack = GetComponent<ShooterPlayerActions>();
-            animator = GetComponent<ShooterAnimator>();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Confined;
-            }
         }
     }
 }
