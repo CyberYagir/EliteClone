@@ -6,7 +6,7 @@ using Core.TDS;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Core
+namespace Core.TDS.Bot
 {
     public class ShooterBotData : MonoBehaviour
     {
@@ -24,7 +24,7 @@ namespace Core
             anim.SetInteger(RandomIdle, Random.Range(0, 4));
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (shooter.isDead && currentWeapon != null)
             {

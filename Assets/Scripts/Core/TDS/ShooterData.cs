@@ -1,43 +1,62 @@
+using System;
 using Core;
 using Core.PlayerScripts;
 using UnityEngine;
 using Event = Core.Event;
 
-public class ShooterData : MonoBehaviour, IDamagable
+namespace Core.TDS
 {
-    public float heath { get; private set; } = 100;
-    public float energy { get; private set; } = 1000;
-    private float maxHeath = 100;
-    private float maxEnergy  = 1000;
-
-    public Event UpdateData = new Event();
-    
-
-    public void TakeDamage(float damage)
+    public class ShooterData : MonoBehaviour, IDamagable
     {
-        
-    }
+        [SerializeField] private float heath = 100;
+        [SerializeField] private float energy = 1000;
+        private float maxHeath = 100;
+        private float maxEnergy = 1000;
+
+        public Event UpdateData = new Event();
 
 
-    public bool RemoveEnergy(float val)
-    {
-        if (energy > val)
+        private Damager damager;
+
+        private void Start()
         {
-            energy -= val;
-            UpdateData.Run();
-            return true;
+            damager = GetComponent<Damager>();
         }
 
-        return false;
+        public void TakeDamage(float damage)
+        {
+            damager.TakeDamage(ref heath, damage);
+            UpdateData.Run();
+            if (heath <= 0)
+            {
+                var dir = (ShooterPlayer.Instance.transform.position-transform.position);
+                
+                GetComponent<Shooter>().Death(transform.position + dir + Vector3.up);
+            }
+        }
+
+
+        public bool RemoveEnergy(float val)
+        {
+            if (energy > val)
+            {
+                energy -= val;
+                UpdateData.Run();
+                return true;
+            }
+
+            return false;
+        }
+
+        public float GetHealth()
+        {
+            return heath / maxHeath;
+        }
+
+        public float GetEnergy()
+        {
+            return energy / maxEnergy;
+        }
     }
 
-    public float GetHealth()
-    {
-        return heath / maxHeath;
-    }
-    
-    public float GetEnergy()
-    {
-        return energy / maxEnergy;
-    }
 }

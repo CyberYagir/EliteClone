@@ -5,7 +5,7 @@ using Core.TDS;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Core
+namespace Core.TDS.Bot
 {
     public class ShooterBotLookBack : MonoBehaviour
     {

@@ -29,6 +29,7 @@ namespace Core.TDS.Weapons
             damage = (float) currentItem.GetKeyPair(KeyPairValue.Damage);
             energy = (float) currentItem.GetKeyPair(KeyPairValue.Energy);
             bullets = Instantiate(options.bullet, wpoint.transform.position, wpoint.transform.rotation).GetComponent<ParticleSystem>();
+            bullets.GetComponent<TDSBullets>().damage = damage;
             bullets.transform.parent = point;
         }
 

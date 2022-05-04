@@ -33,18 +33,24 @@ namespace Core.TDS
             }
         }
 
-        public void Death()
+        public void Death(Vector3 force = default)
         {
             isDead = true;
-            ActiveRagdoll();
+            ActiveRagdoll(force);
             OnDeath.Run();  
         }
         
-        public void ActiveRagdoll()
+        public void ActiveRagdoll(Vector3 pos = default)
         {
             foreach (var rb in GetComponentsInChildren<Rigidbody>())
             {
                 rb.isKinematic = false;
+                if (rb.GetComponent<BoxCollider>())
+                {
+                    rb.AddExplosionForce(1000, pos, 5);
+                }
+
+                rb.gameObject.layer = LayerMask.NameToLayer("Map");
             }
             foreach (var col in GetComponentsInChildren<Collider>())
             {
@@ -55,7 +61,7 @@ namespace Core.TDS
             {
                 mono.enabled = false;
             }
-
+            gameObject.layer = LayerMask.NameToLayer("Main");
             animator.Disable();
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             GetComponent<CapsuleCollider>().enabled = false;

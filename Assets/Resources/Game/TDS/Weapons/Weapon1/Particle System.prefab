@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6938033694901044768}
   - component: {fileID: 6938033694901044770}
   - component: {fileID: 6938033694901044771}
+  - component: {fileID: 8722199744600272936}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -3787,7 +3788,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4805,3 +4806,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8722199744600272936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6938033694901044769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2714a39641dd544ba6803165f1fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5

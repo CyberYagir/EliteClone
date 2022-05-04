@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Core.TDS
+namespace Core.TDS.Bot
 {
     [RequireComponent(typeof(ShooterBotLookBack))]
     public class ShooterBotBackstep : MonoBehaviour

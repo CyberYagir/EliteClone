@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-namespace Core.TDS
+namespace Core.TDS.Bot
 {
     public class ShooterBotStates : MonoBehaviour
     {
@@ -16,10 +17,20 @@ namespace Core.TDS
         [SerializeField] private States state;
         [SerializeField] private GameObject weapon, weaponSpine;
         [SerializeField] private Animator animator;
+        [SerializeField] private ShooterBotAttack attackBehaviour;
         
         private void Start()
         {
             ChangeState(States.Normal);
+        }
+
+        private void Update()
+        {
+            
+            if (state == States.Attack)
+            {
+                attackBehaviour.Calculate();
+            }
         }
 
         public void ChangeState(States newState)
@@ -39,5 +50,9 @@ namespace Core.TDS
             }
         }
 
+        public States GetState()
+        {
+            return state;
+        }
     }
 }
