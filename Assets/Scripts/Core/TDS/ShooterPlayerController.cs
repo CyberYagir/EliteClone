@@ -25,6 +25,8 @@ namespace Core.TDS
             startPointR = RHand.localPosition;
         }
 
+        public Camera GetCamera() => camera;
+        
         void FixedUpdate()
         {
             var oldY = rigidbody.velocity.y;

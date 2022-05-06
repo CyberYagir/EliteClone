@@ -10,6 +10,7 @@ namespace Core.TDS
     {
         [SerializeField] private float heath = 100;
         [SerializeField] private float energy = 1000;
+        [SerializeField] private bool god;
         private float maxHeath = 100;
         private float maxEnergy = 1000;
 
@@ -21,12 +22,21 @@ namespace Core.TDS
         private void Start()
         {
             damager = GetComponent<Damager>();
+            
         }
 
         public void TakeDamage(float damage)
         {
             damager.TakeDamage(ref heath, damage);
             UpdateData.Run();
+
+            if (god)
+            {
+                if (heath <= 0)
+                {
+                    heath = 1;
+                }
+            }
             if (heath <= 0)
             {
                 var dir = (ShooterPlayer.Instance.transform.position-transform.position);
@@ -57,6 +67,7 @@ namespace Core.TDS
         {
             return energy / maxEnergy;
         }
+
     }
 
 }

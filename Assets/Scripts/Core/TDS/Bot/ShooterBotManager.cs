@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.TDS;
 using Core.TDS.Bot;
 using UnityEngine;
 
@@ -14,9 +15,13 @@ namespace Core
         {
             foreach (var unit in units)
             {
-                if (Vector3.Distance(unit.transform.position, startPos) <= radius)
+                var dist = Vector3.Distance(unit.transform.position, startPos);
+                if (dist != 0 && dist <= radius / 2)
                 {
-                    unit.Agr(true);
+                    if (!unit.GetComponent<Shooter>().isDead)
+                    {
+                        unit.Agr(true);
+                    }
                 }
             }
         }

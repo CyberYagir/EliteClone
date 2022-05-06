@@ -30,7 +30,13 @@ namespace Core.TDS.Bot
             {
                 if (other.TryGetComponent(out ShooterInventory inventory))
                 {
+                    var isEmptyInventory = inventory.items.Count == 0;
                     inventory.Add(currentWeapon);
+                    if (isEmptyInventory)
+                    {
+                        inventory.GetComponent<ShooterWeaponSelect>().ChangeWeapon(0);
+                    }
+                    
                     currentWeapon = null;
                 }
             }

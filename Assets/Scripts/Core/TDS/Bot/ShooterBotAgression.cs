@@ -14,7 +14,7 @@ namespace Core.TDS.Bot
         {
             if (!agressed)
             {
-                if (ShooterPlayer.Instance.HaveWeapon() && states.GetState() == ShooterBotStates.States.Normal)
+                if (Vector3.Distance(ShooterPlayer.Instance.transform.position, transform.position) < agressionRadius && ShooterPlayer.Instance.HaveWeapon() && states.GetState() == ShooterBotStates.States.Normal)
                 {
                     Agr(true);
                 }

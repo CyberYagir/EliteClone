@@ -22,21 +22,27 @@ namespace Core.TDS
             {
                 if (Input.GetKeyDown((i+1).ToString()))
                 {
-                    if (currentWeapon == i)
-                    {
-                        RemoveWeapon();
-                        currentWeapon = -1;
-                    }
-                    else
-                    {
-                        RemoveWeapon();
-                        currentWeapon = i;
-                        ActiveWeapon();
-                    }
+                    ChangeWeapon(i);
                 }
             }
         }
 
+        public void ChangeWeapon(int id)
+        {
+            if (currentWeapon == id)
+            {
+                RemoveWeapon();
+                currentWeapon = -1;
+            }
+            else
+            {
+                RemoveWeapon();
+                currentWeapon = id;
+                ActiveWeapon();
+            }
+
+        }
+        
         public void ActiveWeapon()
         {
             var data = weaponsData.weapons[(int) (float) weapons.items[currentWeapon].GetKeyPair(KeyPairValue.Value)];

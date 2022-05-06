@@ -8,15 +8,14 @@ namespace Core.TDS
     public class ShooterPlayer : Shooter
     {
         public static ShooterPlayer Instance;
-        public Camera followCamera;
-
         public ShooterInventory inventory { get; private set; }
-
+        public ShooterPlayerController controller;
         protected override void Awake()
         {
             base.Awake();
             Instance = this;
             inventory = GetComponent<ShooterInventory>();
+            controller = GetComponent<ShooterPlayerController>();
         }
 
         public bool HaveWeapon()
