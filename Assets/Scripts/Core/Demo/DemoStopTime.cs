@@ -1,27 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DemoStopTime : MonoBehaviour
+namespace Core.Core.Demo
 {
-    [SerializeField] private float speed;
-    public void StopTime()
+    public class DemoStopTime : MonoBehaviour
     {
-        StartCoroutine(StopTimer());
-    }
-
-
-    IEnumerator StopTimer()
-    {
-        while (Time.timeScale > 0)
+        [SerializeField] private float speed;
+        public void StopTime()
         {
-            if (Time.timeScale - Time.unscaledDeltaTime * speed < 0)
+            StartCoroutine(StopTimer());
+        }
+
+
+        IEnumerator StopTimer()
+        {
+            while (Time.timeScale > 0)
             {
-                Time.timeScale = 0;
-                yield break;
+                if (Time.timeScale - Time.unscaledDeltaTime * speed < 0)
+                {
+                    Time.timeScale = 0;
+                    yield break;
+                }
+                Time.timeScale -= Time.unscaledDeltaTime * speed;
+                yield return null;
             }
-            Time.timeScale -= Time.unscaledDeltaTime * speed;
-            yield return null;
         }
     }
 }

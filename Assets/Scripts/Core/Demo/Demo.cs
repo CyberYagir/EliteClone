@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
+namespace Core.Core.Demo
+{
 public class Demo : MonoBehaviour
 {
     [SerializeField] private RectTransform textField;
@@ -103,4 +103,6 @@ public class Demo : MonoBehaviour
             yield return null;
         }
     }
+    
+}
 }

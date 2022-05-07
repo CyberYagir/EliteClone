@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DemoRandomIdle : MonoBehaviour
+namespace Core.Core.Demo
 {
-    // Start is called before the first frame update
-    void Start()
+    public class DemoRandomIdle : MonoBehaviour
     {
-        GetComponent<Animator>().Play(Random.Range(0, 4).ToString());   
+        // Start is called before the first frame update
+        void Start()
+        {
+            GetComponent<Animator>().Play(Random.Range(0, 4).ToString());   
+        }
     }
 }

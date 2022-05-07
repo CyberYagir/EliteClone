@@ -45,8 +45,11 @@ namespace Core.TDS
                 {
                     var targetRotation = Quaternion.LookRotation(new Vector3(hit.point.x, 0, hit.point.z) - new Vector3(transform.position.x, 0, transform.position.z));
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 20 * Time.fixedDeltaTime);
+                    var y = IKPoint.transform.position.y;
                     IKPoint.transform.position = hit.point + Vector3.up;
 
+                    IKPoint.transform.position = new Vector3(IKPoint.transform.position.x, y, IKPoint.transform.position.z);
+                    IKPoint.transform.position = Vector3.Lerp(IKPoint.transform.position, hit.point + Vector3.up, 5 * Time.deltaTime);
                     IKhandsRotator.localEulerAngles = Vector3.zero;
                     LHand.localPosition = startPointL;
                     RHand.localPosition = startPointR;

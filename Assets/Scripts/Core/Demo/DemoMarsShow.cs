@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DemoMarsShow : MonoBehaviour
+namespace Core.Core.Demo
 {
-    [SerializeField] private Demo demo;
-    public void ShowMars()
+    public class DemoMarsShow : MonoBehaviour
     {
-        demo.ShowMars();
-        demo.StartCoroutine(demo.StartTime());
+        [SerializeField] private Demo demo;
+        public void ShowMars()
+        {
+            demo.ShowMars();
+            demo.StartCoroutine(demo.StartTime());
+        }
     }
 }

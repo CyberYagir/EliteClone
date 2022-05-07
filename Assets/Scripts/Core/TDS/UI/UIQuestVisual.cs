@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Core.Demo;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -16,27 +17,39 @@ namespace Core.TDS.UI
             text.text = "";
         }
 
-        public void SetQuest(string data)
+        public void SetQuest(TDSQuest data)
         {
-            if (text.text == "")
+            if (data != null)
             {
-                text.rectTransform.DOAnchorPosX(0, 0);
-                text.fontStyle = FontStyles.Normal;
-                text.color = new Color(1, 1, 1, 0);
-                text.text = "<sprite=0>" + data;
-                text.DOFade(1, 0.5f);
-            }else
+                if (text.text == "")
+                {
+                    text.rectTransform.DOAnchorPosX(0, 0);
+                    text.fontStyle = FontStyles.Normal;
+                    text.color = new Color(1, 1, 1, 0);
+                    text.text = "<sprite=0>" + data.GetText();
+                    text.DOFade(1, 0.5f);
+                }
+                else
+                {
+                    StartCoroutine(EndAnimation(data));
+                }
+            }
+            else
             {
-                StartCoroutine(EndAnimation(data));
+                StartCoroutine(EndAnimation(null));
             }
         }
 
 
-        IEnumerator EndAnimation(string data)
+        IEnumerator EndAnimation(TDSQuest data)
         {
             text.rectTransform.DOAnchorPosX(-text.rectTransform.sizeDelta.x * 1.5f, 0.5f);
             yield return new WaitForSeconds(0.5f);
             text.text = "";
+            if (data != null)
+            {
+                SetQuest(data);
+            }
         }
     }
 }

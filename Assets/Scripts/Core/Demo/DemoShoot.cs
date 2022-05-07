@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DemoShoot : MonoBehaviour
+namespace Core.Core.Demo
 {
-    [SerializeField] private GameObject particles;
-
-
-    public void EnableParticles()
+    public class DemoShoot : MonoBehaviour
     {
-        particles.gameObject.SetActive(true);
+        [SerializeField] private GameObject particles;
+
+
+        public void EnableParticles()
+        {
+            particles.gameObject.SetActive(true);
+        }
     }
 }

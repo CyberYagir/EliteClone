@@ -1,16 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DemoTimer : MonoBehaviour
+namespace Core.Core.Demo
 {
-    [SerializeField] private TMP_Text text;
-    private float time;
-    private void LateUpdate()
+    public class DemoTimer : MonoBehaviour
     {
-        time += Time.deltaTime;
-        text.text = time.ToString();
+        [SerializeField] private TMP_Text text;
+        private float time;
+        private void LateUpdate()
+        {
+            time += Time.deltaTime;
+            text.text = time.ToString();
+        }
     }
 }

@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DemoMars : MonoBehaviour
+namespace Core.Core.Demo
 {
-    public Animator animator;
-
-    public GameObject camera;
-
-
-    public void StartMarsAnim()
+    public class DemoMars : MonoBehaviour
     {
-        animator.enabled = true;
-        camera.GetComponent<Camera>().enabled = false;
-        gameObject.SetActive(false);
+        public Animator animator;
+
+        public GameObject camera;
+
+
+        public void StartMarsAnim()
+        {
+            animator.enabled = true;
+            camera.GetComponent<Camera>().enabled = false;
+            gameObject.SetActive(false);
+        }
     }
 }

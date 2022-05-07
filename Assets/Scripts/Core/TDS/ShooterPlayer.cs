@@ -9,7 +9,7 @@ namespace Core.TDS
     {
         public static ShooterPlayer Instance;
         public ShooterInventory inventory { get; private set; }
-        public ShooterPlayerController controller;
+        public ShooterPlayerController controller { get; private set; }
         protected override void Awake()
         {
             base.Awake();
