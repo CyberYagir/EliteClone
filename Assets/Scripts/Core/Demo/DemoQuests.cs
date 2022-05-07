@@ -94,6 +94,14 @@ namespace Core.Core.Demo
                 demoDoor.enable = true;
             }
         }
+        
+        public class SitInShip:TDSQuest
+        {
+            public SitInShip()
+            {
+                text = "Sit in a spaceship and go out into space.";
+            }
+        }
 
 
         [SerializeField] private DemoDoor door;
@@ -112,6 +120,7 @@ namespace Core.Core.Demo
             quests.Add(new KillAllGuards(units, slaves));
             quests.Add(new OpenDoorQuest(door));
             quests.Add(new EnterToShipYardQuest(shipYardEnter));
+            quests.Add(new SitInShip());
             OnChangeQuest.Run(quests[currentQuest]);
         }
 

@@ -17348,7 +17348,7 @@ GameObject:
   - component: {fileID: 265929795}
   - component: {fileID: 265929796}
   m_Layer: 0
-  m_Name: Global Volume (1)
+  m_Name: Mars Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31522,54 +31522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 861551142}
---- !u!1 &1873442184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1873442185}
-  - component: {fileID: 1873442186}
-  m_Layer: 0
-  m_Name: Global Volume (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1873442185
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873442184}
-  m_LocalRotation: {x: 0, y: -0.79335356, z: -0, w: -0.60876113}
-  m_LocalPosition: {x: -2705.7715, y: 603.9526, z: 104.46484}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 865566371}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1873442186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873442184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 2
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 1f6fb1afb500f7a45ba315e09b1ab3ed, type: 2}
 --- !u!1 &1875024564
 GameObject:
   m_ObjectHideFlags: 0
@@ -41957,14 +41909,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 689560481}
     m_Modifications:
-    - target: {fileID: 6242362769873143261, guid: 625a64c064fc5af4eb526fc6ec7eb490, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6740646876952678001, guid: 625a64c064fc5af4eb526fc6ec7eb490, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 7005883740187622700, guid: 625a64c064fc5af4eb526fc6ec7eb490, type: 3}
       propertyPath: oldCamera
       value: 
