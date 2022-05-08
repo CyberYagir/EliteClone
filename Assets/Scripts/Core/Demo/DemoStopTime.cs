@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     public class DemoStopTime : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using Core.TDS;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     public class DemoDoor : MonoBehaviour
     {

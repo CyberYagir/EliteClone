@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core.Core.Demo;
+using Core.Demo;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Core.Demo;
 using Core.TDS;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     public class DemoQuests : MonoBehaviour
     {

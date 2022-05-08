@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     public class DemoTimer : MonoBehaviour
     {

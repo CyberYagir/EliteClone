@@ -4,7 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     public class Demo : MonoBehaviour
     {
@@ -129,7 +129,7 @@ namespace Core.Core.Demo
             {
                 uscaled = Time.unscaledDeltaTime;
                 yield return CheckFocus();
-                if (Time.timeScale - uscaled < 0)
+                if (Time.timeScale - uscaled * 2 < 0)
                 {
                     Time.timeScale = 0;
                     yield break;
@@ -142,7 +142,6 @@ namespace Core.Core.Demo
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            print(hasFocus);
             focus = hasFocus;
         }
     }

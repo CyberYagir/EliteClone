@@ -5,7 +5,8 @@ namespace Core
 {
     public enum Scenes
     {
-        Init, Galaxy, System, Location, Garage, Death, Map
+        Init, Galaxy, System, Location, Garage, Death, Map,
+        Demo
     }
 
     public static class World

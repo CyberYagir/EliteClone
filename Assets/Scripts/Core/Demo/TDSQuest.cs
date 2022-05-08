@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Core.Demo
+namespace Core.Demo
 {
     [System.Serializable]
     public class TDSQuest

@@ -221,7 +221,7 @@ namespace Core.Location
             
             for (int i = 0; i < count; i++)
             {
-                var ship = new HumanShip(rnd, ItemsManager.GetShisList().Count, seed + i);
+                var ship = new HumanShip(rnd, rnd.Next(0,4), seed + i);
                 ships.Add(ship);
             }
 
