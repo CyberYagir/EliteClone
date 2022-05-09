@@ -18,7 +18,7 @@ namespace Core
 
         public static void LoadLevel(Scenes scenes)
         {
-            SceneManager.LoadSceneAsync(scenes.ToString());
+            SceneManager.LoadScene(scenes.ToString());
             Scene = scenes;
         }
     

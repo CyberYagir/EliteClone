@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Core.TDS;
 using UnityEngine;
 
-namespace Core
+namespace Core.PlayerScripts
 {
     public class DemoShootTutorial : MonoBehaviour
     {
