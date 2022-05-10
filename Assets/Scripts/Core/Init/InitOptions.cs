@@ -75,6 +75,7 @@ namespace Core.Init
         {
             if (!File.Exists(PlayerDataManager.ConfigFile))
             {
+                QualitySettings.SetQualityLevel(0);
                 SaveConfig();
             }
 

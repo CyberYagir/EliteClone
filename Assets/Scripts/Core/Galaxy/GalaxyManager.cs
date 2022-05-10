@@ -17,7 +17,7 @@ namespace Core.Galaxy
 
         private void Start()
         {
-            Application.targetFrameRate = 120;
+            //Application.targetFrameRate = 120;
         }
 
         private void Update()

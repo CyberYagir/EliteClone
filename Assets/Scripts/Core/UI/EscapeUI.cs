@@ -81,7 +81,10 @@ namespace Core.UI
         public void GoToMenu()
         {
             PlayerDataManager.SaveAll();
-            Destroy(Player.inst.gameObject);
+            if (Player.inst != null)
+            {
+                Destroy(Player.inst.gameObject);
+            }
             SetPause(false);
             World.LoadLevel(Scenes.Init);
         }
