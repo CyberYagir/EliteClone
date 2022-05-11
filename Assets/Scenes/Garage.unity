@@ -10294,6 +10294,7 @@ MonoBehaviour:
   rigidbody: {fileID: 501457478}
   speed: 350
   forward: {fileID: 842615570}
+  raycast: 1
 --- !u!136 &501457480
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -48158,7 +48159,7 @@ MonoBehaviour:
   xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
-  customRenderingSettings: 0
+  customRenderingSettings: 1
   invertFaceCulling: 0
   probeLayerMask:
     serializedVersion: 2
@@ -48167,8 +48168,8 @@ MonoBehaviour:
   exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
-      data1: 72198262773251917
-      data2: 13763000468760363032
+      data1: 72197541216249869
+      data2: 13763000468677591064
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -48181,8 +48182,8 @@ MonoBehaviour:
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
-      data1: 0
-      data2: 0
+      data1: 5764608602354466636
+      data2: 805240855
   defaultFrameSettings: 0
 --- !u!114 &2129580405
 MonoBehaviour:
