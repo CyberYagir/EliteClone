@@ -1,4 +1,5 @@
-﻿using Core.UI;
+﻿using Core.Systems;
+using Core.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,14 @@ namespace Core.Galaxy
             preview.color = s.particles.startColor;
             nameT.text = s.solarSystem.stars[0].name;
             typeT.text = s.solarSystem.stars[0].starType.ToString();
+            if (SolarSystemGenerator.GetStarsCount(s.solarSystem.position) == 1)
+            {
+                if (s.solarSystem.stars[0].starType != Star.StarType.Hole && new System.Random((int) GalaxyManager.selectedPoint.solarSystem.position.ToVector().magnitude * 10000).Next(0, 5) == 1)
+                {
+                    typeT.text = "Dyson";
+                }
+            }
+
             massT.text = "M:" + s.solarSystem.stars[0].mass.ToString("F5");
             radiusT.text = "R: " + s.solarSystem.stars[0].radius.ToString("F5");
             posXT.text = "X: " + s.solarSystem.position.x.ToString("F5");
