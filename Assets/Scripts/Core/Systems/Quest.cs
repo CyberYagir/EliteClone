@@ -18,7 +18,7 @@ namespace Core.Location
         
         
         public Character quester { get; private set; }
-        public int questType { get; private set; }
+        public int questType { get; set; }
         public int questID { get; private set; }
 
         public int questCost { get; private set; }

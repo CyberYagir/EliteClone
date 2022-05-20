@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace Core.Map
 {
-    public class MapSelect : MonoBehaviour
+    public class MapSelect : Singleton<MapSelect>
     {
         public enum  MapMode
         {
             Frame, Active
         }
 
-        public static MapSelect Instance;
         [SerializeField] private Camera camera;
         [SerializeField] private GameObject point;
         public static GameObject selected;
@@ -19,7 +18,7 @@ namespace Core.Map
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         void Update()

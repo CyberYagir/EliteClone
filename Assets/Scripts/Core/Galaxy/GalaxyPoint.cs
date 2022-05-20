@@ -24,13 +24,13 @@ namespace Core.Galaxy
         {
             if (GalaxyManager.Select(this))
             {
-                if (LineDrawer.instance.stars.Contains(this))
+                if (LineDrawer.Instance.stars.Contains(this))
                 {
-                    LineDrawer.instance.stars.Remove(this);
+                    LineDrawer.Instance.stars.Remove(this);
                 }
 
-                LineDrawer.instance.stars.Insert(0, this);
-                LineDrawer.instance.UpdateLines();
+                LineDrawer.Instance.stars.Insert(0, this);
+                LineDrawer.Instance.UpdateLines();
             }
         }
     }

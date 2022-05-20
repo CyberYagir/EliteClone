@@ -13,10 +13,8 @@ using Random = System.Random;
 
 namespace Core.Location
 {
-    public class SolarSystemShips : MonoBehaviour
+    public class SolarSystemShips : Singleton<SolarSystemShips>
     {
-        public static SolarSystemShips Instance;
-
         public static Dictionary<string, List<HumanShipDead>> deadList { get; private set; } = new Dictionary<string, List<HumanShipDead>>();
     
     
@@ -68,7 +66,7 @@ namespace Core.Location
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         public static void LoadDeads()
@@ -233,7 +231,7 @@ namespace Core.Location
         {
             if (PlayerDataManager.CurrentSolarSystem != null)
             {
-                Instance = this;
+                Single(this);
                 LoadDeads();
                 InitShipsPoses();
             }

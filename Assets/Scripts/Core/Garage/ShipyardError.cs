@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace Core.Garage
 {
-    public class ShipyardError : MonoBehaviour
+    public class ShipyardError : Singleton<ShipyardError>
     {
-        public static ShipyardError Instance;
         [SerializeField] private GameObject error;
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
             error.gameObject.SetActive(false);
         }
 

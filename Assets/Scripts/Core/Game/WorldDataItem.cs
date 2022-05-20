@@ -9,9 +9,7 @@ namespace Core.Game
     public class WorldDataItem : ScriptableObject
     {
         private static WorldDataItem Instance;
-     
-        
-        
+
         [Serializable]
         public class Data
         {
@@ -20,7 +18,14 @@ namespace Core.Game
             
             public Sprite IconByID(int id)
             {
-                return types[id].icon;
+                try
+                {
+                    return types[id].icon;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
             public int NameToID(string name)
             {

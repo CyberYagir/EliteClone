@@ -62,7 +62,7 @@ namespace Core.Location
         }
     }
 
-    public class WorldOrbitalStation : MonoBehaviour
+    public class WorldOrbitalStation : Singleton<WorldOrbitalStation>
     {
         [System.Serializable]
         public class OrbitalStationMesh
@@ -70,7 +70,6 @@ namespace Core.Location
             public GameObject worldObject;
             public Transform spawnPoint;
         }
-        public static WorldOrbitalStation Instance;
         public List<OrbitalStationMesh> meshList;
         [SerializeField] private int uniqSeed;
         [SerializeField] private StationRefiller refiller;
@@ -88,11 +87,14 @@ namespace Core.Location
         public static void ClearEvent()
         {
             OnInit = new Event();
-            Instance = null;
+            Instance?.Clear();
         }
+
+
+
         public void Init()
         {
-            Instance = this;
+            Single(this);
             InitNames();
             uniqSeed = CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
 

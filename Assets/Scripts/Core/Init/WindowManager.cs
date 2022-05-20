@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Core.Init
 {
-    public class WindowManager : MonoBehaviour
+    public class WindowManager : Singleton<WindowManager>
     {
-        public static WindowManager Instance;
-
         [SerializeField] private List<CustomAnimate> customAnimate;
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         public void FixedUpdate()

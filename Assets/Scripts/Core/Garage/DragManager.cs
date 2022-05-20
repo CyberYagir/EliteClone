@@ -7,9 +7,8 @@ using UnityEngine.UI;
 
 namespace Core.Garage
 {
-    public class DragManager : MonoBehaviour
+    public class DragManager : Singleton<DragManager>
     {
-        public static DragManager Instance;
 
         public Draggable dragObject;
         [SerializeField] private RectTransform movableObject;
@@ -18,7 +17,7 @@ namespace Core.Garage
         public Event<DragDropData> OnDrop = new Event<DragDropData>();
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
     
         public class DragDropData

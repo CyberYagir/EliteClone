@@ -9,14 +9,12 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class WorldSpaceObjectCanvas : MonoBehaviour
+    public class WorldSpaceObjectCanvas : Singleton<WorldSpaceObjectCanvas>
     {
         [SerializeField] private GameObject pointPrefab, contactPrefab;
         [SerializeField] private TMP_Text contactText;
         private List<DisplaySpaceObject> spaceObjects = new List<DisplaySpaceObject>();
     
-        public static WorldSpaceObjectCanvas Instance;
-
     
         private Camera camera;
         private bool skipFrame;
@@ -32,7 +30,7 @@ namespace Core.UI
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
             camera = Camera.main;
             Player.OnSceneChanged += UpdateList;
         }

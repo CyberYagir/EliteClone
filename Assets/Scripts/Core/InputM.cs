@@ -61,7 +61,12 @@ namespace Core
             }
             
         }
-    
+
+        public string GetButtonByKAction(KAction action)
+        {
+            return keys[action].plus.ToString();
+        }
+        
         public List<Axis> GetAxesList()
         {
             return axes;

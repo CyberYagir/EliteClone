@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace Core.PlayerScripts
 {
-    public class AppliedQuests : MonoBehaviour
+    public class AppliedQuests : Singleton<AppliedQuests>
     {
-        public static AppliedQuests Instance;
         public List<Quest> quests { get; private set; } = new List<Quest>();
         public Event OnChangeQuests = new Event();
     
@@ -21,7 +20,7 @@ namespace Core.PlayerScripts
     
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         private void Start()

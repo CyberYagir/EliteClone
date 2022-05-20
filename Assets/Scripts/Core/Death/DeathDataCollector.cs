@@ -10,10 +10,8 @@ using UnityEngine;
 
 namespace Core.Death
 {
-    public class DeathDataCollector : MonoBehaviour
+    public class DeathDataCollector : Singleton<DeathDataCollector>
     {
-        public static DeathDataCollector Instance;
-    
         public PlayerData playerData { get; private set; }
         public SavedSolarSystem savedSolarSystem;
         public SaveLoadData saves { get; private set; }
@@ -27,7 +25,7 @@ namespace Core.Death
     
         private void Awake()
         {
-            Instance = this;
+            Single(this);
             InitDataCollector();
         }
 

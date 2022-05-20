@@ -17,7 +17,7 @@ namespace Core.PlayerScripts
         private void Update()
         {
             if (activeLocationPoint)
-                WarningManager.AddWarning("Press 'Jump' to enter the station.", WarningTypes.GoLocation);
+                WarningManager.AddWarning($"Press {InputM.GetData().GetButtonByKAction(KAction.JumpIn)} to enter the station.", WarningTypes.GoLocation);
         
             WarpCheck();
             JumpToLocation();

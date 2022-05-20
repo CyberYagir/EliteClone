@@ -2,10 +2,8 @@ using UnityEngine;
 
 namespace Core.PlayerScripts
 {
-	public class CameraShake : MonoBehaviour
+	public class CameraShake : Singleton<CameraShake>
 	{
-		public static CameraShake Instance;
-	
 		[SerializeField] private Transform camTransform;
 		[SerializeField] private float shakeDuration;
 		[SerializeField] private float shakeAmount = 0.7f;
@@ -15,7 +13,7 @@ namespace Core.PlayerScripts
 	
 		void Awake()
 		{
-			Instance = this;
+			Single(this);
 			if (camTransform == null)
 			{
 				camTransform = transform;

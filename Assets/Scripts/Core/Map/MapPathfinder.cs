@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace Core.Map
 {
-    public class MapPathfinder : MonoBehaviour
+    public class MapPathfinder : Singleton<MapPathfinder>
     {
-        public static MapPathfinder Instance;
         [SerializeField] private List<string> path = new List<string>();
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private Material pathMat;
@@ -24,7 +23,7 @@ namespace Core.Map
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
 

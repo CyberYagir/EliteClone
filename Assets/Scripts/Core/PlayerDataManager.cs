@@ -9,9 +9,8 @@ using UnityEngine;
 
 namespace Core
 {
-    public class PlayerDataManager : MonoBehaviour
+    public class PlayerDataManager : Singleton<PlayerDataManager>
     {
-        public static PlayerDataManager Instance;
         public static SolarSystem CurrentSolarSystem;
 
         public static InitOptions.PlayerConfig PlayerConfig;
@@ -76,7 +75,7 @@ namespace Core
 
             }
 
-            Instance = this;
+            Single(this);
             DontDestroyOnLoad(gameObject);
             FoldersManage();
         }

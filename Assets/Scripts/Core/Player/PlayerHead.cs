@@ -2,16 +2,15 @@ using UnityEngine;
 
 namespace Core.PlayerScripts
 {
-    public class PlayerHead : MonoBehaviour
+    public class PlayerHead : Singleton<PlayerHead>
     {
-        public static PlayerHead Instance;
         [SerializeField] private float sence;
         private Transform headcamera;
         private Player player;
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         private void Start()

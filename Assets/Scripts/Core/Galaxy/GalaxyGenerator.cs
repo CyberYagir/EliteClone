@@ -99,7 +99,7 @@ namespace Core.Galaxy
         {
             PlayerPrefs.SetString("Error", text);
             Destroy(PlayerDataManager.Instance.gameObject);
-            PlayerDataManager.Instance = null;
+            PlayerDataManager.Instance?.Clear();
             World.LoadLevel(Scenes.Init);
         }
 

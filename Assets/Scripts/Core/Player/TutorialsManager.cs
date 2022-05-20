@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Core.Game;
+using Core.Location;
+using Core.Systems;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -13,16 +16,14 @@ namespace Core.PlayerScripts
         public class Tutorial
         {
             public bool isDemoEnd;
-            public bool isShipControlComplete;
-            public bool isUITutorialComplete;
-            public bool isLandingStationComplete;
-            public bool isGarageTutorialComplete;
-            public bool isMineTutorialComplete;
-
+            public bool m1_Dialog1;
+            public bool m1_QuestCompleted;
+            
             public Tutorial()
             {
             }
         }
+
 
 
 

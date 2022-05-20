@@ -16,10 +16,9 @@ using Random = UnityEngine.Random;
 
 namespace Core.Map
 {
-    public class MapGenerator : MonoBehaviour
+    public class MapGenerator : Singleton<MapGenerator>
     {
         public static bool Set;
-        public static MapGenerator Instance;
         public const float size = 1500;
         
         [SerializeField] private Camera camera;
@@ -42,7 +41,7 @@ namespace Core.Map
         public Event OnInited;
         private void Awake()
         {
-            Instance = this;
+            Single(this);
             Set = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

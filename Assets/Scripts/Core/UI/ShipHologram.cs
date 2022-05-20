@@ -6,12 +6,10 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class ShipHologram : MonoBehaviour
+    public class ShipHologram : Singleton<ShipHologram>
     {
         private Quaternion startRotation;
         private Player player;
-
-        public static ShipHologram Instance;
     
         [SerializeField] private Transform floor;
         [SerializeField] private MeshFilter shipModel;
@@ -20,7 +18,7 @@ namespace Core.UI
 
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         private void Start()

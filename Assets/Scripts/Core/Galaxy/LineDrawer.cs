@@ -9,10 +9,8 @@ namespace Core.Galaxy
         public GalaxyPoint p1, p2;
     }
 
-    public class LineDrawer : MonoBehaviour
+    public class LineDrawer : Singleton<LineDrawer>
     {
-        public static LineDrawer instance;
-
         public GameObject linePrefab, holder;
 
         public float time;
@@ -26,7 +24,7 @@ namespace Core.Galaxy
         private Vector3 oldCameraPos;
         private void Awake()
         {
-            instance = this;
+            Single(this);
             oldCameraPos = transform.position;
 
             for (int i = 0; i < 300; i++)

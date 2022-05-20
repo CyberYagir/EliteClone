@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace Core.PlayerScripts
 {
-    public class ReputationManager : MonoBehaviour
+    public class ReputationManager : Singleton<ReputationManager>
     {
-        public static ReputationManager Instance;
         public Dictionary<string, int> ratings = new Dictionary<string, int>();
         public Event OnChangeRating = new Event();
         
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
         
         public void AddRating(int fractionID, int scores)

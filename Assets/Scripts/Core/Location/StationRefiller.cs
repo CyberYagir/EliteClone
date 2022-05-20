@@ -7,7 +7,7 @@ using Random = System.Random;
 
 namespace Core.Location
 {
-    public class StationRefiller : MonoBehaviour
+    public class StationRefiller : Singleton<StationRefiller>
     {
         [Serializable]
         public class Refiller
@@ -22,12 +22,11 @@ namespace Core.Location
             public ValueLimit valueLimit;
         }
 
-        public static StationRefiller Instance;
         [SerializeField] List<Refiller> refillers;
 
         public void InitRefiller(int seed)
         {
-            Instance = this;
+            Single(this);
             var rnd = new Random(seed);
             for (int i = 0; i < refillers.Count; i++)
             {

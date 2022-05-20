@@ -64,7 +64,9 @@ class HierarchyIcons
                     {
                         for (int i = 0; i < list.icons.Count; i++)
                         {
-                            if (go.GetComponent(list.icons[i]))
+
+                            var type = list.icons[i];
+                            if (go.GetComponent(type))
                             {
                                 iconPos.size = Vector2.one * 20;
                                 iconPos.position -= Vector2.down * 2.5f;

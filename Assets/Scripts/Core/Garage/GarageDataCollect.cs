@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace Core.Garage
 {
-    public class GarageDataCollect : MonoBehaviour
+    public class GarageDataCollect : Singleton<GarageDataCollect>
     {
-        public static GarageDataCollect Instance;
         public PlayerData playerData { get; private set; }
         public Cargo cargo  { get; private set; }
         public Location.Location playerLocation  { get; private set; }
@@ -23,7 +22,7 @@ namespace Core.Garage
         public int stationSeed;
         private void Awake()
         {
-            Instance = this;
+            Single(this);
         }
 
         public virtual void InitDataCollector()

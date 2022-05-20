@@ -34,6 +34,7 @@ namespace Core.UI
                         break;
                     }
                 }
+
                 questPath = questPath.nextPath;
             }
 
@@ -51,6 +52,7 @@ namespace Core.UI
                 it.Init(questsQuest.reward.rewardItems[i]);
                 it.gameObject.SetActive(true);
             }
+            
             for (int i = 0; i < questsQuest.toTransfer.Count; i++)
             {
                 var it = Instantiate(rewardItem, requireHolder).GetComponent<ItemUI>();
