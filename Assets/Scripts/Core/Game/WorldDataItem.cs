@@ -64,6 +64,7 @@ namespace Core.Game
 
         public Data quests = new Data();
         public Data fractions = new Data();
+        public Sprite playerQuest;
         public static Data Quests => GetData().quests;
         public static Data Fractions => GetData().fractions;
         

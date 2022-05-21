@@ -9,7 +9,7 @@ namespace Core.Location
     {
         public enum LocationType
         {
-            Station, Belt, Empty
+            Station, Belt, Empty, Quest
         }
         private Camera mainCamera;
         [SerializeField] float size;

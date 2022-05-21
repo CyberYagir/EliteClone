@@ -72,6 +72,7 @@ namespace Core.UI
                 {
                     var questItem = Instantiate(item, holder);
                     var questData = WorldDataItem.Quests.ByID(quests[i].questType);
+
                     questItem.GetComponent<QuestItemUI>().Init(questData.icon, questData.typeName, count);
                     questItem.gameObject.SetActive(true);
                     items.Add(questItem.GetComponent<ButtonEffect>());

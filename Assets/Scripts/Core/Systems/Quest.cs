@@ -19,13 +19,13 @@ namespace Core.Location
         
         public Character quester { get; private set; }
         public int questType { get; set; }
-        public int questID { get; private set; }
+        public int questID { get; set; }
 
         public int questCost { get; private set; }
 
-        public string appliedStation { get; private set; }
-        public string appliedSolar { get; private set; }
-        public List<Item> toTransfer { get; private set; } = new List<Item>();
+        public string appliedStation { get; set; }
+        public string appliedSolar { get; set; }
+        public List<Item> toTransfer { get; set; } = new List<Item>();
         public Reward reward { get; private set; } = new Reward();
         
         
@@ -87,20 +87,23 @@ namespace Core.Location
             return count;
         }
 
-        public void Init(int questSeed, Character character)
+        public void Init(int questSeed, Character character, bool notStation = false)
         {
             var rnd = new Random(questSeed);
             quester = character;
             questType = rnd.Next(0, WorldDataItem.Quests.Count);
             questID = questSeed;
             questCost = rnd.Next(1, 5);
-            if (WorldStationQuests.Instance != null)
+            if (!notStation)
             {
-                WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-            }
-            else
-            {
-                Player.inst.StartCoroutine(Wait());
+                if (WorldStationQuests.Instance != null)
+                {
+                    WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
+                }
+                else
+                {
+                    Player.inst.StartCoroutine(Wait());
+                }
             }
         }
 
@@ -120,9 +123,9 @@ namespace Core.Location
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.IsCompleteCheck);
         }
 
-        public QuestPath GetPath(Random rnd, string stationName, string solarName)
+        public QuestPath GetPath(Random rnd, string stationName, string solarName, int minJumps = 0, int maxJumps = 7, bool canBroke = true)
         {
-            int pathLength = rnd.Next(0, 7);
+            int pathLength = rnd.Next(minJumps, maxJumps);
             List<string> pathNames = new List<string>();
             QuestPath last = new QuestPath {solarName = solarName};
             QuestPath first = last;
@@ -176,7 +179,7 @@ namespace Core.Location
                     }
                 }
             }
-            else
+            else if (canBroke)
             {
                 questState = QuestCompleted.BrokeQuest;
             }

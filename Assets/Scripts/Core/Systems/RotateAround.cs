@@ -14,6 +14,9 @@ namespace Core.Systems
         private LineRenderer lineRenderer;
         private Camera camera;
         private bool drawed;
+
+
+        public Event OnRotate = new Event();
         private void Start()
         {
             DrawCircle(Vector3.Distance(transform.position, point.position));
@@ -27,6 +30,7 @@ namespace Core.Systems
             var rnd = new Random(orbitID);
             transform.RotateAround(point.position, orbitRotation, rnd.Next(0, 360));
             transform.RotateAround(point.position, Vector3.up, rnd.Next(0, 360));
+            OnRotate.Run();
         }
 
         public void InitOrbit(Transform target, float orbitSpeed, int orbit, Vector3 orbitRot = default)

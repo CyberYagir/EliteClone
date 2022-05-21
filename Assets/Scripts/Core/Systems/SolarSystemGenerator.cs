@@ -416,11 +416,14 @@ namespace Core.Systems
                 planet.transform.name = item.name;
                 planet.transform.position = item.position.ToVector() * _scale;
                 planet.transform.localScale *= item.radius * _scale;
-
+                    
                 var rotate = planet.GetComponent<RotateAround>();
                 rotate.InitOrbit(attractor.transform, (float) rnd.NextDouble() * 0.001f, objects.Count);
-            
-            
+                rotate.OnRotate += delegate
+                {
+                    rotate.transform.RotateAround(attractor.transform.position, new Vector3(rnd.Next(-1, 2), rnd.Next(-1, 2), rnd.Next(-1, 2)), rnd.Next(-3, 3));
+                };
+
                 planet.GetComponent<PlanetTexture>().SetTexture(item.textureID);
             
                 objects.Add(planet.GetComponent<WorldSpaceObject>());

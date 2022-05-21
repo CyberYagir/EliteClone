@@ -54,8 +54,7 @@ namespace Core.UI
                     floor.gameObject.SetActive(hit.transform.GetComponent<LandPoint>());
                     if (floor.gameObject.active)
                     {
-                        floor.transform.localPosition = player.transform.InverseTransformPoint(hit.transform.position) *
-                                                        transform.localScale.magnitude;
+                        floor.transform.localPosition = (player.transform.InverseTransformPoint(hit.transform.GetChild(0).position) - Vector3.up*4)  * transform.localScale.magnitude;
                         floor.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
                     }
                 }

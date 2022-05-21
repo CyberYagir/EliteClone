@@ -9,6 +9,7 @@ namespace Core.PlayerScripts
     {
         public List<Quest> quests { get; private set; } = new List<Quest>();
         public Event OnChangeQuests = new Event();
+        public Event OnNotify = new Event();
     
         public class QuestData
         {
@@ -69,7 +70,7 @@ namespace Core.PlayerScripts
             return false;
         }
     
-        public void ApplyQuest(Quest quest)
+        public void ApplyQuest(Quest quest, bool triggerNotify = true)
         {
             if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.AddItems(quest.toTransfer))
             {
@@ -79,12 +80,17 @@ namespace Core.PlayerScripts
             {
                 quests.Add(quest);
             }
-            
+
+            if (triggerNotify)
+            {
+                OnNotify.Run();
+            }
             OnChangeQuests.Run();
         }
 
         public void CancelQuest(Quest quest)
         {
+            if (quest == null) return;
             if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.RemoveItems(quest.toTransfer))
             {
                 quests.RemoveAll(x => x.questID == quest.questID);

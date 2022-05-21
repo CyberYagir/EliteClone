@@ -13,11 +13,16 @@ namespace Core.UI
         [SerializeField] private Image icon;
         [SerializeField] private TMP_Text targetT, jumpToT, QuestTextT;
         [SerializeField] private Transform rewardHolder, rewardItem;
-        [SerializeField] private Transform requireHolder, requireItemList, questTextHolder;
+        [SerializeField] private Transform requireHolder, requireItemList, rewardItemList, questTextHolder, rewardText;
 
         public void Init(Quest questsQuest)
         {
-            icon.sprite = WorldDataItem.Quests.IconByID(questsQuest.questType);
+            var questIcon = WorldDataItem.Quests.IconByID(questsQuest.questType);
+            if (questsQuest.questType == -1)
+            {
+                questIcon = WorldDataItem.GetData().playerQuest;
+            }
+            icon.sprite = questIcon;
             targetT.text = questsQuest.GetLastQuestPath().targetName;
             QuestPath first = questsQuest.pathToTarget;
             QuestPath questPath = first;
@@ -59,10 +64,12 @@ namespace Core.UI
                 it.Init(questsQuest.toTransfer[i]);
                 it.gameObject.SetActive(true);
             }
-
-            requireItemList.gameObject.SetActive(questsQuest.toTransfer.Count != 0);
-            questTextHolder.gameObject.SetActive(questsQuest.toTransfer.Count == 0);
-            if (questsQuest.toTransfer.Count == 0)
+            
+            requireItemList.gameObject.SetActive(questsQuest.toTransfer.Count != 0 && questsQuest.questType != -1);
+            rewardItemList.gameObject.SetActive(questsQuest.questType != -1);
+            rewardText.gameObject.SetActive(questsQuest.questType != -1);
+            questTextHolder.gameObject.SetActive(questsQuest.toTransfer.Count == 0 || questsQuest.questType == -1);
+            if (questsQuest.toTransfer.Count == 0 || questsQuest.questType == -1)
             {
                 try
                 {
