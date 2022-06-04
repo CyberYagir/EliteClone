@@ -2,9 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Core.Dialogs
 {
+    public enum NodeType
+    {
+        Dialog, End, Action, Entry
+    }
+    public enum Actions
+    {
+        None, Positive, Negative
+    }
+    
+    public enum Characters
+    {
+        Main, Second
+    }
     [CreateAssetMenu(fileName = "Extended Dialog", menuName = "Game/Dialogs/Variants Dialog", order = 1)]
     public class ExtendedDialog : ScriptableObject
     {
@@ -14,6 +28,9 @@ namespace Core.Dialogs
             public string nodeGUID;
             public string text;
             public Vector2 pos;
+            public int character;
+            public int nodeType;
+            public int nodeAction;
         }
 
         [Serializable]
@@ -24,7 +41,43 @@ namespace Core.Dialogs
             public string targetNodeGUID;
         }
 
+
+        [Serializable]
+        public class NodeReplicaData
+        {
+            public string GUID;
+            public string text;
+            public NodeType type;
+        }
+
+        [Serializable]
+        public class NodeAutoReplicaData : NodeReplicaData
+        {
+            public string nextGUID;
+        }
+        [Serializable]
+        public class NodeMultiReplicaData : NodeReplicaData
+        {
+            public class TextReplica
+            {
+                public string replica;
+                public string nextGUID;
+            }
+            public List<TextReplica> nexts = new List<TextReplica>();
+        }
+        [Serializable]
+        public class NodeTriggerData : NodeReplicaData
+        {
+            public Actions action;
+        }
+        [Serializable]
+        public class NodeEndData: NodeReplicaData
+        {
+            public string triggerGUID;
+        }
+
         public List<NodeData> nodeData = new List<NodeData>();
         public List<NodeLink> nodesLinks = new List<NodeLink>();
+        public string replicasJson;
     }
 }

@@ -32,18 +32,16 @@ public class EditTextWindow : EditorWindow
         return Instance;
     }
 
-    public void SetData(string text, string guid)
+    public void SetData(string text)
     {
         this.text = text;
-        nodeGUID = guid;
     }
 
     public UnityEvent<string> ChangeCallback = new Event<string>();
     public string text;
-    public string nodeGUID;
     private void OnGUI()
     {
-        text = EditorGUILayout.TextArea(text, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
+        text = EditorGUILayout.TextField(text, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
         if (GUILayout.Button("Save"))
         {
             ChangeCallback.Invoke(text);

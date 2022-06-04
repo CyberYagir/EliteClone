@@ -53,6 +53,8 @@ public class ExtendedDialogsGraph : EditorWindow
     {
         var toolbar = new Toolbar();
         CreateAddButton(toolbar);
+        CreateAddButtonEnd(toolbar);
+        CreateAddButtonAction(toolbar);
         CreateSaveFile(toolbar);
         rootVisualElement.Add(toolbar);
     }
@@ -64,16 +66,38 @@ public class ExtendedDialogsGraph : EditorWindow
     
     public void CreateAddButton(Toolbar toolbar)
     {
-        var createNodeB = new Button(CreateDialogNodeClick);
+        var createNodeB = new Button(delegate
+        {
+            CreateDialog(NodeType.Dialog);
+        });
         createNodeB.text = "Add Replica";
         toolbar.Add(createNodeB);
     }
     
-    public void CreateDialogNodeClick()
+    public void CreateAddButtonEnd(Toolbar toolbar)
     {
-        view.CreateNode();
+        var createNodeB = new Button(delegate
+        {
+            CreateDialog(NodeType.End);
+        });
+        createNodeB.text = "Add end";
+        toolbar.Add(createNodeB);
     }
 
+    public void CreateAddButtonAction(Toolbar toolbar)
+    {
+        var createNodeB = new Button(delegate
+        {
+            CreateDialog(NodeType.Action);
+        });
+        createNodeB.text = "Add Action";
+        toolbar.Add(createNodeB);
+    }
+    
+    public void CreateDialog(NodeType n)
+    {
+        view.CreateNode(n);
+    }
 
     public void SetFile(ExtendedDialog dialog)
     {
