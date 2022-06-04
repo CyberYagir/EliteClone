@@ -95,6 +95,37 @@ public class ExtendedDialogGraphView : GraphView
     }
 
 
+    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+    {
+        if (evt.target is GraphView || evt.target is Node)
+        {
+            evt.menu.AppendAction("Create Replica Node", (e) => { CreateNode(NodeType.Dialog); });
+            evt.menu.AppendAction("Create End Node", (e) => { CreateNode(NodeType.End); });
+            evt.menu.AppendAction("Create Trigger Node", (e) => { CreateNode(NodeType.Action); });
+
+
+            if (evt.target is Node)
+            {
+                var ex = evt.target as ExtendedNode;
+                if (ex.NodeType != NodeType.Entry)
+                {
+                    evt.menu.AppendAction("Delete", (e) => { DeleteSelection(); });
+                }
+
+                if (ex.NodeType != NodeType.Action && ex.NodeType != NodeType.Entry)
+                {
+                    evt.menu.AppendAction("Edit", (e) => { EditButton(ex); });
+                    if (ex.NodeType != NodeType.End)
+                    {
+                        evt.menu.AppendAction("Add", (e) => { AddButton(ex); });
+                    }
+                }
+            }
+        }
+        evt.menu.AppendSeparator();
+        evt.menu.AppendAction("Save", (e) => { ExtendedDialogsGraph.GetGraph().DataOperation(true); });
+
+    }
 
     public ExtendedNode CreateActionNode(Vector2 pos = default)
     {
@@ -107,7 +138,6 @@ public class ExtendedDialogGraphView : GraphView
         inputPort.portName = "Trigger";
         node.NodeType = NodeType.Action;
 
-        
         
         node.actionUIEl = new EnumField(node.actions);
         node.actionUIEl.RegisterValueChangedCallback(delegate(ChangeEvent<Enum> evt)
@@ -179,20 +209,13 @@ public class ExtendedDialogGraphView : GraphView
         });
         
         
-        node.HeaderAddUIEl = new Button(() => AddChoicePort(node));
+        node.HeaderAddUIEl = new Button(() => AddButton(node));
         node.HeaderAddUIEl.text = "Add";
         node.titleContainer.Add(node.HeaderAddUIEl);
 
         node.HeaderEditUIEl = new Button(() =>
         {
-            EditTextWindow.Open();
-            EditTextWindow.GetInstance().SetData(node.text);
-            EditTextWindow.GetInstance().ChangeCallback.AddListener(delegate(string str)
-            {
-                node.text = str;
-                node.title = str;
-            });
-            EditTextWindow.GetInstance().ShowModal();
+            EditButton(node);
         });
         node.HeaderEditUIEl.text = "Edit";
         node.titleContainer.Add(node.HeaderEditUIEl);
@@ -211,6 +234,32 @@ public class ExtendedDialogGraphView : GraphView
         return node;
     }
 
+    public void AddButton(ExtendedNode node)
+    {
+        if (node.outputContainer.childCount == 1)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                AddChoicePort(node);
+            }
+        }
+        else
+        {
+            AddChoicePort(node);
+        }
+    }
+    public void EditButton(ExtendedNode node)
+    {
+        EditTextWindow.Open();
+        EditTextWindow.GetInstance().SetData(node.text);
+        EditTextWindow.GetInstance().ChangeCallback.AddListener(delegate(string str)
+        {
+            node.text = str;
+            node.title = str;
+        });
+        EditTextWindow.GetInstance().ShowModal();
+    }
+    
     public void AddChoicePort(ExtendedNode node, string overrideName = "")
     {
         var port = CreatePort(node, Direction.Output, Port.Capacity.Single);
@@ -247,12 +296,31 @@ public class ExtendedDialogGraphView : GraphView
         
         node.outputContainer.Add(port);
 
-        var autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1);
+        
+            
+        var autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1) as Port;
         for (int i = 0; i < node.outputContainer.childCount; i++)
         {
             autoPort.SendToBack();
         }
-        
+        autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1) as Port;
+        if (node.outputContainer.childCount > 1)
+        {
+            if (autoPort.connected)
+            {
+                var edge = autoPort.connections.ToList()[0];
+                edge.input.Disconnect(edge);
+                edge.output.Disconnect(edge);
+                RemoveElement(edge);
+                autoPort.DisconnectAll();
+            }
+
+            autoPort.SetEnabled(false);
+        }
+        else
+        {
+            autoPort.SetEnabled(true);
+        }
         node.RefreshExpandedState();
         node.RefreshPorts();
     }
@@ -266,8 +334,15 @@ public class ExtendedDialogGraphView : GraphView
             edge.input.Disconnect(edge);
             RemoveElement(targetEdge.First());
         }
-
         node.outputContainer.Remove(port);
+
+        if (node.outputContainer.childCount == 2)
+        {
+            RemovePort(node, node.outputContainer.ElementAt(0) as Port);
+            var autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1);
+            autoPort.SetEnabled(true);
+        }
+        
         node.RefreshExpandedState();
         node.RefreshPorts();
     }

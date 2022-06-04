@@ -60,24 +60,39 @@ MonoBehaviour:
     portName: Next Replica
     targetNodeGUID: 7f7ca17b0a35d4346b86800dec311d1d
   - baseNodeGUID: 7f7ca17b0a35d4346b86800dec311d1d
-    portName: 1.1
+    portName: 1.2
     targetNodeGUID: 63a31a7f47de8a9459edf7368876d96e
   - baseNodeGUID: 7f7ca17b0a35d4346b86800dec311d1d
-    portName: 1.2
+    portName: 1.1
     targetNodeGUID: 33f1a87a8d9b7754286193469bc4ce05
-  - baseNodeGUID: 63a31a7f47de8a9459edf7368876d96e
-    portName: Auto
-    targetNodeGUID: 785a430bb08c3f14f9a0abb28fffcf06
   - baseNodeGUID: 4085591c640aaa341ad5b8f5409f37c1
     portName: Auto
     targetNodeGUID: a174b079afc646d409aa2864dddb72c4
-  - baseNodeGUID: a174b079afc646d409aa2864dddb72c4
-    portName: Action
-    targetNodeGUID: 74366a26269862b469625a37e43971ed
+  - baseNodeGUID: 63a31a7f47de8a9459edf7368876d96e
+    portName: Auto
+    targetNodeGUID: 785a430bb08c3f14f9a0abb28fffcf06
   - baseNodeGUID: 33f1a87a8d9b7754286193469bc4ce05
     portName: Auto
     targetNodeGUID: 785a430bb08c3f14f9a0abb28fffcf06
   - baseNodeGUID: 785a430bb08c3f14f9a0abb28fffcf06
     portName: Auto
     targetNodeGUID: 4085591c640aaa341ad5b8f5409f37c1
-  replicasJson: '[{"nexts":[{"replica":"1.1","nextGUID":"63a31a7f47de8a9459edf7368876d96e"},{"replica":"1.2","nextGUID":"33f1a87a8d9b7754286193469bc4ce05"}],"GUID":"7f7ca17b0a35d4346b86800dec311d1d","text":"1","type":0},{"nextGUID":"a174b079afc646d409aa2864dddb72c4","GUID":"4085591c640aaa341ad5b8f5409f37c1","text":"3","type":0},{"nextGUID":"785a430bb08c3f14f9a0abb28fffcf06","GUID":"63a31a7f47de8a9459edf7368876d96e","text":"1.1","type":0},{"nextGUID":"785a430bb08c3f14f9a0abb28fffcf06","GUID":"33f1a87a8d9b7754286193469bc4ce05","text":"1.2","type":0},{"nextGUID":"4085591c640aaa341ad5b8f5409f37c1","GUID":"785a430bb08c3f14f9a0abb28fffcf06","text":"2","type":0},{"triggerGUID":"74366a26269862b469625a37e43971ed","GUID":"a174b079afc646d409aa2864dddb72c4","text":"4","type":1},{"action":2,"GUID":"74366a26269862b469625a37e43971ed","text":"","type":2}]'
+  - baseNodeGUID: a174b079afc646d409aa2864dddb72c4
+    portName: Action
+    targetNodeGUID: 74366a26269862b469625a37e43971ed
+  replicasJson: "[\r\n  {\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
+    \"1.2\",\r\n        \"nextGUID\": \"63a31a7f47de8a9459edf7368876d96e\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"1.1\",\r\n        \"nextGUID\": \"33f1a87a8d9b7754286193469bc4ce05\"\r\n     
+    }\r\n    ],\r\n    \"GUID\": \"7f7ca17b0a35d4346b86800dec311d1d\",\r\n    \"text\":
+    \"1\",\r\n    \"type\": 0\r\n  },\r\n  {\r\n    \"nextGUID\": \"a174b079afc646d409aa2864dddb72c4\",\r\n   
+    \"GUID\": \"4085591c640aaa341ad5b8f5409f37c1\",\r\n    \"text\": \"3\",\r\n   
+    \"type\": 0\r\n  },\r\n  {\r\n    \"nextGUID\": \"785a430bb08c3f14f9a0abb28fffcf06\",\r\n   
+    \"GUID\": \"63a31a7f47de8a9459edf7368876d96e\",\r\n    \"text\": \"1.1\",\r\n   
+    \"type\": 0\r\n  },\r\n  {\r\n    \"nextGUID\": \"785a430bb08c3f14f9a0abb28fffcf06\",\r\n   
+    \"GUID\": \"33f1a87a8d9b7754286193469bc4ce05\",\r\n    \"text\": \"1.2\",\r\n   
+    \"type\": 0\r\n  },\r\n  {\r\n    \"nextGUID\": \"4085591c640aaa341ad5b8f5409f37c1\",\r\n   
+    \"GUID\": \"785a430bb08c3f14f9a0abb28fffcf06\",\r\n    \"text\": \"2\",\r\n   
+    \"type\": 0\r\n  },\r\n  {\r\n    \"triggerGUID\": \"74366a26269862b469625a37e43971ed\",\r\n   
+    \"GUID\": \"a174b079afc646d409aa2864dddb72c4\",\r\n    \"text\": \"4\",\r\n   
+    \"type\": 1\r\n  },\r\n  {\r\n    \"action\": 2,\r\n    \"GUID\": \"74366a26269862b469625a37e43971ed\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 2\r\n  }\r\n]"

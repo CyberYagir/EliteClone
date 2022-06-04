@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -78,6 +80,15 @@ namespace Core.Dialogs
 
         public List<NodeData> nodeData = new List<NodeData>();
         public List<NodeLink> nodesLinks = new List<NodeLink>();
+        [TextArea(10, 57)]
         public string replicasJson;
+
+
+        public List<NodeReplicaData> GetConvertedReplicas()
+        {
+            var objects = JsonConvert.DeserializeObject<List<object>>(replicasJson);
+            List<NodeReplicaData> replicaDatas = objects.Cast<NodeReplicaData>().ToList();
+            return replicaDatas;
+        }
     }
 }

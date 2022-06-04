@@ -185,7 +185,7 @@ public class GraphSaveUtility
 
         var castToObject = chain.Cast<object>().ToList();
 
-        return JsonConvert.SerializeObject(castToObject);
+        return JsonConvert.SerializeObject(castToObject, Formatting.Indented);
     }
     
     
