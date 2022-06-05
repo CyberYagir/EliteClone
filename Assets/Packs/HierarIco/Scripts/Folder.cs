@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class Folder : MonoBehaviour
 {
     
 #if UNITY_EDITOR
+
+    [SerializeField] private bool haveZeroPos;
     [MenuItem("GameObject/Create Folder", false, -1)]
     public static void CreateFolder()   
     {
@@ -25,7 +28,7 @@ public class Folder : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (!Application.isPlaying)
+        if (!Application.isPlaying && haveZeroPos)
         {
             transform.localPosition = Vector3.zero;
         }
@@ -34,7 +37,22 @@ public class Folder : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawIcon(transform.position, "Folder Icon");
+        var filters = GetComponentsInChildren<Renderer>();
+        if (filters.Length != 0)
+        {
+            float count = 0;
+            Vector3 center = new Vector3();
+            for (int i = 0; i < filters.Length; i++)
+            {
+                center += (filters[i].bounds.center);
+                count++;
+            }
+            Gizmos.DrawIcon(center/count, "Folder Icon");
+        }
+        else
+        {
+            Gizmos.DrawIcon(transform.position, "Folder Icon");
+        }
     }
 #endif
 }

@@ -9,9 +9,6 @@ using UnityEngine.UIElements;
 
 public class ExtendedDialogsGraph : EditorWindow
 {
-
-    
-    
     public ExtendedDialogGraphView view;
 
     public string fileName;
