@@ -12,7 +12,6 @@ namespace Core.CommunistsBase
         private bool triggered;
         [SerializeField] private Transform mesh;
         [SerializeField] private float up;
-        [SerializeField] private List<DoorExit> exits;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -21,10 +20,6 @@ namespace Core.CommunistsBase
                 StopAllCoroutines();
                 mesh.DOKill();
                 mesh.DOLocalMoveY(up, 2);
-                for (int i = 0; i < exits.Count; i++)
-                {
-                    exits[i]?.gameObject.SetActive(true);
-                }
                 triggered = true;
             }
         }
