@@ -16,10 +16,12 @@ namespace Core.PlayerScripts
     
         private ItemShip currentShip;
         public List<Item> items { get; private set; } = new List<Item>();
+        public Dictionary<int, List<Item>> idDictionary = new Dictionary<int, List<Item>>();
         public float tons { get; private set; }
         public Event OnChangeInventory = new Event();
-    
-    
+
+
+        private int creditID;
     
         private void Awake()
         {
@@ -28,6 +30,8 @@ namespace Core.PlayerScripts
             {
                 currentShip = ship.GetShip();
             }
+
+            creditID = ItemsManager.GetItem("credit").id.id;
         }
 
         public void CustomInit(PlayerData data, ItemShip ship)
@@ -53,7 +57,7 @@ namespace Core.PlayerScripts
 
         public int GetCredits()
         {
-            var credit = FindItem("credit");
+            var credit = FindItem(creditID);
             if (credit != null)
             {
                 return (int)credit.amount.Value;
@@ -71,7 +75,7 @@ namespace Core.PlayerScripts
         }
         public bool RemoveCredits(float remove, bool updateInventory = false)
         {
-            var credit = FindItem("credit");
+            var credit = FindItem(creditID);
             if (credit != null)
             {
                 if (credit.amount.Value >= remove)
@@ -114,22 +118,37 @@ namespace Core.PlayerScripts
             OnChangeInventory.Run();
         }
 
-        public Item FindItem(string idName)
+        public Item FindItem(int id)
         {
-            return items.Find(x => x.id.idname == idName);
-        }
-        public List<Item> FindItems(string idName)
-        {
-            return items.FindAll(x => x.id.idname == idName);
-        }
-        public bool ContainItem(string itemName)
-        {
-            return FindItem(itemName) != null;
+            if (idDictionary.ContainsKey(id))
+            {
+                if (idDictionary[id].Count != 0)
+                {
+                    return idDictionary[id][0];
+                }
+            }
+
+            return null;
         }
 
-        public bool ContainItem(string itemName, float value)
+        public List<Item> FindItems(int id)
         {
-            var item = FindItem(itemName);
+            if (idDictionary.ContainsKey(id))
+            {
+                return idDictionary[id];
+            }
+
+            return new List<Item>();
+        }
+
+        public bool ContainItem(int id)
+        {
+            return idDictionary.ContainsKey(id) && idDictionary[id].Count != 0;
+        }
+
+        public bool ContainItem(int id, float value)
+        {
+            var item = FindItem(id);
             if (item)
             {
                 if (item.amount.Value >= value)
@@ -146,9 +165,9 @@ namespace Core.PlayerScripts
             var cheked = new List<Item>();
             foreach (var item in list)
             {
-                if (ContainItem(item.id.idname, item.amount.Value))
+                if (ContainItem(item.id.id, item.amount.Value))
                 {
-                    var finded = FindItems(item.id.idname);
+                    var finded = FindItems(item.id.id);
                     if (finded.Count == 0) return false;
                     for (int i = 0; i < finded.Count; i++)
                     {
@@ -205,17 +224,19 @@ namespace Core.PlayerScripts
             {
                 return false;
             }
-        
-            var findedItem = items.FindAll(x => x.id.idname == item.id.idname);
-            if (findedItem.Count != 0)
+
+            if (idDictionary.ContainsKey(item.id.id) && idDictionary[item.id.id].Count != 0)
             {
                 if (item.amount.Min != 0)
                 {
                     item.amount.SetMinZero();
                 }
+
+                var findedItem = idDictionary[item.id.id];
+                
                 for (int i = 0; i < findedItem.Count; i++) 
                 {
-                    if (findedItem[i].amount.value == findedItem[i].amount.Max) continue;
+                    if (findedItem[i].amount.value >= findedItem[i].amount.Max) continue;
                 
                     if (canAddByWeight && findedItem[i].amount.value + item.amount.value < findedItem[i].amount.Max)
                     {
@@ -262,12 +283,22 @@ namespace Core.PlayerScripts
         public void AddToInventory(Item item)
         {
             items.Add(item.Clone());
+            if (!idDictionary.ContainsKey(item.id.id))
+            {
+                idDictionary.Add(item.id.id, new List<Item>());
+            }
+
+            idDictionary[item.id.id].Add(items[items.Count - 1]);
+
+            print(items[items.Count - 1].GetInstanceID() + " " + idDictionary[item.id.id][idDictionary[item.id.id].Count - 1].GetInstanceID());
+            
             tons +=  item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
         }
 
-        public Item RemoveItem(string idName, float value = 1, bool callEvent = false)
+        public Item RemoveItem(int id, float value = 1, bool callEvent = false)
         {
-            var item = FindItem(idName);
+            var item = FindItem(id);
+            idDictionary[item.id.id].Remove(item);
             return RemoveItem(item, value, callEvent);
         }
 
@@ -292,6 +323,7 @@ namespace Core.PlayerScripts
                 if (item.amount.Value == 0)
                 {
                     items.Remove(item);
+                    idDictionary[item.id.id].Remove(item);
                     tons -= item.amount.Value * itemMass;
                     Destroy(item);
                     OnChangeInventory.Run();
@@ -314,7 +346,7 @@ namespace Core.PlayerScripts
             {
                 for (int i = 0; i < its.Count; i++)
                 {
-                    RemoveItem(its[i].id.idname, its[i].amount.Value);
+                    RemoveItem(its[i].id.id, its[i].amount.Value);
                 }
                 OnChangeInventory.Run();
                 return true;
@@ -322,11 +354,11 @@ namespace Core.PlayerScripts
             return false;
         }
 
-        public void DropItem(string itemIdName, float currentValue, float val)
+        public void DropItem(int id, float currentValue, float val)
         {
-            if (ContainItem(itemIdName))
+            if (ContainItem(id))
             {
-                var item = items.Find(x => x.id.idname == itemIdName && x.amount.value == currentValue);
+                var item = idDictionary[id].Find(x => x.amount.value == currentValue);
                 var removed = RemoveItem(item, val);
                 if (removed)
                 {

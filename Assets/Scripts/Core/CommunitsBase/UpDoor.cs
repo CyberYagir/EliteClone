@@ -12,6 +12,7 @@ namespace Core.CommunistsBase
         private bool triggered;
         [SerializeField] private Transform mesh;
         [SerializeField] private float up;
+        [SerializeField] private List<AlphaController> controllers;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -21,6 +22,10 @@ namespace Core.CommunistsBase
                 mesh.DOKill();
                 mesh.DOLocalMoveY(up, 2);
                 triggered = true;
+                for (int i = 0; i < controllers.Count; i++)
+                {
+                    controllers[i].overrideActive = true;
+                }
             }
         }
         private void OnTriggerExit(Collider other)
@@ -31,6 +36,11 @@ namespace Core.CommunistsBase
                 mesh.DOLocalMoveY(0, 2);
                 mesh.gameObject.layer = LayerMask.NameToLayer("Main");
                 triggered = false;
+                
+                for (int i = 0; i < controllers.Count; i++)
+                {
+                    controllers[i].overrideActive = false;
+                }
             }
         }
     }

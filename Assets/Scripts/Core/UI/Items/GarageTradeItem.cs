@@ -76,7 +76,7 @@ namespace Core.Garage
             {
                 if (!offer.item.IsHaveKeyPair(KeyPairValue.Mineral))
                 {
-                    if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 1, true))
+                    if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.id, 1, true))
                     {
                         GarageDataCollect.Instance.cargo.AddCredits(offer.cost);
                     }
@@ -85,7 +85,7 @@ namespace Core.Garage
                 {
                     if (allItem[0].amount.value == allItem[0].amount.Max)
                     {
-                        if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.idname, 100, true))
+                        if (GarageDataCollect.Instance.cargo.RemoveItem(offer.item.id.id, 100, true))
                         {
                             GarageDataCollect.Instance.cargo.AddCredits(offer.cost * 100);
                         }

@@ -112,7 +112,7 @@ namespace Core.Game
                 {
                     var oldItem = slot.current;
                     cargo.AddItem(oldItem);
-                    var removed = cargo.RemoveItem(item.id.idname, 1, true);
+                    var removed = cargo.RemoveItem(item.id.id, 1, true);
                     slot.current = removed;
                 }
                 OnChangeShipData.Invoke();
