@@ -22,89 +22,148 @@ class HierarchyIcons
 
 
     private static Dictionary<string, GUIContent> iconsNames = new Dictionary<string, GUIContent>();
-    private static GUIContent folder;
     private static GUIContent tmpText;
 
+    private static Dictionary<Transform, bool> openedFolders = new Dictionary<Transform, bool>(); 
 
     private static void HandleHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
     {
+        var obj = EditorUtility.InstanceIDToObject(instanceID);
+
+        if (Event.current.type == EventType.Layout)
+        {
+            openedFolders = new Dictionary<Transform, bool>();
+            CheckFolders(obj);
+        }
+
         if (Event.current.type == EventType.Repaint)
         {
-            if (CreateSingleton())
+            Repaint(obj, selectionRect);
+        }
+    }
+
+    public static void CheckFolders(Object obj)
+    {
+        if (obj != null)
+        {
+            var go = (obj as GameObject);
+            var parent = go.transform.parent;
+            if (parent != null && parent.GetComponent<Folder>())
             {
-                var obj = EditorUtility.InstanceIDToObject(instanceID);
-                if (obj != null)
+                if (!openedFolders.ContainsKey(parent))
                 {
-                    var go = (obj as GameObject);
-                    selectionRect.position += offset;
-                    Rect offsetRect = new Rect(selectionRect.position, selectionRect.size);
+                    openedFolders.Add(parent, true);
+                }
+            }
+        }
+    }
 
-                    var iconPos = GetIconPos(selectionRect);
-                    bool isfolder = false;
-                    if (go.GetComponent<Folder>())
-                    {
-                        go.transform.localPosition = Vector3.zero;
-                        GUI.Label(iconPos, folder);
-                        isfolder = true;
-                    }
-                    else if (go.TryGetComponent(out Light light))
-                    {
-                        GUI.Label(iconPos, DrawLightIcon(light.type));
-                    }
-                    else if (go.transform.name.ToLower() == "gamemanager")
-                    {
-                        GUI.Label(iconPos, EditorGUIUtility.IconContent("GameManager Icon"));
-                    }
-                    else if (go.GetComponent<TMP_Text>())
-                    {
-                        iconPos.size = Vector2.one * 18;
-                        iconPos.position += new Vector2(3, 2.5f);
-                        GUI.Label(iconPos, tmpText);
-                    }else
-                    {
-                        for (int i = 0; i < list.icons.Count; i++)
-                        {
+    public static void Repaint(Object obj, Rect selectionRect)
+    {
+        if (CreateSingleton())
+        {
+            if (obj != null)
+            {
+                var gameObject = (obj as GameObject);
+                selectionRect.position += offset;
 
-                            var type = list.icons[i];
-                            if (go.GetComponent(type))
-                            {
-                                iconPos.size = Vector2.one * 20;
-                                iconPos.position -= Vector2.down * 2.5f;
-                                iconPos.position += Vector2.right * 2f;
-                                var key = $"d_{list.icons[i]} Icon";
-                                if (!iconsNames.ContainsKey(key))
-                                {
-                                    var icon = EditorGUIUtility.IconContent(key);
-                                    if (icon != null)
-                                    {
-                                        iconsNames.Add(key, icon);
-                                    }
-                                    else
-                                    {
-                                        list.icons.RemoveAt(i);
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    GUI.Label(iconPos, iconsNames[key]);
-                                }
+                var iconPos = GetIconPos(selectionRect);
+                bool isfolder = false;
+                
+                
+                if (gameObject.GetComponent<Folder>())
+                {
+                    RepaintFolders(gameObject,iconPos);
+                    isfolder = true;
+                }
+                else if (gameObject.TryGetComponent(out Light light))
+                {
+                    GUI.Label(iconPos, DrawLightIcon(light.type));
+                }
+                else if (gameObject.transform.name.ToLower() == "gamemanager")
+                {
+                    GUI.Label(iconPos, EditorGUIUtility.IconContent("GameManager Icon"));
+                }
+                else if (gameObject.GetComponent<TMP_Text>())
+                {
+                    iconPos.size = Vector2.one * 18;
+                    iconPos.position += new Vector2(3, 2.5f);
+                    GUI.Label(iconPos, tmpText);
+                }
+                else
+                {
+                    RepaintComponent(gameObject, iconPos);
+                }
 
-                                return;
-                            }
-                        }
-                    }
-
-                    if (list.allEmptyFolders && !isfolder && go.transform.localPosition == Vector3.zero)
+                if (list.allEmptyFolders && !isfolder && gameObject.transform.localPosition == Vector3.zero)
+                {
+                    if (gameObject.transform.GetComponents<Component>().Length == 1)
                     {
-                        if (go.transform.GetComponents<Component>().Length == 1)
-                        {
-                            go.AddComponent<Folder>();
-                        }
+                        gameObject.AddComponent<Folder>();
                     }
                 }
             }
         }
+    }
+
+    public static void RepaintFolders(GameObject go, Rect iconPos)
+    {
+        GUIContent folder = new GUIContent();
+        bool isOpened = false;
+        if (go.transform.childCount == 0)
+        {
+            folder = EditorGUIUtility.IconContent("d_FolderEmpty Icon");
+        }
+        else
+        {
+            if (openedFolders.ContainsKey(go.transform))
+            {
+                folder = EditorGUIUtility.IconContent("Folder On Icon");
+                isOpened = true;
+            }
+            else
+            {
+                folder = EditorGUIUtility.IconContent("Folder Icon");
+            }
+        }
+
+        GUI.Label(iconPos, folder);
+    }
+
+    public static void RepaintComponent(GameObject go,  Rect iconPos)
+    {
+        for (int i = 0; i < list.icons.Count; i++)
+        {
+
+            var type = list.icons[i];
+            if (go.GetComponent(type))
+            {
+                iconPos.size = Vector2.one * 20;
+                iconPos.position -= Vector2.down * 2.5f;
+                iconPos.position += Vector2.right * 2f;
+                var key = $"d_{list.icons[i]} Icon";
+                if (!iconsNames.ContainsKey(key))
+                {
+                    var icon = EditorGUIUtility.IconContent(key);
+                    if (icon != null)
+                    {
+                        iconsNames.Add(key, icon);
+                    }
+                    else
+                    {
+                        list.icons.RemoveAt(i);
+                        return;
+                    }
+                }
+                else
+                {
+                    GUI.Label(iconPos, iconsNames[key]);
+                }
+
+                return;
+            }
+        }
+
     }
 
     public static bool CreateSingleton()
@@ -116,7 +175,6 @@ class HierarchyIcons
             {
                 var path = AssetDatabase.GUIDToAssetPath(find[0]);
                 list = AssetDatabase.LoadAssetAtPath<IconsList>(path);
-                folder = EditorGUIUtility.IconContent("Folder Icon");
 
 
                 var tmptextIcons = AssetDatabase.FindAssets("TMP - Text Component Icon");

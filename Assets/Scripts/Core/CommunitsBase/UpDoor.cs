@@ -14,9 +14,10 @@ namespace Core.CommunistsBase
         [SerializeField] private float up;
         [SerializeField] private List<AlphaController> controllers;
 
+        [SerializeField] private bool isLocked;
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponentInParent<ShooterPlayer>())
+            if (!isLocked && other.GetComponentInParent<ShooterPlayer>())
             {
                 StopAllCoroutines();
                 mesh.DOKill();

@@ -21,7 +21,7 @@ namespace Core.TDS.Bot
                 if (time > reactionTime)
                 {
                     transform.DOKill();
-                    transform.DOLookAt(ShooterPlayer.Instance.transform.position, 0.5f);
+                    transform.DOLookAt(new Vector3(ShooterPlayer.Instance.transform.position.x, transform.position.y, ShooterPlayer.Instance.transform.position.z), 0.5f);
                     time = 0;
                 }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -18,6 +19,14 @@ public class Folder : MonoBehaviour
             if (Selection.activeObject is GameObject)
             {
                 folder.transform.parent = (Selection.activeObject as GameObject)?.transform;
+            }
+        }
+        else
+        {
+            var prefab = PrefabStageUtility.GetCurrentPrefabStage();
+            if (prefab != null)
+            {
+                folder.transform.parent = prefab.prefabContentsRoot.transform;
             }
         }
 
