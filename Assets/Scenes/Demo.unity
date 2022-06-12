@@ -30187,7 +30187,6 @@ MonoBehaviour:
   m_Script: {fileID: 1724783043}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries: []
 --- !u!4 &841159057
 Transform:
   m_ObjectHideFlags: 19
@@ -44674,7 +44673,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871220987}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: f051b1473e261c044b567879c898b65d, type: 3}
   m_Controller: {fileID: 9100000, guid: ddc8cdbabd3508d449777cf8eb2b7de3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -53088,7 +53087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.6066475
+      value: 3.606647
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -53415,6 +53414,34 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.012076163
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3504867
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.011164399
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96513784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.10105218
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.18687066
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.15289469
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: 1f8461f8e61c425499fe64cb22ae58d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 19.879013
       objectReference: {fileID: 0}
@@ -53539,7 +53566,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871148843}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: f051b1473e261c044b567879c898b65d, type: 3}
   m_Controller: {fileID: 9100000, guid: 0dbcdb4510d99394ead1be8a4f942376, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -95714,7 +95741,9 @@ MonoBehaviour:
   rewardItem: {fileID: 5589965642426844417}
   requireHolder: {fileID: 5693689063640168025}
   requireItemList: {fileID: 8886057253426631713}
+  rewardItemList: {fileID: 0}
   questTextHolder: {fileID: 1582615338247420866}
+  rewardText: {fileID: 0}
 --- !u!1 &8281655940875767393
 GameObject:
   m_ObjectHideFlags: 0
