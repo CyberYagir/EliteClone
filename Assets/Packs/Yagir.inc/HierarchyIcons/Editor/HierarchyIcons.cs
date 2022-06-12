@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEngine;
@@ -80,11 +79,11 @@ class HierarchyIcons
                 {
                     GUI.Label(iconPos, DrawLightIcon(light.type));
                 }
-                else if (gameObject.transform.name.ToLower() == "gamemanager")
+                else if (gameObject.transform.name.ToLower().Contains("manager"))
                 {
                     GUI.Label(iconPos, EditorGUIUtility.IconContent("GameManager Icon"));
                 }
-                else if (gameObject.GetComponent<TMP_Text>())
+                else if (gameObject.GetComponent("TMP_Text"))
                 {
                     iconPos.size = Vector2.one * 18;
                     iconPos.position += new Vector2(3, 2.5f);

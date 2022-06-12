@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -28,6 +29,11 @@ public class Folder : MonoBehaviour
             {
                 folder.transform.parent = prefab.prefabContentsRoot.transform;
             }
+        }
+
+        if (folder.GetComponentInParent<Canvas>())
+        {
+            folder.AddComponent<RectTransform>();
         }
 
         folder.transform.gameObject.AddComponent<Folder>();
