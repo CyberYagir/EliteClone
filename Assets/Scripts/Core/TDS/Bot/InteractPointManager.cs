@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.TDS
 {
@@ -17,14 +18,18 @@ namespace Core.TDS
 
         public InteractPoint GetEmptyTarget(TDSPointsWaker setter)
         {
-            for (int i = 0; i < point.Count; i++)
+            int count = 1;
+            do
             {
-                if (point[i].IsEmpty())
+                var id = Random.Range(0, point.Count);
+                if (point[id].IsEmpty())
                 {
-                    point[i].AddToMove(setter);
-                    return point[i];
+                    point[id].AddToMove(setter);
+                    return point[id];
                 }
-            }
+
+                count++;
+            } while (count < 5);
 
             return null;
         }
