@@ -1203,6 +1203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1917013320345523220}
   - component: {fileID: 111274720000032879}
+  - component: {fileID: 62628218}
   m_Layer: 6
   m_Name: Vert
   m_TagString: Untagged
@@ -1243,7 +1244,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: b03585ba169e11e4eb5cf29597d27bc9, type: 3}
+  - {fileID: 2100000, guid: 3a772d29d3ba786418d3e0b2ae1a9ef6, type: 2}
   - {fileID: 2100000, guid: b677ca7814cf0494990c115d6a34faae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1299,6 +1300,28 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000011205673, y: -1.551434, z: 0.13628978}
     m_Extent: {x: 4.4254436, y: 2.8086257, z: 0.9527425}
   m_DirtyAABB: 0
+--- !u!114 &62628218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623032422957006150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f19f7fe14674694192309cc12f2c62a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 5730432091305970805}
+  mats:
+  - {fileID: 2100000, guid: 7a4c895ef349e9144b192dedca92d222, type: 2}
+  - {fileID: 2100000, guid: b677ca7814cf0494990c115d6a34faae, type: 2}
+  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
+  - {fileID: 2100000, guid: 6653e55a574bbec418242e1e1d168b38, type: 2}
+  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
+  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
+  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
+  matId: 0
 --- !u!1 &3797038374773912515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,14 +1571,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4875467763309219175}
   - component: {fileID: 5730432091305970805}
-  - component: {fileID: 910921299}
   m_Layer: 6
   m_Name: Vert.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4875467763309219175
 Transform:
   m_ObjectHideFlags: 0
@@ -1644,28 +1666,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0001553297, y: -0.78054297, z: 0.091432914}
     m_Extent: {x: 3.5805879, y: 2.0377345, z: 0.33497816}
   m_DirtyAABB: 0
---- !u!114 &910921299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5434030849591422015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f19f7fe14674694192309cc12f2c62a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderer: {fileID: 5730432091305970805}
-  mats:
-  - {fileID: 2100000, guid: 7a4c895ef349e9144b192dedca92d222, type: 2}
-  - {fileID: 2100000, guid: b677ca7814cf0494990c115d6a34faae, type: 2}
-  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
-  - {fileID: 2100000, guid: 6653e55a574bbec418242e1e1d168b38, type: 2}
-  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
-  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
-  - {fileID: 2100000, guid: c99bb51e22d75d04391fc87a42406866, type: 2}
-  matId: 0
 --- !u!1 &6178845101249901873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,7 +2218,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   centerOffsetCompatibility: NaN
   orientation: 0
-  enableRotation: 0
+  enableRotation: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
