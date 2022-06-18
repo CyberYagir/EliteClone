@@ -21,6 +21,7 @@ namespace Core.PlayerScripts
 		}
 		public static void Shake(float time = 0.1f)
 		{
+			if (Instance == null) return;
 			Instance.shakeDuration = time;
 		}
 		void OnEnable()

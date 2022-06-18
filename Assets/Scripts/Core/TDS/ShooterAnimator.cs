@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Core.TDS
 {
@@ -13,7 +14,7 @@ namespace Core.TDS
         [SerializeField] private Rigidbody rigidbody;
         
         
-        [SerializeField] private AIPath aiPath;
+        [SerializeField] private NavMeshAgent agent;
         
         private static readonly int Horizontal = Animator.StringToHash("horizontal");
         private static readonly int Vertical = Animator.StringToHash("vertical");
@@ -23,13 +24,13 @@ namespace Core.TDS
         {
             Vector3 dir;
             bool canMove;
-            if (aiPath == null)
+            if (agent == null)
             {
                 canMove = rigidbody.velocity.magnitude > 0.01f;
                 dir = transform.InverseTransformDirection(rigidbody.velocity);
             }else{
-                dir = transform.InverseTransformDirection(aiPath.velocity);
-                canMove = aiPath.velocity.magnitude > 0.01f;
+                dir = transform.InverseTransformDirection(agent.velocity);
+                canMove = agent.velocity.magnitude > 0.01f;
             }
 
             if (canMove)

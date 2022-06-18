@@ -15,7 +15,7 @@ namespace Core.CommunistsBase
         {
             for (int i = 0; i < count; i++)
             {
-                Instantiate(npcs[Random.Range(0, npcs.Length)], spawnpoints[Random.Range(0, spawnpoints.Count)].position, Quaternion.identity, transform);
+                Instantiate(npcs[Random.Range(0, npcs.Length)], spawnpoints[Random.Range(0, spawnpoints.Count)].position + new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)), Quaternion.identity, transform);
             }
         }
     }

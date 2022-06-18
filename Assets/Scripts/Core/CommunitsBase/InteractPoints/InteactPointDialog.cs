@@ -30,9 +30,9 @@ namespace Core.CommunistsBase.Intacts
                 } while (points[pointID].person != null);
 
                 CalculateTalker(move);
-                
-                move.SetTarget(points[pointID].point);
-                move.transform.DORotateQuaternion(points[pointID].point.transform.rotation, 0.5f);
+
+                move.transform.DOMove(new Vector3(points[pointID].point.position.x, move.transform.position.y, points[pointID].point.transform.position.z), 1f);
+                move.transform.DORotateQuaternion(points[pointID].point.transform.rotation, 1f);
 
                 points[pointID].person = move;
             }

@@ -393,7 +393,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 164e729cd57ec96428018cffd52bc0a3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1561,12 +1561,11 @@ GameObject:
   - component: {fileID: 5629658247857966333}
   - component: {fileID: 5629658247857966332}
   - component: {fileID: 6542903246012178189}
-  - component: {fileID: 7013028676008116523}
-  - component: {fileID: 7013028676008116522}
-  - component: {fileID: 7013028676008116521}
   - component: {fileID: 5629658247857966334}
   - component: {fileID: 5629658247857966331}
   - component: {fileID: 4695320667115120590}
+  - component: {fileID: -6872092577908403505}
+  - component: {fileID: -5296207002269032095}
   m_Layer: 6
   m_Name: BotGemokorsWalk
   m_TagString: Untagged
@@ -1601,7 +1600,7 @@ Rigidbody:
   m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1614,7 +1613,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5629658247857966329}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2.03731
   m_Direction: 1
@@ -1628,88 +1627,10 @@ SphereCollider:
   m_GameObject: {fileID: 5629658247857966329}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.569078
   m_Center: {x: 0, y: 1.1260786, z: 0}
---- !u!114 &7013028676008116523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5629658247857966329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  target: {fileID: 0}
---- !u!114 &7013028676008116522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5629658247857966329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 2
-  radius: 1
-  height: 2
-  repathRate: 1
-  canSearch: 1
-  canMove: 1
-  maxSpeed: 2.5
-  gravity: {x: NaN, y: NaN, z: NaN}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  centerOffsetCompatibility: NaN
-  orientation: 0
-  enableRotation: 1
-  targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 360
-  slowdownDistance: 0.05
-  pickNextWaypointDist: 1
-  endReachedDistance: 0.05
-  alwaysDrawGizmos: 1
-  slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 1
---- !u!114 &7013028676008116521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5629658247857966329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 0
-    exactEndPoint: 0
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!114 &5629658247857966334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1724,12 +1645,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWakingToPoint: 0
   isArrived: 0
-  setter: {fileID: 7013028676008116523}
   animator: {fileID: 5857803451865118354}
   interactor: {fileID: 9443284037910030}
   range:
-    min: 5
-    max: 15
+    min: 15
+    max: 35
 --- !u!114 &5629658247857966331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,7 +1665,7 @@ MonoBehaviour:
   animator: {fileID: 5857803451865118354}
   maxVelocity: 2.5
   rigidbody: {fileID: 5629658247857966333}
-  aiPath: {fileID: 7013028676008116522}
+  agent: {fileID: -6872092577908403505}
 --- !u!114 &4695320667115120590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,6 +1678,44 @@ MonoBehaviour:
   m_Script: {fileID: -65064583, guid: dbbd4258d3bece140922f50c249c946b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &-6872092577908403505
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629658247857966329}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.44
+  m_Speed: 2.5
+  m_Acceleration: 1000
+  avoidancePriority: 50
+  m_AngularSpeed: 10000000
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
+--- !u!208 &-5296207002269032095
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629658247857966329}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.176, y: 1, z: 0.176}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5689357016420349406
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System.IO;
 using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 using Random = UnityEngine.Random;
 
@@ -17,7 +18,7 @@ namespace Core.TDS.Bot
         [SerializeField] private float repointTime;
         [SerializeField] private float shootcooldown;
         [SerializeField] private float minDist, maxDist;
-        [SerializeField] private AIDestinationSetter destinator;
+        [SerializeField] private NavMeshAgent agent;
         [SerializeField] private TDSBullets bullets;
         
         
@@ -29,6 +30,7 @@ namespace Core.TDS.Bot
         private void Start()
         {
             time = 99999;
+            agent.updateRotation = false;
             nextTime = repointTime + Random.Range(0, nextTime * 0.5f);
             nextShootTime = shootcooldown * Random.Range(1f, 2f);
         }
@@ -63,10 +65,7 @@ namespace Core.TDS.Bot
                 {
                     Destroy(target.gameObject);
                 }
-
-                target = new GameObject("Target " + transform.GetInstanceID()).transform;
-                target.position = pos;
-                destinator.target = target;
+                agent.SetDestination(pos);
                 time = 0;
             }   
         }

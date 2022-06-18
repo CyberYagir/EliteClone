@@ -5,6 +5,7 @@ using Core.CommunistsBase;
 using DG.DemiLib;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Core.TDS
 {
@@ -12,19 +13,22 @@ namespace Core.TDS
     {
         private InteractPointManager pointManager;
         [SerializeField] private bool isWakingToPoint, isArrived;
-        [SerializeField] private AIDestinationSetter setter;
         [SerializeField] private Animator animator;
         [SerializeField] private NPCInteract interactor;
+        
         [SerializeField] private Range range;
-        private AIPath aiPath;
+        private NavMeshAgent agent;
         private float time;
         private float cooldown;
+
+
+        private Transform currentTarget;
         private void Start()
         {
             pointManager = GetComponentInParent<InteractPointManager>();
-            aiPath = GetComponent<AIPath>();
+            agent = GetComponent<NavMeshAgent>();
         }
-
+        
         private void FixedUpdate()
         {
             if (!isWakingToPoint)
@@ -32,11 +36,14 @@ namespace Core.TDS
                 var target = pointManager.GetEmptyTarget(this);
                 if (target != null)
                 {
+                    agent.enabled = true;
+                    currentTarget = target.transform;
+                    agent.SetDestination(currentTarget.position);
                     interactor.Clear();
-                    setter.target = target.transform;
+                    currentTarget = target.transform;
                     isArrived = false;
                     isWakingToPoint = true;
-                    aiPath.enableRotation = true;
+                    agent.updateRotation = true;
                     cooldown = range.RandomWithin();
                     time = 0;
                 }
@@ -48,25 +55,25 @@ namespace Core.TDS
                 if (time >= cooldown)
                 {
                     isWakingToPoint = false;
-                    if (setter.target != null)
+                    if (currentTarget != null)
                     {
-                        if (setter.target.TryGetComponent(out InteractPoint point))
+                        if (currentTarget.TryGetComponent(out InteractPoint point))
                         {
                             point.RemovePerson(this);
-                        }else if (setter.target.parent.TryGetComponent(out InteractPoint parentPoint))
+                        }else if (currentTarget.transform.parent.TryGetComponent(out InteractPoint parentPoint))
                         {
                             parentPoint.RemovePerson(this);
                         }
                     }
 
-                    setter.target = null;
+                    currentTarget = null;
                 }
             }
         }
 
         public void SetTarget(Transform point)
         {
-            setter.target = point.transform;
+            currentTarget = point;
         }
         
 
@@ -75,16 +82,16 @@ namespace Core.TDS
             if (!isArrived)
             {
                 var botPos = new Vector2(transform.position.x, transform.position.z);
-                var targPos = new Vector2(setter.target.position.x, setter.target.position.z);
+                var targPos = new Vector2(currentTarget.position.x, currentTarget.position.z);
                 if (Vector2.Distance(botPos, targPos) < 0.5f)
                 {
-                    aiPath.enableRotation = false;
+                    agent.enabled = false;
                     isArrived = true;
                     return true;
                 }
                 else
                 {
-                    aiPath.enableRotation = true;
+                    agent.enabled = true;
                 }
             }
 

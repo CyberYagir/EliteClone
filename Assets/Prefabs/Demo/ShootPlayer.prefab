@@ -2237,6 +2237,7 @@ GameObject:
   - component: {fileID: 375828154}
   - component: {fileID: 8247541345845424693}
   - component: {fileID: 4603972098250886201}
+  - component: {fileID: 8011864030931917348}
   m_Layer: 6
   m_Name: ShootPlayer
   m_TagString: Untagged
@@ -2341,7 +2342,7 @@ MonoBehaviour:
   animator: {fileID: 3355623747958969640}
   maxVelocity: 8
   rigidbody: {fileID: 3517549861524150507}
-  aiPath: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!114 &7240257406220282942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2482,6 +2483,22 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!208 &8011864030931917348
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517549861524150511}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.385, y: 1, z: 0.385}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3715350335526328392
 GameObject:
   m_ObjectHideFlags: 0
@@ -4784,13 +4801,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08e953c98e0915a4798056b28446073b, type: 3}
---- !u!4 &543450652761138510 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 08e953c98e0915a4798056b28446073b, type: 3}
-  m_PrefabInstance: {fileID: 947208869}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919132149028257780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 08e953c98e0915a4798056b28446073b, type: 3}
+  m_PrefabInstance: {fileID: 947208869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &543450652761138510 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 08e953c98e0915a4798056b28446073b, type: 3}
   m_PrefabInstance: {fileID: 947208869}
   m_PrefabAsset: {fileID: 0}
