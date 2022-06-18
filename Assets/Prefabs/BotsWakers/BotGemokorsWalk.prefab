@@ -1659,9 +1659,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 2
-  radius: 0.5
+  radius: 1
   height: 2
-  repathRate: 0.5
+  repathRate: 1
   canSearch: 1
   canMove: 1
   maxSpeed: 2.5
@@ -1676,12 +1676,12 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.05
-  pickNextWaypointDist: 2
+  pickNextWaypointDist: 1
   endReachedDistance: 0.05
-  alwaysDrawGizmos: 0
+  alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  constrainInsideGraph: 1
 --- !u!114 &7013028676008116521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1699,8 +1699,8 @@ MonoBehaviour:
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
+    exactStartPoint: 0
+    exactEndPoint: 0
     useRaycasting: 0
     mask:
       serializedVersion: 2
@@ -1727,6 +1727,9 @@ MonoBehaviour:
   setter: {fileID: 7013028676008116523}
   animator: {fileID: 5857803451865118354}
   interactor: {fileID: 9443284037910030}
+  range:
+    min: 5
+    max: 15
 --- !u!114 &5629658247857966331
 MonoBehaviour:
   m_ObjectHideFlags: 0

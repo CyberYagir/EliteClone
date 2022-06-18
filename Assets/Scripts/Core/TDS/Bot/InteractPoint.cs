@@ -43,5 +43,11 @@ namespace Core.TDS
             moving.Remove(move);
             persons.Add(move);
         }
+
+        public virtual void RemovePerson(TDSPointsWaker move)
+        {
+            persons.Remove(move);
+            move.RemoveAnim();
+        }
     }
 }

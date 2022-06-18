@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.CommunistsBase;
+using DG.DemiLib;
 using Pathfinding;
 using UnityEngine;
 
@@ -14,7 +15,10 @@ namespace Core.TDS
         [SerializeField] private AIDestinationSetter setter;
         [SerializeField] private Animator animator;
         [SerializeField] private NPCInteract interactor;
+        [SerializeField] private Range range;
         private AIPath aiPath;
+        private float time;
+        private float cooldown;
         private void Start()
         {
             pointManager = GetComponentInParent<InteractPointManager>();
@@ -33,6 +37,29 @@ namespace Core.TDS
                     isArrived = false;
                     isWakingToPoint = true;
                     aiPath.enableRotation = true;
+                    cooldown = range.RandomWithin();
+                    time = 0;
+                }
+            }
+
+            if (isArrived && isWakingToPoint)
+            {
+                time += Time.deltaTime;
+                if (time >= cooldown)
+                {
+                    isWakingToPoint = false;
+                    if (setter.target != null)
+                    {
+                        if (setter.target.TryGetComponent(out InteractPoint point))
+                        {
+                            point.RemovePerson(this);
+                        }else if (setter.target.parent.TryGetComponent(out InteractPoint parentPoint))
+                        {
+                            parentPoint.RemovePerson(this);
+                        }
+                    }
+
+                    setter.target = null;
                 }
             }
         }
@@ -68,7 +95,11 @@ namespace Core.TDS
         {
             animator.Play(animHash, 1);
             StartCoroutine(ChangeLayer(1, 2, 0.5f, true));
+        }
 
+        public void RemoveAnim()
+        {           
+            StartCoroutine(ChangeLayer(1, 2, 0, false));
         }
 
         public void SetAnimFloat(string nm, float val) => animator.SetFloat(nm, val);
