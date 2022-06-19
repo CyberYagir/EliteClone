@@ -49,5 +49,11 @@ namespace Core.TDS
             persons.Remove(move);
             move.RemoveAnim();
         }
+
+        public Transform GetLastPerson()
+        {
+            if (persons.Count == 0) return null;
+            return persons[0].transform;
+        }
     }
 }

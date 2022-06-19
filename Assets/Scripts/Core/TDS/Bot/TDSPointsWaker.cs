@@ -6,6 +6,7 @@ using DG.DemiLib;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Core.TDS
 {
@@ -27,6 +28,7 @@ namespace Core.TDS
         {
             pointManager = GetComponentInParent<InteractPointManager>();
             agent = GetComponent<NavMeshAgent>();
+            animator.SetBool("Drunk", Random.Range(0, 1f) > 0.7f);
         }
         
         private void FixedUpdate()

@@ -15,6 +15,7 @@ namespace Core.CommunistsBase.Intacts
         private TDSPointsWaker lastWalker;
         
         [SerializeField] private Event<TDSPointsWaker> OnArriveEvent = new Event<TDSPointsWaker>();
+        [SerializeField] private Event<TDSPointsWaker> OnMoveToPointEvent = new Event<TDSPointsWaker>();
         
         public override void OnArrive(TDSPointsWaker move)
         {
@@ -24,6 +25,7 @@ namespace Core.CommunistsBase.Intacts
             move.transform.DORotate(new Vector3(0, YRot, 0), 1f);
             lastWalker = move;
             move.GetInteract().ActionEvent.AddListener(Punch);
+            OnMoveToPointEvent.Run(move);
         }
 
         public void Punch()
