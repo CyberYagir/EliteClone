@@ -47,7 +47,7 @@ namespace Core.PlayerScripts
             }
 
             collisionCooldown += Time.deltaTime;
-            headView = InputM.GetPressButton(KAction.HeadView);
+            headView = InputM.GetAxisIsActive(KAction.HeadView);
             RotationControl();
             ForwardBackward();
         }
@@ -173,7 +173,7 @@ namespace Core.PlayerScripts
 
         public bool IsStoping()
         {
-            if (InputM.GetPressButton(KAction.Stop))
+            if (InputM.GetAxisIsActive(KAction.Stop))
             {
                 StopPlayer();
                 return true;

@@ -8,7 +8,7 @@ namespace Core.PlayerScripts
         [SerializeField] private FreeCam freeCam;
         private void Update()
         {
-            freeCam.enabled = InputM.GetPressButton(KAction.Click);
+            freeCam.enabled = InputM.GetAxisIsActive(KAction.Click);
             Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
             Cursor.visible = !freeCam.enabled;
         }

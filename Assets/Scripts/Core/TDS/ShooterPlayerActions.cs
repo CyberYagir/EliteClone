@@ -11,7 +11,7 @@ namespace Core.TDS
         public Event OnShoot = new Event();
         public void Update()
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (InputM.GetAxisIsActive(KAction.Shoot))
             {
                 OnShoot.Run();
             }

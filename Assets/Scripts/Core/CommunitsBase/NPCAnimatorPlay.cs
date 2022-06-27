@@ -12,6 +12,11 @@ namespace Core.CommunistsBase
 
         private void Start()
         {
+            Play();
+        }
+
+        public void Play()
+        {
             GetComponent<TDSPointsWaker>().SetAnim(Animator.StringToHash(animName));
         }
     }

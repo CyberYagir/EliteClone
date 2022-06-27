@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Demo;
@@ -18,6 +19,11 @@ namespace Core.CommunistsBase
         public CameraModes mode;
         private Quaternion startRotation;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         public void Start()
         {
             startRotation = transform.rotation;
@@ -36,6 +42,11 @@ namespace Core.CommunistsBase
         {
             if (Instance == null) return;
             Instance.mode = mode;
+        }
+
+        public Camera GetCamera()
+        {
+            return GetComponent<Camera>();
         }
     }
 }

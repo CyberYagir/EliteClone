@@ -16,6 +16,7 @@ namespace Core.Demo
 
         private void FixedUpdate()
         {
+            UpdateCamera(Time.fixedDeltaTime);
         }
 
 

@@ -24,7 +24,7 @@ namespace Core.TDS
 
 
         private Transform currentTarget;
-        private void Start()
+        private void Awake()
         {
             pointManager = GetComponentInParent<InteractPointManager>();
             agent = GetComponent<NavMeshAgent>();

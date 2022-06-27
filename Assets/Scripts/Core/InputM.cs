@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate}
+    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate, Shoot, Interact}
 
     public class InputM : MonoBehaviour
     {
@@ -109,7 +109,7 @@ namespace Core
         {
             return keys[action].value;
         }
-        public static bool GetAxisChange(KAction action)
+        public static bool GetAxisIsActive(KAction action)
         {
             return keys[action].rawvalue != 0;
         }
@@ -117,16 +117,7 @@ namespace Core
         {
             return keys[action].rawvalue;
         }
-    
-        /// <summary>
-        /// Hold button
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static bool GetPressButton(KAction action)
-        {
-            return keys[action].rawvalue != 0;
-        }
+        
         /// <summary>
         /// One frame down
         /// </summary>

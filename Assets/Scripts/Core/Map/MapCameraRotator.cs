@@ -15,7 +15,7 @@ namespace Core.UI
         {
             if (MapGenerator.mode == MapSelect.MapMode.Active && MapSelect.selected)
             {
-                if (InputM.GetPressButton(KAction.MapRotate))
+                if (InputM.GetAxisIsActive(KAction.MapRotate))
                 {
                     transform.RotateAround(MapSelect.selected.transform.position,
                         transform.up,
