@@ -194,19 +194,41 @@ public class ExtendedDialogGraphView : GraphView
         var input = CreatePort(node, Direction.Input, Port.Capacity.Multi);
         input.portName = "Prev";
         node.inputContainer.Add(input);
+
+        node.inputUELabel = new Label(node.text);
+
+        node.UpdateText(node.text);
         
+        
+        node.inputContainer.Add(node.inputUELabel);
         node.NodeType = NodeType.Dialog;
+
+
+        void ChangeColor()
+        {
+            var color = Color.white;
+            if (node.character == Characters.Main)
+            {
+                color =  (Color) new Color32(24, 52, 71, 255);;
+            }
+            else
+            {
+                color = (Color) new Color32(0, 165, 95, 255);
+            }
+            node.titleContainer.style.backgroundColor = new StyleColor(color);
+        }
+
         
-        
-        var color = (Color) new Color32(0, 165, 95, 255);
-        node.titleContainer.style.backgroundColor = new StyleColor(color);
         
         node.characterUIEl = new EnumField(node.character);
         node.titleContainer.Add(node.characterUIEl);
         node.characterUIEl.RegisterValueChangedCallback(delegate(ChangeEvent<Enum> evt)
         {
             node.character = (Characters) evt.newValue;
+            ChangeColor();
         });
+
+        ChangeColor();
         
         
         node.HeaderAddUIEl = new Button(() => AddButton(node));
@@ -224,6 +246,7 @@ public class ExtendedDialogGraphView : GraphView
         var autoPort = CreatePort(node, Direction.Output, Port.Capacity.Single);
         autoPort.portType = typeof(string);
         autoPort.portName = "Auto";
+        
         autoPort.portColor = Color.green;
         node.outputContainer.Add(autoPort);
         
@@ -255,7 +278,7 @@ public class ExtendedDialogGraphView : GraphView
         EditTextWindow.GetInstance().ChangeCallback.AddListener(delegate(string str)
         {
             node.text = str;
-            node.title = str;
+            //node.title = str;
         });
         EditTextWindow.GetInstance().ShowModal();
     }
@@ -296,14 +319,23 @@ public class ExtendedDialogGraphView : GraphView
         
         node.outputContainer.Add(port);
 
-        
-            
-        var autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1) as Port;
+
+
+        Port autoPort = null;
         for (int i = 0; i < node.outputContainer.childCount; i++)
         {
-            autoPort.SendToBack();
+            if (node.outputContainer[i] is Port)
+            {
+                var prt = node.outputContainer[i] as Port;
+                if (prt.portName == "Auto")
+                {
+                    autoPort = prt;
+                    break;
+                }
+            }
         }
-        autoPort = node.outputContainer.ElementAt(node.outputContainer.childCount - 1) as Port;
+        port.PlaceBehind(autoPort);
+        
         if (node.outputContainer.childCount > 1)
         {
             if (autoPort.connected)

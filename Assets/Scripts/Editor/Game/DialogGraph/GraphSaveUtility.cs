@@ -240,7 +240,7 @@ public class GraphSaveUtility
             
             tmpNode.GUID = node.nodeGUID;
             tmpNode.text = node.text;
-            tmpNode.title = node.text;
+            //tmpNode.title = node.text;
             
             if (type == NodeType.Action)
             {
@@ -249,8 +249,8 @@ public class GraphSaveUtility
             }
 
             tmpNode.character = (Characters)node.character;
-            tmpNode.characterUIEl.SetValueWithoutNotify(tmpNode.character);
-            
+            tmpNode.characterUIEl.value = (tmpNode.character);
+            tmpNode.UpdateText(tmpNode.text);
             var ports = file.nodesLinks.Where(x => x.baseNodeGUID == node.nodeGUID).ToList();
 
             ports.ForEach(x=>
