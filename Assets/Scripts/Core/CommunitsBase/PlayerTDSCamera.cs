@@ -16,7 +16,7 @@ namespace Core.CommunistsBase
             OutsideControl
         }
 
-        public CameraModes mode;
+        private CameraModes mode;
         private Quaternion startRotation;
 
         private void Awake()

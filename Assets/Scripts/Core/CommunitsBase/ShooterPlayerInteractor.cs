@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,11 @@ namespace Core.CommunistsBase.Intacts
         [SerializeField]
         private List<ShooterInteractor> interactors = new List<ShooterInteractor>();
 
+        private bool interacted;
+
         public Event OnAddInter = new Event(); 
         public Event OnRemInter = new Event(); 
+        public Event OnInteract = new Event(); 
 
         public void AddInteractor(ShooterInteractor interactor)
         {
@@ -32,7 +36,20 @@ namespace Core.CommunistsBase.Intacts
 
         public bool IsHaveInteractors()
         {
-            return interactors.Count != 0;
+            return interactors.Count != 0 && !interacted;
+        }
+
+        private void Update()
+        {
+            if (interacted == false && InputM.GetAxisDown(KAction.Interact))
+            {
+                if (interactors.Count != 0)
+                {
+                    interactors[0].TriggerAction();
+                    interacted = true;
+                    OnInteract.Run();
+                }
+            }
         }
     }
 }

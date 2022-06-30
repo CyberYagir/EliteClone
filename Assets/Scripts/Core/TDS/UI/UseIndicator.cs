@@ -17,6 +17,7 @@ namespace Core.TDS.UI
             text = GetComponent<TMP_Text>();
             interactor.OnAddInter.AddListener(UpdateText);
             interactor.OnRemInter.AddListener(UpdateText);
+            interactor.OnInteract.AddListener(UpdateText);
             UpdateText();
         }
 

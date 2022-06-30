@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.TDS;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.CommunistsBase.Intacts
 {
@@ -12,6 +13,7 @@ namespace Core.CommunistsBase.Intacts
         private bool triggered;
         private Transform target;
 
+        [SerializeField] private Event Action;
         private void FixedUpdate()
         {
             if (triggered)
@@ -20,6 +22,11 @@ namespace Core.CommunistsBase.Intacts
             }
         }
 
+
+        public void TriggerAction()
+        {
+            Action.Invoke();
+        }
         private void Awake()
         {
             walker = GetComponent<TDSPointsWaker>();

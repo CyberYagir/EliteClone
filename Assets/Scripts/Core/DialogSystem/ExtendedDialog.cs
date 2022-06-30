@@ -8,6 +8,17 @@ using Object = UnityEngine.Object;
 
 namespace Core.Dialogs
 {
+    public class SaveTrouple<T,K>
+    {
+        public T name;
+        public K data;
+
+        public SaveTrouple(T key, K data)
+        {
+            name = key;
+            this.data = data;
+        }
+    }
     public enum NodeType
     {
         Dialog, End, Action, Entry
@@ -50,16 +61,25 @@ namespace Core.Dialogs
             public string GUID;
             public string text;
             public NodeType type;
-        }
-
-        [Serializable]
-        public class NodeAutoReplicaData : NodeReplicaData
-        {
+            public enum ClassName
+            {
+                NodeReplicaData,
+                NodeAutoReplicaData,
+                NodeMultiReplicaData,
+                NodeTriggerData,
+                NodeEndData
+            }
+            public ClassName classname;
+            
+            
+            public Actions action;
+            
             public string nextGUID;
-        }
-        [Serializable]
-        public class NodeMultiReplicaData : NodeReplicaData
-        {
+            
+            
+            
+            public string triggerGUID;
+            
             public class TextReplica
             {
                 public string replica;
@@ -67,16 +87,7 @@ namespace Core.Dialogs
             }
             public List<TextReplica> nexts = new List<TextReplica>();
         }
-        [Serializable]
-        public class NodeTriggerData : NodeReplicaData
-        {
-            public Actions action;
-        }
-        [Serializable]
-        public class NodeEndData: NodeReplicaData
-        {
-            public string triggerGUID;
-        }
+        
 
         public List<NodeData> nodeData = new List<NodeData>();
         public List<NodeLink> nodesLinks = new List<NodeLink>();
@@ -86,9 +97,8 @@ namespace Core.Dialogs
 
         public List<NodeReplicaData> GetConvertedReplicas()
         {
-            var objects = JsonConvert.DeserializeObject<List<object>>(replicasJson);
-            List<NodeReplicaData> replicaDatas = objects.Cast<NodeReplicaData>().ToList();
-            return replicaDatas;
+            var objects = JsonConvert.DeserializeObject<List<NodeReplicaData>>(replicasJson);
+           return objects;
         }
     }
 }

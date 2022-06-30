@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Core.Dialogs.ExtendedDialog;
+using static Core.Dialogs.ExtendedDialog.NodeReplicaData;
 
 public class GraphSaveUtility
 {
@@ -35,7 +37,7 @@ public class GraphSaveUtility
             var input = connectedPorts[i].input.node as ExtendedNode;
             var output = connectedPorts[i].output.node as ExtendedNode;
             
-            dialogContainer.nodesLinks.Add(new ExtendedDialog.NodeLink()
+            dialogContainer.nodesLinks.Add(new NodeLink()
             {
                 baseNodeGUID = output.GUID,
                 portName = connectedPorts[i].output.portName,
@@ -45,7 +47,7 @@ public class GraphSaveUtility
 
         foreach (var dialogue in nodes.Where(node=>node.NodeType != NodeType.Entry))
         {
-            dialogContainer.nodeData.Add(new ExtendedDialog.NodeData()
+            dialogContainer.nodeData.Add(new NodeData()
             {
                 nodeGUID = dialogue.GUID,
                 text = dialogue.text,
@@ -87,7 +89,7 @@ public class GraphSaveUtility
 
     public string ConvertToChain()
     {
-        var chain = new List<ExtendedDialog.NodeReplicaData>();
+        var chain = new List<NodeReplicaData>();
         var list = nodes.Where(node => node.NodeType != NodeType.Entry);
         foreach (var dialogue in list)
         {
@@ -95,38 +97,42 @@ public class GraphSaveUtility
             {
                 if (dialogue.outputContainer.childCount <= 2)
                 {
-                    chain.Add(new ExtendedDialog.NodeAutoReplicaData()
+                    chain.Add(new NodeReplicaData()
                     {
                         GUID = dialogue.GUID,
                         text = dialogue.text,
-                        type = dialogue.NodeType
+                        type = dialogue.NodeType,
+                        classname = ClassName.NodeAutoReplicaData
                     });
                 }
                 else
                 {
-                    chain.Add(new ExtendedDialog.NodeMultiReplicaData()
+                    chain.Add(new NodeReplicaData()
                     {
                         GUID = dialogue.GUID,
                         text = dialogue.text,
-                        type = dialogue.NodeType
+                        type = dialogue.NodeType,
+                        classname = ClassName.NodeMultiReplicaData
                     });
                 }
             }else if (dialogue.NodeType == NodeType.Action)
             {
-                chain.Add(new ExtendedDialog.NodeTriggerData()
+                chain.Add(new NodeReplicaData()
                 {
                     GUID = dialogue.GUID,
                     text = dialogue.text,
                     type = dialogue.NodeType,
-                    action = dialogue.actions
+                    action = dialogue.actions,
+                    classname = ClassName.NodeTriggerData
                 });
             }else if (dialogue.NodeType == NodeType.End)
             {
-                chain.Add(new ExtendedDialog.NodeEndData()
+                chain.Add(new NodeReplicaData()
                 {
                     GUID = dialogue.GUID,
                     text = dialogue.text,
-                    type = dialogue.NodeType
+                    type = dialogue.NodeType,
+                    classname = ClassName.NodeEndData
                 });
             }
         }
@@ -136,9 +142,9 @@ public class GraphSaveUtility
             var chainPart = chain.Find(x => x.GUID == dialogue.GUID);
             if (chainPart.type == NodeType.Dialog)
             {
-                if (chainPart is ExtendedDialog.NodeAutoReplicaData)
+                if (chainPart.classname == ClassName.NodeReplicaData)
                 {
-                    var autoReplica = chainPart as ExtendedDialog.NodeAutoReplicaData;
+                    var autoReplica = chainPart;
                     var lastPort = (dialogue.outputContainer.ElementAt(dialogue.outputContainer.childCount - 1) as Port);
                     if (lastPort.connected)
                     {
@@ -148,8 +154,8 @@ public class GraphSaveUtility
                 }
                 else
                 {
-                    var multiReplica = chainPart as ExtendedDialog.NodeMultiReplicaData;
-                    multiReplica.nexts = new List<ExtendedDialog.NodeMultiReplicaData.TextReplica>();
+                    var multiReplica = chainPart;
+                    multiReplica.nexts = new List<NodeReplicaData.TextReplica>();
                     for (int i = 0; i < dialogue.outputContainer.childCount; i++)
                     {
                         var port = dialogue.outputContainer.ElementAt(i) as Port;
@@ -158,7 +164,7 @@ public class GraphSaveUtility
                             if (port.connected)
                             {
                                 var connectedGUID = (port.connections.ToList()[0].input.node as ExtendedNode).GUID;
-                                multiReplica.nexts.Add(new ExtendedDialog.NodeMultiReplicaData.TextReplica()
+                                multiReplica.nexts.Add(new NodeReplicaData.TextReplica()
                                 {
                                     nextGUID = connectedGUID,
                                     replica = port.portName
@@ -169,11 +175,11 @@ public class GraphSaveUtility
                 }
             }else if (chainPart.type == NodeType.End)
             {
-                var endNode = chainPart as ExtendedDialog.NodeEndData;
+                var endNode = chainPart;
                 var lastPort = dialogue.outputContainer.ElementAt(0) as Port;
                 if (lastPort.connected)
                 {
-                    var connectedGUID = (lastPort.connections.ToList()[0].input.node as ExtendedNode).GUID;
+                    var connectedGUID = (lastPort.connections.ToList()[0].input.node as ExtendedNode)?.GUID;
                     var triggerNode = chain.Find(x => x.GUID == connectedGUID);
                     if (triggerNode.type == NodeType.Action)
                     {
@@ -183,10 +189,12 @@ public class GraphSaveUtility
             }
         }
 
-        var castToObject = chain.Cast<object>().ToList();
 
-        return JsonConvert.SerializeObject(castToObject, Formatting.Indented);
+        return JsonConvert.SerializeObject(chain, Formatting.Indented);
     }
+    
+    
+
     
     
     

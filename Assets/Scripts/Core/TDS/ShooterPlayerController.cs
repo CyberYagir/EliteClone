@@ -26,7 +26,17 @@ namespace Core.TDS
         }
 
         public Camera GetCamera() => camera;
-        
+
+        private void OnEnable()
+        {
+            IKPoint.gameObject.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            IKPoint.gameObject.SetActive(false);
+        }
+
         void FixedUpdate()
         {
             var oldY = rigidbody.velocity.y;
