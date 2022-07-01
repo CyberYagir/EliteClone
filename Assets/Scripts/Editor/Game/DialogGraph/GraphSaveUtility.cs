@@ -73,11 +73,13 @@ public class GraphSaveUtility
         if (file != null)
         {
             path = AssetDatabase.GetAssetPath(file);
-            AssetDatabase.DeleteAsset(path);
-            AssetDatabase.Refresh();
+            EditorUtility.CopySerialized(dialogContainer, AssetDatabase.LoadAssetAtPath<ExtendedDialog>(path));
         }
-
-        AssetDatabase.CreateAsset(dialogContainer, path);
+        else
+        {
+            AssetDatabase.CreateAsset(dialogContainer, path);
+        }
+        AssetDatabase.Refresh();
         AssetDatabase.SaveAssets();
         
         ExtendedDialogsGraph.GetGraph().fileName = path;
@@ -93,50 +95,38 @@ public class GraphSaveUtility
         var list = nodes.Where(node => node.NodeType != NodeType.Entry);
         foreach (var dialogue in list)
         {
+            var node = new NodeReplicaData()
+            {
+                GUID = dialogue.GUID,
+                text = dialogue.text,
+                type = dialogue.NodeType,
+                character = dialogue.character
+            };
             if (dialogue.NodeType == NodeType.Dialog)
             {
                 if (dialogue.outputContainer.childCount <= 2)
                 {
-                    chain.Add(new NodeReplicaData()
-                    {
-                        GUID = dialogue.GUID,
-                        text = dialogue.text,
-                        type = dialogue.NodeType,
-                        classname = ClassName.NodeAutoReplicaData
-                    });
+
+                    node.classname = ClassName.NodeAutoReplicaData;
                 }
                 else
                 {
-                    chain.Add(new NodeReplicaData()
-                    {
-                        GUID = dialogue.GUID,
-                        text = dialogue.text,
-                        type = dialogue.NodeType,
-                        classname = ClassName.NodeMultiReplicaData
-                    });
+                    node.classname = ClassName.NodeMultiReplicaData;
                 }
-            }else if (dialogue.NodeType == NodeType.Action)
-            {
-                chain.Add(new NodeReplicaData()
-                {
-                    GUID = dialogue.GUID,
-                    text = dialogue.text,
-                    type = dialogue.NodeType,
-                    action = dialogue.actions,
-                    classname = ClassName.NodeTriggerData
-                });
-            }else if (dialogue.NodeType == NodeType.End)
-            {
-                chain.Add(new NodeReplicaData()
-                {
-                    GUID = dialogue.GUID,
-                    text = dialogue.text,
-                    type = dialogue.NodeType,
-                    classname = ClassName.NodeEndData
-                });
             }
+            else if (dialogue.NodeType == NodeType.Action)
+            {
+                node.action = dialogue.actions;
+                node.classname = ClassName.NodeTriggerData;
+            }
+            else if (dialogue.NodeType == NodeType.End)
+            {
+                node.classname = ClassName.NodeEndData;
+            }
+
+            chain.Add(node);
         }
-        
+
         foreach (var dialogue in list)
         {
             var chainPart = chain.Find(x => x.GUID == dialogue.GUID);
@@ -156,20 +146,32 @@ public class GraphSaveUtility
                 {
                     var multiReplica = chainPart;
                     multiReplica.nexts = new List<NodeReplicaData.TextReplica>();
-                    for (int i = 0; i < dialogue.outputContainer.childCount; i++)
+                    if (multiReplica.classname == ClassName.NodeMultiReplicaData)
                     {
-                        var port = dialogue.outputContainer.ElementAt(i) as Port;
-                        if (port.portName != "Auto")
+                        for (int i = 0; i < dialogue.outputContainer.childCount; i++)
                         {
-                            if (port.connected)
+                            var port = dialogue.outputContainer.ElementAt(i) as Port;
+                            if (port.portName != "Auto")
                             {
-                                var connectedGUID = (port.connections.ToList()[0].input.node as ExtendedNode).GUID;
-                                multiReplica.nexts.Add(new NodeReplicaData.TextReplica()
+                                if (port.connected)
                                 {
-                                    nextGUID = connectedGUID,
-                                    replica = port.portName
-                                });
+                                    var connectedGUID = (port.connections.ToList()[0].input.node as ExtendedNode).GUID;
+                                    multiReplica.nexts.Add(new NodeReplicaData.TextReplica()
+                                    {
+                                        nextGUID = connectedGUID,
+                                        replica = port.portName
+                                    });
+                                }
                             }
+                        }
+                    }
+                    else if (multiReplica.classname == ClassName.NodeAutoReplicaData)
+                    {
+                        var port = dialogue.outputContainer.ElementAt(0) as Port;
+                        if (port.connected)
+                        {
+                            var connectedGUID = (port.connections.ToList()[0].input.node as ExtendedNode).GUID;
+                            multiReplica.nextGUID = connectedGUID;
                         }
                     }
                 }

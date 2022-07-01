@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
-  m_Name: GarbageMan
+  m_Name: 
   m_EditorClassIdentifier: 
   nodeData:
   - nodeGUID: e593b64152a0928469c09cf71974bca2
@@ -211,12 +211,12 @@ MonoBehaviour:
     2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
     []\r\n  },\r\n  {\r\n    \"GUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\",\r\n   
     \"text\": \"Half of the crowd are party agents.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
     \"text\": \"I saw a guy speak out in a bar against modern party politics and
     ended up being found on Industrial O1.\",\r\n    \"type\": 0,\r\n    \"classname\":
-    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
-    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
     \"text\": \"Local lifeforms unearthed his costume, separated the bones from the
     meat, and began to worship the skeleton.\",\r\n    \"type\": 0,\r\n    \"classname\":
     2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
@@ -229,32 +229,32 @@ MonoBehaviour:
     \"e593b64152a0928469c09cf71974bca2\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
     \"GUID\": \"7e00674240630fd46b142e82f7afaac3\",\r\n    \"text\": \"You can fly
     over there and check it out.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n   
-    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
-    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"ccf9a4830be7d69499c077529cade1f3\",\r\n   
+    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"ccf9a4830be7d69499c077529cade1f3\",\r\n   
     \"text\": \"They have enslaved all the Zinc deposits and are blackmailing other
     groups with it.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    []\r\n  },\r\n  {\r\n    \"GUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   
+    0,\r\n    \"nextGUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   
     \"text\": \"Because of this, mining caravans are constantly attacked by pirates,
     organized crime groups and the remnants of liberals.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
     \"text\": \"Moreover, the followers of the \\\"Followers of Rationality\\\" create
     Shaheed fleets that leave no chance for survival.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
     \"text\": \"As a result, a sad result, people do not want to mine zinc for fear
     of death, and they are afraid not to mine for fear of death, a vicious circle
     turns out.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    []\r\n  },\r\n  {\r\n    \"GUID\": \"adeb1a5224f213641b7a37a6226d1d07\",\r\n   
+    0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"adeb1a5224f213641b7a37a6226d1d07\",\r\n   
     \"text\": \"When you gave a request for communication, I connected you via an
     encrypted channel, they will not listen to us. But everyone understands that
     you are a goof, you do not have the distinguishing features of the group.\",\r\n   
     \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
-    null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n   
-    \"GUID\": \"4d824f90eb691d448afa6680b06138ab\",\r\n    \"text\": \"Yes, and I
-    have nothing to lose, the family was killed by the Fortaks a year ago, but nothing,
-    and my hour will come.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n   
-    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
-    \"nexts\": []\r\n  }\r\n]"
+    \"4d824f90eb691d448afa6680b06138ab\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"4d824f90eb691d448afa6680b06138ab\",\r\n   
+    \"text\": \"Yes, and I have nothing to lose, the family was killed by the Fortaks
+    a year ago, but nothing, and my hour will come.\",\r\n    \"type\": 0,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"e593b64152a0928469c09cf71974bca2\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  }\r\n]"

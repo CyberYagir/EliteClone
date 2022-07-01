@@ -61,6 +61,8 @@ namespace Core.Dialogs
             public string GUID;
             public string text;
             public NodeType type;
+            public Characters character;
+            
             public enum ClassName
             {
                 NodeReplicaData,

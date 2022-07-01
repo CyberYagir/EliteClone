@@ -11,7 +11,7 @@ namespace Core.CommunistsBase.Intacts
         [SerializeField]
         private List<ShooterInteractor> interactors = new List<ShooterInteractor>();
 
-        private bool interacted;
+        public static bool interacted;
 
         public Event OnAddInter = new Event(); 
         public Event OnRemInter = new Event(); 
