@@ -1,0 +1,269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
+  m_Name: DrunkedMan
+  m_EditorClassIdentifier: 
+  nodeData:
+  - nodeGUID: 30ada711d38c9a848be663ac9f231c3d
+    text: Why are you drinking here? It's not a bar...
+    pos: {x: 394.66666, y: 200}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+    text: Why can't I just have a drink without being hit on by idiots!
+    pos: {x: 652, y: 200}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 2c4064c84e27bb741931d0b785c1038c
+    text: 
+    pos: {x: 1146, y: 332}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+  - nodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
+    text: 
+    pos: {x: 1396, y: 332}
+    character: 0
+    nodeType: 2
+    nodeAction: 0
+  - nodeGUID: d4c9fa09300746c46b5312b64a9e04f1
+    text: I'm a refugee from Lapis 19, washing my grief down.
+    pos: {x: 1073.3334, y: -322}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
+    text: My system was under the Pirates, and I myself, in my youth, liked to rob
+      spaceships.
+    pos: {x: 1583.3334, y: -424}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 427ee72dba5b9554a836024f25f4c6bd
+    text: As a result, a couple of days ago, the Annihilators broke into the system,
+      sterilized it.
+    pos: {x: 1826, y: -556}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+    text: I was lucky that I am one of the best pilots in my sector, I was able to
+      jump into another system.
+    pos: {x: 2079.3333, y: -750.6666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
+    text: "The asshole who is standing in front of us. I don\u2019t know what\u2019s
+      under the suit, but they don\u2019t have such a name for nothing. The communists
+      have already crossed all borders."
+    pos: {x: 2628.6667, y: -750.6666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 0db77019940329d43b040b9cdc730e74
+    text: My heart is anarchy! And I will believe in it until the end of my days!
+      And the Destroyer will execute me, but I will die an anarchist!
+    pos: {x: 1728.6666, y: -14}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+    text: You think it's easy to be a pirate all your life, hate communists, and
+      live out your last days at their base.
+    pos: {x: 1170.6666, y: 127.333336}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
+    text: This is a huge animal with a minigun in front of us. It is not even clear
+      whether people are in suits. They have some kind of secret communication channel,
+      and they only listen to orders.
+    pos: {x: 2256.6667, y: -198.66666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
+    text: It was the Destroyers who kicked me out of the house...
+    pos: {x: 2567.3333, y: -199.33333}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: e35dda77938e2e7478ddc604b5deba1a
+    text: Destroyers?
+    pos: {x: 1982, y: -120.66667}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 911c75d07faf5744bb74c0220d2998e5
+    text: Yes, and they sewed a chip into me, took away the ship, money. As a result,
+      all that remains is to drink, since the refugees get free booze ...
+    pos: {x: 1981.3334, y: 284.66666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 348d61be71c07484ab858ba702980d81
+    text: Love of life. Though this life is in hell, but life.
+    pos: {x: 1728.6666, y: 182.66667}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  nodesLinks:
+  - baseNodeGUID: c087f9b408a190c43a8547963221c545
+    portName: Next Replica
+    targetNodeGUID: 30ada711d38c9a848be663ac9f231c3d
+  - baseNodeGUID: 30ada711d38c9a848be663ac9f231c3d
+    portName: Auto
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+    portName: Why are you here?
+    targetNodeGUID: d4c9fa09300746c46b5312b64a9e04f1
+  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+    portName: Why are you so hard drinking?
+    targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+    portName: Bye
+    targetNodeGUID: 2c4064c84e27bb741931d0b785c1038c
+  - baseNodeGUID: 2c4064c84e27bb741931d0b785c1038c
+    portName: Action
+    targetNodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
+  - baseNodeGUID: d4c9fa09300746c46b5312b64a9e04f1
+    portName: What happened to your system?
+    targetNodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
+  - baseNodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
+    portName: Auto
+    targetNodeGUID: 427ee72dba5b9554a836024f25f4c6bd
+  - baseNodeGUID: 427ee72dba5b9554a836024f25f4c6bd
+    portName: Auto
+    targetNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+    portName: Well, it could be worse. Many are not alive at all.
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+    portName: Who are these Destroyers?
+    targetNodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
+  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+    portName: I sympathize.
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
+    portName: Auto
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: 0db77019940329d43b040b9cdc730e74
+    portName: Auto
+    targetNodeGUID: e35dda77938e2e7478ddc604b5deba1a
+  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+    portName: Who are you at heart?
+    targetNodeGUID: 0db77019940329d43b040b9cdc730e74
+  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+    portName: What's stopping you from leaving the system?
+    targetNodeGUID: 348d61be71c07484ab858ba702980d81
+  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+    portName: Ok...
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
+    portName: Auto
+    targetNodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
+  - baseNodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
+    portName: Auto
+    targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+  - baseNodeGUID: 911c75d07faf5744bb74c0220d2998e5
+    portName: Auto
+    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+  - baseNodeGUID: 348d61be71c07484ab858ba702980d81
+    portName: Auto
+    targetNodeGUID: 911c75d07faf5744bb74c0220d2998e5
+  - baseNodeGUID: e35dda77938e2e7478ddc604b5deba1a
+    portName: Auto
+    targetNodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
+  replicasJson: "[\r\n  {\r\n    \"GUID\": \"30ada711d38c9a848be663ac9f231c3d\",\r\n   
+    \"text\": \"Why are you drinking here? It's not a bar...\",\r\n    \"type\":
+    0,\r\n    \"character\": 0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\",\r\n   
+    \"text\": \"Why can't I just have a drink without being hit on by idiots!\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    [\r\n      {\r\n        \"replica\": \"Why are you here?\",\r\n        \"nextGUID\":
+    \"d4c9fa09300746c46b5312b64a9e04f1\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"Why are you so hard drinking?\",\r\n        \"nextGUID\": \"9889d67eb49bfc746ad76ad1dd9dfcff\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Bye\",\r\n        \"nextGUID\": \"2c4064c84e27bb741931d0b785c1038c\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"2c4064c84e27bb741931d0b785c1038c\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"8b3c0bed75a6c104f83f7ecb34b00172\",\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8b3c0bed75a6c104f83f7ecb34b00172\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"d4c9fa09300746c46b5312b64a9e04f1\",\r\n   
+    \"text\": \"I'm a refugee from Lapis 19, washing my grief down.\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"3b79fa18637a36849b1aaa84fba97bc5\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"3b79fa18637a36849b1aaa84fba97bc5\",\r\n   
+    \"text\": \"My system was under the Pirates, and I myself, in my youth, liked
+    to rob spaceships.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"427ee72dba5b9554a836024f25f4c6bd\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"427ee72dba5b9554a836024f25f4c6bd\",\r\n   
+    \"text\": \"As a result, a couple of days ago, the Annihilators broke into the
+    system, sterilized it.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"45a7bde30d4716c4484ebd9b5d60920b\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"45a7bde30d4716c4484ebd9b5d60920b\",\r\n   
+    \"text\": \"I was lucky that I am one of the best pilots in my sector, I was
+    able to jump into another system.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
+    \"Well, it could be worse. Many are not alive at all.\",\r\n        \"nextGUID\":
+    \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"Who are these Destroyers?\",\r\n        \"nextGUID\": \"588e2d8dec6b0ca4288093f25a3c937e\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"I sympathize.\",\r\n        \"nextGUID\":
+    \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
+    \"GUID\": \"588e2d8dec6b0ca4288093f25a3c937e\",\r\n    \"text\": \"The asshole
+    who is standing in front of us. I don\u2019t know what\u2019s under the suit,
+    but they don\u2019t have such a name for nothing. The communists have already
+    crossed all borders.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"0db77019940329d43b040b9cdc730e74\",\r\n   
+    \"text\": \"My heart is anarchy! And I will believe in it until the end of my
+    days! And the Destroyer will execute me, but I will die an anarchist!\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"e35dda77938e2e7478ddc604b5deba1a\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"9889d67eb49bfc746ad76ad1dd9dfcff\",\r\n   
+    \"text\": \"You think it's easy to be a pirate all your life, hate communists,
+    and live out your last days at their base.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
+    \"Who are you at heart?\",\r\n        \"nextGUID\": \"0db77019940329d43b040b9cdc730e74\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"What's stopping you from leaving the
+    system?\",\r\n        \"nextGUID\": \"348d61be71c07484ab858ba702980d81\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Ok...\",\r\n        \"nextGUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"b4a8d9d471011ce4ea33d116183fd7ec\",\r\n   
+    \"text\": \"This is a huge animal with a minigun in front of us. It is not even
+    clear whether people are in suits. They have some kind of secret communication
+    channel, and they only listen to orders.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"3c477cbaef1bfd642bb333075ce9fab4\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"3c477cbaef1bfd642bb333075ce9fab4\",\r\n   
+    \"text\": \"It was the Destroyers who kicked me out of the house...\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"9889d67eb49bfc746ad76ad1dd9dfcff\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"e35dda77938e2e7478ddc604b5deba1a\",\r\n   
+    \"text\": \"Destroyers?\",\r\n    \"type\": 0,\r\n    \"character\": 0,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"b4a8d9d471011ce4ea33d116183fd7ec\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"911c75d07faf5744bb74c0220d2998e5\",\r\n   
+    \"text\": \"Yes, and they sewed a chip into me, took away the ship, money. As
+    a result, all that remains is to drink, since the refugees get free booze ...\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"348d61be71c07484ab858ba702980d81\",\r\n   
+    \"text\": \"Love of life. Though this life is in hell, but life.\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"911c75d07faf5744bb74c0220d2998e5\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  }\r\n]"

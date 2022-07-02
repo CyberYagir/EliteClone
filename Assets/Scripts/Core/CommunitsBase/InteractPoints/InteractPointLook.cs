@@ -23,6 +23,9 @@ namespace Core.CommunistsBase.Intacts
             int hash = Animator.StringToHash(animation);
             move.SetAnim(hash);
             move.transform.DORotate(new Vector3(0, YRot, 0), 1f);
+            
+            
+            
             lastWalker = move;
             move.GetInteract().ActionEvent.AddListener(Punch);
             OnMoveToPointEvent.Run(move);

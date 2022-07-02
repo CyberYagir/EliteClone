@@ -22,7 +22,8 @@ namespace Core.TDS
         private void Start()
         {
             damager = GetComponent<Damager>();
-            
+            maxHeath = heath;
+            maxEnergy = energy;
         }
 
         public void TakeDamage(float damage)

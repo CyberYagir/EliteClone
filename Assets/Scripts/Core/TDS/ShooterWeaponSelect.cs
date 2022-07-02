@@ -64,5 +64,15 @@ namespace Core.TDS
             rightH.GetComponentInParent<ChainIKConstraint>().weight = 0;
             Destroy(GetComponent<TDSWeapon>());
         }
+
+        public bool IsSelected()
+        {
+            return currentWeapon != -1;
+        }
+
+        public int GetCurrent()
+        {
+            return currentWeapon;
+        }
     }
 }

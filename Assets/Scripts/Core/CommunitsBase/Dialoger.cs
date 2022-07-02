@@ -79,6 +79,13 @@ namespace Core.Dialogs.Game
             while (true)
             {
                 yield return null;
+                if (currentDialogNode == null)
+                {
+                    OnEnd.Run();
+                    yield break;
+                }
+
+                character = currentDialogNode.character;
                 if (currentDialogNode.type == NodeType.Dialog)
                 {
                     yield return StartCoroutine(TextThrow(currentDialogNode.text));
@@ -167,22 +174,40 @@ namespace Core.Dialogs.Game
         {
             OnThrowReplica.Run(text);
             float timer = 0;
-            float time = text.Length / 20f;
+            float time = text.Length / 10f;
             if (time < 2)
             {
                 time = 2;
             }
+
+            SetAnim(true);
             while (timer < time && !InputM.GetAxisDown(KAction.Interact))
             {
                 timer += Time.deltaTime;
                 yield return null;
             }
+
+            SetAnim(false);
         }
 
+        public void SetAnim(bool state)
+        {
+            if (character == Characters.Main)
+            {
+                ShooterPlayer.Instance.animator.Get().SetBool(IsTalk, state);
+                StartCoroutine(ShooterAnimator.ChangeLayer(ShooterPlayer.Instance.animator.Get(), 2, 2, 0, state));
+            }
+            else
+            {
+                GetComponent<TDSPointsWaker>().SetAnimBool(IsTalk, state);
+            }
+        }
+        
         public Event<string> OnThrowReplica = new Event<string>();
         public Event<List<TextReplica>> OnShowChoice = new Event<List<TextReplica>>();
         public Event<Dialoger> OnInit = new Event<Dialoger>();
         public Event<int> OnChangeChoice = new Event<int>();
         public Event OnEnd = new Event();
+        private static readonly int IsTalk = Animator.StringToHash("IsTalk");
     }
 }

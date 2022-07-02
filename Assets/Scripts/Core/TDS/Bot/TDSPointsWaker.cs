@@ -103,31 +103,36 @@ namespace Core.TDS
         public void SetAnim(int animHash)
         {
             animator.Play(animHash, 1);
-            StartCoroutine(ChangeLayer(1, 2, 0.5f, true));
+            StartCoroutine(ShooterAnimator.ChangeLayer(animator, 1, 2, 0.5f, true));
         }
 
         public void RemoveAnim()
         {           
-            StartCoroutine(ChangeLayer(1, 2, 0, false));
+            StartCoroutine(ShooterAnimator.ChangeLayer(animator, 1, 2, 0, false));
         }
 
         public void SetAnimFloat(string nm, float val) => animator.SetFloat(nm, val);
 
-        public IEnumerator ChangeLayer(int layer, float speed, float delay, bool to = true)
-        {
-            var weight = animator.GetLayerWeight(layer);
-            yield return new WaitForSeconds(delay);
-            while (to ? weight < 1 : weight > 0)
-            {
-                yield return null;
-                weight += Time.deltaTime * speed * (to ? 1 : -1);
-                animator.SetLayerWeight(layer, weight);
-            }
-        }
+
 
         public NPCInteract GetInteract()
         {
             return interactor;
+        }
+
+        public void SetAnimBool(string istalk, bool state)
+        {
+            animator.SetBool(istalk, state);
+        }
+        public void SetAnimBool(int istalk, bool state)
+        {
+            animator.SetBool(istalk, state);
+        }
+
+
+        public Animator GetAnimator()
+        {
+            return animator;
         }
     }
 }

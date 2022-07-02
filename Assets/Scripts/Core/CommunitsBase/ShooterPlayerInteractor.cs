@@ -30,6 +30,7 @@ namespace Core.CommunistsBase.Intacts
         {
             if (interactors.Remove(interactor))
             {
+                interactor.UnTrigger();
                 OnRemInter.Run();
             }
         }

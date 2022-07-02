@@ -68,6 +68,18 @@ namespace Core.TDS
         {
             return ref animator;
         }
+        
+        public static IEnumerator ChangeLayer(Animator animator, int layer, float speed, float delay, bool to = true)
+        {
+            var weight = animator.GetLayerWeight(layer);
+            yield return new WaitForSeconds(delay);
+            while (to ? weight < 1 : weight > 0)
+            {
+                yield return null;
+                weight += Time.deltaTime * speed * (to ? 1 : -1);
+                animator.SetLayerWeight(layer, weight);
+            }
+        }
     }
 
 }

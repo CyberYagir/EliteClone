@@ -10,17 +10,23 @@ namespace Core.TDS
         public static ShooterPlayer Instance;
         public ShooterInventory inventory { get; private set; }
         public ShooterPlayerController controller { get; private set; }
+        public ShooterAnimator animator { get; private set; }
+
         protected override void Awake()
         {
             base.Awake();
             Instance = this;
             inventory = GetComponent<ShooterInventory>();
             controller = GetComponent<ShooterPlayerController>();
+            animator = GetComponentInChildren<ShooterAnimator>();
         }
 
         public bool HaveWeapon()
         {
             return inventory.items.Count > 0;
         }
+        
+        
+
     }
 }

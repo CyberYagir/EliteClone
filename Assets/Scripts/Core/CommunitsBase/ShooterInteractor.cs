@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.TDS;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +14,19 @@ namespace Core.CommunistsBase.Intacts
         private bool triggered;
         private Transform target;
 
+        [SerializeField] private bool lookAt = true;
+        
         [SerializeField] private Event Action;
+        [SerializeField] private Event Disable;
+
+
+        private Quaternion startRotation;
+
+        private void Start()
+        {
+            startRotation = startRotation;
+        }
+
         private void FixedUpdate()
         {
             if (triggered)
@@ -23,9 +36,19 @@ namespace Core.CommunistsBase.Intacts
         }
 
 
+        public void ReturnRotation()
+        {
+            transform.DORotateQuaternion(startRotation, 1f);
+        }
+
         public void TriggerAction()
         {
             Action.Invoke();
+        }
+
+        public void UnTrigger()
+        {
+            Disable.Run();
         }
         private void Awake()
         {
@@ -40,7 +63,7 @@ namespace Core.CommunistsBase.Intacts
                 if (inters)
                 {
                     inters.AddInteractor(this);
-                    StartCoroutine(walker.ChangeLayer(2, 2.5f, 0, true));
+                    StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, true));
                     triggered = true;
                     target = inters.transform;
                 }
@@ -55,7 +78,7 @@ namespace Core.CommunistsBase.Intacts
                 if (inters)
                 {
                     inters.DestroyInteractor(this);
-                    StartCoroutine(walker.ChangeLayer(2, 2.5f, 0, false));
+                    StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, false));
                     triggered = false;
                 }
             }

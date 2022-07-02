@@ -19,8 +19,16 @@ namespace Core.TDS
         private Vector3 startPointL, startPointR;
         [SerializeField] private Transform LHand, RHand;
 
+        private ShooterWeaponSelect weaponSelect;
+        private ShooterWeaponList weaponsList;
+        private ShooterInventory inventory;
+        
         private void Start()
         {
+            weaponSelect = GetComponent<ShooterWeaponSelect>();
+            weaponsList = GetComponent<ShooterWeaponList>();
+            inventory = GetComponent<ShooterInventory>();
+            
             startPointL = LHand.localPosition;
             startPointR = RHand.localPosition;
         }
@@ -61,8 +69,17 @@ namespace Core.TDS
                     IKPoint.transform.position = new Vector3(IKPoint.transform.position.x, y, IKPoint.transform.position.z);
                     IKPoint.transform.position = Vector3.Lerp(IKPoint.transform.position, hit.point + Vector3.up, 5 * Time.deltaTime);
                     IKhandsRotator.localEulerAngles = Vector3.zero;
-                    LHand.localPosition = startPointL;
-                    RHand.localPosition = startPointR;
+                    if (!weaponSelect.IsSelected())
+                    {
+                        LHand.localPosition = startPointL;
+                        RHand.localPosition = startPointR;
+                    }
+                    else
+                    {
+                        var options = weaponsList.weapons.Find(x => x.item.id.id == inventory.items[weaponSelect.GetCurrent()].id.id).options;
+                        options.leftH.Set(LHand);
+                        options.rightH.Set(RHand);
+                    }
 
                     IKhandsRotator.LookAt(IKPoint.transform.position);
                     var lpos = LHand.position;

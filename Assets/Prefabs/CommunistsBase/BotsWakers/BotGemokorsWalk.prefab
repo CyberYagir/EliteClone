@@ -391,7 +391,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 81f62147ecd4f1b47bfbb6d50da477d4, type: 3}
   m_Controller: {fileID: 9100000, guid: 164e729cd57ec96428018cffd52bc0a3, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1697,7 +1697,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: -0.1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
 --- !u!208 &-5296207002269032095

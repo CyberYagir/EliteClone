@@ -278,6 +278,7 @@ public class ExtendedDialogGraphView : GraphView
         EditTextWindow.GetInstance().ChangeCallback.AddListener(delegate(string str)
         {
             node.text = str;
+            node.UpdateText(str);
             //node.title = str;
         });
         EditTextWindow.GetInstance().ShowModal();

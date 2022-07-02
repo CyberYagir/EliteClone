@@ -900,6 +900,14 @@ PrefabInstance:
       propertyPath: CollisionModule.radiusScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6938033694901044770, guid: 062b078e98902e94b90696fe42bfaf1a, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938033694901044770, guid: 062b078e98902e94b90696fe42bfaf1a, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8722199744600272936, guid: 062b078e98902e94b90696fe42bfaf1a, type: 3}
       propertyPath: damage
       value: 1
@@ -924,10 +932,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 323728099, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a21f02702bbaba42b8a55890c9999c4, type: 2}
     - target: {fileID: 375828154, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1283317373, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de9609352abe08a43a8428fc421083f1, type: 2}
+    - target: {fileID: 1379532706, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 90a47c3c2883cdc49be3e1b2a1f08f8a, type: 2}
+    - target: {fileID: 1458696915, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b913671d94bbe4743b4312e111a779f0, type: 2}
+    - target: {fileID: 1484270191, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eefd6b5b3483ffe4387643b3a83b0a6c, type: 2}
     - target: {fileID: 1805103589, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -936,6 +964,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2132972414, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de9609352abe08a43a8428fc421083f1, type: 2}
     - target: {fileID: 221526836795944521, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: weapons.Array.size
       value: 0
@@ -975,6 +1007,14 @@ PrefabInstance:
     - target: {fileID: 919132149028257780, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802260008921866084, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802260008921866084, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2260861815978221087, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1062,7 +1102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3517549861524150511, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_Name
-      value: ShootBot Variant
+      value: ShootBot
       objectReference: {fileID: 0}
     - target: {fileID: 3538196372233271493, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
       propertyPath: m_Weight
