@@ -8,6 +8,7 @@ namespace Core.Dialogs
     public class TalkCloud : MonoBehaviour
     {
         private Camera camera;
+        [SerializeField] private float offcet;
         private void Start()
         {
             camera = PlayerTDSCamera.Instance.GetCamera();
@@ -16,6 +17,7 @@ namespace Core.Dialogs
         private void FixedUpdate()
         {
             transform.LookAt(camera.transform);
+            transform.Rotate(Vector3.up * offcet);
         }
     }
 }

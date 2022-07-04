@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate, Shoot, Interact}
+    public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate, Shoot, Interact, SlowDialog}
 
     public class InputM : MonoBehaviour
     {

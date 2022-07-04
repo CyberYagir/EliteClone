@@ -1,0 +1,288 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
+  m_Name: LeanMan
+  m_EditorClassIdentifier: 
+  nodeData:
+  - nodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
+    text: What do you want from me?
+    pos: {x: 328, y: 180.66667}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 796853342675ef94389c8181c3ab79fc
+    text: 'Tell me, how do you feel about the Xirodots?
+
+      Do they annoy you?'
+    pos: {x: 541.3333, y: 180.66667}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
+    text: Tall and thin idiots who cannot learn a normal language.
+    pos: {x: 972.6667, y: 15.333334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
+    text: Why can't they learn languages?
+    pos: {x: 1236.6666, y: 13.999998}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 9a18870ae4557274f9f6d6ae4542f992
+    text: It's like they're physically different. Everyone is doing well, only they
+      are all idiotic.
+    pos: {x: 1482.6666, y: 13.999998}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 6a288c275cdee5047b76345fa7d2482a
+    text: They are so kind here, if you go to their systems for a while, you will
+      be treated like cattle.
+    pos: {x: 1030.6666, y: 272.66666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 1981505663e64ad45bebd6e9e318cd6a
+    text: Why do we have to keep them at the base?
+    pos: {x: 1321.3334, y: 272.66666}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: c5a8a0da51c95d447945560e8038d3d0
+    text: Recently I tried to negotiate with one of them. His name was like a dick
+      knows how, blah blah blah some. He, like a true communist, decided to engage
+      in capitalism ...
+    pos: {x: 1570, y: 272}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 771e7c652940e944b964d46eee247f1f
+    text: 'And for some reason people like me are being evicted, not them.
+
+      While
+      we are working they are fucking our wives with their humamomejes!'
+    pos: {x: 1822.6666, y: 272}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
+    text: 
+    pos: {x: 972.6667, y: 456.66666}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+  - nodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
+    text: I'm not a racist, they're just critters. I have nothing against Gemokors.
+      Decent humanoidEven if they go naked. But at least they lay eggs.
+    pos: {x: 2381.3333, y: -8.000001}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: d2ad438069e72d240bd122db4a95cc05
+    text: Thanks for the sympathy.
+    pos: {x: 2408.6667, y: 300}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 669495380e625854da6065eb58aed092
+    text: I don't see anything wrong, we're communists. Our wives are in common.
+    pos: {x: 2409.3333, y: 456.66666}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: 5c827b0369b6de34e889259dcd00d51b
+    text: Why do you say that they are capitalists, if you yourself are a sexual
+      capitalist.
+    pos: {x: 2684.6667, y: 456}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: ba668e96dbd22144dab39e01eee4a90d
+    text: THIS IS DIFFERENT!
+    pos: {x: 2935.3333, y: 456}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+  - nodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
+    text: 
+    pos: {x: 3174.6667, y: 456.66666}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+  - nodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
+    text: 
+    pos: {x: 3398.6667, y: 456}
+    character: 0
+    nodeType: 2
+    nodeAction: 2
+  - nodeGUID: e59b8cf021f2d824aaa4f5e196afe334
+    text: 
+    pos: {x: 2676, y: 300}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+  - nodeGUID: 543cece3e21eb6542b37ba906f5be2ef
+    text: 
+    pos: {x: 2904, y: 300}
+    character: 0
+    nodeType: 2
+    nodeAction: 1
+  nodesLinks:
+  - baseNodeGUID: 2c72ba57516eebf4a9fd4ed149ec1c0f
+    portName: Next Replica
+    targetNodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
+  - baseNodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
+    portName: Auto
+    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
+    portName: Xirodots?
+    targetNodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
+  - baseNodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
+    portName: Auto
+    targetNodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
+  - baseNodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
+    portName: Auto
+    targetNodeGUID: 9a18870ae4557274f9f6d6ae4542f992
+  - baseNodeGUID: 9a18870ae4557274f9f6d6ae4542f992
+    portName: Auto
+    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
+    portName: What did they do to you?
+    targetNodeGUID: 6a288c275cdee5047b76345fa7d2482a
+  - baseNodeGUID: 6a288c275cdee5047b76345fa7d2482a
+    portName: Auto
+    targetNodeGUID: 1981505663e64ad45bebd6e9e318cd6a
+  - baseNodeGUID: 1981505663e64ad45bebd6e9e318cd6a
+    portName: Auto
+    targetNodeGUID: c5a8a0da51c95d447945560e8038d3d0
+  - baseNodeGUID: c5a8a0da51c95d447945560e8038d3d0
+    portName: Auto
+    targetNodeGUID: 771e7c652940e944b964d46eee247f1f
+  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
+    portName: Bye
+    targetNodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
+  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
+    portName: Brother you are a racist
+    targetNodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
+  - baseNodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
+    portName: Auto
+    targetNodeGUID: 771e7c652940e944b964d46eee247f1f
+  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
+    portName: Ok
+    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
+    portName: I understand you, it's a pity that this is so.
+    targetNodeGUID: d2ad438069e72d240bd122db4a95cc05
+  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
+    portName: If I were in their place, I would do the same
+    targetNodeGUID: 669495380e625854da6065eb58aed092
+  - baseNodeGUID: 669495380e625854da6065eb58aed092
+    portName: Auto
+    targetNodeGUID: 5c827b0369b6de34e889259dcd00d51b
+  - baseNodeGUID: 5c827b0369b6de34e889259dcd00d51b
+    portName: Auto
+    targetNodeGUID: ba668e96dbd22144dab39e01eee4a90d
+  - baseNodeGUID: ba668e96dbd22144dab39e01eee4a90d
+    portName: Auto
+    targetNodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
+  - baseNodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
+    portName: Action
+    targetNodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
+  - baseNodeGUID: d2ad438069e72d240bd122db4a95cc05
+    portName: Auto
+    targetNodeGUID: e59b8cf021f2d824aaa4f5e196afe334
+  - baseNodeGUID: e59b8cf021f2d824aaa4f5e196afe334
+    portName: Action
+    targetNodeGUID: 543cece3e21eb6542b37ba906f5be2ef
+  replicasJson: "[\r\n  {\r\n    \"GUID\": \"a2fc01b0cc3ffeb408aeaf49d6e6c5e0\",\r\n   
+    \"text\": \"What do you want from me?\",\r\n    \"type\": 0,\r\n    \"character\":
+    0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"796853342675ef94389c8181c3ab79fc\",\r\n   
+    \"text\": \"Tell me, how do you feel about the Xirodots?\\r\\nDo they annoy you?\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    [\r\n      {\r\n        \"replica\": \"Xirodots?\",\r\n        \"nextGUID\":
+    \"9931a21425de1bc41bd7a6f10a2e3fef\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"What did they do to you?\",\r\n        \"nextGUID\": \"6a288c275cdee5047b76345fa7d2482a\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Bye\",\r\n        \"nextGUID\": \"0de9ef0d7acba504c8ce6b70d03458d7\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"9931a21425de1bc41bd7a6f10a2e3fef\",\r\n   
+    \"text\": \"Tall and thin idiots who cannot learn a normal language.\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"45e726f0bf484304b90c49bfd4aebf7a\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"45e726f0bf484304b90c49bfd4aebf7a\",\r\n   
+    \"text\": \"Why can't they learn languages?\",\r\n    \"type\": 0,\r\n    \"character\":
+    0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"9a18870ae4557274f9f6d6ae4542f992\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"9a18870ae4557274f9f6d6ae4542f992\",\r\n   
+    \"text\": \"It's like they're physically different. Everyone is doing well, only
+    they are all idiotic.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"6a288c275cdee5047b76345fa7d2482a\",\r\n   
+    \"text\": \"They are so kind here, if you go to their systems for a while, you
+    will be treated like cattle.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"1981505663e64ad45bebd6e9e318cd6a\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"1981505663e64ad45bebd6e9e318cd6a\",\r\n   
+    \"text\": \"Why do we have to keep them at the base?\",\r\n    \"type\": 0,\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"c5a8a0da51c95d447945560e8038d3d0\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"c5a8a0da51c95d447945560e8038d3d0\",\r\n   
+    \"text\": \"Recently I tried to negotiate with one of them. His name was like
+    a dick knows how, blah blah blah some. He, like a true communist, decided to
+    engage in capitalism ...\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"771e7c652940e944b964d46eee247f1f\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"771e7c652940e944b964d46eee247f1f\",\r\n   
+    \"text\": \"And for some reason people like me are being evicted, not them.\\r\\nWhile
+    we are working they are fucking our wives with their humamomejes!\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n     
+    {\r\n        \"replica\": \"Brother you are a racist\",\r\n        \"nextGUID\":
+    \"9e27b08cccc9d0e4384bbd46ff2636c1\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"I understand you, it's a pity that this is so.\",\r\n        \"nextGUID\":
+    \"d2ad438069e72d240bd122db4a95cc05\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"If I were in their place, I would do the same\",\r\n        \"nextGUID\": \"669495380e625854da6065eb58aed092\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Ok\",\r\n        \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"0de9ef0d7acba504c8ce6b70d03458d7\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"9e27b08cccc9d0e4384bbd46ff2636c1\",\r\n   
+    \"text\": \"I'm not a racist, they're just critters. I have nothing against Gemokors.
+    Decent humanoidEven if they go naked. But at least they lay eggs.\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"771e7c652940e944b964d46eee247f1f\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"d2ad438069e72d240bd122db4a95cc05\",\r\n   
+    \"text\": \"Thanks for the sympathy.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"e59b8cf021f2d824aaa4f5e196afe334\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"669495380e625854da6065eb58aed092\",\r\n   
+    \"text\": \"I don't see anything wrong, we're communists. Our wives are in common.\",\r\n   
+    \"type\": 0,\r\n    \"character\": 0,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"5c827b0369b6de34e889259dcd00d51b\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"5c827b0369b6de34e889259dcd00d51b\",\r\n   
+    \"text\": \"Why do you say that they are capitalists, if you yourself are a sexual
+    capitalist.\",\r\n    \"type\": 0,\r\n    \"character\": 0,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"ba668e96dbd22144dab39e01eee4a90d\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"ba668e96dbd22144dab39e01eee4a90d\",\r\n   
+    \"text\": \"THIS IS DIFFERENT!\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"bdb8d6b786fef5a4c8cd26dc3d13ead9\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"bdb8d6b786fef5a4c8cd26dc3d13ead9\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"58dbf9ee88fec294e8df486edeab9d6c\",\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"58dbf9ee88fec294e8df486edeab9d6c\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"e59b8cf021f2d824aaa4f5e196afe334\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"543cece3e21eb6542b37ba906f5be2ef\",\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"543cece3e21eb6542b37ba906f5be2ef\",\r\n   
+    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 1,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  }\r\n]"

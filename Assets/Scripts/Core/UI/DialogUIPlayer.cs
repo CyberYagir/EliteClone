@@ -15,6 +15,7 @@ namespace Core.Dialogs.Game.UI
         [SerializeField] private GameObject choicePrefab;
         [SerializeField] private RectTransform arrow;
         [SerializeField] private float spacing = 1.5f;
+        [SerializeField] private TMP_Text tutorialText;
         private void Awake()
         {
             Single(this);
@@ -31,6 +32,10 @@ namespace Core.Dialogs.Game.UI
             dialoger.OnShowChoice.AddListener(ShowChoices);
             dialoger.OnChangeChoice.AddListener(ChangeChoice);
             dialoger.OnEnd.AddListener(Disable);
+            tutorialText.text = $"Up - {InputM.GetAxisData(KAction.TabsVertical).plus.ToString()}\n" +
+                                $"Down - {InputM.GetAxisData(KAction.TabsVertical).minus.ToString()}\n" +
+                                $"Select - {InputM.GetAxisData(KAction.Interact).plus.ToString()}/{InputM.GetAxisData(KAction.Interact).minus.ToString()}\n" +
+                                $"Slow - {InputM.GetAxisData(KAction.SlowDialog).plus}";
         }
 
         public void Disable()

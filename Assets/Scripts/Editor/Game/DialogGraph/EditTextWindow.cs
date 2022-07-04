@@ -41,7 +41,7 @@ public class EditTextWindow : EditorWindow
     public string text;
     private void OnGUI()
     {
-        text = GUILayout.TextField(text, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
+        text = EditorGUILayout.TextArea(text, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
         if (GUILayout.Button("Save"))
         {
             ChangeCallback.Invoke(text);

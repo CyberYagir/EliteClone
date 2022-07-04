@@ -12,9 +12,11 @@ namespace Core.TDS.UI
         [SerializeField] private ShooterPlayerInteractor interactor;
         private TMP_Text text;
 
-        private void Awake()
+        private void Start()
         {
             text = GetComponent<TMP_Text>();
+            var data = InputM.GetAxisData(KAction.Interact);
+            text.text = $"Use [{data.plus.ToString()}/{data.minus.ToString()}]";
             interactor.OnAddInter.AddListener(UpdateText);
             interactor.OnRemInter.AddListener(UpdateText);
             interactor.OnInteract.AddListener(UpdateText);

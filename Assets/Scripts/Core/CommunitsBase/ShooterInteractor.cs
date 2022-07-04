@@ -24,14 +24,16 @@ namespace Core.CommunistsBase.Intacts
 
         private void Start()
         {
-            startRotation = startRotation;
+            startRotation = transform.rotation;
         }
 
         private void FixedUpdate()
         {
-            if (triggered)
+            if (triggered && lookAt)
             {
-                transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+                var pos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                var targetRotation = Quaternion.LookRotation(pos - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
             }
         }
 

@@ -92,5 +92,10 @@ namespace Core.TDS
                 }
             }
         }
+
+        public void SetPointPose(Vector3 transformPosition)
+        {
+            IKPoint.transform.position = transformPosition + Vector3.up;
+        }
     }
 }

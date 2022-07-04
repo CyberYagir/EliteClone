@@ -16,6 +16,7 @@ namespace Core.Dialogs.Game
         [SerializeField] private ExtendedDialog dialog;
         private List<ExtendedDialog.NodeReplicaData> replicas = new List<ExtendedDialog.NodeReplicaData>();
 
+        private List<string> choicesGUIDS = new List<string>();
 
         public Event<Actions> OnTrigger = new Event<Actions>();
         
@@ -26,10 +27,12 @@ namespace Core.Dialogs.Game
 
         public void Init()
         {
+            choicesGUIDS = new List<string>();
             StopAllCoroutines();
             PlayerTDSCamera.ChangeMode(PlayerTDSCamera.CameraModes.OutsideControl);
             ShooterPlayer.Instance.controller.enabled = false;
             ShooterPlayer.Instance.transform.DOLookAt(new Vector3(transform.position.x, ShooterPlayer.Instance.transform.position.y, transform.position.z), 0.5f);
+            ShooterPlayer.Instance.controller.SetPointPose(transform.position);
             var playerpos = ShooterPlayer.Instance.transform.position;
             if (Vector3.Distance(playerpos, transform.position) < 1.5f)
             {
@@ -88,7 +91,10 @@ namespace Core.Dialogs.Game
                 character = currentDialogNode.character;
                 if (currentDialogNode.type == NodeType.Dialog)
                 {
-                    yield return StartCoroutine(TextThrow(currentDialogNode.text));
+                    if (!choicesGUIDS.Contains(currentDialogNode.GUID))
+                    {
+                        yield return StartCoroutine(TextThrow(currentDialogNode.text));
+                    }
                 }
 
 
@@ -109,6 +115,7 @@ namespace Core.Dialogs.Game
                         yield return null;
                         yield return StartCoroutine(TextThrow(currentDialogNode.nexts[choice].replica));
                         character = Characters.Second;
+                        choicesGUIDS.Add(currentDialogNode.GUID);
                         currentDialogNode = NextNode(currentDialogNode.nexts[choice].nextGUID);
                         break;
                     case ClassName.NodeTriggerData:
@@ -143,6 +150,14 @@ namespace Core.Dialogs.Game
         {
             var next = replicas.Find(x => x.GUID == guid);
             return next;
+        }
+
+        IEnumerator Slow()
+        {
+            while (InputM.GetAxisRaw(KAction.SlowDialog) != 0)
+            {
+                yield return null;
+            }
         }
         
         IEnumerator SelectChoice(List<TextReplica> replicas)
@@ -186,8 +201,11 @@ namespace Core.Dialogs.Game
                 timer += Time.deltaTime;
                 yield return null;
             }
+            
+            yield return StartCoroutine(Slow());
 
             SetAnim(false);
+            
         }
 
         public void SetAnim(bool state)
