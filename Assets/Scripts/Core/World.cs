@@ -6,7 +6,7 @@ namespace Core
     public enum Scenes
     {
         Init, Galaxy, System, Location, Garage, Death, Map,
-        Demo
+        Demo, CommunistsBase
     }
 
     public static class World
@@ -18,6 +18,10 @@ namespace Core
 
         public static void LoadLevel(Scenes scenes)
         {
+            if (scenes == Scenes.Init)
+            {
+                Debug.Log("Go To Init");
+            }
             SceneManager.LoadScene(scenes.ToString());
             Scene = scenes;
         }

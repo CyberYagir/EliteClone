@@ -1,0 +1,234 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
+  m_Name: CheerMan
+  m_EditorClassIdentifier: 
+  nodeData:
+  - text: Thanks to the Ancients for Lenin Marx and Engels!
+    nodeGUID: 1aeff7b1fa7c07345936d84e511486dc
+    pos: {x: 374, y: 179.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Why are you a communist?
+      GUID: 3e689bc89792c704ea7c6c504eeb93e7
+      order: 0
+      connections:
+      - targetNodeGUID: 94089a7b20b21d84e99aa5bd72136512
+        targetPortGUID: a80011a38549d984d83bcb0932317007
+    - portText: Ancient?
+      GUID: 20ec94f8f47319148967d57127dbf037
+      order: 1
+      connections:
+      - targetNodeGUID: 7c783261834013f4f93c033ed937eff1
+        targetPortGUID: baeda489934b9ee48a0243bfa183bf4d
+    - portText: Good luck
+      GUID: 73651d6a7e65cd74788a1c5c9f0f3e45
+      order: 2
+      connections:
+      - targetNodeGUID: f0a972b99ae66694ebd4584373ae3a6b
+        targetPortGUID: 345c27a3e0daead4d836f53763a33f68
+    - portText: Auto
+      GUID: 2cf5557d8b9176d458604afe86783cb2
+      order: 3
+      connections: []
+    entry: 1
+  - text: Yes, it is extremely rare to have one yellow dwarf and a planet in the
+      habitable zone in the system. Usually life disappears when one of the luminaries
+      flares up and sterilizes the planets. But the Earth is just lucky to have a
+      stable star.
+    nodeGUID: 8e982bbf9214cd94998352cab3b8bab2
+    pos: {x: 1822, y: -42}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 038a96c77863fac46851a8f9c857a91d
+      order: 0
+      connections:
+      - targetNodeGUID: b6e29fe0908e1cc46aaebef26914ce3b
+        targetPortGUID: d42f893189bd4b84dacf94dc4c087235
+    entry: 0
+  - text: "Yes, it looks like it was destroyed. I don\u2019t remember exactly what
+      happened, but when the Rgyukos flew in to make a Dyson sphere, they fought
+      for the solar system for a long time, successfully, but the atmosphere and
+      water on earth were destroyed.\r"
+    nodeGUID: 6f646eae962e8454b9b30e03c3ec1f4f
+    pos: {x: 1911.3334, y: 204.66667}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: d09eec5a90785934696da6fc11e8a69d
+      order: 0
+      connections:
+      - targetNodeGUID: 425e59f3519f7ee47a86dac2ea1b7e1a
+        targetPortGUID: 70488c39685824a4c9fcf991399c16d1
+    entry: 0
+  - text: Now there are settlements there, but a sick civilization has long been
+      in orbit.
+    nodeGUID: 425e59f3519f7ee47a86dac2ea1b7e1a
+    pos: {x: 2280, y: 199.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 8cc7d4bb8ee8ff04f8e57aa08dd09143
+      order: 0
+      connections:
+      - targetNodeGUID: b6e29fe0908e1cc46aaebef26914ce3b
+        targetPortGUID: d42f893189bd4b84dacf94dc4c087235
+    entry: 0
+  - text: The ideas of communism for thousands of years in practice brought that
+      they are the best and most effective!
+    nodeGUID: 94089a7b20b21d84e99aa5bd72136512
+    pos: {x: 867.3333, y: -70}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: a0c4a5715a721a74a869998693dbca99
+      order: 0
+      connections:
+      - targetNodeGUID: 5f0cb8146a5dd0e4e9649b5889712539
+        targetPortGUID: 43d9c899e6d8ab3448c481b918997b5c
+    entry: 0
+  - text: Even the overdeveloped races from the Segue-1 or Ursa Major galaxies use
+      all the ideas that Marx and Engils described for life.
+    nodeGUID: 5f0cb8146a5dd0e4e9649b5889712539
+    pos: {x: 1169.3334, y: -70}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 42d7fd9afdad1564bb47eb0e5b18e0a5
+      order: 0
+      connections:
+      - targetNodeGUID: 1aeff7b1fa7c07345936d84e511486dc
+        targetPortGUID: a256c2b8d2f6ba0459e83757f03d87dd
+    entry: 0
+  - text: End
+    nodeGUID: f0a972b99ae66694ebd4584373ae3a6b
+    pos: {x: 867.3333, y: 376.66666}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+    ports:
+    - portText: Action
+      GUID: 7efa273f45d6c054da16442c23dc82bc
+      order: 0
+      connections: []
+    entry: 0
+  - text: You don't know about them? These are people who lived 1000 years ago. They
+      created the basic philosophical postulates.
+    nodeGUID: 7c783261834013f4f93c033ed937eff1
+    pos: {x: 932.6667, y: 155.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: c1fac1bb3af3de44f98a90dafec58b4d
+      order: 0
+      connections:
+      - targetNodeGUID: b6e29fe0908e1cc46aaebef26914ce3b
+        targetPortGUID: d42f893189bd4b84dacf94dc4c087235
+    entry: 0
+  - text: This is the base dude... Earth, Sun, Solar system, Orion Arm. You are very
+      dumb.
+    nodeGUID: b6e29fe0908e1cc46aaebef26914ce3b
+    pos: {x: 1169.3334, y: 155.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: People appeared in the system with the 1st star?
+      GUID: 889eaea6b2a759749a8fb861fb7775a4
+      order: 0
+      connections:
+      - targetNodeGUID: 8e982bbf9214cd94998352cab3b8bab2
+        targetPortGUID: ff2b37ffd3b18bf4898b42b21325c7c8
+    - portText: And what is there now?
+      GUID: ebc65714fbbdee8469009ee26e7990c9
+      order: 1
+      connections:
+      - targetNodeGUID: 6f646eae962e8454b9b30e03c3ec1f4f
+        targetPortGUID: a9559ef04f6e6f24ea3b22b902d73881
+    - portText: Understood.
+      GUID: 01a323624b5c74740a2c95cd1b30da33
+      order: 2
+      connections:
+      - targetNodeGUID: 1aeff7b1fa7c07345936d84e511486dc
+        targetPortGUID: a256c2b8d2f6ba0459e83757f03d87dd
+    - portText: Auto
+      GUID: 16d3de9e51c40784bada031761b198e6
+      order: 3
+      connections: []
+    entry: 0
+  replicasJson: "[\r\n  {\r\n    \"GUID\": \"1aeff7b1fa7c07345936d84e511486dc\",\r\n   
+    \"text\": \"Thanks to the Ancients for Lenin Marx and Engels!\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n     
+    {\r\n        \"replica\": \"Why are you a communist?\",\r\n        \"nextGUID\":
+    \"94089a7b20b21d84e99aa5bd72136512\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"Ancient?\",\r\n        \"nextGUID\": \"7c783261834013f4f93c033ed937eff1\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Good luck\",\r\n        \"nextGUID\":
+    \"f0a972b99ae66694ebd4584373ae3a6b\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
+    \"GUID\": \"8e982bbf9214cd94998352cab3b8bab2\",\r\n    \"text\": \"Yes, it is
+    extremely rare to have one yellow dwarf and a planet in the habitable zone in
+    the system. Usually life disappears when one of the luminaries flares up and
+    sterilizes the planets. But the Earth is just lucky to have a stable star.\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"b6e29fe0908e1cc46aaebef26914ce3b\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"6f646eae962e8454b9b30e03c3ec1f4f\",\r\n   
+    \"text\": \"Yes, it looks like it was destroyed. I don\u2019t remember exactly
+    what happened, but when the Rgyukos flew in to make a Dyson sphere, they fought
+    for the solar system for a long time, successfully, but the atmosphere and water
+    on earth were destroyed.\\r\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
+    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"425e59f3519f7ee47a86dac2ea1b7e1a\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"425e59f3519f7ee47a86dac2ea1b7e1a\",\r\n   
+    \"text\": \"Now there are settlements there, but a sick civilization has long
+    been in orbit.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"b6e29fe0908e1cc46aaebef26914ce3b\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"94089a7b20b21d84e99aa5bd72136512\",\r\n   
+    \"text\": \"The ideas of communism for thousands of years in practice brought
+    that they are the best and most effective!\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"5f0cb8146a5dd0e4e9649b5889712539\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"5f0cb8146a5dd0e4e9649b5889712539\",\r\n   
+    \"text\": \"Even the overdeveloped races from the Segue-1 or Ursa Major galaxies
+    use all the ideas that Marx and Engils described for life.\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"1aeff7b1fa7c07345936d84e511486dc\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"f0a972b99ae66694ebd4584373ae3a6b\",\r\n   
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"7c783261834013f4f93c033ed937eff1\",\r\n   
+    \"text\": \"You don't know about them? These are people who lived 1000 years
+    ago. They created the basic philosophical postulates.\",\r\n    \"type\": 0,\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"b6e29fe0908e1cc46aaebef26914ce3b\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"b6e29fe0908e1cc46aaebef26914ce3b\",\r\n   
+    \"text\": \"This is the base dude... Earth, Sun, Solar system, Orion Arm. You
+    are very dumb.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": [\r\n      {\r\n        \"replica\": \"People appeared in the system
+    with the 1st star?\",\r\n        \"nextGUID\": \"8e982bbf9214cd94998352cab3b8bab2\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"And what is there now?\",\r\n       
+    \"nextGUID\": \"6f646eae962e8454b9b30e03c3ec1f4f\"\r\n      },\r\n      {\r\n       
+    \"replica\": \"Understood.\",\r\n        \"nextGUID\": \"1aeff7b1fa7c07345936d84e511486dc\"\r\n     
+    }\r\n    ]\r\n  }\r\n]"

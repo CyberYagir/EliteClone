@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -32,29 +33,40 @@ namespace Core.Dialogs
     {
         Main, Second
     }
+
     [CreateAssetMenu(fileName = "Extended Dialog", menuName = "Game/Dialogs/Variants Dialog", order = 1)]
     public class ExtendedDialog : ScriptableObject
     {
-        [Serializable]
+        [System.Serializable]
         public class NodeData
         {
-            public string nodeGUID;
             public string text;
+            public string nodeGUID;
             public Vector2 pos;
             public int character;
             public int nodeType;
             public int nodeAction;
+
+            public List<PortData> ports;
+            public bool entry;
+            [System.Serializable]
+            public class PortData
+            {
+                public string portText;
+                public string GUID;
+                public int order;
+                [System.Serializable]
+                public class ConnectData
+                {
+                    public string targetNodeGUID;
+                    public string targetPortGUID;
+                }
+
+                public List<ConnectData> connections = new List<ConnectData>();
+            }
         }
-
-        [Serializable]
-        public class NodeLink
-        {
-            public string baseNodeGUID;
-            public string portName;
-            public string targetNodeGUID;
-        }
-
-
+        
+        
         [Serializable]
         public class NodeReplicaData
         {
@@ -92,7 +104,7 @@ namespace Core.Dialogs
         
 
         public List<NodeData> nodeData = new List<NodeData>();
-        public List<NodeLink> nodesLinks = new List<NodeLink>();
+        //public List<NodeLink> nodesLinks = new List<NodeLink>();
         [TextArea(10, 57)]
         public string replicasJson;
 

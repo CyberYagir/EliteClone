@@ -12,6 +12,42 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UIElements.Button;
 using Object = UnityEngine.Object;
+public class DataElement: VisualElement
+{
+    public string text { get; private set; }
+    public int order { get; private set; }
+    public string GUID { get; private set; }
+
+    public DataElement(string text, int order, string guid)
+    {
+        this.text = text;
+        this.order = order;
+        if (string.IsNullOrEmpty(guid))
+        {
+            GUID = UnityEditor.GUID.Generate().ToString();
+        }
+        else
+        {
+            this.GUID = guid;
+        }
+    }
+
+    public void SetText(string newText) => text = newText;
+
+    public void ChangeOrder(int findIndex) => order = findIndex;
+
+    public string GetGUID()
+    {
+        if (string.IsNullOrEmpty(GUID))
+        {
+            GUID = UnityEditor.GUID.Generate().ToString();
+        }
+
+        return GUID;
+    }
+
+    public void SetGUID(string autoPortGuid) => GUID = autoPortGuid;
+}
 
 public class ExtendedDialogGraphView : GraphView
 {
@@ -47,9 +83,16 @@ public class ExtendedDialogGraphView : GraphView
         return node;
     }
 
-    public Port CreatePort(ExtendedNode node, Direction dir, Port.Capacity cap = Port.Capacity.Single)
+    public Port CreatePort(ExtendedNode node, Direction dir, Port.Capacity cap = Port.Capacity.Single, string text = "", int order = 0, string GUID = "")
     {
-        return node.InstantiatePort(Orientation.Horizontal, dir, cap, typeof(string));
+        var port = node.InstantiatePort(Orientation.Horizontal, dir, cap, typeof(string));
+        port.contentContainer.Q<Label>("type").text = "";
+        port.Add(new DataElement(text, order, GUID)
+        {
+            visible = false
+        });
+
+        return port;
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -131,7 +174,6 @@ public class ExtendedDialogGraphView : GraphView
     {
         var node = CreateDialogNode(pos);
 
-        
         node.outputContainer.Clear();
         var inputPort = (node.inputContainer.ElementAt(0) as Port);
         inputPort.portType = typeof(int);
@@ -154,6 +196,11 @@ public class ExtendedDialogGraphView : GraphView
         var color = (Color) new Color32(148, 129, 230, 255);
         node.titleContainer.style.backgroundColor = new StyleColor(color);
         
+        
+        node.text = "Trigger";
+        
+        node.inputContainer.Remove(node.inputUELabel);
+        
         node.RefreshExpandedState();
         node.RefreshPorts();
         
@@ -162,7 +209,6 @@ public class ExtendedDialogGraphView : GraphView
     public ExtendedNode CreateEndNode(Vector2 pos = default)
     {
         var node = CreateDialogNode(pos);
-
         node.HeaderAddUIEl.visible = false;
         node.outputContainer.Clear();
         var inputPort = (node.inputContainer.ElementAt(0) as Port);
@@ -172,12 +218,20 @@ public class ExtendedDialogGraphView : GraphView
         var color = (Color) new Color32(165, 0, 52, 255);
         node.titleContainer.style.backgroundColor = new StyleColor(color);
         
-        var actionPort = CreatePort(node, Direction.Output, Port.Capacity.Single);
+        var actionPort = CreatePort(node, Direction.Output, Port.Capacity.Single, "Action");
         actionPort.portName = "Action";
         actionPort.portType = typeof(int);
+
         node.outputContainer.Add(actionPort);
         
         node.NodeType = NodeType.End;
+
+        node.characterUIEl.visible = false;
+        node.HeaderEditUIEl.visible = false;
+        node.inputContainer.Remove(node.inputUELabel);
+        
+        node.text = "End Node";
+
         node.RefreshExpandedState();
         node.RefreshPorts();
         return node;
@@ -191,6 +245,10 @@ public class ExtendedDialogGraphView : GraphView
             text = "",
             GUID = GUID.Generate().ToString()
         };
+
+        node.Q("node-border").Q("title").style.justifyContent = new StyleEnum<Justify>(Justify.FlexEnd);
+        
+        
         var input = CreatePort(node, Direction.Input, Port.Capacity.Multi);
         input.portName = "Prev";
         node.inputContainer.Add(input);
@@ -243,7 +301,7 @@ public class ExtendedDialogGraphView : GraphView
         node.titleContainer.Add(node.HeaderEditUIEl);
 
 
-        var autoPort = CreatePort(node, Direction.Output, Port.Capacity.Single);
+        var autoPort = CreatePort(node, Direction.Output, Port.Capacity.Single, "Auto");
         autoPort.portType = typeof(string);
         autoPort.portName = "Auto";
         
@@ -283,18 +341,21 @@ public class ExtendedDialogGraphView : GraphView
         });
         EditTextWindow.GetInstance().ShowModal();
     }
-    
-    public void AddChoicePort(ExtendedNode node, string overrideName = "")
+
+    public Port AddChoicePort(ExtendedNode node, string text = "", int order = 0, string GUID = "")
     {
-        var port = CreatePort(node, Direction.Output, Port.Capacity.Single);
-        port.contentContainer.Q<Label>("type").text = "";
-        var outputContainer = node.outputContainer.Query("connector").ToList().Count;
-        port.portName = "Option " + outputContainer;
-        if (overrideName != "")
-        {
-            port.portName = overrideName;
-        }
+        var port = CreatePort(node, Direction.Output, Port.Capacity.Single, text, order, GUID);
         
+        var outputContainer = node.outputContainer.Query("connector").ToList().Count;
+
+        var data = port.Q<DataElement>();
+        port.portName = "Option " + outputContainer;
+        
+        if (text != "")
+        {
+            port.portName = text;
+        }
+
         var editButton = new Button(() =>
         {
             EditTextWindow.Open();
@@ -302,20 +363,41 @@ public class ExtendedDialogGraphView : GraphView
             EditTextWindow.GetInstance().ChangeCallback.AddListener(delegate(string str)
             {
                 port.portName = str;
+                data.SetText(str);
             });
             EditTextWindow.GetInstance().ShowModal();
 
         })
         {
-            text = "edit"
+            text = "✎"
         };
+        
         var deleteButton = new Button(() => RemovePort(node, port))
         {
             text = "-"
         };
-        
+        var downButton = new Button(() =>
+        {
+            port.SendToBack();
+            int index = 0;
+            foreach (var child in node.outputContainer.Children())
+            {
+                if (child is Port)
+                {
+                    var data = (child as Port).Q<DataElement>();
+                    data.ChangeOrder(index);
+                }
+
+                index++;
+            }
+        })
+        {
+            text = "↑"
+        };
+
         port.contentContainer.Add(deleteButton);
         port.contentContainer.Add(editButton);
+        port.contentContainer.Add(downButton);
         
         
         node.outputContainer.Add(port);
@@ -327,35 +409,54 @@ public class ExtendedDialogGraphView : GraphView
         {
             if (node.outputContainer[i] is Port)
             {
-                var prt = node.outputContainer[i] as Port;
-                if (prt.portName == "Auto")
+                if (node.outputContainer[i] is Port {portName: "Auto"} prt)
                 {
                     autoPort = prt;
                     break;
                 }
             }
         }
-        port.PlaceBehind(autoPort);
-        
-        if (node.outputContainer.childCount > 1)
+
+        if (autoPort != null)
         {
-            if (autoPort.connected)
+            port.PlaceBehind(autoPort);
+            
+            if (node.outputContainer.childCount > 1)
             {
-                var edge = autoPort.connections.ToList()[0];
-                edge.input.Disconnect(edge);
-                edge.output.Disconnect(edge);
-                RemoveElement(edge);
-                autoPort.DisconnectAll();
+                if (autoPort.connected)
+                {
+                    var edge = autoPort.connections.ToList()[0];
+                    edge.input.Disconnect(edge);
+                    edge.output.Disconnect(edge);
+                    RemoveElement(edge);
+                    autoPort.DisconnectAll();
+                }
+
+                autoPort.SetEnabled(false);
+            }
+            else
+            {
+                autoPort.SetEnabled(true);
             }
 
-            autoPort.SetEnabled(false);
         }
-        else
+
+
+        int ids = 0;
+        for (int i = 0; i < node.outputContainer.childCount; i++)
         {
-            autoPort.SetEnabled(true);
+            if (node.outputContainer.ElementAt(i) is Port)
+            {
+                (node.outputContainer.ElementAt(i) as Port).Q<DataElement>().ChangeOrder(i);
+                ids++;
+            }
         }
+        
         node.RefreshExpandedState();
         node.RefreshPorts();
+
+
+        return port;
     }
 
     private void RemovePort(ExtendedNode node, Port port)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.PlayerScripts;
@@ -31,11 +32,14 @@ namespace Core.UI
         private void Awake()
         {
             Single(this);
-            camera = Camera.main;
             Player.OnSceneChanged += UpdateList;
         }
 
 
+        private void Start()
+        {
+            camera = Player.inst.GetCamera();
+        }
 
         public bool SetActiveObjects()
         {

@@ -56,11 +56,12 @@ public class ExtendedDialogsGraph : EditorWindow
         rootVisualElement.Add(toolbar);
     }
 
+
     public void CreateSaveFile(Toolbar toolbar)
     {
         toolbar.Add(new Button(() => { DataOperation(true);}){text = "Save"});
     }
-    
+
     public void CreateAddButton(Toolbar toolbar)
     {
         var createNodeB = new Button(delegate
@@ -107,12 +108,11 @@ public class ExtendedDialogsGraph : EditorWindow
         {
             var save = GraphSaveUtility.GetInstance(view);
             if (isSave)
-            {
-                save.SaveGraph(file);
+            {save.SaveGraphNew(file);
             }
             else
             {
-                save.LoadGraph(file);
+                save.LoadGraphNew(file);
             }
         }
     }

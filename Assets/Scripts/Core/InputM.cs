@@ -53,7 +53,6 @@ namespace Core
 
         public void LoadControls()
         {
-            
             keys = new Dictionary<KAction, Axis>();
             foreach (var ax in axes)
             {
@@ -73,7 +72,14 @@ namespace Core
         }
         public void SetAxesList(List<Axis> axies)
         {
-            axes = axies;
+            for (int i = 0; i < axies.Count; i++)
+            {
+                var ax = axes.FindIndex(x => x.action == axies[i].action);
+                if(ax != -1)
+                {
+                    axes[ax] = axies[i];
+                }
+            }
             LoadControls();
         }
     

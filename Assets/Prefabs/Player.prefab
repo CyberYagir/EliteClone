@@ -365,15 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83162f7ea8f66d1429c2b61c66550cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 0
-  vertical: 0
-  yaw: 0
-  axisSence: 5
-  freezeControl: 0
-  headView: 0
-  player: {fileID: 594618446116798302}
-  moveMode: 0
-  speed: 0
+  mainCamera: {fileID: 594618447513562870}
 --- !u!114 &594618446116798302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeLocationPoint: {fileID: 0}
   warpParticle: {fileID: 714017739277574917}
+  sceneFader: {fileID: 4858806467550488175, guid: 60c080df87d709b429dadd23779b3bb0, type: 3}
   isWarp: 0
   warpSpeed: 0
   maxWarpSpeed: 2000
@@ -513,6 +506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnChangeQuests:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotify:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &227262322764977332

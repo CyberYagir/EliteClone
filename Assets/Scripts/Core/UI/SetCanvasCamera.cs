@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.UI
@@ -7,7 +8,7 @@ namespace Core.UI
         // Start is called before the first frame update
         void Start()
         {
-            GetComponent<Canvas>().worldCamera = Camera.main;
+            GetComponent<Canvas>().worldCamera = Player.inst.GetCamera();
         }
     }
 }

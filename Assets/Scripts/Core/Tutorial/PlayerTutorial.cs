@@ -39,9 +39,11 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         {
             var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
             messenger.dialog = (Dialog)Resources.Load("Game/Dialogs/M1", typeof(Dialog));
+            tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
+            TutorialsManager.SaveTutorial(tutorial);
             EnablePlayer(false);
         }
-        else if (!tutorial.m1_QuestCompleted)
+        else if (tutorial.startSystemName != "")
         {
             M1GenerateQuest(false);
         }
@@ -51,12 +53,14 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         if (Player.inst.quests.quests.Find(x => x.questID == int.MaxValue).GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)
         {
-            var rnd = new System.Random(NamesHolder.StringToSeed(PlayerDataManager.CurrentSolarSystem.name));
+            var rnd = new System.Random(NamesHolder.StringToSeed(tutorial.startSystemName));
             var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
             var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1) , rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
             point.transform.localPosition = pos;
             point.GetComponent<ContactObject>().Init();
             point.name = "Communist Space Unorbital Station";
+            tutorial.baseSystemName = PlayerDataManager.CurrentSolarSystem.name;
+            TutorialsManager.SaveTutorial(tutorial);
             StartCoroutine(M1AddStationUpdate());
         }
     }
@@ -90,9 +94,9 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         quest.questType = -1;
         quest.questID = int.MaxValue;
         quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
-        quest.appliedSolar = PlayerDataManager.CurrentSolarSystem.name;
+        quest.appliedSolar = tutorial.startSystemName;
         quest.appliedStation = "";
-        quest.GetPath(new System.Random(int.MaxValue), "Communists Base", PlayerDataManager.CurrentSolarSystem.name, 1, 3, false);
+        quest.GetPath(new System.Random(int.MaxValue), "Communists Base", tutorial.startSystemName, 1, 3, false);
         quest.GetLastQuestPath().targetName = "Communists Base";
         quest.toTransfer = new List<Item>();
         Player.inst.quests.ApplyQuest(quest, notify);

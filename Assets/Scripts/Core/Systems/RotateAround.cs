@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 using Random = System.Random;
 
@@ -21,7 +22,7 @@ namespace Core.Systems
         {
             DrawCircle(Vector3.Distance(transform.position, point.position));
             lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
-            camera = Camera.main;
+            camera = Player.inst.GetCamera();
             Rotate();
         }
 

@@ -13,248 +13,352 @@ MonoBehaviour:
   m_Name: GarbageMan
   m_EditorClassIdentifier: 
   nodeData:
-  - nodeGUID: e593b64152a0928469c09cf71974bca2
-    text: Be careful, they see everything here.
+  - text: Be careful, they see everything here.
+    nodeGUID: e593b64152a0928469c09cf71974bca2
     pos: {x: 349.33334, y: 199.33334}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
-    text: 
+    ports:
+    - portText: Who is watching that?
+      GUID: f41f61aa021b1d54490b8468c4ec12ff
+      order: 0
+      connections:
+      - targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
+        targetPortGUID: 9aeb68cf43f3fe540b33891c750babde
+    - portText: Moron?
+      GUID: a2083745091c25642b0c593b98ccca0b
+      order: 1
+      connections:
+      - targetNodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
+        targetPortGUID: bc72e273adc9785459b9923eeecbc57b
+    - portText: Goodbye
+      GUID: 445ebf4c07eb230418563e63d4bacbb2
+      order: 2
+      connections:
+      - targetNodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
+        targetPortGUID: 216883dea736b674397e8490cd1dfd1f
+    - portText: Auto
+      GUID: a2cfc6ce8e7297a42ae0417fba6823b4
+      order: 3
+      connections: []
+    entry: 1
+  - text: End
+    nodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
     pos: {x: 948.6667, y: 532.6667}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
-    text: What an idiot you are, I'm trying to save your life!
+    ports:
+    - portText: Action
+      GUID: e924c106b67610c47a5b1d369de759e6
+      order: 0
+      connections:
+      - targetNodeGUID: 8d0e2d6bc69f2e54285edcb5e76a1111
+        targetPortGUID: 5edc82d296ab8494288a304aecc521bf
+    entry: 0
+  - text: What an idiot you are, I'm trying to save your life!
+    nodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
     pos: {x: 931.3333, y: 334.66666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 8d0e2d6bc69f2e54285edcb5e76a1111
-    text: 
+    ports:
+    - portText: Well then talk
+      GUID: a9bc90b27d282424890bf245e482bc09
+      order: 0
+      connections:
+      - targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
+        targetPortGUID: 9aeb68cf43f3fe540b33891c750babde
+    - portText: I will not even try to delve into your nonsense.
+      GUID: ec9d5625bb062da4f977795283345041
+      order: 1
+      connections:
+      - targetNodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
+        targetPortGUID: c01ea4b2d2d895c429754739e236c8c2
+    - portText: Auto
+      GUID: 319f33a77458d6d42b55bb25a9df37fc
+      order: 2
+      connections: []
+    entry: 0
+  - text: Trigger
+    nodeGUID: 8d0e2d6bc69f2e54285edcb5e76a1111
     pos: {x: 1230.6666, y: 532.6667}
     character: 0
     nodeType: 2
     nodeAction: 0
-  - nodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
-    text: 
+    ports: []
+    entry: 0
+  - text: End
+    nodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
     pos: {x: 1577.3334, y: 356}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
-    text: 
+    ports:
+    - portText: Action
+      GUID: 47c30269061d12841b4f0b93e7e94135
+      order: 0
+      connections:
+      - targetNodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
+        targetPortGUID: 35aba59e8ee46c84cb8862029669e450
+    entry: 0
+  - text: Trigger
+    nodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
     pos: {x: 1855.3334, y: 356}
     character: 0
     nodeType: 2
     nodeAction: 2
-  - nodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-    text: Half of the crowd are party agents.
+    ports: []
+    entry: 0
+  - text: Half of the crowd are party agents.
+    nodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
     pos: {x: 1434.6666, y: -64}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 111dd2debe615ab42ae8f08167b733ea
-    text: I saw a guy speak out in a bar against modern party politics and ended
+    ports:
+    - portText: Auto
+      GUID: 3f6a1eccd07044f44bea299f42edeefc
+      order: 0
+      connections:
+      - targetNodeGUID: 111dd2debe615ab42ae8f08167b733ea
+        targetPortGUID: 899312179094b664f82c50a9a68cebf5
+    entry: 0
+  - text: I saw a guy speak out in a bar against modern party politics and ended
       up being found on Industrial O1.
+    nodeGUID: 111dd2debe615ab42ae8f08167b733ea
     pos: {x: 1678.6666, y: -64.666664}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 2134253dbe17d6b448fee45910207028
-    text: Local lifeforms unearthed his costume, separated the bones from the meat,
+    ports:
+    - portText: Auto
+      GUID: 33d89487748cf484ba9c17c566a1b1b2
+      order: 0
+      connections:
+      - targetNodeGUID: 2134253dbe17d6b448fee45910207028
+        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+    entry: 0
+  - text: Local lifeforms unearthed his costume, separated the bones from the meat,
       and began to worship the skeleton.
+    nodeGUID: 2134253dbe17d6b448fee45910207028
     pos: {x: 1936, y: -65.333336}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 7e00674240630fd46b142e82f7afaac3
-    text: You can fly over there and check it out.
+    ports:
+    - portText: Why aren't you afraid to tell me this?
+      GUID: 095824e0343f5ac4390237df7954e8f4
+      order: 0
+      connections:
+      - targetNodeGUID: 7e00674240630fd46b142e82f7afaac3
+        targetPortGUID: 537c7d41492d7dc4390dc85f08e39cac
+    - portText: Is there any proof?
+      GUID: 6301f8cf780ef0b4f9c74c88d9c6340f
+      order: 1
+      connections:
+      - targetNodeGUID: ccf9a4830be7d69499c077529cade1f3
+        targetPortGUID: d4bceb15957d1c94d8f09449703d88a2
+    - portText: I got you
+      GUID: 91ff305343dcdf942976ce6565358c87
+      order: 2
+      connections:
+      - targetNodeGUID: adeb1a5224f213641b7a37a6226d1d07
+        targetPortGUID: 95c30fab96d77b947828d6c23d5bbdd8
+    - portText: And what is the vector of the party now?
+      GUID: 6513052fe79cb224a9097f84b490fe34
+      order: 3
+      connections:
+      - targetNodeGUID: e593b64152a0928469c09cf71974bca2
+        targetPortGUID: 0a96294649d863d4b9a3d9298f916d74
+    - portText: Auto
+      GUID: c73527f5bda7f6f4aa4340887cfdad5f
+      order: 4
+      connections: []
+    entry: 0
+  - text: You can fly over there and check it out.
+    nodeGUID: 7e00674240630fd46b142e82f7afaac3
     pos: {x: 2490.6667, y: -169.33333}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: ccf9a4830be7d69499c077529cade1f3
-    text: They have enslaved all the Zinc deposits and are blackmailing other groups
+    ports:
+    - portText: Auto
+      GUID: 325116e017803f240bb9ff5ace39a4bd
+      order: 0
+      connections:
+      - targetNodeGUID: 2134253dbe17d6b448fee45910207028
+        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+    entry: 0
+  - text: They have enslaved all the Zinc deposits and are blackmailing other groups
       with it.
+    nodeGUID: ccf9a4830be7d69499c077529cade1f3
     pos: {x: 2490.6667, y: -50.666668}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 721c165c9e187c849bedd3c709d0f5d8
-    text: Because of this, mining caravans are constantly attacked by pirates, organized
+    ports:
+    - portText: Auto
+      GUID: e5e8815ef56e86648aad96e9f07a8026
+      order: 0
+      connections:
+      - targetNodeGUID: 721c165c9e187c849bedd3c709d0f5d8
+        targetPortGUID: 93a49672212c7c5448374a12fe62513f
+    entry: 0
+  - text: Because of this, mining caravans are constantly attacked by pirates, organized
       crime groups and the remnants of liberals.
+    nodeGUID: 721c165c9e187c849bedd3c709d0f5d8
     pos: {x: 2748.6667, y: -50.666668}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: af30c7f7edaf9104cbfe45e267cb169c
-    text: Moreover, the followers of the "Followers of Rationality" create Shaheed
+    ports:
+    - portText: Auto
+      GUID: 5990d31d668b4bc45b9307c91463e5e7
+      order: 0
+      connections:
+      - targetNodeGUID: af30c7f7edaf9104cbfe45e267cb169c
+        targetPortGUID: c0bdea11e0856a64d88d5da5392d0ad3
+    entry: 0
+  - text: Moreover, the followers of the "Followers of Rationality" create Shaheed
       fleets that leave no chance for survival.
+    nodeGUID: af30c7f7edaf9104cbfe45e267cb169c
     pos: {x: 3006, y: -52}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
-    text: As a result, a sad result, people do not want to mine zinc for fear of
+    ports:
+    - portText: Auto
+      GUID: e215a5efa2c32624b930a8701189d77a
+      order: 0
+      connections:
+      - targetNodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
+        targetPortGUID: 7f469eff6331f4d4aae4ffff534b7e80
+    entry: 0
+  - text: As a result, a sad result, people do not want to mine zinc for fear of
       death, and they are afraid not to mine for fear of death, a vicious circle
       turns out.
+    nodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
     pos: {x: 3280, y: -52}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: adeb1a5224f213641b7a37a6226d1d07
-    text: When you gave a request for communication, I connected you via an encrypted
+    ports:
+    - portText: Auto
+      GUID: 9e606ff962d972847ae910efcc909a4f
+      order: 0
+      connections:
+      - targetNodeGUID: 2134253dbe17d6b448fee45910207028
+        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+    entry: 0
+  - text: When you gave a request for communication, I connected you via an encrypted
       channel, they will not listen to us. But everyone understands that you are
       a goof, you do not have the distinguishing features of the group.
+    nodeGUID: adeb1a5224f213641b7a37a6226d1d07
     pos: {x: 2488, y: 117.99999}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 4d824f90eb691d448afa6680b06138ab
-    text: Yes, and I have nothing to lose, the family was killed by the Fortaks a
+    ports:
+    - portText: Auto
+      GUID: 37869c1028f7c284db2e08fa1447ef12
+      order: 0
+      connections:
+      - targetNodeGUID: 4d824f90eb691d448afa6680b06138ab
+        targetPortGUID: fcc8e045dc483f9439b9b9add22f320c
+    entry: 0
+  - text: Yes, and I have nothing to lose, the family was killed by the Fortaks a
       year ago, but nothing, and my hour will come.
+    nodeGUID: 4d824f90eb691d448afa6680b06138ab
     pos: {x: 2768.6667, y: 172.66667}
     character: 1
     nodeType: 0
     nodeAction: 0
-  nodesLinks:
-  - baseNodeGUID: 3ee0d51a9f2e4564288446c0ac7140f4
-    portName: Next Replica
-    targetNodeGUID: e593b64152a0928469c09cf71974bca2
-  - baseNodeGUID: e593b64152a0928469c09cf71974bca2
-    portName: Who is watching that?
-    targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-  - baseNodeGUID: e593b64152a0928469c09cf71974bca2
-    portName: Moron?
-    targetNodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
-  - baseNodeGUID: e593b64152a0928469c09cf71974bca2
-    portName: Goodbye
-    targetNodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
-  - baseNodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
-    portName: Action
-    targetNodeGUID: 8d0e2d6bc69f2e54285edcb5e76a1111
-  - baseNodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
-    portName: Well then talk
-    targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-  - baseNodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
-    portName: I will not even try to delve into your nonsense.
-    targetNodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
-  - baseNodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
-    portName: Action
-    targetNodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
-  - baseNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-    portName: Auto
-    targetNodeGUID: 111dd2debe615ab42ae8f08167b733ea
-  - baseNodeGUID: 111dd2debe615ab42ae8f08167b733ea
-    portName: Auto
-    targetNodeGUID: 2134253dbe17d6b448fee45910207028
-  - baseNodeGUID: 2134253dbe17d6b448fee45910207028
-    portName: Is there any proof?
-    targetNodeGUID: 7e00674240630fd46b142e82f7afaac3
-  - baseNodeGUID: 2134253dbe17d6b448fee45910207028
-    portName: And what is the vector of the party now?
-    targetNodeGUID: ccf9a4830be7d69499c077529cade1f3
-  - baseNodeGUID: 2134253dbe17d6b448fee45910207028
-    portName: Why aren't you afraid to tell me this?
-    targetNodeGUID: adeb1a5224f213641b7a37a6226d1d07
-  - baseNodeGUID: 2134253dbe17d6b448fee45910207028
-    portName: I got you
-    targetNodeGUID: e593b64152a0928469c09cf71974bca2
-  - baseNodeGUID: 7e00674240630fd46b142e82f7afaac3
-    portName: Auto
-    targetNodeGUID: 2134253dbe17d6b448fee45910207028
-  - baseNodeGUID: ccf9a4830be7d69499c077529cade1f3
-    portName: Auto
-    targetNodeGUID: 721c165c9e187c849bedd3c709d0f5d8
-  - baseNodeGUID: 721c165c9e187c849bedd3c709d0f5d8
-    portName: Auto
-    targetNodeGUID: af30c7f7edaf9104cbfe45e267cb169c
-  - baseNodeGUID: af30c7f7edaf9104cbfe45e267cb169c
-    portName: Auto
-    targetNodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
-  - baseNodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
-    portName: Auto
-    targetNodeGUID: 2134253dbe17d6b448fee45910207028
-  - baseNodeGUID: adeb1a5224f213641b7a37a6226d1d07
-    portName: Auto
-    targetNodeGUID: 4d824f90eb691d448afa6680b06138ab
-  - baseNodeGUID: 4d824f90eb691d448afa6680b06138ab
-    portName: Auto
-    targetNodeGUID: e593b64152a0928469c09cf71974bca2
+    ports:
+    - portText: Auto
+      GUID: 1e4f0c558da5fda409f6963e6f0bb598
+      order: 0
+      connections:
+      - targetNodeGUID: e593b64152a0928469c09cf71974bca2
+        targetPortGUID: 0a96294649d863d4b9a3d9298f916d74
+    entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"e593b64152a0928469c09cf71974bca2\",\r\n   
     \"text\": \"Be careful, they see everything here.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\": \"Who is watching
-    that?\",\r\n        \"nextGUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\"\r\n     
+    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n       
+    \"replica\": \"Who is watching that?\",\r\n        \"nextGUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\"\r\n     
     },\r\n      {\r\n        \"replica\": \"Moron?\",\r\n        \"nextGUID\": \"28ecb8e86bae27a40bcfda7ae3780c6a\"\r\n     
     },\r\n      {\r\n        \"replica\": \"Goodbye\",\r\n        \"nextGUID\": \"2c6d88f8dd6d833459ca8a7ed4e3fd22\"\r\n     
     }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"2c6d88f8dd6d833459ca8a7ed4e3fd22\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"classname\": 4,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"8d0e2d6bc69f2e54285edcb5e76a1111\",\r\n   
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"8d0e2d6bc69f2e54285edcb5e76a1111\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"28ecb8e86bae27a40bcfda7ae3780c6a\",\r\n   
     \"text\": \"What an idiot you are, I'm trying to save your life!\",\r\n    \"type\":
-    0,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
-    \"Well then talk\",\r\n        \"nextGUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\"\r\n     
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n     
+    {\r\n        \"replica\": \"Well then talk\",\r\n        \"nextGUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\"\r\n     
     },\r\n      {\r\n        \"replica\": \"I will not even try to delve into your
     nonsense.\",\r\n        \"nextGUID\": \"aa3b79d4e0c8e6248ade62fdabd0b6d2\"\r\n     
     }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"8d0e2d6bc69f2e54285edcb5e76a1111\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"classname\": 3,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    []\r\n  },\r\n  {\r\n    \"GUID\": \"aa3b79d4e0c8e6248ade62fdabd0b6d2\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"classname\": 4,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"2781aa3f4a3d4d74a819fc4fd87b69c9\",\r\n   
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"aa3b79d4e0c8e6248ade62fdabd0b6d2\",\r\n   
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"2781aa3f4a3d4d74a819fc4fd87b69c9\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"2781aa3f4a3d4d74a819fc4fd87b69c9\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"classname\": 3,\r\n    \"action\":
-    2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    []\r\n  },\r\n  {\r\n    \"GUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\",\r\n   
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"3ae13fad8ebd7cb44bded47d8964eb0b\",\r\n   
     \"text\": \"Half of the crowd are party agents.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"111dd2debe615ab42ae8f08167b733ea\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"111dd2debe615ab42ae8f08167b733ea\",\r\n   
     \"text\": \"I saw a guy speak out in a bar against modern party politics and
-    ended up being found on Industrial O1.\",\r\n    \"type\": 0,\r\n    \"classname\":
-    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    ended up being found on Industrial O1.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
     \"text\": \"Local lifeforms unearthed his costume, separated the bones from the
-    meat, and began to worship the skeleton.\",\r\n    \"type\": 0,\r\n    \"classname\":
-    2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
-    \"nexts\": [\r\n      {\r\n        \"replica\": \"Is there any proof?\",\r\n       
-    \"nextGUID\": \"7e00674240630fd46b142e82f7afaac3\"\r\n      },\r\n      {\r\n       
-    \"replica\": \"And what is the vector of the party now?\",\r\n        \"nextGUID\":
+    meat, and began to worship the skeleton.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
+    \"Why aren't you afraid to tell me this?\",\r\n        \"nextGUID\": \"7e00674240630fd46b142e82f7afaac3\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Is there any proof?\",\r\n        \"nextGUID\":
     \"ccf9a4830be7d69499c077529cade1f3\"\r\n      },\r\n      {\r\n        \"replica\":
-    \"Why aren't you afraid to tell me this?\",\r\n        \"nextGUID\": \"adeb1a5224f213641b7a37a6226d1d07\"\r\n     
-    },\r\n      {\r\n        \"replica\": \"I got you\",\r\n        \"nextGUID\":
-    \"e593b64152a0928469c09cf71974bca2\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
-    \"GUID\": \"7e00674240630fd46b142e82f7afaac3\",\r\n    \"text\": \"You can fly
-    over there and check it out.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n   
-    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    \"I got you\",\r\n        \"nextGUID\": \"adeb1a5224f213641b7a37a6226d1d07\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"And what is the vector of the party now?\",\r\n       
+    \"nextGUID\": \"e593b64152a0928469c09cf71974bca2\"\r\n      }\r\n    ]\r\n  },\r\n 
+    {\r\n    \"GUID\": \"7e00674240630fd46b142e82f7afaac3\",\r\n    \"text\": \"You
+    can fly over there and check it out.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"ccf9a4830be7d69499c077529cade1f3\",\r\n   
     \"text\": \"They have enslaved all the Zinc deposits and are blackmailing other
-    groups with it.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   
+    groups with it.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   
     \"text\": \"Because of this, mining caravans are constantly attacked by pirates,
     organized crime groups and the remnants of liberals.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"af30c7f7edaf9104cbfe45e267cb169c\",\r\n   
     \"text\": \"Moreover, the followers of the \\\"Followers of Rationality\\\" create
     Shaheed fleets that leave no chance for survival.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"8691bea54c04bef48a2a65b87a7dfa09\",\r\n   
     \"text\": \"As a result, a sad result, people do not want to mine zinc for fear
     of death, and they are afraid not to mine for fear of death, a vicious circle
-    turns out.\",\r\n    \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\":
-    0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n    \"triggerGUID\":
-    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"adeb1a5224f213641b7a37a6226d1d07\",\r\n   
+    turns out.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"adeb1a5224f213641b7a37a6226d1d07\",\r\n   
     \"text\": \"When you gave a request for communication, I connected you via an
     encrypted channel, they will not listen to us. But everyone understands that
     you are a goof, you do not have the distinguishing features of the group.\",\r\n   
-    \"type\": 0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
-    \"4d824f90eb691d448afa6680b06138ab\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    []\r\n  },\r\n  {\r\n    \"GUID\": \"4d824f90eb691d448afa6680b06138ab\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"4d824f90eb691d448afa6680b06138ab\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"4d824f90eb691d448afa6680b06138ab\",\r\n   
     \"text\": \"Yes, and I have nothing to lose, the family was killed by the Fortaks
     a year ago, but nothing, and my hour will come.\",\r\n    \"type\": 0,\r\n   
-    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"e593b64152a0928469c09cf71974bca2\",\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  }\r\n]"
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"e593b64152a0928469c09cf71974bca2\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  }\r\n]"

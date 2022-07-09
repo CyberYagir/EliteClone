@@ -13,34 +13,46 @@ MonoBehaviour:
   m_Name: LeninMan
   m_EditorClassIdentifier: 
   nodeData:
-  - nodeGUID: 9e0909fc101c64846b48cfc0a7a9a9a3
-    text: How beautiful is the face of Vladimir Lenin!
+  - text: How beautiful is the face of Vladimir Lenin!
+    nodeGUID: 9e0909fc101c64846b48cfc0a7a9a9a3
     pos: {x: 406, y: 199.33334}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 7386464b20908c14385e24f47b6fbf2f
-    text: A little more and the October Revolution will know the galactic scale!
+    ports:
+    - portText: Auto
+      GUID: ad34aca42fc47304a8a2f5ef00168531
+      order: 0
+      connections:
+      - targetNodeGUID: 7386464b20908c14385e24f47b6fbf2f
+        targetPortGUID: 12aadd0720a6363428c260fa8e7f206b
+    entry: 1
+  - text: A little more and the October Revolution will know the galactic scale!
+    nodeGUID: 7386464b20908c14385e24f47b6fbf2f
     pos: {x: 751.3333, y: 199.33334}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: fa59c75f20c2d7041a539c5b4d03a7d2
-    text: 
+    ports:
+    - portText: Auto
+      GUID: d9cb2a04b7fd4204ca631ef6d3298268
+      order: 0
+      connections:
+      - targetNodeGUID: fa59c75f20c2d7041a539c5b4d03a7d2
+        targetPortGUID: bd0de52092211654d9af2d51bef78851
+    entry: 0
+  - text: End
+    nodeGUID: fa59c75f20c2d7041a539c5b4d03a7d2
     pos: {x: 1041.3334, y: 199.33334}
     character: 0
     nodeType: 1
     nodeAction: 0
-  nodesLinks:
-  - baseNodeGUID: a05f59ead936dac4892843c6abaa9cab
-    portName: Next Replica
-    targetNodeGUID: 9e0909fc101c64846b48cfc0a7a9a9a3
-  - baseNodeGUID: 9e0909fc101c64846b48cfc0a7a9a9a3
-    portName: Auto
-    targetNodeGUID: 7386464b20908c14385e24f47b6fbf2f
-  - baseNodeGUID: 7386464b20908c14385e24f47b6fbf2f
-    portName: Auto
-    targetNodeGUID: fa59c75f20c2d7041a539c5b4d03a7d2
+    ports:
+    - portText: Action
+      GUID: dbed484d058f4fc4ab72e569cd9d832d
+      order: 0
+      connections: []
+    entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"9e0909fc101c64846b48cfc0a7a9a9a3\",\r\n   
     \"text\": \"How beautiful is the face of Vladimir Lenin!\",\r\n    \"type\":
     0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
@@ -50,6 +62,6 @@ MonoBehaviour:
     \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
     0,\r\n    \"nextGUID\": \"fa59c75f20c2d7041a539c5b4d03a7d2\",\r\n    \"triggerGUID\":
     null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"fa59c75f20c2d7041a539c5b4d03a7d2\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
     4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
     \"nexts\": []\r\n  }\r\n]"

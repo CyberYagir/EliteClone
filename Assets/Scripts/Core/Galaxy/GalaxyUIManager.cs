@@ -1,12 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace Core.Galaxy
 {
     public class GalaxyUIManager : MonoBehaviour
     {
-        public Transform selectGalaxyCursor;
-    
-
+        [SerializeField] private Transform selectGalaxyCursor;
+        [SerializeField] private Camera camera;
         private void Update()
         {
             SelectSystemIcon();
@@ -17,10 +17,10 @@ namespace Core.Galaxy
             selectGalaxyCursor.gameObject.SetActive(GalaxyManager.selectedPoint != null);
             if (GalaxyManager.selectedPoint)
             {
-                if (Vector3.Angle(Camera.main.transform.forward, GalaxyManager.selectedPoint.transform.position - Camera.main.transform.position) < 90)
+                if (Vector3.Angle(camera.transform.forward, GalaxyManager.selectedPoint.transform.position - camera.transform.position) < 90)
                 {
                     var oldPos = selectGalaxyCursor.transform.position;
-                    selectGalaxyCursor.transform.position = Camera.main.WorldToScreenPoint(GalaxyManager.selectedPoint.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+                    selectGalaxyCursor.transform.position = camera.WorldToScreenPoint(GalaxyManager.selectedPoint.transform.position, Camera.MonoOrStereoscopicEye.Mono);
                     selectGalaxyCursor.transform.localPosition = new Vector3(selectGalaxyCursor.transform.localPosition.x, selectGalaxyCursor.transform.localPosition.y, 0);
                     var newPos = selectGalaxyCursor.transform.position;
                     selectGalaxyCursor.transform.position = oldPos;

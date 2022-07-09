@@ -6,18 +6,31 @@ namespace Core.PlayerScripts
 {
     public class ShipController : MonoBehaviour
     {
-        public float horizontal, vertical, yaw;
-        public float axisSence;
-        public bool freezeControl, headView;
-        public Player player;
+        public enum MoveMode
+        {
+            S,
+            F,
+            B
+        }
 
-        public enum MoveMode { S, F, B }
-        public MoveMode moveMode = MoveMode.S;
+        
+        
+        public float horizontal { get; private set; }
+        public float vertical { get; private set; }
+        public float yaw { get; private set; }
+        public float axisSence { get; private set; } = 5;
+        public bool headView { get; private set; }
+        public MoveMode moveMode { get; private set; } = MoveMode.S;
+        public float speed { get; private set; }
+        public Camera Camera => mainCamera;
 
+        [SerializeField] private Camera mainCamera;
+
+        private bool freezeControl;
+        private Player player;
         private Rigidbody rigidbody;
-
-        public float speed;
         private float collisionCooldown;
+
         private void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
@@ -34,6 +47,7 @@ namespace Core.PlayerScripts
                 speed = player.Ship().data.maxSpeedUnits * 0.05f;
                 moveMode = MoveMode.B;
             }
+
             player.TakeDamageHeath(0);
             WarningManager.AddWarning("Damage when touched by the mesh.", WarningTypes.Damage);
         }
@@ -68,8 +82,9 @@ namespace Core.PlayerScripts
                 horizontal = Mathf.Clamp(horizontal, -1, 1);
                 vertical = Mathf.Clamp(vertical, -1, 1);
                 yaw = Input.GetAxis("Horizontal") * Time.deltaTime;
-            
+
             }
+
             transform.rotation *= Quaternion.Euler(player.Ship().data.XRotSpeed * -vertical * Time.deltaTime, player.Ship().data.YRotSpeed * yaw, player.Ship().data.ZRotSpeed * -horizontal * Time.deltaTime);
         }
 
@@ -78,15 +93,16 @@ namespace Core.PlayerScripts
             speed = Mathf.Lerp(speed, 0, 20 * Time.deltaTime);
             if (player.warp.warpSpeed > 200)
             {
-                player.TakeDamageHeath((player.warp.warpSpeed/1000f) * 100);
+                player.TakeDamageHeath((player.warp.warpSpeed / 1000f) * 100);
             }
+
             player.warp.warpSpeed = Mathf.Lerp(player.warp.warpSpeed, 0, 20 * Time.deltaTime);
             if (speed < 0.001f) speed = 0;
             if (player.warp.warpSpeed < 0.001f) player.warp.warpSpeed = 0;
-        
+
             rigidbody.velocity = transform.forward * (speed + player.warp.warpSpeed);
         }
-    
+
         public void CheckMinDistanceToObjects()
         {
             if (World.Scene == Scenes.System)
@@ -128,12 +144,14 @@ namespace Core.PlayerScripts
                 {
                     moveMode = MoveMode.F;
                 }
+
                 if (InputM.GetAxis(KAction.Vertical) < 0)
                 {
                     moveMode = MoveMode.B;
                 }
             }
         }
+
         public void ForceAndWarpControl()
         {
             if (!player.warp.isWarp)
@@ -151,6 +169,7 @@ namespace Core.PlayerScripts
                         player.warp.warpSpeed = player.warp.maxLocationSpeed;
                     }
                 }
+
                 if (player.warp.warpSpeed < 0)
                 {
                     player.warp.WarpStop();
@@ -186,17 +205,20 @@ namespace Core.PlayerScripts
         {
             var fuel = Player.inst.Ship().GetValue(Fuel);
             if (fuel.value < fuel.max * 0.3f)
-            { 
+            {
                 WarningManager.AddWarning("Not enough fuel in the tank.", WarningTypes.Fuel);
             }
+
             if (fuel.value <= 0)
             {
                 return false;
             }
+
             return true;
         }
 
         private const float locationSpeedUp = 5;
+
         public void ForwardBackward()
         {
             ForwardBackwardMove();
@@ -213,6 +235,19 @@ namespace Core.PlayerScripts
                     rigidbody.velocity = transform.forward * (calcSpeed + player.warp.warpSpeed);
                 }
             }
+        }
+
+        public void SetZero()
+        {
+            horizontal = 0;
+            vertical = 0;
+            speed = 0;
+        }
+
+        public void HardStop()
+        {
+            speed = 0;
+            rigidbody.velocity = Vector3.zero;
         }
     }
 }

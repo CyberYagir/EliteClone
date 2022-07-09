@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
+  m_Name: DysonMan
+  m_EditorClassIdentifier: 
+  nodeData:
+  - text: Hi, I'm Xfyun Fksng from Sagittarius Arm.
+    nodeGUID: 19f81081137fb034d86a17331a5daa27
+    pos: {x: 352.66666, y: 200}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: What are you doing here?
+      GUID: 0367be6598bee6f47928d5a5401bd953
+      order: 0
+      connections:
+      - targetNodeGUID: 4081cb96b89406a40a6a1e869a7f6dce
+        targetPortGUID: 8e4c1e879188dd24daf140993f808766
+    - portText: How do you know the language?
+      GUID: 108bb6c8fd7f43542a385d2ba9a3b043
+      order: 1
+      connections:
+      - targetNodeGUID: dbcd2596a09e471469c041febdfec09b
+        targetPortGUID: 02fb2964e4f70004eb7d7fab5db9d792
+    - portText: Bye
+      GUID: 4ee4b632e69341d41af7ce1daf00075f
+      order: 2
+      connections:
+      - targetNodeGUID: 5a4a67ffafc14aa4b814e448dbdaea8e
+        targetPortGUID: 93c4febfc963499458c651f8989c3e37
+    - portText: Auto
+      GUID: 633e662d1dcaef942bcb2356c8b23380
+      order: 3
+      connections: []
+    entry: 1
+  - text: Clouds of small builder robots are created, which extract resources in
+      systems and build a sphere. Also, these robots build themselves.
+    nodeGUID: 7fef34bcdfc33c14989ed26899bae447
+    pos: {x: 1396, y: -167.33333}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 081f62fa86990494f8c183aac35e6451
+      order: 0
+      connections:
+      - targetNodeGUID: 19f81081137fb034d86a17331a5daa27
+        targetPortGUID: 3d8324c7525a41143aac9280aef69c70
+    entry: 0
+  - text: Specialist in the construction of Dyson spheres. I'm here for refresher
+      courses.
+    nodeGUID: 4081cb96b89406a40a6a1e869a7f6dce
+    pos: {x: 631.3333, y: -141.33333}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: And how are Dyson spheres created?
+      GUID: 3cb55ad02a4fb2b40b2ffad660f5ac21
+      order: 0
+      connections:
+      - targetNodeGUID: 7fef34bcdfc33c14989ed26899bae447
+        targetPortGUID: 974c0e591853bea4db34f8c151548cfa
+    - portText: OK
+      GUID: 01ac791acf3ead24389d620654332ebf
+      order: 1
+      connections:
+      - targetNodeGUID: 19f81081137fb034d86a17331a5daa27
+        targetPortGUID: 3d8324c7525a41143aac9280aef69c70
+    - portText: Auto
+      GUID: b3a99f670c776d44f8ee82f84847d505
+      order: 2
+      connections: []
+    entry: 0
+  - text: My youth was spent among people, and my studies too. That is why I know
+      that Dyson spheres are Dyson spheres and not Clearorp
+    nodeGUID: dbcd2596a09e471469c041febdfec09b
+    pos: {x: 964, y: 170}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 422ffc67ad42cdd4da024de6c0bfe5ec
+      order: 0
+      connections:
+      - targetNodeGUID: 19f81081137fb034d86a17331a5daa27
+        targetPortGUID: 3d8324c7525a41143aac9280aef69c70
+    entry: 0
+  - text: End Node
+    nodeGUID: 5a4a67ffafc14aa4b814e448dbdaea8e
+    pos: {x: 974.6667, y: 373.3333}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+    ports:
+    - portText: Action
+      GUID: 7b44693eded366f44935f03d2f7dc95b
+      order: 0
+      connections: []
+    entry: 0
+  replicasJson: "[\r\n  {\r\n    \"GUID\": \"19f81081137fb034d86a17331a5daa27\",\r\n   
+    \"text\": \"Hi, I'm Xfyun Fksng from Sagittarius Arm.\",\r\n    \"type\": 0,\r\n   
+    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n       
+    \"replica\": \"What are you doing here?\",\r\n        \"nextGUID\": \"4081cb96b89406a40a6a1e869a7f6dce\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"How do you know the language?\",\r\n       
+    \"nextGUID\": \"dbcd2596a09e471469c041febdfec09b\"\r\n      },\r\n      {\r\n       
+    \"replica\": \"Bye\",\r\n        \"nextGUID\": \"5a4a67ffafc14aa4b814e448dbdaea8e\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"7fef34bcdfc33c14989ed26899bae447\",\r\n   
+    \"text\": \"Clouds of small builder robots are created, which extract resources
+    in systems and build a sphere. Also, these robots build themselves.\",\r\n   
+    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": \"19f81081137fb034d86a17331a5daa27\",\r\n    \"triggerGUID\":
+    null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"4081cb96b89406a40a6a1e869a7f6dce\",\r\n   
+    \"text\": \"Specialist in the construction of Dyson spheres. I'm here for refresher
+    courses.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
+    2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": [\r\n      {\r\n        \"replica\": \"And how are Dyson spheres created?\",\r\n       
+    \"nextGUID\": \"7fef34bcdfc33c14989ed26899bae447\"\r\n      },\r\n      {\r\n       
+    \"replica\": \"OK\",\r\n        \"nextGUID\": \"19f81081137fb034d86a17331a5daa27\"\r\n     
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"dbcd2596a09e471469c041febdfec09b\",\r\n   
+    \"text\": \"My youth was spent among people, and my studies too. That is why
+    I know that Dyson spheres are Dyson spheres and not Clearorp\",\r\n    \"type\":
+    0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"19f81081137fb034d86a17331a5daa27\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"5a4a67ffafc14aa4b814e448dbdaea8e\",\r\n   
+    \"text\": \"End Node\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  }\r\n]"

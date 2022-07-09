@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Core.PlayerScripts;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Core.Demo
         [SerializeField] private ParticleSystem shootParticles;
         [SerializeField] private Camera camera;
 
+        private float skipTime;
+        
         private float textShowTimer;
         private bool timerShowed;
 
@@ -38,6 +41,16 @@ namespace Core.Demo
 
         private void LateUpdate()
         {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                skipTime += Time.deltaTime;
+                if (skipTime >= 5)
+                {
+                    DemoMoveToGalaxy.LoadGalaxyLocation();
+                    skipTime = 0;
+                }
+            }
+            else skipTime = 0;
             lateTime += Time.unscaledDeltaTime;
         }
 

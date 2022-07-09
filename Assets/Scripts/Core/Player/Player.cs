@@ -65,9 +65,7 @@ namespace Core.PlayerScripts
     
         public void StopAxis()
         {
-            control.horizontal = 0;
-            control.vertical = 0;
-            control.speed = 0;
+            control.SetZero();
             GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     
@@ -102,8 +100,7 @@ namespace Core.PlayerScripts
 
         public void HardStop()
         {
-            control.speed = 0;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            control.HardStop();
         }
         public void Init()
         {
@@ -179,6 +176,11 @@ namespace Core.PlayerScripts
             {
                 World.LoadLevel(Scenes.Death);
             }
+        }
+
+        public Camera GetCamera()
+        {
+            return control.Camera;
         }
     }
 }

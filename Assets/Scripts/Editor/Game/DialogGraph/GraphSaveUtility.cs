@@ -24,51 +24,115 @@ public class GraphSaveUtility
     private List<Edge> edges => target.edges.ToList();
     private List<ExtendedNode> nodes => target.nodes.ToList().Cast<ExtendedNode>().ToList();
 
-    public void SaveGraph(ExtendedDialog file)
+    
+    public void SaveGraphNew(ExtendedDialog file)
     {
-        if (!edges.Any()) return;
-
         var dialogContainer = ScriptableObject.CreateInstance<ExtendedDialog>();
-
-        var connectedPorts = edges.Where(x => x.input.node != null).ToArray();
-
-        for (int i = 0; i < connectedPorts.Length; i++)
+        foreach (var dialogue in nodes.Where(node => node.NodeType != NodeType.Entry))
         {
-            var input = connectedPorts[i].input.node as ExtendedNode;
-            var output = connectedPorts[i].output.node as ExtendedNode;
-            
-            dialogContainer.nodesLinks.Add(new NodeLink()
-            {
-                baseNodeGUID = output.GUID,
-                portName = connectedPorts[i].output.portName,
-                targetNodeGUID = input.GUID
-            });
-        }
-
-        foreach (var dialogue in nodes.Where(node=>node.NodeType != NodeType.Entry))
-        {
-            dialogContainer.nodeData.Add(new NodeData()
+            var nodeData = new NodeData()
             {
                 nodeGUID = dialogue.GUID,
                 text = dialogue.text,
-                pos = dialogue.GetPosition().position, 
-                character = (int)dialogue.character,
-                nodeType = (int)dialogue.NodeType,
-                nodeAction = (int)dialogue.actions
-            });
+                pos = dialogue.GetPosition().position,
+                character = (int) dialogue.character,
+                nodeType = (int) dialogue.NodeType,
+                nodeAction = (int) dialogue.actions,
+                ports = new List<NodeData.PortData>()
+            };
+
+            foreach (var obj in dialogue.outputContainer.Children())
+            {
+                if (obj is Port)
+                {
+                    var port = obj as Port;
+                    var data = port.Q<DataElement>();
+                    var portData = new NodeData.PortData()
+                    {
+                        portText = data.text,
+                        order = data.order,
+                        GUID = data.GetGUID(),
+                        connections = new List<NodeData.PortData.ConnectData>()
+                    };
+                    if (port.connected)
+                    {
+                        foreach (var edge in port.connections)
+                        {
+                            portData.connections.Add(new NodeData.PortData.ConnectData()
+                            {
+                                targetNodeGUID = (edge.input.node as ExtendedNode).GUID,
+                                targetPortGUID = (edge.input).Q<DataElement>().GetGUID()
+                            });
+                        }
+                    }
+
+                    nodeData.ports.Add(portData);
+                }
+
+
+
+                
+                // if (dialogue.text == "Thanks to the Ancients for Lenin Marx and Engels!")
+                // {
+                //     if (dialogue.inputContainer.childCount != 0)
+                //     {
+                //         var inputPort = (dialogue.inputContainer.ElementAt(0) as Port);
+                //         if (inputPort.connected)
+                //         {
+                //             foreach (var connection in inputPort.connections)
+                //             {
+                //                 Debug.Log((connection.input.node as ExtendedNode).NodeType);
+                //                 if ((connection.input.node as ExtendedNode).NodeType == NodeType.Entry)
+                //                 {
+                //                     nodeData.entry = true;
+                //                     break;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+            }
+
+           
+            if (nodeData.ports.Count != 0)
+            {
+                nodeData.ports = nodeData.ports.OrderBy(x => x.order).ToList();
+            }
+
+            
+            dialogContainer.nodeData.Add(nodeData);
+            
+        }
+        
+                    
+        var start = nodes.Find(x => x.NodeType == NodeType.Entry).outputContainer.ElementAt(0) as Port;
+        if (start.connected)
+        {
+            var node = start.connections.ElementAt(0).input.node as ExtendedNode;
+            if (node != null)
+            {
+                dialogContainer.nodeData.Find(x => x.nodeGUID == node.GUID).entry = true;
+            }
+        }
+
+        var entry = dialogContainer.nodeData.Find(x => x.entry);
+        if (entry != null)
+        {
+            dialogContainer.nodeData.RemoveAll(x => x.nodeGUID == entry.nodeGUID);
+            dialogContainer.nodeData.Insert(0, entry);
         }
 
         try
         {
 
-            dialogContainer.replicasJson = ConvertToChain();
+            dialogContainer.replicasJson = ConvertToChain(entry?.nodeGUID);
         }
         catch (Exception e)
         {
             
             Debug.LogError("Convert To Dialog Error\n" + e.Message);
         }
-        
+
         var path = "";
         if (file != null)
         {
@@ -79,17 +143,132 @@ public class GraphSaveUtility
         {
             AssetDatabase.CreateAsset(dialogContainer, path);
         }
+
         AssetDatabase.Refresh();
         AssetDatabase.SaveAssets();
-        
+
         ExtendedDialogsGraph.GetGraph().fileName = path;
         ExtendedDialogsGraph.GetGraph().file = AssetDatabase.LoadAssetAtPath<ExtendedDialog>(path);
+    }
+    
+
+    public void LoadGraphNew(ExtendedDialog file)
+    {
+        if (file != null)
+        {
+            ClearGraph(file);
+            CreateNewNodes(file);
+            ConnectNewNodes(file);
+        }
+    }
+
+    private void CreateNewNodes(ExtendedDialog file)
+    {
+        foreach (var node in file.nodeData)
+        {
+            NodeType type = (NodeType) node.nodeType;
+
+            var tmpNode = target.CreateNode(type);
+
+            tmpNode.GUID = node.nodeGUID;
+            tmpNode.text = node.text;
+
+            if (type == NodeType.Action)
+            {
+                tmpNode.actions = (Actions) node.nodeAction;
+                tmpNode.actionUIEl.SetValueWithoutNotify(tmpNode.actions);
+            }
+
+            tmpNode.character = (Characters) node.character;
+            tmpNode.characterUIEl.value = (tmpNode.character);
+            tmpNode.UpdateText(tmpNode.text);
+
+            tmpNode.SetPosition(new Rect(node.pos, ExtendedDialogGraphView.nodeSize));
+            foreach (var port in node.ports.OrderBy(x=>x.order))
+            {
+                if (port.portText != "Auto" && port.portText != "Action")
+                {
+                    target.AddChoicePort(tmpNode, port.portText, port.order, port.GUID);
+                }
+            }
 
 
+            SetPortByNameGUID(node, tmpNode, "Auto");
+            SetPortByNameGUID(node, tmpNode, "Action");
+
+
+            tmpNode.RefreshPorts();
+            tmpNode.RefreshExpandedState();
+        }
     }
 
 
-    public string ConvertToChain()
+    public void SetPortByNameGUID(NodeData node, ExtendedNode tmpNode, string portName)
+    {
+        var autoPort = node.ports.Find(x => x.portText == portName);
+        if (autoPort != null){
+            foreach (var port in tmpNode.outputContainer.Children())
+            {
+                if (port is Port)
+                {
+                    var ordered = port as Port;
+                    if (ordered.portName == portName)
+                    {
+                        ordered.Q<DataElement>().SetGUID(autoPort.GUID);
+                    }
+                }
+            }
+        } 
+    }
+
+    private void ConnectNewNodes(ExtendedDialog file)
+    {
+        foreach (var node in file.nodeData)
+        {
+            var createdNode = nodes.Find(x => x.GUID == node.nodeGUID);
+            if (node.entry)
+            {
+                LinkNodes(nodes.Find(x=>x.NodeType == NodeType.Entry).outputContainer.ElementAt(0) as Port, createdNode.inputContainer.ElementAt(0) as Port);
+            }
+            
+            foreach (var port in node.ports)
+            {
+                Port findedPort = FindPort(createdNode, port.GUID, createdNode.outputContainer.Children().ToList());
+                if (findedPort != null)
+                {
+                    foreach (var conn in port.connections)
+                    {
+                        var targetNode = nodes.Find(x => x.GUID == conn.targetNodeGUID);
+                        var targetPort = targetNode.inputContainer.ElementAt(0) as Port;
+                        if (targetPort != null)
+                        {
+                            LinkNodes(findedPort, targetPort);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public Port FindPort(ExtendedNode createdNode, string portGUID, List<VisualElement> container)
+    {
+        foreach (var x in container)
+        {
+            if (x is Port)
+            {
+                var ordered = (x as Port);
+                if (ordered.Q<DataElement>().GetGUID() == portGUID)
+                {
+                    return ordered;
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+    public string ConvertToChain(string entryGUID)
     {
         var chain = new List<NodeReplicaData>();
         var list = nodes.Where(node => node.NodeType != NodeType.Entry);
@@ -127,6 +306,13 @@ public class GraphSaveUtility
             chain.Add(node);
         }
 
+        if (!string.IsNullOrEmpty(entryGUID))
+        {
+            var entry = chain.Find(x => x.GUID == entryGUID);
+            chain.RemoveAll(x => x.GUID == entryGUID);
+            chain.Insert(0, entry);
+        }
+        
         foreach (var dialogue in list)
         {
             var chainPart = chain.Find(x => x.GUID == dialogue.GUID);
@@ -190,42 +376,17 @@ public class GraphSaveUtility
                 }
             }
         }
-
+        
+        
 
         return JsonConvert.SerializeObject(chain, Formatting.Indented);
-    }
     
     
 
     
     
     
-    public void LoadGraph(ExtendedDialog file)
-    {
-        if (file != null)
-        {
-            ClearGraph(file);
-            CreateNodes(file);
-            ConnectNodes(file);
-        }
     }
-
-    private void ConnectNodes(ExtendedDialog file)
-    {
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            var connections = file.nodesLinks.Where(x => x.baseNodeGUID == nodes[i].GUID).ToList();
-            for (int j = 0; j < connections.Count; j++)
-            {
-                var targetNodeGUID = connections[j].targetNodeGUID;
-                var targetNode = nodes.First(x => x.GUID == targetNodeGUID);
-                LinkNodes(nodes[i].outputContainer[j].Q<Port>(), (Port) targetNode.inputContainer[0]);
-                
-                targetNode.SetPosition(new Rect(file.nodeData.First(x=>x.nodeGUID == targetNodeGUID).pos, ExtendedDialogGraphView.nodeSize));
-            }
-        }
-    }
-
     private void LinkNodes(Port output, Port input)
     {
         var tmpEdge = new Edge()
@@ -239,47 +400,8 @@ public class GraphSaveUtility
         
         target.Add(tmpEdge);
     }
-
-    private void CreateNodes(ExtendedDialog file)
-    {
-        foreach (var node in file.nodeData)
-        {
-            NodeType type = (NodeType) node.nodeType;
-            
-            var tmpNode = target.CreateNode(type);
-            
-            tmpNode.GUID = node.nodeGUID;
-            tmpNode.text = node.text;
-            //tmpNode.title = node.text;
-            
-            if (type == NodeType.Action)
-            {
-                tmpNode.actions = (Actions) node.nodeAction;
-                tmpNode.actionUIEl.SetValueWithoutNotify(tmpNode.actions);
-            }
-
-            tmpNode.character = (Characters)node.character;
-            tmpNode.characterUIEl.value = (tmpNode.character);
-            tmpNode.UpdateText(tmpNode.text);
-            var ports = file.nodesLinks.Where(x => x.baseNodeGUID == node.nodeGUID).ToList();
-
-            ports.ForEach(x=>
-            {
-                if (x.portName != "Auto" && x.portName != "Action")
-                {
-                    target.AddChoicePort(tmpNode, x.portName);
-                }
-            });
-            
-            tmpNode.RefreshPorts();
-            tmpNode.RefreshExpandedState();
-        }
-    }
-
     private void ClearGraph(ExtendedDialog file)
     {
-        nodes.Find(x => x.NodeType == NodeType.Entry).GUID = file.nodesLinks[0].baseNodeGUID;
-
         foreach (var node in nodes)
         {
             if (node.NodeType == NodeType.Entry) continue;

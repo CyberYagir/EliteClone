@@ -13,46 +13,66 @@ MonoBehaviour:
   m_Name: LookMan
   m_EditorClassIdentifier: 
   nodeData:
-  - nodeGUID: 40d5b851025908e49aae4bf25accc752
-    text: Get away from me you piece of shit!
+  - text: Get away from me you piece of shit!
+    nodeGUID: 40d5b851025908e49aae4bf25accc752
     pos: {x: 379.33334, y: 200}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 291461b328b65da4ba28d59c5666164c
-    text: Are you blind? I'm trying to control the ship's parking so go in peace
+    ports:
+    - portText: Why are you so nervous?
+      GUID: 51cc836dea3d4b14486eb0b4eece7a3a
+      order: 0
+      connections:
+      - targetNodeGUID: 291461b328b65da4ba28d59c5666164c
+        targetPortGUID: 72042ede8dcd65c48964d4783c72fea2
+    - portText: Ok
+      GUID: fd320310f4639154e8020b82aa88a8dc
+      order: 1
+      connections:
+      - targetNodeGUID: 84f993074148f3a44a8c12b71f044675
+        targetPortGUID: ccd015761b9f6e042be351fff9f9d7d3
+    - portText: Auto
+      GUID: 130313577c6ee9c48b5654653c594574
+      order: 2
+      connections: []
+    entry: 1
+  - text: Are you blind? I'm trying to control the ship's parking so go in peace
+    nodeGUID: 291461b328b65da4ba28d59c5666164c
     pos: {x: 900.6667, y: 69.33333}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 84f993074148f3a44a8c12b71f044675
-    text: 
+    ports:
+    - portText: Auto
+      GUID: 76441ebfdf8a4bc47a7ad569f309fb04
+      order: 0
+      connections:
+      - targetNodeGUID: 84f993074148f3a44a8c12b71f044675
+        targetPortGUID: ccd015761b9f6e042be351fff9f9d7d3
+    entry: 0
+  - text: End
+    nodeGUID: 84f993074148f3a44a8c12b71f044675
     pos: {x: 1231.3334, y: 220.66667}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 08ac8109c007e134a90f6b5bef94bea0
-    text: 
+    ports:
+    - portText: Action
+      GUID: e0dacd0322573bf43a86b9bab5488ca2
+      order: 0
+      connections:
+      - targetNodeGUID: 08ac8109c007e134a90f6b5bef94bea0
+        targetPortGUID: 98d00cdcfa9f5de418f0989ae64533e9
+    entry: 0
+  - text: Trigger
+    nodeGUID: 08ac8109c007e134a90f6b5bef94bea0
     pos: {x: 1517.3334, y: 221.33334}
     character: 0
     nodeType: 2
     nodeAction: 0
-  nodesLinks:
-  - baseNodeGUID: da97216ff7e05294ab27fbed2214e683
-    portName: Next Replica
-    targetNodeGUID: 40d5b851025908e49aae4bf25accc752
-  - baseNodeGUID: 40d5b851025908e49aae4bf25accc752
-    portName: Why are you so nervous?
-    targetNodeGUID: 291461b328b65da4ba28d59c5666164c
-  - baseNodeGUID: 40d5b851025908e49aae4bf25accc752
-    portName: Ok
-    targetNodeGUID: 84f993074148f3a44a8c12b71f044675
-  - baseNodeGUID: 291461b328b65da4ba28d59c5666164c
-    portName: Auto
-    targetNodeGUID: 84f993074148f3a44a8c12b71f044675
-  - baseNodeGUID: 84f993074148f3a44a8c12b71f044675
-    portName: Action
-    targetNodeGUID: 08ac8109c007e134a90f6b5bef94bea0
+    ports: []
+    entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"40d5b851025908e49aae4bf25accc752\",\r\n   
     \"text\": \"Get away from me you piece of shit!\",\r\n    \"type\": 0,\r\n   
     \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\":
@@ -64,9 +84,9 @@ MonoBehaviour:
     peace\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n   
     \"action\": 0,\r\n    \"nextGUID\": \"84f993074148f3a44a8c12b71f044675\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"84f993074148f3a44a8c12b71f044675\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
     4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"08ac8109c007e134a90f6b5bef94bea0\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"08ac8109c007e134a90f6b5bef94bea0\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
     3,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
     \"nexts\": []\r\n  }\r\n]"

@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Core.UI
         private LayerMask mask;
         private void Start()
         {
-            camera = Camera.main;
+            camera = Player.inst.GetCamera();
             mask = LayerMask.GetMask("Main");
         }
 

@@ -1,4 +1,5 @@
 using Core.Galaxy;
+using Core.Garage;
 using Core.Location;
 using Core.Systems;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Core.PlayerScripts
     {
         [SerializeField] LocationPoint activeLocationPoint;
         [SerializeField] ParticleSystem warpParticle;
+        [SerializeField] private GameObject sceneFader;
         public bool isWarp;
         public float warpSpeed, maxWarpSpeed, warpSpeedUp, warpSpeedAdd;
 
@@ -67,11 +69,21 @@ namespace Core.PlayerScripts
                     {
                         warpParticle.Play();
                         SolarSystemGenerator.SaveSystem();
-                        LocationGenerator.SaveLocationFile(activeLocationPoint.root.name, activeLocationPoint.locationType, activeLocationPoint.data);
-                        Player.inst.saves.SetKey("loc_start", true);
-                        DontDestroyOnLoad(Player.inst);
-                        Player.OnPreSceneChanged.Run();
-                        World.LoadLevel(Scenes.Location);
+                        if (activeLocationPoint.Location != LocationPoint.LocationType.Scene)
+                        {
+                            LocationGenerator.SaveLocationFile(activeLocationPoint.Root.name, activeLocationPoint.Location, activeLocationPoint.data);
+                            Player.inst.saves.SetKey("loc_start", true);
+                            DontDestroyOnLoad(Player.inst);
+                            Player.OnPreSceneChanged.Run();
+                            World.LoadLevel(Scenes.Location);
+                        }
+                        else
+                        {
+                            Player.inst.HardStop();
+                            Player.inst.control.enabled = false;
+                            var fader = Instantiate(sceneFader).GetComponent<FaderMultiScenes>();
+                            fader.LoadScene(activeLocationPoint.Scene);
+                        }
                     }
                 }
             }

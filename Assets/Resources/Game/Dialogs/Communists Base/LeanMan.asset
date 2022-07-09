@@ -13,203 +13,312 @@ MonoBehaviour:
   m_Name: LeanMan
   m_EditorClassIdentifier: 
   nodeData:
-  - nodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
-    text: What do you want from me?
+  - text: What do you want from me?
+    nodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
     pos: {x: 328, y: 180.66667}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 796853342675ef94389c8181c3ab79fc
-    text: 'Tell me, how do you feel about the Xirodots?
+    ports:
+    - portText: Auto
+      GUID: 6972afc5709b62747ab3bd8ce3c84035
+      order: 0
+      connections:
+      - targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+        targetPortGUID: 45964b85a7cb552408ec0f3124a9408b
+    entry: 1
+  - text: 'Tell me, how do you feel about the Xirodots?
 
       Do they annoy you?'
+    nodeGUID: 796853342675ef94389c8181c3ab79fc
     pos: {x: 541.3333, y: 180.66667}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
-    text: Tall and thin idiots who cannot learn a normal language.
+    ports:
+    - portText: Xirodots?
+      GUID: 024b4b394ba42fd40b3c5eae7968558f
+      order: 0
+      connections:
+      - targetNodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
+        targetPortGUID: d3415c8bcecc1f441921a7d482d7d220
+    - portText: What did they do to you?
+      GUID: c76dcebd841d66f4e815cf2cf0cd920a
+      order: 1
+      connections:
+      - targetNodeGUID: 6a288c275cdee5047b76345fa7d2482a
+        targetPortGUID: 601468fa81d633442b27f2df37f6db6d
+    - portText: Bye
+      GUID: dabb074a92363a04cba5ac9ef07f4e3f
+      order: 2
+      connections:
+      - targetNodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
+        targetPortGUID: e6b5aa95844b5574cb7b3235365a4b5f
+    - portText: Auto
+      GUID: e63e0e715fc5d6d42ac92925db9cafd4
+      order: 3
+      connections: []
+    entry: 0
+  - text: Tall and thin idiots who cannot learn a normal language.
+    nodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
     pos: {x: 972.6667, y: 15.333334}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
-    text: Why can't they learn languages?
+    ports:
+    - portText: Auto
+      GUID: e356123ff7e30ce468bb87905191c0db
+      order: 0
+      connections:
+      - targetNodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
+        targetPortGUID: fa1e00b741f0956468acbda2c77e2f20
+    entry: 0
+  - text: Why can't they learn languages?
+    nodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
     pos: {x: 1236.6666, y: 13.999998}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 9a18870ae4557274f9f6d6ae4542f992
-    text: It's like they're physically different. Everyone is doing well, only they
+    ports:
+    - portText: Auto
+      GUID: ce58cc5ff7d8b304b81cadaa3c06e54c
+      order: 0
+      connections:
+      - targetNodeGUID: 9a18870ae4557274f9f6d6ae4542f992
+        targetPortGUID: 57b6ee8e7cb270848b8ed23dba1852f4
+    entry: 0
+  - text: It's like they're physically different. Everyone is doing well, only they
       are all idiotic.
+    nodeGUID: 9a18870ae4557274f9f6d6ae4542f992
     pos: {x: 1482.6666, y: 13.999998}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 6a288c275cdee5047b76345fa7d2482a
-    text: They are so kind here, if you go to their systems for a while, you will
+    ports:
+    - portText: Auto
+      GUID: d84cba57413f56e40b30d85a99649e1d
+      order: 0
+      connections:
+      - targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+        targetPortGUID: 45964b85a7cb552408ec0f3124a9408b
+    entry: 0
+  - text: They are so kind here, if you go to their systems for a while, you will
       be treated like cattle.
+    nodeGUID: 6a288c275cdee5047b76345fa7d2482a
     pos: {x: 1030.6666, y: 272.66666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 1981505663e64ad45bebd6e9e318cd6a
-    text: Why do we have to keep them at the base?
+    ports:
+    - portText: Auto
+      GUID: 2e94d3132b3bb2c4ca48388fca0b7699
+      order: 0
+      connections:
+      - targetNodeGUID: 1981505663e64ad45bebd6e9e318cd6a
+        targetPortGUID: 887c5e919f3824141ae94f61eba075da
+    entry: 0
+  - text: Why do we have to keep them at the base?
+    nodeGUID: 1981505663e64ad45bebd6e9e318cd6a
     pos: {x: 1321.3334, y: 272.66666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: c5a8a0da51c95d447945560e8038d3d0
-    text: Recently I tried to negotiate with one of them. His name was like a dick
+    ports:
+    - portText: Auto
+      GUID: 37b8804c43045bf4aba6c025d324d290
+      order: 0
+      connections:
+      - targetNodeGUID: c5a8a0da51c95d447945560e8038d3d0
+        targetPortGUID: 2473142f0ad025d42977356229137868
+    entry: 0
+  - text: Recently I tried to negotiate with one of them. His name was like a dick
       knows how, blah blah blah some. He, like a true communist, decided to engage
       in capitalism ...
+    nodeGUID: c5a8a0da51c95d447945560e8038d3d0
     pos: {x: 1570, y: 272}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 771e7c652940e944b964d46eee247f1f
-    text: 'And for some reason people like me are being evicted, not them.
+    ports:
+    - portText: Auto
+      GUID: 35d469c55c9386e4dacbe1336c2aeae4
+      order: 0
+      connections:
+      - targetNodeGUID: 771e7c652940e944b964d46eee247f1f
+        targetPortGUID: fbcb4367847bcd341b57b3e32d9884af
+    entry: 0
+  - text: 'And for some reason people like me are being evicted, not them.
 
       While
       we are working they are fucking our wives with their humamomejes!'
+    nodeGUID: 771e7c652940e944b964d46eee247f1f
     pos: {x: 1822.6666, y: 272}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
-    text: 
+    ports:
+    - portText: Ok
+      GUID: f9b63e4b26edb4042aa3af0449771e4f
+      order: 0
+      connections:
+      - targetNodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
+        targetPortGUID: defef12a6a9157e44a402af5075cce4b
+    - portText: If I were in their place, I would do the same
+      GUID: 50d3a8088b7e8ff4d8aa3acb2715210f
+      order: 1
+      connections:
+      - targetNodeGUID: 796853342675ef94389c8181c3ab79fc
+        targetPortGUID: 45964b85a7cb552408ec0f3124a9408b
+    - portText: I understand you, it's a pity that this is so.
+      GUID: 3d9b96ac81acbe445a9dd656b652339b
+      order: 2
+      connections:
+      - targetNodeGUID: d2ad438069e72d240bd122db4a95cc05
+        targetPortGUID: f33003f68ec543648a0099590098ea11
+    - portText: Brother you are a racist
+      GUID: c74194052a38d484cb8b2753d33b4cf1
+      order: 3
+      connections:
+      - targetNodeGUID: 669495380e625854da6065eb58aed092
+        targetPortGUID: e966c76f35db2d040b634578ec3c8c2c
+    - portText: Auto
+      GUID: ff0b7cbc52325eb4ca7e772412018a93
+      order: 4
+      connections: []
+    entry: 0
+  - text: End
+    nodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
     pos: {x: 972.6667, y: 456.66666}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
-    text: I'm not a racist, they're just critters. I have nothing against Gemokors.
+    ports:
+    - portText: Action
+      GUID: fd90e03bdade9ce4cb8546267fe98368
+      order: 0
+      connections: []
+    entry: 0
+  - text: I'm not a racist, they're just critters. I have nothing against Gemokors.
       Decent humanoidEven if they go naked. But at least they lay eggs.
-    pos: {x: 2381.3333, y: -8.000001}
+    nodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
+    pos: {x: 2381.3333, y: -8.666667}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: d2ad438069e72d240bd122db4a95cc05
-    text: Thanks for the sympathy.
+    ports:
+    - portText: Auto
+      GUID: f4d466dd63f4d124e80e5ccb711f0644
+      order: 0
+      connections:
+      - targetNodeGUID: 771e7c652940e944b964d46eee247f1f
+        targetPortGUID: fbcb4367847bcd341b57b3e32d9884af
+    entry: 0
+  - text: Thanks for the sympathy.
+    nodeGUID: d2ad438069e72d240bd122db4a95cc05
     pos: {x: 2408.6667, y: 300}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 669495380e625854da6065eb58aed092
-    text: I don't see anything wrong, we're communists. Our wives are in common.
+    ports:
+    - portText: Auto
+      GUID: 82fcf221ad4be4248a0b22de6d8801b4
+      order: 0
+      connections:
+      - targetNodeGUID: e59b8cf021f2d824aaa4f5e196afe334
+        targetPortGUID: 18069a2e9d482444f8774a445ab9b796
+    entry: 0
+  - text: I don't see anything wrong, we're communists. Our wives are in common.
+    nodeGUID: 669495380e625854da6065eb58aed092
     pos: {x: 2409.3333, y: 456.66666}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 5c827b0369b6de34e889259dcd00d51b
-    text: Why do you say that they are capitalists, if you yourself are a sexual
+    ports:
+    - portText: Auto
+      GUID: 492cee0649188be45a5c731a98adaf8d
+      order: 0
+      connections:
+      - targetNodeGUID: 5c827b0369b6de34e889259dcd00d51b
+        targetPortGUID: 370ea6ed9173da1468fffa048ac950a6
+    entry: 0
+  - text: Why do you say that they are capitalists, if you yourself are a sexual
       capitalist.
+    nodeGUID: 5c827b0369b6de34e889259dcd00d51b
     pos: {x: 2684.6667, y: 456}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: ba668e96dbd22144dab39e01eee4a90d
-    text: THIS IS DIFFERENT!
+    ports:
+    - portText: Auto
+      GUID: 83901ca0d3a3e0743847df6cc08a3a45
+      order: 0
+      connections:
+      - targetNodeGUID: ba668e96dbd22144dab39e01eee4a90d
+        targetPortGUID: 70b80fe6018fec24eb04852b7d6d4c85
+    entry: 0
+  - text: THIS IS DIFFERENT!
+    nodeGUID: ba668e96dbd22144dab39e01eee4a90d
     pos: {x: 2935.3333, y: 456}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
-    text: 
+    ports:
+    - portText: Auto
+      GUID: 6cf3d4a090981414e8d25a4b23ac352b
+      order: 0
+      connections:
+      - targetNodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
+        targetPortGUID: bb9fe60bdcb177c4684e81cabf7d9f26
+    entry: 0
+  - text: End
+    nodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
     pos: {x: 3174.6667, y: 456.66666}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
-    text: 
+    ports:
+    - portText: Action
+      GUID: d30ec3d3ebe522d4781e6a42366bd36e
+      order: 0
+      connections:
+      - targetNodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
+        targetPortGUID: 7ab437b73c28e0e4095813af5590ca03
+    entry: 0
+  - text: Trigger
+    nodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
     pos: {x: 3398.6667, y: 456}
     character: 0
     nodeType: 2
     nodeAction: 2
-  - nodeGUID: e59b8cf021f2d824aaa4f5e196afe334
-    text: 
+    ports: []
+    entry: 0
+  - text: End
+    nodeGUID: e59b8cf021f2d824aaa4f5e196afe334
     pos: {x: 2676, y: 300}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 543cece3e21eb6542b37ba906f5be2ef
-    text: 
+    ports:
+    - portText: Action
+      GUID: 92ec6cc5e78b83745acb0a7137225cab
+      order: 0
+      connections:
+      - targetNodeGUID: 543cece3e21eb6542b37ba906f5be2ef
+        targetPortGUID: f2d0720db7c14424d8e414271626ca80
+    entry: 0
+  - text: Trigger
+    nodeGUID: 543cece3e21eb6542b37ba906f5be2ef
     pos: {x: 2904, y: 300}
     character: 0
     nodeType: 2
     nodeAction: 1
-  nodesLinks:
-  - baseNodeGUID: 2c72ba57516eebf4a9fd4ed149ec1c0f
-    portName: Next Replica
-    targetNodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
-  - baseNodeGUID: a2fc01b0cc3ffeb408aeaf49d6e6c5e0
-    portName: Auto
-    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
-  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
-    portName: Xirodots?
-    targetNodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
-  - baseNodeGUID: 9931a21425de1bc41bd7a6f10a2e3fef
-    portName: Auto
-    targetNodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
-  - baseNodeGUID: 45e726f0bf484304b90c49bfd4aebf7a
-    portName: Auto
-    targetNodeGUID: 9a18870ae4557274f9f6d6ae4542f992
-  - baseNodeGUID: 9a18870ae4557274f9f6d6ae4542f992
-    portName: Auto
-    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
-  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
-    portName: What did they do to you?
-    targetNodeGUID: 6a288c275cdee5047b76345fa7d2482a
-  - baseNodeGUID: 6a288c275cdee5047b76345fa7d2482a
-    portName: Auto
-    targetNodeGUID: 1981505663e64ad45bebd6e9e318cd6a
-  - baseNodeGUID: 1981505663e64ad45bebd6e9e318cd6a
-    portName: Auto
-    targetNodeGUID: c5a8a0da51c95d447945560e8038d3d0
-  - baseNodeGUID: c5a8a0da51c95d447945560e8038d3d0
-    portName: Auto
-    targetNodeGUID: 771e7c652940e944b964d46eee247f1f
-  - baseNodeGUID: 796853342675ef94389c8181c3ab79fc
-    portName: Bye
-    targetNodeGUID: 0de9ef0d7acba504c8ce6b70d03458d7
-  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
-    portName: Brother you are a racist
-    targetNodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
-  - baseNodeGUID: 9e27b08cccc9d0e4384bbd46ff2636c1
-    portName: Auto
-    targetNodeGUID: 771e7c652940e944b964d46eee247f1f
-  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
-    portName: Ok
-    targetNodeGUID: 796853342675ef94389c8181c3ab79fc
-  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
-    portName: I understand you, it's a pity that this is so.
-    targetNodeGUID: d2ad438069e72d240bd122db4a95cc05
-  - baseNodeGUID: 771e7c652940e944b964d46eee247f1f
-    portName: If I were in their place, I would do the same
-    targetNodeGUID: 669495380e625854da6065eb58aed092
-  - baseNodeGUID: 669495380e625854da6065eb58aed092
-    portName: Auto
-    targetNodeGUID: 5c827b0369b6de34e889259dcd00d51b
-  - baseNodeGUID: 5c827b0369b6de34e889259dcd00d51b
-    portName: Auto
-    targetNodeGUID: ba668e96dbd22144dab39e01eee4a90d
-  - baseNodeGUID: ba668e96dbd22144dab39e01eee4a90d
-    portName: Auto
-    targetNodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
-  - baseNodeGUID: bdb8d6b786fef5a4c8cd26dc3d13ead9
-    portName: Action
-    targetNodeGUID: 58dbf9ee88fec294e8df486edeab9d6c
-  - baseNodeGUID: d2ad438069e72d240bd122db4a95cc05
-    portName: Auto
-    targetNodeGUID: e59b8cf021f2d824aaa4f5e196afe334
-  - baseNodeGUID: e59b8cf021f2d824aaa4f5e196afe334
-    portName: Action
-    targetNodeGUID: 543cece3e21eb6542b37ba906f5be2ef
+    ports: []
+    entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"a2fc01b0cc3ffeb408aeaf49d6e6c5e0\",\r\n   
     \"text\": \"What do you want from me?\",\r\n    \"type\": 0,\r\n    \"character\":
     0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"796853342675ef94389c8181c3ab79fc\",\r\n   
-    \"text\": \"Tell me, how do you feel about the Xirodots?\\r\\nDo they annoy you?\",\r\n   
+    \"text\": \"Tell me, how do you feel about the Xirodots?\\nDo they annoy you?\",\r\n   
     \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\":
     0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
     [\r\n      {\r\n        \"replica\": \"Xirodots?\",\r\n        \"nextGUID\":
@@ -241,20 +350,21 @@ MonoBehaviour:
     engage in capitalism ...\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
     \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"771e7c652940e944b964d46eee247f1f\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"771e7c652940e944b964d46eee247f1f\",\r\n   
-    \"text\": \"And for some reason people like me are being evicted, not them.\\r\\nWhile
+    \"text\": \"And for some reason people like me are being evicted, not them.\\nWhile
     we are working they are fucking our wives with their humamomejes!\",\r\n    \"type\":
     0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n   
     \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n     
-    {\r\n        \"replica\": \"Brother you are a racist\",\r\n        \"nextGUID\":
-    \"9e27b08cccc9d0e4384bbd46ff2636c1\"\r\n      },\r\n      {\r\n        \"replica\":
-    \"I understand you, it's a pity that this is so.\",\r\n        \"nextGUID\":
-    \"d2ad438069e72d240bd122db4a95cc05\"\r\n      },\r\n      {\r\n        \"replica\":
-    \"If I were in their place, I would do the same\",\r\n        \"nextGUID\": \"669495380e625854da6065eb58aed092\"\r\n     
-    },\r\n      {\r\n        \"replica\": \"Ok\",\r\n        \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\"\r\n     
-    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"0de9ef0d7acba504c8ce6b70d03458d7\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
-    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
-    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"9e27b08cccc9d0e4384bbd46ff2636c1\",\r\n   
+    {\r\n        \"replica\": \"Ok\",\r\n        \"nextGUID\": \"9e27b08cccc9d0e4384bbd46ff2636c1\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"If I were in their place, I would do
+    the same\",\r\n        \"nextGUID\": \"796853342675ef94389c8181c3ab79fc\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"I understand you, it's a pity that this
+    is so.\",\r\n        \"nextGUID\": \"d2ad438069e72d240bd122db4a95cc05\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Brother you are a racist\",\r\n       
+    \"nextGUID\": \"669495380e625854da6065eb58aed092\"\r\n      }\r\n    ]\r\n  },\r\n 
+    {\r\n    \"GUID\": \"0de9ef0d7acba504c8ce6b70d03458d7\",\r\n    \"text\": \"End\",\r\n   
+    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\": 4,\r\n    \"action\":
+    0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"9e27b08cccc9d0e4384bbd46ff2636c1\",\r\n   
     \"text\": \"I'm not a racist, they're just critters. I have nothing against Gemokors.
     Decent humanoidEven if they go naked. But at least they lay eggs.\",\r\n    \"type\":
     0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
@@ -274,15 +384,15 @@ MonoBehaviour:
     \"text\": \"THIS IS DIFFERENT!\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n   
     \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"bdb8d6b786fef5a4c8cd26dc3d13ead9\",\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"bdb8d6b786fef5a4c8cd26dc3d13ead9\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
     4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"58dbf9ee88fec294e8df486edeab9d6c\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"58dbf9ee88fec294e8df486edeab9d6c\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
     3,\r\n    \"action\": 2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"e59b8cf021f2d824aaa4f5e196afe334\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
     4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"543cece3e21eb6542b37ba906f5be2ef\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"543cece3e21eb6542b37ba906f5be2ef\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
     3,\r\n    \"action\": 1,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
     \"nexts\": []\r\n  }\r\n]"

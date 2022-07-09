@@ -18,6 +18,8 @@ namespace Core.PlayerScripts
             public bool isDemoEnd;
             public bool m1_Dialog1;
             public bool m1_QuestCompleted;
+            public string startSystemName = "";
+            public string baseSystemName = "";
             
             public Tutorial()
             {

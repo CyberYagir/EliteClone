@@ -1,3 +1,4 @@
+using Core.PlayerScripts;
 using UnityEngine;
 
 namespace Core.Systems
@@ -15,7 +16,7 @@ namespace Core.Systems
         private Transform camera;
         private void Start()
         {
-            camera = Camera.main.transform;
+            camera = Player.inst.GetCamera().transform;
         }
 
         private void Update()

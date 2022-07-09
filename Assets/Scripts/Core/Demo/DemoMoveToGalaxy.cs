@@ -7,13 +7,17 @@ namespace Core.Demo
 {
     public class DemoMoveToGalaxy : MonoBehaviour
     {
-        public void LoadGalaxy()
+        public static void LoadGalaxyLocation()
         {
-            
             var tutor = TutorialsManager.LoadTutorial();
             tutor.isDemoEnd = true;
             TutorialsManager.SaveTutorial(tutor);
             World.LoadLevelAsync(Scenes.Galaxy);
+        }
+
+        public void LoadGalaxy()
+        {
+            LoadGalaxyLocation();
         }
     }
 }

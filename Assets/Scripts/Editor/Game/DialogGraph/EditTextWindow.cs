@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
-using DG.DemiEditor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,11 +36,13 @@ public class EditTextWindow : EditorWindow
         this.text = text;
     }
 
-    public UnityEvent<string> ChangeCallback = new Event<string>();
+    public UnityEvent<string> ChangeCallback = new UnityEvent<string>();
     public string text;
     private void OnGUI()
     {
-        text = EditorGUILayout.TextArea(text, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
+        GUIStyle style = new GUIStyle(EditorStyles.textArea);
+        style.wordWrap = true;
+        text = EditorGUILayout.TextArea(text, style, GUILayout.MinHeight(220), GUILayout.MaxHeight(225));
         if (GUILayout.Button("Save"))
         {
             ChangeCallback.Invoke(text);

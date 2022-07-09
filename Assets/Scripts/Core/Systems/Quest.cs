@@ -109,13 +109,19 @@ namespace Core.Location
 
         IEnumerator Wait()
         {
-            while (WorldStationQuests.Instance == null)
+            if (World.Scene == Scenes.Location)
             {
-                yield return null;
-                WorldStationQuests.SetInstance();
+                int framesCount = 0;
+                while (WorldStationQuests.Instance == null)
+                {
+                    yield return null;
+                    WorldStationQuests.SetInstance();
+                    framesCount++;
+                }
+
+                WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
+                Player.inst.quests.OnChangeQuests.Run();
             }
-            WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-            Player.inst.quests.OnChangeQuests.Run();
         }
         
         public void CheckIsQuestCompleted()

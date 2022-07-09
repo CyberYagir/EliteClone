@@ -21,7 +21,7 @@ namespace Core.UI
         
         private void Start()
         {
-            camera = Camera.main;
+            camera = Player.inst.GetCamera();
             Player.OnPreSceneChanged += SaveLastSelected;
             Player.OnSceneChanged += LoadLastSelected;
         }

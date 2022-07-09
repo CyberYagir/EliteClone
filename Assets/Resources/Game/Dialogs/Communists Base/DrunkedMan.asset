@@ -13,179 +13,286 @@ MonoBehaviour:
   m_Name: DrunkedMan
   m_EditorClassIdentifier: 
   nodeData:
-  - nodeGUID: 30ada711d38c9a848be663ac9f231c3d
-    text: Why are you drinking here? It's not a bar...
+  - text: Why are you drinking here? It's not a bar...
+    nodeGUID: 30ada711d38c9a848be663ac9f231c3d
     pos: {x: 394.66666, y: 200}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-    text: Why can't I just have a drink without being hit on by idiots!
+    ports:
+    - portText: Auto
+      GUID: f589b1356d37f494aa02f08d6346af5d
+      order: 0
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    entry: 1
+  - text: Why can't I just have a drink without being hit on by idiots!
+    nodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
     pos: {x: 652, y: 200}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 2c4064c84e27bb741931d0b785c1038c
-    text: 
+    ports:
+    - portText: Why are you so hard drinking?
+      GUID: 4f1e736d7bb06414ebeb16c00cae3256
+      order: 0
+      connections:
+      - targetNodeGUID: d4c9fa09300746c46b5312b64a9e04f1
+        targetPortGUID: ddb65106ded30f2419a1690cca1b1dae
+    - portText: Why are you here?
+      GUID: 3989ea929afe454439ef4db0e4efa903
+      order: 1
+      connections:
+      - targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+        targetPortGUID: 15d29e4d3dfc962498ed5d1d1afe6ff6
+    - portText: Bye
+      GUID: 742dac3efa9c1f9439b1edff13dd3c90
+      order: 2
+      connections:
+      - targetNodeGUID: 2c4064c84e27bb741931d0b785c1038c
+        targetPortGUID: 901b2f8f1c82de8458f696579d546434
+    - portText: Auto
+      GUID: bf9d9edc7785347459b431a8c6f4c991
+      order: 3
+      connections: []
+    entry: 0
+  - text: End
+    nodeGUID: 2c4064c84e27bb741931d0b785c1038c
     pos: {x: 1146, y: 332}
     character: 0
     nodeType: 1
     nodeAction: 0
-  - nodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
-    text: 
+    ports:
+    - portText: Action
+      GUID: a90e3e9de682a014d961dbe289a7c20d
+      order: 0
+      connections:
+      - targetNodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
+        targetPortGUID: 56f8ddc07da2bf5409bf9580335d9355
+    entry: 0
+  - text: Trigger
+    nodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
     pos: {x: 1396, y: 332}
     character: 0
     nodeType: 2
     nodeAction: 0
-  - nodeGUID: d4c9fa09300746c46b5312b64a9e04f1
-    text: I'm a refugee from Lapis 19, washing my grief down.
+    ports: []
+    entry: 0
+  - text: I'm a refugee from Lapis 19, washing my grief down.
+    nodeGUID: d4c9fa09300746c46b5312b64a9e04f1
     pos: {x: 1073.3334, y: -322}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
-    text: My system was under the Pirates, and I myself, in my youth, liked to rob
+    ports:
+    - portText: What happened to your system?
+      GUID: 8abd19240f13a354bab8354b209bfb8b
+      order: 0
+      connections:
+      - targetNodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
+        targetPortGUID: 57d0c9e938554884fa644e03de9beb71
+    - portText: Auto
+      GUID: 013ec18dff01a2746bdce54604f80e4b
+      order: 1
+      connections: []
+    entry: 0
+  - text: My system was under the Pirates, and I myself, in my youth, liked to rob
       spaceships.
+    nodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
     pos: {x: 1583.3334, y: -424}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 427ee72dba5b9554a836024f25f4c6bd
-    text: As a result, a couple of days ago, the Annihilators broke into the system,
+    ports:
+    - portText: Auto
+      GUID: 068a54250c1fddf4cbf8f19cb74edfeb
+      order: 0
+      connections:
+      - targetNodeGUID: 427ee72dba5b9554a836024f25f4c6bd
+        targetPortGUID: 44a268e4c892f9d4a870b311e2146359
+    entry: 0
+  - text: As a result, a couple of days ago, the Annihilators broke into the system,
       sterilized it.
+    nodeGUID: 427ee72dba5b9554a836024f25f4c6bd
     pos: {x: 1826, y: -556}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
-    text: I was lucky that I am one of the best pilots in my sector, I was able to
+    ports:
+    - portText: Auto
+      GUID: 8d056fa3e8546ae48b9ace30685c7e60
+      order: 0
+      connections:
+      - targetNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
+        targetPortGUID: b8dcb9ba25bea2b428fe66ccc02f212c
+    entry: 0
+  - text: I was lucky that I am one of the best pilots in my sector, I was able to
       jump into another system.
+    nodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
     pos: {x: 2079.3333, y: -750.6666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
-    text: "The asshole who is standing in front of us. I don\u2019t know what\u2019s
+    ports:
+    - portText: Who are these Destroyers?
+      GUID: 22c968f829126de47b39f6005eb6de3c
+      order: 0
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    - portText: Well, it could be worse. Many are not alive at all.
+      GUID: b70899bdb1a34c5479806b9c1a427a36
+      order: 1
+      connections:
+      - targetNodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
+        targetPortGUID: ef1d3ff858bd75d429d842a8e135518e
+    - portText: I sympathize.
+      GUID: 87e24787f2ff09f429de8e5634afb20b
+      order: 2
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    - portText: Auto
+      GUID: 243de4aa5d50f284ca1df765248b453a
+      order: 3
+      connections: []
+    entry: 0
+  - text: "The asshole who is standing in front of us. I don\u2019t know what\u2019s
       under the suit, but they don\u2019t have such a name for nothing. The communists
       have already crossed all borders."
+    nodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
     pos: {x: 2628.6667, y: -750.6666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 0db77019940329d43b040b9cdc730e74
-    text: My heart is anarchy! And I will believe in it until the end of my days!
+    ports:
+    - portText: Auto
+      GUID: cc5eddebc64d15840a5ba1b9c224a969
+      order: 0
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    entry: 0
+  - text: My heart is anarchy! And I will believe in it until the end of my days!
       And the Destroyer will execute me, but I will die an anarchist!
+    nodeGUID: 0db77019940329d43b040b9cdc730e74
     pos: {x: 1728.6666, y: -14}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-    text: You think it's easy to be a pirate all your life, hate communists, and
+    ports:
+    - portText: Auto
+      GUID: 137feed8f7b40e949b50707894739961
+      order: 0
+      connections:
+      - targetNodeGUID: e35dda77938e2e7478ddc604b5deba1a
+        targetPortGUID: 7b4829f0532065d41b25efc92715635f
+    entry: 0
+  - text: You think it's easy to be a pirate all your life, hate communists, and
       live out your last days at their base.
+    nodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
     pos: {x: 1170.6666, y: 127.333336}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
-    text: This is a huge animal with a minigun in front of us. It is not even clear
+    ports:
+    - portText: Who are you at heart?
+      GUID: 1f6eb9c634b01af48be0a47948465d0a
+      order: 0
+      connections:
+      - targetNodeGUID: 0db77019940329d43b040b9cdc730e74
+        targetPortGUID: 43ef3f9b43040c3479496502a4b6fb34
+    - portText: What's stopping you from leaving the system?
+      GUID: cf5458211da5bff41bb98126952df888
+      order: 1
+      connections:
+      - targetNodeGUID: 348d61be71c07484ab858ba702980d81
+        targetPortGUID: ee08a48b4224be2409bc0fd4391218f7
+    - portText: Ok...
+      GUID: 9265e8f44d12b1941919849f1e2a498d
+      order: 2
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    - portText: Auto
+      GUID: 8703b636507a54b4eb43f70266b34623
+      order: 3
+      connections: []
+    entry: 0
+  - text: This is a huge animal with a minigun in front of us. It is not even clear
       whether people are in suits. They have some kind of secret communication channel,
       and they only listen to orders.
+    nodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
     pos: {x: 2256.6667, y: -198.66666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
-    text: It was the Destroyers who kicked me out of the house...
+    ports:
+    - portText: Auto
+      GUID: 1cd001bc95816f9449705b64dfb7fd37
+      order: 0
+      connections:
+      - targetNodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
+        targetPortGUID: 81fb8d80728b68d42865b01f2eafa9ab
+    entry: 0
+  - text: It was the Destroyers who kicked me out of the house...
+    nodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
     pos: {x: 2567.3333, y: -199.33333}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: e35dda77938e2e7478ddc604b5deba1a
-    text: Destroyers?
+    ports:
+    - portText: Auto
+      GUID: d0d65a196325f0c4cae3a1e26cb7edcf
+      order: 0
+      connections:
+      - targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
+        targetPortGUID: 15d29e4d3dfc962498ed5d1d1afe6ff6
+    entry: 0
+  - text: Destroyers?
+    nodeGUID: e35dda77938e2e7478ddc604b5deba1a
     pos: {x: 1982, y: -120.66667}
     character: 0
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 911c75d07faf5744bb74c0220d2998e5
-    text: Yes, and they sewed a chip into me, took away the ship, money. As a result,
+    ports:
+    - portText: Auto
+      GUID: b68bdd982e70327429e5912632af02b4
+      order: 0
+      connections:
+      - targetNodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
+        targetPortGUID: af1b929edd50c0c4e906b2d77465fdc1
+    entry: 0
+  - text: Yes, and they sewed a chip into me, took away the ship, money. As a result,
       all that remains is to drink, since the refugees get free booze ...
+    nodeGUID: 911c75d07faf5744bb74c0220d2998e5
     pos: {x: 1981.3334, y: 284.66666}
     character: 1
     nodeType: 0
     nodeAction: 0
-  - nodeGUID: 348d61be71c07484ab858ba702980d81
-    text: Love of life. Though this life is in hell, but life.
+    ports:
+    - portText: Auto
+      GUID: 8c07322b20210c340b26ae0f0e0275fa
+      order: 0
+      connections:
+      - targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
+        targetPortGUID: f66fa6087d0761744831a2c4315485ae
+    entry: 0
+  - text: Love of life. Though this life is in hell, but life.
+    nodeGUID: 348d61be71c07484ab858ba702980d81
     pos: {x: 1728.6666, y: 182.66667}
     character: 1
     nodeType: 0
     nodeAction: 0
-  nodesLinks:
-  - baseNodeGUID: c087f9b408a190c43a8547963221c545
-    portName: Next Replica
-    targetNodeGUID: 30ada711d38c9a848be663ac9f231c3d
-  - baseNodeGUID: 30ada711d38c9a848be663ac9f231c3d
-    portName: Auto
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-    portName: Why are you here?
-    targetNodeGUID: d4c9fa09300746c46b5312b64a9e04f1
-  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-    portName: Why are you so hard drinking?
-    targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-  - baseNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-    portName: Bye
-    targetNodeGUID: 2c4064c84e27bb741931d0b785c1038c
-  - baseNodeGUID: 2c4064c84e27bb741931d0b785c1038c
-    portName: Action
-    targetNodeGUID: 8b3c0bed75a6c104f83f7ecb34b00172
-  - baseNodeGUID: d4c9fa09300746c46b5312b64a9e04f1
-    portName: What happened to your system?
-    targetNodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
-  - baseNodeGUID: 3b79fa18637a36849b1aaa84fba97bc5
-    portName: Auto
-    targetNodeGUID: 427ee72dba5b9554a836024f25f4c6bd
-  - baseNodeGUID: 427ee72dba5b9554a836024f25f4c6bd
-    portName: Auto
-    targetNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
-  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
-    portName: Well, it could be worse. Many are not alive at all.
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
-    portName: Who are these Destroyers?
-    targetNodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
-  - baseNodeGUID: 45a7bde30d4716c4484ebd9b5d60920b
-    portName: I sympathize.
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: 588e2d8dec6b0ca4288093f25a3c937e
-    portName: Auto
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: 0db77019940329d43b040b9cdc730e74
-    portName: Auto
-    targetNodeGUID: e35dda77938e2e7478ddc604b5deba1a
-  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-    portName: Who are you at heart?
-    targetNodeGUID: 0db77019940329d43b040b9cdc730e74
-  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-    portName: What's stopping you from leaving the system?
-    targetNodeGUID: 348d61be71c07484ab858ba702980d81
-  - baseNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-    portName: Ok...
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
-    portName: Auto
-    targetNodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
-  - baseNodeGUID: 3c477cbaef1bfd642bb333075ce9fab4
-    portName: Auto
-    targetNodeGUID: 9889d67eb49bfc746ad76ad1dd9dfcff
-  - baseNodeGUID: 911c75d07faf5744bb74c0220d2998e5
-    portName: Auto
-    targetNodeGUID: 4ce678589ca77af49b78b9e6ce5e48bb
-  - baseNodeGUID: 348d61be71c07484ab858ba702980d81
-    portName: Auto
-    targetNodeGUID: 911c75d07faf5744bb74c0220d2998e5
-  - baseNodeGUID: e35dda77938e2e7478ddc604b5deba1a
-    portName: Auto
-    targetNodeGUID: b4a8d9d471011ce4ea33d116183fd7ec
+    ports:
+    - portText: Auto
+      GUID: 194b435b2164f0a4aaf0a88974f3b001
+      order: 0
+      connections:
+      - targetNodeGUID: 911c75d07faf5744bb74c0220d2998e5
+        targetPortGUID: 99b521f714410954aa67ada6ef522741
+    entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"30ada711d38c9a848be663ac9f231c3d\",\r\n   
     \"text\": \"Why are you drinking here? It's not a bar...\",\r\n    \"type\":
     0,\r\n    \"character\": 0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
@@ -194,15 +301,15 @@ MonoBehaviour:
     \"text\": \"Why can't I just have a drink without being hit on by idiots!\",\r\n   
     \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 2,\r\n    \"action\":
     0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
-    [\r\n      {\r\n        \"replica\": \"Why are you here?\",\r\n        \"nextGUID\":
-    \"d4c9fa09300746c46b5312b64a9e04f1\"\r\n      },\r\n      {\r\n        \"replica\":
-    \"Why are you so hard drinking?\",\r\n        \"nextGUID\": \"9889d67eb49bfc746ad76ad1dd9dfcff\"\r\n     
+    [\r\n      {\r\n        \"replica\": \"Why are you so hard drinking?\",\r\n       
+    \"nextGUID\": \"d4c9fa09300746c46b5312b64a9e04f1\"\r\n      },\r\n      {\r\n       
+    \"replica\": \"Why are you here?\",\r\n        \"nextGUID\": \"9889d67eb49bfc746ad76ad1dd9dfcff\"\r\n     
     },\r\n      {\r\n        \"replica\": \"Bye\",\r\n        \"nextGUID\": \"2c4064c84e27bb741931d0b785c1038c\"\r\n     
     }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"2c4064c84e27bb741931d0b785c1038c\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"End\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
     4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"8b3c0bed75a6c104f83f7ecb34b00172\",\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8b3c0bed75a6c104f83f7ecb34b00172\",\r\n   
-    \"text\": \"\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
     3,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
     \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"d4c9fa09300746c46b5312b64a9e04f1\",\r\n   
     \"text\": \"I'm a refugee from Lapis 19, washing my grief down.\",\r\n    \"type\":
@@ -221,9 +328,9 @@ MonoBehaviour:
     able to jump into another system.\",\r\n    \"type\": 0,\r\n    \"character\":
     1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
     \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
-    \"Well, it could be worse. Many are not alive at all.\",\r\n        \"nextGUID\":
-    \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n      },\r\n      {\r\n        \"replica\":
-    \"Who are these Destroyers?\",\r\n        \"nextGUID\": \"588e2d8dec6b0ca4288093f25a3c937e\"\r\n     
+    \"Who are these Destroyers?\",\r\n        \"nextGUID\": \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Well, it could be worse. Many are not
+    alive at all.\",\r\n        \"nextGUID\": \"588e2d8dec6b0ca4288093f25a3c937e\"\r\n     
     },\r\n      {\r\n        \"replica\": \"I sympathize.\",\r\n        \"nextGUID\":
     \"4ce678589ca77af49b78b9e6ce5e48bb\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
     \"GUID\": \"588e2d8dec6b0ca4288093f25a3c937e\",\r\n    \"text\": \"The asshole

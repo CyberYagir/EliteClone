@@ -32,8 +32,7 @@ namespace Core.UI
                 Player.inst.saves.SetKey("MapActive", (int) World.Scene);
                 PlayerDataManager.SaveAll();
                 var fd = Instantiate(fader.gameObject).GetComponent<FaderMultiScenes>();
-                fd.SetScene((int)Scenes.Map);
-                fd.LoadLocation();
+                fd.LoadScene(Scenes.Map);
             }
         }
     }

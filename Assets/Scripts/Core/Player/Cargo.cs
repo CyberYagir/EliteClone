@@ -289,8 +289,6 @@ namespace Core.PlayerScripts
             }
 
             idDictionary[item.id.id].Add(items[items.Count - 1]);
-
-            print(items[items.Count - 1].GetInstanceID() + " " + idDictionary[item.id.id][idDictionary[item.id.id].Count - 1].GetInstanceID());
             
             tons +=  item.amount.Value * (float) item.GetKeyPair(KeyPairValue.Mass);
         }

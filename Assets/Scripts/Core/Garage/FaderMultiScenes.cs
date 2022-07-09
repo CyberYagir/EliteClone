@@ -21,6 +21,7 @@ namespace Core.Garage
     
         public void LoadScene(Scenes scene)
         {
+            this.scene = scene;
             StartCoroutine(LoadAsync());
         }
 
