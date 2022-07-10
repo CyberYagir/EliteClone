@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Core.TDS.Bot
 {
@@ -47,6 +48,7 @@ namespace Core.TDS.Bot
                 animator.SetLayerWeight(1,1);
                 weapon.SetActive(true);
                 weaponSpine.SetActive(false);
+                GetComponent<NavMeshAgent>().enabled = true;
             }
         }
 

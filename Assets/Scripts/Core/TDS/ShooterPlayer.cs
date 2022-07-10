@@ -11,6 +11,7 @@ namespace Core.TDS
         public ShooterInventory inventory { get; private set; }
         public ShooterPlayerController controller { get; private set; }
         public ShooterAnimator animator { get; private set; }
+        public ShooterWeaponSelect weaponSelect { get; private set; }
 
         protected override void Awake()
         {
@@ -19,6 +20,7 @@ namespace Core.TDS
             inventory = GetComponent<ShooterInventory>();
             controller = GetComponent<ShooterPlayerController>();
             animator = GetComponentInChildren<ShooterAnimator>();
+            weaponSelect = GetComponentInChildren<ShooterWeaponSelect>();
         }
 
         public bool HaveWeapon()

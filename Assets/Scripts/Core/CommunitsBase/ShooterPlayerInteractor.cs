@@ -9,14 +9,24 @@ namespace Core.CommunistsBase.Intacts
     public class ShooterPlayerInteractor : MonoBehaviour
     {
         [SerializeField]
-        private List<ShooterInteractor> interactors = new List<ShooterInteractor>();
+        private List<ShooterInteractor> interactors = new List<ShooterInteractor>(5);
 
         public static bool interacted;
 
         public Event OnAddInter = new Event(); 
         public Event OnRemInter = new Event(); 
-        public Event OnInteract = new Event(); 
+        public Event OnInteract = new Event();
 
+        public void RemoveAll()
+        {
+            foreach (var interactor in interactors)
+            {
+                interactor.UnTrigger();
+            }
+            interactors.Clear();
+            OnRemInter.Run();
+        }
+        
         public void AddInteractor(ShooterInteractor interactor)
         {
             if (!interactors.Contains(interactor))
@@ -46,8 +56,8 @@ namespace Core.CommunistsBase.Intacts
             {
                 if (interactors.Count != 0)
                 {
-                    interactors[0].TriggerAction();
                     interacted = true;
+                    interactors[0].TriggerAction();
                     OnInteract.Run();
                 }
             }

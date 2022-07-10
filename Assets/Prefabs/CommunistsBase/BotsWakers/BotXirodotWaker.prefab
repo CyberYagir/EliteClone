@@ -2006,6 +2006,8 @@ GameObject:
   - component: {fileID: 8761249890774599559}
   - component: {fileID: 2379813392637517430}
   - component: {fileID: -1869973588901665007}
+  - component: {fileID: -2411929561365661300}
+  - component: {fileID: -8444346294324395461}
   m_Layer: 6
   m_Name: BotXirodotWaker
   m_TagString: Untagged
@@ -2156,6 +2158,72 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &-2411929561365661300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750447932900189546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4c267369bd3914c9f629ca5e795e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8444346294324395461}
+        m_TargetAssemblyTypeName: Core.TDS.RagdollActivator, CoreDef
+        m_MethodName: AutoRagdoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-8444346294324395461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750447932900189546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066796262107e4a4b9f9eb02b546c607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bones:
+  - {fileID: 8162778326970585842}
+  - {fileID: 8498518002434068502}
+  - {fileID: 7947969491459195250}
+  - {fileID: 3564243932044783454}
+  - {fileID: 1774010003512566241}
+  - {fileID: 4483606807251574169}
+  - {fileID: 2279922945511274639}
+  - {fileID: 4185452210920348709}
+  - {fileID: 1223131087248792768}
+  - {fileID: 2442513827609579664}
+  - {fileID: 8988020902997012975}
+  colliders:
+  - {fileID: 6538055624190905890}
+  - {fileID: 6619882044209269538}
+  - {fileID: 2319982879048995026}
+  - {fileID: 1673747217348465021}
+  - {fileID: 3322913880310051347}
+  - {fileID: 1420215533282783550}
+  - {fileID: 6214495769559724465}
+  - {fileID: 8605269831325705075}
+  - {fileID: 805377228349445606}
+  - {fileID: 3895935493049252654}
+  - {fileID: 2291872572364684303}
 --- !u!1 &6937779878656000527
 GameObject:
   m_ObjectHideFlags: 0

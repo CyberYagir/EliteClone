@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.TDS
@@ -15,13 +16,15 @@ namespace Core.TDS
         [SerializeField] private Transform IKPoint;
         [SerializeField] private Transform IKhandsRotator;
 
-
         private Vector3 startPointL, startPointR;
         [SerializeField] private Transform LHand, RHand;
 
         private ShooterWeaponSelect weaponSelect;
         private ShooterWeaponList weaponsList;
         private ShooterInventory inventory;
+        
+        
+        public Rigidbody GetRigidbody() => rigidbody;
         
         private void Start()
         {
@@ -45,7 +48,7 @@ namespace Core.TDS
             IKPoint.gameObject.SetActive(false);
         }
 
-        void FixedUpdate()
+        public void FixedUpdate()
         {
             var oldY = rigidbody.velocity.y;
             var dir = new Vector3(InputM.GetAxis(KAction.Horizontal) * speed * Time.fixedDeltaTime, 0, InputM.GetAxis(KAction.Vertical) * speed * Time.fixedDeltaTime);
@@ -53,10 +56,9 @@ namespace Core.TDS
             rigidbody.velocity = forwardDir;
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, oldY - 1, rigidbody.velocity.z);
 
-
+            
             RaycastHit hit;
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
             {
                 if (hit.transform != transform)
@@ -95,7 +97,7 @@ namespace Core.TDS
 
         public void SetPointPose(Vector3 transformPosition)
         {
-            IKPoint.transform.position = transformPosition + Vector3.up;
+            IKPoint.transform.DOMove(transformPosition + Vector3.up, 0.5f);
         }
     }
 }

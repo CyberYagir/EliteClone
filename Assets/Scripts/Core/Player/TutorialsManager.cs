@@ -20,10 +20,12 @@ namespace Core.PlayerScripts
             public bool m1_QuestCompleted;
             public string startSystemName = "";
             public string baseSystemName = "";
+            public bool isBarmanKilled;
             
             public Tutorial()
             {
             }
+
         }
 
 

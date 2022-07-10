@@ -57,30 +57,51 @@ namespace Core.CommunistsBase.Intacts
             walker = GetComponent<TDSPointsWaker>();
         }
 
+        private void OnDisable()
+        {
+            triggered = false;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (!triggered)
+            if (!triggered && this.enabled)
             {
                 var inters = other.GetComponentInParent<ShooterPlayerInteractor>();
                 if (inters)
                 {
-                    inters.AddInteractor(this);
-                    StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, true));
-                    triggered = true;
-                    target = inters.transform;
+                    if (walker != null)
+                    {
+                        if (ShooterPlayer.Instance.inventory.items.Count == 0)
+                        {
+                            inters.AddInteractor(this);
+                            StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, true));
+                            triggered = true;
+                            target = inters.transform;
+                        }
+                    }
+                    else
+                    {
+                        inters.AddInteractor(this);
+                        triggered = true;
+                        target = inters.transform;
+                    }
                 }
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (triggered)
+            if (triggered && this.enabled && !ShooterPlayerInteractor.interacted)
             {
                 var inters = other.GetComponentInParent<ShooterPlayerInteractor>();
                 if (inters)
                 {
                     inters.DestroyInteractor(this);
-                    StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, false));
+                    if (walker != null)
+                    {
+                        StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, false));
+                    }
+
                     triggered = false;
                 }
             }

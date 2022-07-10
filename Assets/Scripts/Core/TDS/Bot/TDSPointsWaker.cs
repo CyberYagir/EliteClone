@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.CommunistsBase;
+using Core.PlayerScripts;
 using DG.DemiLib;
 using Pathfinding;
 using UnityEngine;
@@ -10,17 +11,21 @@ using Random = UnityEngine.Random;
 
 namespace Core.TDS
 {
-    public class TDSPointsWaker : MonoBehaviour
+    public class TDSPointsWaker : MonoBehaviour, IDamagable
     {
         private InteractPointManager pointManager;
         [SerializeField] private bool isWakingToPoint, isArrived;
         [SerializeField] private Animator animator;
         [SerializeField] private NPCInteract interactor;
-        
         [SerializeField] private Range range;
+
+
+        private float health = 1;
         private NavMeshAgent agent;
         private float time;
         private float cooldown;
+
+        private Damager damager;
 
 
         private Transform currentTarget;
@@ -29,6 +34,7 @@ namespace Core.TDS
             pointManager = GetComponentInParent<InteractPointManager>();
             agent = GetComponent<NavMeshAgent>();
             animator.SetBool("Drunk", Random.Range(0, 1f) > 0.7f);
+            damager = GetComponent<Damager>();
         }
         
         private void FixedUpdate()
@@ -133,6 +139,11 @@ namespace Core.TDS
         public Animator GetAnimator()
         {
             return animator;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            damager.TakeDamage(ref health, damage);
         }
     }
 }

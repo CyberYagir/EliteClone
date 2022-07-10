@@ -372,6 +372,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9ef7028bb20de784ab5f3b007d65cfdb, type: 2}
+    - target: {fileID: 5193564350412929642, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193564350412929642, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193564350412929642, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226723735715493985, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5652553512785083155, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.21415064
@@ -383,6 +399,10 @@ PrefabInstance:
     - target: {fileID: 5652553512785083155, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.012657129
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859356653041536098, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: damage
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6235237689879918555, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -503,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 7043927068388605411, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
       propertyPath: m_Name
       value: ShootBotAlphaGuard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043927068388605414, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
+      propertyPath: m_Radius
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 7043927068388605415, guid: 7f864ab4008f2bd41aae6d457ba8b20c, type: 3}
       propertyPath: m_Mass

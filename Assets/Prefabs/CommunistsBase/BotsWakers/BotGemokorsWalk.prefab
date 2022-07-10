@@ -1566,6 +1566,8 @@ GameObject:
   - component: {fileID: 4695320667115120590}
   - component: {fileID: -6872092577908403505}
   - component: {fileID: -5296207002269032095}
+  - component: {fileID: 8352241848107471027}
+  - component: {fileID: -2698203211398497858}
   m_Layer: 6
   m_Name: BotGemokorsWalk
   m_TagString: Untagged
@@ -1716,6 +1718,72 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &8352241848107471027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629658247857966329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4c267369bd3914c9f629ca5e795e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -2698203211398497858}
+        m_TargetAssemblyTypeName: Core.TDS.RagdollActivator, CoreDef
+        m_MethodName: AutoRagdoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-2698203211398497858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629658247857966329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066796262107e4a4b9f9eb02b546c607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bones:
+  - {fileID: 1594267941876347685}
+  - {fileID: 2420301704078782623}
+  - {fileID: 6452426571526197330}
+  - {fileID: 7218358232256737690}
+  - {fileID: 682607699318724937}
+  - {fileID: 4143792019544716829}
+  - {fileID: 7634827485044595315}
+  - {fileID: 8818547837452636276}
+  - {fileID: 8452238112084339516}
+  - {fileID: 9068443644327809833}
+  - {fileID: 8134483220526520226}
+  colliders:
+  - {fileID: 6676470258480759733}
+  - {fileID: 8079504401828505256}
+  - {fileID: 4483369804163242437}
+  - {fileID: 7379951735731755359}
+  - {fileID: 3080905983054583368}
+  - {fileID: 5425951391906029242}
+  - {fileID: 5476477525198025608}
+  - {fileID: 1319808550561254809}
+  - {fileID: 8367999913030144405}
+  - {fileID: 841239402443830085}
+  - {fileID: 4349365515401615325}
 --- !u!1 &5689357016420349406
 GameObject:
   m_ObjectHideFlags: 0

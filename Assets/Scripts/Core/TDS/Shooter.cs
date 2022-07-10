@@ -7,7 +7,8 @@ namespace Core.TDS
         public ShooterPlayerActions attack { get; private set; }
         public ShooterAnimator animator { get; private set; }
         public ShooterData data { get; private set; }
-
+        public RagdollActivator ragdoll { get; private set; }
+        
         public bool isDead { get; private set; }
 
         public Event OnDeath = new Event();
@@ -22,6 +23,7 @@ namespace Core.TDS
             attack = GetComponent<ShooterPlayerActions>();
             animator = GetComponent<ShooterAnimator>();
             data = GetComponent<ShooterData>();
+            ragdoll = GetComponent<RagdollActivator>();
         }
 
         private void Update()
@@ -36,36 +38,9 @@ namespace Core.TDS
         public void Death(Vector3 force = default)
         {
             isDead = true;
-            ActiveRagdoll(force);
+            ragdoll.ActivateRagdoll(animator.Get(), force);
             OnDeath.Run();  
         }
-        
-        public void ActiveRagdoll(Vector3 pos = default)
-        {
-            foreach (var rb in GetComponentsInChildren<Rigidbody>())
-            {
-                rb.isKinematic = false;
-                if (rb.GetComponent<BoxCollider>())
-                {
-                    rb.AddExplosionForce(1000, pos, 5);
-                }
 
-                rb.gameObject.layer = LayerMask.NameToLayer("Map");
-            }
-            foreach (var col in GetComponentsInChildren<Collider>())
-            {
-                col.enabled = true;
-            }
-
-            foreach (var mono in GetComponents<MonoBehaviour>())
-            {
-                mono.enabled = false;
-            }
-            gameObject.layer = LayerMask.NameToLayer("Main");
-            animator.Disable();
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            GetComponent<CapsuleCollider>().enabled = false;
-        }
-        
     }
 }

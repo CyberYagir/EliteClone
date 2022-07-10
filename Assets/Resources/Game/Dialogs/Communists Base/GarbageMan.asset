@@ -25,19 +25,19 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-        targetPortGUID: 9aeb68cf43f3fe540b33891c750babde
+        targetPortGUID: 75537d25a451944439b72e37853b0df1
     - portText: Moron?
       GUID: a2083745091c25642b0c593b98ccca0b
       order: 1
       connections:
       - targetNodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
-        targetPortGUID: bc72e273adc9785459b9923eeecbc57b
+        targetPortGUID: 75d80cdb6880dc34f8f4f51de2b21ad6
     - portText: Goodbye
       GUID: 445ebf4c07eb230418563e63d4bacbb2
       order: 2
       connections:
       - targetNodeGUID: 2c6d88f8dd6d833459ca8a7ed4e3fd22
-        targetPortGUID: 216883dea736b674397e8490cd1dfd1f
+        targetPortGUID: a961137eaf5aecd44bb47c9e6dd85269
     - portText: Auto
       GUID: a2cfc6ce8e7297a42ae0417fba6823b4
       order: 3
@@ -55,7 +55,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 8d0e2d6bc69f2e54285edcb5e76a1111
-        targetPortGUID: 5edc82d296ab8494288a304aecc521bf
+        targetPortGUID: 68e60d89b3c61e847a3339c2c0ee61ab
     entry: 0
   - text: What an idiot you are, I'm trying to save your life!
     nodeGUID: 28ecb8e86bae27a40bcfda7ae3780c6a
@@ -69,13 +69,13 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 3ae13fad8ebd7cb44bded47d8964eb0b
-        targetPortGUID: 9aeb68cf43f3fe540b33891c750babde
+        targetPortGUID: 75537d25a451944439b72e37853b0df1
     - portText: I will not even try to delve into your nonsense.
       GUID: ec9d5625bb062da4f977795283345041
       order: 1
       connections:
       - targetNodeGUID: aa3b79d4e0c8e6248ade62fdabd0b6d2
-        targetPortGUID: c01ea4b2d2d895c429754739e236c8c2
+        targetPortGUID: 6a4cd0c83f9c5c6438ef191aa3309da8
     - portText: Auto
       GUID: 319f33a77458d6d42b55bb25a9df37fc
       order: 2
@@ -101,7 +101,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
-        targetPortGUID: 35aba59e8ee46c84cb8862029669e450
+        targetPortGUID: cd62bf63875fd104ba1eb6d31acb9960
     entry: 0
   - text: Trigger
     nodeGUID: 2781aa3f4a3d4d74a819fc4fd87b69c9
@@ -123,7 +123,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 111dd2debe615ab42ae8f08167b733ea
-        targetPortGUID: 899312179094b664f82c50a9a68cebf5
+        targetPortGUID: f73aa1eeb69433f42847a7f776a341f8
     entry: 0
   - text: I saw a guy speak out in a bar against modern party politics and ended
       up being found on Industrial O1.
@@ -138,7 +138,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 2134253dbe17d6b448fee45910207028
-        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+        targetPortGUID: e2acba64a2f0a0a4f95f10b5841919e7
     entry: 0
   - text: Local lifeforms unearthed his costume, separated the bones from the meat,
       and began to worship the skeleton.
@@ -153,25 +153,19 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 7e00674240630fd46b142e82f7afaac3
-        targetPortGUID: 537c7d41492d7dc4390dc85f08e39cac
+        targetPortGUID: 34352379233c75949bc52893fb1680ce
     - portText: Is there any proof?
       GUID: 6301f8cf780ef0b4f9c74c88d9c6340f
       order: 1
       connections:
       - targetNodeGUID: ccf9a4830be7d69499c077529cade1f3
-        targetPortGUID: d4bceb15957d1c94d8f09449703d88a2
+        targetPortGUID: b45db12eecdf95742b1ebb58b0bb96b4
     - portText: I got you
       GUID: 91ff305343dcdf942976ce6565358c87
       order: 2
       connections:
       - targetNodeGUID: adeb1a5224f213641b7a37a6226d1d07
-        targetPortGUID: 95c30fab96d77b947828d6c23d5bbdd8
-    - portText: And what is the vector of the party now?
-      GUID: 6513052fe79cb224a9097f84b490fe34
-      order: 3
-      connections:
-      - targetNodeGUID: e593b64152a0928469c09cf71974bca2
-        targetPortGUID: 0a96294649d863d4b9a3d9298f916d74
+        targetPortGUID: ef9a69bf4d842b7408fd4f8d0a8fb985
     - portText: Auto
       GUID: c73527f5bda7f6f4aa4340887cfdad5f
       order: 4
@@ -189,7 +183,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 2134253dbe17d6b448fee45910207028
-        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+        targetPortGUID: e2acba64a2f0a0a4f95f10b5841919e7
     entry: 0
   - text: They have enslaved all the Zinc deposits and are blackmailing other groups
       with it.
@@ -204,7 +198,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 721c165c9e187c849bedd3c709d0f5d8
-        targetPortGUID: 93a49672212c7c5448374a12fe62513f
+        targetPortGUID: 1fd2379bf64c54e46930d3b28eecc57f
     entry: 0
   - text: Because of this, mining caravans are constantly attacked by pirates, organized
       crime groups and the remnants of liberals.
@@ -219,7 +213,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: af30c7f7edaf9104cbfe45e267cb169c
-        targetPortGUID: c0bdea11e0856a64d88d5da5392d0ad3
+        targetPortGUID: 0e0e4d220f130144e8a610e51256a9f3
     entry: 0
   - text: Moreover, the followers of the "Followers of Rationality" create Shaheed
       fleets that leave no chance for survival.
@@ -234,7 +228,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 8691bea54c04bef48a2a65b87a7dfa09
-        targetPortGUID: 7f469eff6331f4d4aae4ffff534b7e80
+        targetPortGUID: cfb267a6aec5c574aa0cf90ecaff66db
     entry: 0
   - text: As a result, a sad result, people do not want to mine zinc for fear of
       death, and they are afraid not to mine for fear of death, a vicious circle
@@ -250,7 +244,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 2134253dbe17d6b448fee45910207028
-        targetPortGUID: d372fd43d16e32e40ab6d7bc4802cc29
+        targetPortGUID: e2acba64a2f0a0a4f95f10b5841919e7
     entry: 0
   - text: When you gave a request for communication, I connected you via an encrypted
       channel, they will not listen to us. But everyone understands that you are
@@ -266,7 +260,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: 4d824f90eb691d448afa6680b06138ab
-        targetPortGUID: fcc8e045dc483f9439b9b9add22f320c
+        targetPortGUID: 4fe866259d9a79c44b35feb6ef1c27ad
     entry: 0
   - text: Yes, and I have nothing to lose, the family was killed by the Fortaks a
       year ago, but nothing, and my hour will come.
@@ -281,7 +275,7 @@ MonoBehaviour:
       order: 0
       connections:
       - targetNodeGUID: e593b64152a0928469c09cf71974bca2
-        targetPortGUID: 0a96294649d863d4b9a3d9298f916d74
+        targetPortGUID: 05f6ef53f23e4e54a8c6c576e4f4889a
     entry: 0
   replicasJson: "[\r\n  {\r\n    \"GUID\": \"e593b64152a0928469c09cf71974bca2\",\r\n   
     \"text\": \"Be careful, they see everything here.\",\r\n    \"type\": 0,\r\n   
@@ -326,12 +320,11 @@ MonoBehaviour:
     },\r\n      {\r\n        \"replica\": \"Is there any proof?\",\r\n        \"nextGUID\":
     \"ccf9a4830be7d69499c077529cade1f3\"\r\n      },\r\n      {\r\n        \"replica\":
     \"I got you\",\r\n        \"nextGUID\": \"adeb1a5224f213641b7a37a6226d1d07\"\r\n     
-    },\r\n      {\r\n        \"replica\": \"And what is the vector of the party now?\",\r\n       
-    \"nextGUID\": \"e593b64152a0928469c09cf71974bca2\"\r\n      }\r\n    ]\r\n  },\r\n 
-    {\r\n    \"GUID\": \"7e00674240630fd46b142e82f7afaac3\",\r\n    \"text\": \"You
-    can fly over there and check it out.\",\r\n    \"type\": 0,\r\n    \"character\":
-    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"2134253dbe17d6b448fee45910207028\",\r\n   
-    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"ccf9a4830be7d69499c077529cade1f3\",\r\n   
+    }\r\n    ]\r\n  },\r\n  {\r\n    \"GUID\": \"7e00674240630fd46b142e82f7afaac3\",\r\n   
+    \"text\": \"You can fly over there and check it out.\",\r\n    \"type\": 0,\r\n   
+    \"character\": 1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\":
+    \"2134253dbe17d6b448fee45910207028\",\r\n    \"triggerGUID\": null,\r\n    \"nexts\":
+    []\r\n  },\r\n  {\r\n    \"GUID\": \"ccf9a4830be7d69499c077529cade1f3\",\r\n   
     \"text\": \"They have enslaved all the Zinc deposits and are blackmailing other
     groups with it.\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\":
     1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"721c165c9e187c849bedd3c709d0f5d8\",\r\n   

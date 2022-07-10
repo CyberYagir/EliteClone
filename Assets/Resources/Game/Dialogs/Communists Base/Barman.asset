@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2099577369a2f2468d772196c85dd82, type: 3}
+  m_Name: Barman
+  m_EditorClassIdentifier: 
+  nodeData:
+  - text: Hello! What will you order?
+    nodeGUID: 86d6cb9dda69b7b44b19918d99a09f2b
+    pos: {x: 340, y: 199.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: I need information about a person with id 2025
+      GUID: 6eaefbbdd9ff2d6459221fb6ec4829cd
+      order: 0
+      connections:
+      - targetNodeGUID: b633469c8729c224a8dae2230424d15b
+        targetPortGUID: dc894588a7609194786730ea13ea2947
+    - portText: What is happening in the sector?
+      GUID: 63773e6ed514f6349a863cb7dcb62e1c
+      order: 1
+      connections:
+      - targetNodeGUID: 31986dac6df12664db5408d46c04b211
+        targetPortGUID: 17fc06b73f3f57d418d084ea06bfd05c
+    - portText: Good luck
+      GUID: 757fb0a7113186440a0cb5e2fdfee15d
+      order: 2
+      connections:
+      - targetNodeGUID: 8782bdd7264fa114f8e9d29ef3188ffb
+        targetPortGUID: be55880b15940f54d9697b319377cf43
+    - portText: Auto
+      GUID: 0c030d1adf1ba724db104b0ebecbac60
+      order: 3
+      connections: []
+    entry: 1
+  - text: You want too much
+    nodeGUID: b633469c8729c224a8dae2230424d15b
+    pos: {x: 975.3333, y: 94.666664}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 0c6419e7d0c61464e9cf9b866574da36
+      order: 0
+      connections:
+      - targetNodeGUID: be6eba7932fded24db959b8dc4092f10
+        targetPortGUID: 079433ff80d79674db7c079767317d93
+    entry: 0
+  - text: Your father wanted a lot when he wanted a son.
+    nodeGUID: be6eba7932fded24db959b8dc4092f10
+    pos: {x: 1254, y: 68.666664}
+    character: 0
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 15a580cc0e4bf99409febc56ca1bd38d
+      order: 0
+      connections:
+      - targetNodeGUID: 87acc812c1bd43d42a4f6f5b9f9e0669
+        targetPortGUID: 004283e259a495947b03722d1575ed79
+    entry: 0
+  - text: End Node
+    nodeGUID: 87acc812c1bd43d42a4f6f5b9f9e0669
+    pos: {x: 1507.3334, y: 68}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+    ports:
+    - portText: Action
+      GUID: b9647f47f47fff64398b11ec8c2a76de
+      order: 0
+      connections:
+      - targetNodeGUID: fcee836a38561da459a9dc609730d56c
+        targetPortGUID: eed9b27ac84bac54eba854e119ff50b2
+    entry: 0
+  - text: Trigger
+    nodeGUID: fcee836a38561da459a9dc609730d56c
+    pos: {x: 1750, y: 68}
+    character: 0
+    nodeType: 2
+    nodeAction: 2
+    ports: []
+    entry: 0
+  - text: Things are going well. Recently, on the other side of the galaxy, the liberal
+      sector has been crushed.
+    nodeGUID: 31986dac6df12664db5408d46c04b211
+    pos: {x: 1071.3334, y: 199.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 46b9def5478335140a78c249c2bec0ba
+      order: 0
+      connections:
+      - targetNodeGUID: 829b1022ada7af747b725ad324395ad0
+        targetPortGUID: 17f5dea4b2f840b4094c2daab832b6c3
+    entry: 0
+  - text: The Destroyers fucked them well.
+    nodeGUID: 829b1022ada7af747b725ad324395ad0
+    pos: {x: 1352.6666, y: 199.33334}
+    character: 1
+    nodeType: 0
+    nodeAction: 0
+    ports:
+    - portText: Auto
+      GUID: 4cc299721e9563b468c65bf417e2a597
+      order: 0
+      connections:
+      - targetNodeGUID: 86d6cb9dda69b7b44b19918d99a09f2b
+        targetPortGUID: 8ba0259e93a3ec84f81f8112151bb0a5
+    entry: 0
+  - text: End Node
+    nodeGUID: 8782bdd7264fa114f8e9d29ef3188ffb
+    pos: {x: 1022, y: 374.66666}
+    character: 0
+    nodeType: 1
+    nodeAction: 0
+    ports:
+    - portText: Action
+      GUID: 67e63b44c11a72b41bfc2b6b21e75ce2
+      order: 0
+      connections:
+      - targetNodeGUID: a307690edd3e6d448b48aeda8e64c101
+        targetPortGUID: 5a0b6c4f65b4d154b836e5b44a6287ad
+    entry: 0
+  - text: Trigger
+    nodeGUID: a307690edd3e6d448b48aeda8e64c101
+    pos: {x: 1254, y: 374.66666}
+    character: 0
+    nodeType: 2
+    nodeAction: 0
+    ports: []
+    entry: 0
+  replicasJson: "[\r\n  {\r\n    \"GUID\": \"86d6cb9dda69b7b44b19918d99a09f2b\",\r\n   
+    \"text\": \"Hello! What will you order?\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 2,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": [\r\n      {\r\n        \"replica\":
+    \"I need information about a person with id 2025\",\r\n        \"nextGUID\":
+    \"b633469c8729c224a8dae2230424d15b\"\r\n      },\r\n      {\r\n        \"replica\":
+    \"What is happening in the sector?\",\r\n        \"nextGUID\": \"31986dac6df12664db5408d46c04b211\"\r\n     
+    },\r\n      {\r\n        \"replica\": \"Good luck\",\r\n        \"nextGUID\":
+    \"8782bdd7264fa114f8e9d29ef3188ffb\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n   
+    \"GUID\": \"b633469c8729c224a8dae2230424d15b\",\r\n    \"text\": \"You want too
+    much\",\r\n    \"type\": 0,\r\n    \"character\": 1,\r\n    \"classname\": 1,\r\n   
+    \"action\": 0,\r\n    \"nextGUID\": \"be6eba7932fded24db959b8dc4092f10\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"be6eba7932fded24db959b8dc4092f10\",\r\n   
+    \"text\": \"Your father wanted a lot when he wanted a son.\",\r\n    \"type\":
+    0,\r\n    \"character\": 0,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n   
+    \"nextGUID\": \"87acc812c1bd43d42a4f6f5b9f9e0669\",\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"87acc812c1bd43d42a4f6f5b9f9e0669\",\r\n   
+    \"text\": \"End Node\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"fcee836a38561da459a9dc609730d56c\",\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"fcee836a38561da459a9dc609730d56c\",\r\n   
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 2,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"31986dac6df12664db5408d46c04b211\",\r\n   
+    \"text\": \"Things are going well. Recently, on the other side of the galaxy,
+    the liberal sector has been crushed.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"829b1022ada7af747b725ad324395ad0\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"829b1022ada7af747b725ad324395ad0\",\r\n   
+    \"text\": \"The Destroyers fucked them well.\",\r\n    \"type\": 0,\r\n    \"character\":
+    1,\r\n    \"classname\": 1,\r\n    \"action\": 0,\r\n    \"nextGUID\": \"86d6cb9dda69b7b44b19918d99a09f2b\",\r\n   
+    \"triggerGUID\": null,\r\n    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"8782bdd7264fa114f8e9d29ef3188ffb\",\r\n   
+    \"text\": \"End Node\",\r\n    \"type\": 1,\r\n    \"character\": 0,\r\n    \"classname\":
+    4,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": \"a307690edd3e6d448b48aeda8e64c101\",\r\n   
+    \"nexts\": []\r\n  },\r\n  {\r\n    \"GUID\": \"a307690edd3e6d448b48aeda8e64c101\",\r\n   
+    \"text\": \"Trigger\",\r\n    \"type\": 2,\r\n    \"character\": 0,\r\n    \"classname\":
+    3,\r\n    \"action\": 0,\r\n    \"nextGUID\": null,\r\n    \"triggerGUID\": null,\r\n   
+    \"nexts\": []\r\n  }\r\n]"

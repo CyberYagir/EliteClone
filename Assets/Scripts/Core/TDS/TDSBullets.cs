@@ -25,7 +25,7 @@ namespace Core.TDS
             IDamagable damagable = other.GetComponent<IDamagable>();
             if (damagable == null)
             {
-                damagable = other.GetComponentInParent<IDamagable>();
+                damagable = other.GetComponentInParent<IDamagable>(true);
             }
             damagable?.TakeDamage(damage);
         }

@@ -31,8 +31,11 @@ namespace Core.Dialogs.Game
             StopAllCoroutines();
             PlayerTDSCamera.ChangeMode(PlayerTDSCamera.CameraModes.OutsideControl);
             ShooterPlayer.Instance.controller.enabled = false;
-            ShooterPlayer.Instance.transform.DOLookAt(new Vector3(transform.position.x, ShooterPlayer.Instance.transform.position.y, transform.position.z), 0.5f);
+            ShooterPlayer.Instance.controller.GetRigidbody().isKinematic = true;
             ShooterPlayer.Instance.controller.SetPointPose(transform.position);
+            ShooterPlayer.Instance.transform.DOLookAt(new Vector3(transform.position.x, ShooterPlayer.Instance.transform.position.y, transform.position.z), 0.5f);
+
+
             var playerpos = ShooterPlayer.Instance.transform.position;
             if (Vector3.Distance(playerpos, transform.position) < 1.5f)
             {
@@ -48,7 +51,7 @@ namespace Core.Dialogs.Game
             StartCoroutine(DialogLoop());
             cameraLoop = CameraLoop();
             StartCoroutine(cameraLoop);
-          
+
         }
 
         private IEnumerator cameraLoop;
@@ -129,6 +132,7 @@ namespace Core.Dialogs.Game
                         print("NodeEndData");
                         PlayerTDSCamera.ChangeMode(PlayerTDSCamera.CameraModes.Control);
                         ShooterPlayer.Instance.controller.enabled = true;
+                        ShooterPlayer.Instance.controller.GetRigidbody().isKinematic = false;
                         StopCoroutine(cameraLoop);
                         ShooterPlayerInteractor.interacted = false;
                         PlayerTDSCamera.Instance.GetCamera().transform.DOKill();
