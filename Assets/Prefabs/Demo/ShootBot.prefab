@@ -1263,6 +1263,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149028257780, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
   m_PrefabInstance: {fileID: 2279666677010275905}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2279666678050942860 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1325101517, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+  m_PrefabInstance: {fileID: 2279666677010275905}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3366777279424505476 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3538196372233271493, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
@@ -1279,11 +1284,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6473748320389130758, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
   m_PrefabInstance: {fileID: 2279666677010275905}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7500172486932585271 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8626354678201337206, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
-  m_PrefabInstance: {fileID: 2279666677010275905}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5173766685768224081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6372568872071533328, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
@@ -1294,9 +1294,9 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 3355623747958969640, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
   m_PrefabInstance: {fileID: 2279666677010275905}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2279666678050942860 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1325101517, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
+--- !u!1 &7500172486932585271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8626354678201337206, guid: 56b75c13322722e45b0eef7edf6d77ec, type: 3}
   m_PrefabInstance: {fileID: 2279666677010275905}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3419314268252735150 stripped
@@ -1349,6 +1349,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4393450381784092208}
+        m_TargetAssemblyTypeName: Core.TDS.Bot.ShooterBotDrop, CoreDef
+        m_MethodName: SpawnDrop
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1486,3 +1498,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4393450381784092208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419314268252735150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23d35498e44ff540b89d0e5bf0e1b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drop:
+  - {fileID: 3825300315506358559, guid: 6d42ade85347115458c9e7db56455fec, type: 3}
+  - {fileID: 4980677460843251017, guid: 94930693da18d6f4294254e19ccb3022, type: 3}

@@ -29,6 +29,11 @@ namespace Core.TDS
         public void TakeDamage(float damage)
         {
             damager.TakeDamage(ref heath, damage);
+            if (heath > maxHeath)
+            {
+                heath = maxHeath;
+            }
+
             UpdateData.Run();
 
             if (god)
@@ -38,6 +43,7 @@ namespace Core.TDS
                     heath = 1;
                 }
             }
+            
             if (heath <= 0)
             {
                 var dir = (ShooterPlayer.Instance.transform.position-transform.position);
@@ -52,6 +58,12 @@ namespace Core.TDS
             if (energy > val)
             {
                 energy -= val;
+
+                if (energy > maxEnergy)
+                {
+                    energy = maxEnergy;
+                }
+                
                 UpdateData.Run();
                 return true;
             }

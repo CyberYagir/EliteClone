@@ -11,7 +11,7 @@ namespace Core
 {
     public class PlayerDataManager : Singleton<PlayerDataManager>
     {
-        public static SolarSystem CurrentSolarSystem;
+        public static SolarSystem CurrentSolarSystem { get; set; }
 
         public static InitOptions.PlayerConfig PlayerConfig;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Core.TDS
 {
@@ -25,21 +26,13 @@ namespace Core.TDS
             data = GetComponent<ShooterData>();
             ragdoll = GetComponent<RagdollActivator>();
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Confined;
-            }
-        }
-
         public void Death(Vector3 force = default)
         {
             isDead = true;
             ragdoll.ActivateRagdoll(animator.Get(), force);
-            OnDeath.Run();  
+            OnDeath.Run();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
     }

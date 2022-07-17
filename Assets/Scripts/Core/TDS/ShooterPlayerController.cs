@@ -43,6 +43,12 @@ namespace Core.TDS
             IKPoint.gameObject.SetActive(true);
         }
 
+        public void CursorState(bool visible)
+        {
+            Cursor.visible = visible;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+
         private void OnDisable()
         {
             IKPoint.gameObject.SetActive(false);

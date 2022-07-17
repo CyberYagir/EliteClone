@@ -56,6 +56,10 @@ namespace Core.Galaxy
             LoadSystems();
         }
 
+        public static void Clear()
+        {
+            systems = null;
+        }
         public static bool LoadSystems()
         {
             if (systems == null)
@@ -73,13 +77,13 @@ namespace Core.Galaxy
                         }
 
                         File.Delete(PlayerDataManager.GalaxyFile);
-                        Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
+                        //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
                     }
                     catch (Exception e)
                     {
                         Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
-                        Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
+                        //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError("Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                     }
                 }

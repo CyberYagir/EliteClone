@@ -40,11 +40,15 @@ namespace Core.Init
 
         public void GenerateGalaxy()
         {
-            WindowManager.Instance.OpenWindow(null);
-            menuback.DOPlayForward();
-            ActiveLoading();
-            loadingText.text = "Loading Galaxy";
-            PlayerDataManager.Instance.LoadScene();
+            GalaxyGenerator.Clear();
+            if (GalaxyGenerator.LoadSystems())
+            {
+                WindowManager.Instance.OpenWindow(null);
+                menuback.DOPlayForward();
+                ActiveLoading();
+                loadingText.text = "Loading Galaxy";
+                PlayerDataManager.Instance.LoadScene();
+            }
         }
 
         public void DowloadGalaxy()

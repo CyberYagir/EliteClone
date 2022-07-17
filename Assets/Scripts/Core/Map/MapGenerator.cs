@@ -39,6 +39,9 @@ namespace Core.Map
 
         public List<string> systems = new List<string>();
         public Event OnInited;
+        
+        
+        
         private void Awake()
         {
             Single(this);
@@ -145,11 +148,19 @@ namespace Core.Map
         
         public void DrawWorld(List<string> historyList)
         {
+            var tutorial = TutorialsManager.LoadTutorial();
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];
                 systems.Add(system.name);
                 var spawn = Instantiate(star.gameObject, system.position.ToVector() / size, Quaternion.identity);
+
+                if (system.name == tutorial.baseSystemName)
+                {
+                    var render = spawn.GetComponentInChildren<Renderer>();
+                    render.material.color = Color.red;
+                    render.material.SetColor("_EmissiveColor", new Color(0.5f, 0.074f, 0.074f));
+                }
 
                 for (int i = 0; i < system.sibligs.Count; i++)
                 {
@@ -183,10 +194,7 @@ namespace Core.Map
                 texts.Add(text);
             }
 
-            if (mode == MapSelect.MapMode.Active)
-            {
-                PlayerDataManager.CurrentSolarSystem = null;
-            }
+   
         }
         
         public void DrawCanvas()

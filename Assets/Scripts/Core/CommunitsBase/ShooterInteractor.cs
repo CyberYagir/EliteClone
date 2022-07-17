@@ -60,30 +60,35 @@ namespace Core.CommunistsBase.Intacts
         private void OnDisable()
         {
             triggered = false;
+            if (interactor != null)
+            {
+                interactor.DestroyInteractor(this);
+            }
         }
 
+        private ShooterPlayerInteractor interactor;
         private void OnTriggerEnter(Collider other)
         {
             if (!triggered && this.enabled)
             {
-                var inters = other.GetComponentInParent<ShooterPlayerInteractor>();
-                if (inters)
+                interactor = other.GetComponentInParent<ShooterPlayerInteractor>();
+                if (interactor)
                 {
                     if (walker != null)
                     {
                         if (ShooterPlayer.Instance.inventory.items.Count == 0)
                         {
-                            inters.AddInteractor(this);
+                            interactor.AddInteractor(this);
                             StartCoroutine(ShooterAnimator.ChangeLayer(walker.GetAnimator(), 2, 2.5f, 0, true));
                             triggered = true;
-                            target = inters.transform;
+                            target = interactor.transform;
                         }
                     }
                     else
                     {
-                        inters.AddInteractor(this);
+                        interactor.AddInteractor(this);
                         triggered = true;
-                        target = inters.transform;
+                        target = interactor.transform;
                     }
                 }
             }
@@ -106,5 +111,7 @@ namespace Core.CommunistsBase.Intacts
                 }
             }
         }
+        
+        
     }
 }

@@ -49,7 +49,10 @@ namespace Core.UI
                     alpha = Mathf.Lerp(alpha, 1, Time.unscaledDeltaTime * TransitionSpeed);
                 }
 
-                backImage.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+                if (backImage != null)
+                {
+                    backImage.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+                }
             }
 
             image.color = Color.Lerp(image.color, over == ActionType.Over ? overColor : (over == ActionType.Selected ? selectedColor : noneColor), TransitionSpeed * Time.unscaledDeltaTime);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Core.Galaxy;
@@ -130,7 +131,7 @@ namespace Core.Location
             {
                 locationObject.initEvent.AddListener(delegate
                 {
-                    var allPoints = WorldOrbitalStation.Instance.GetComponent<WorldOrbitalStationPoints>().GetLandPoint();
+                    var allPoints = WorldOrbitalStation.Instance.GetComponentInChildren<WorldOrbitalStationPoints>().GetLandPoint();
                     var point = allPoints[Random.Range(0, allPoints.Count)];
             
                     Player.inst.transform.position = point.point.position;

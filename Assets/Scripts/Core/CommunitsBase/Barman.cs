@@ -15,14 +15,7 @@ namespace Core.CommunistsBase
     {
         [SerializeField] private Item weapon;
         [SerializeField] private List<CapsuleCollider> toEnable;
-        private void Start()
-        {
-            var tutorial = TutorialsManager.LoadTutorial();
-            if (tutorial.isBarmanKilled)
-            {
-                gameObject.SetActive(false);
-            }
-        }
+        [SerializeField] private List<ShooterInteractor> terminals;
 
         public void Trigger(Actions action)
         {
@@ -38,6 +31,11 @@ namespace Core.CommunistsBase
                     bot.GetComponent<CapsuleCollider>().enabled = true;
                 }
 
+                foreach (var terminal in terminals)
+                {
+                    terminal.enabled = true;
+                }
+                
                 foreach (var coll in toEnable)
                 {
                     coll.enabled = true;

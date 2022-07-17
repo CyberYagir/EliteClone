@@ -8,11 +8,7 @@ namespace Core.Demo
         [SerializeField] protected Vector3 offcet;
         [SerializeField] protected Transform player;
         
-
-        private void Start()
-        {
-            
-        }
+        
 
         private void FixedUpdate()
         {

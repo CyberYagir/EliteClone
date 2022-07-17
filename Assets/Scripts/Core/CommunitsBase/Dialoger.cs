@@ -14,6 +14,9 @@ namespace Core.Dialogs.Game
     public class Dialoger : MonoBehaviour
     {
         [SerializeField] private ExtendedDialog dialog;
+
+        public ExtendedDialog Dialog => dialog;
+        
         private List<ExtendedDialog.NodeReplicaData> replicas = new List<ExtendedDialog.NodeReplicaData>();
 
         private List<string> choicesGUIDS = new List<string>();
@@ -30,11 +33,7 @@ namespace Core.Dialogs.Game
             choicesGUIDS = new List<string>();
             StopAllCoroutines();
             PlayerTDSCamera.ChangeMode(PlayerTDSCamera.CameraModes.OutsideControl);
-            ShooterPlayer.Instance.controller.enabled = false;
-            ShooterPlayer.Instance.controller.GetRigidbody().isKinematic = true;
-            ShooterPlayer.Instance.controller.SetPointPose(transform.position);
-            ShooterPlayer.Instance.transform.DOLookAt(new Vector3(transform.position.x, ShooterPlayer.Instance.transform.position.y, transform.position.z), 0.5f);
-
+            ShooterPlayer.Instance.Disable(transform, false, true);
 
             var playerpos = ShooterPlayer.Instance.transform.position;
             if (Vector3.Distance(playerpos, transform.position) < 1.5f)
@@ -131,8 +130,9 @@ namespace Core.Dialogs.Game
                         
                         print("NodeEndData");
                         PlayerTDSCamera.ChangeMode(PlayerTDSCamera.CameraModes.Control);
-                        ShooterPlayer.Instance.controller.enabled = true;
-                        ShooterPlayer.Instance.controller.GetRigidbody().isKinematic = false;
+                        
+                        
+                        ShooterPlayer.Instance.Disable(null, true, false);
                         StopCoroutine(cameraLoop);
                         ShooterPlayerInteractor.interacted = false;
                         PlayerTDSCamera.Instance.GetCamera().transform.DOKill();

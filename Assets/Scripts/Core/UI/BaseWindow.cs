@@ -11,6 +11,7 @@ namespace Core.UI
     {
         private RectTransform rect;
         [SerializeField] private float height = 1400;
+        [SerializeField] private Canvas canvas;
         [SerializeField] private TMP_Text infoText, nameText;
         [SerializeField] private CharacterList characters;
         [SerializeField] private TMP_Text repairT, fuelT;
@@ -75,6 +76,7 @@ namespace Core.UI
             if (rect)
             {
                 rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+                canvas.enabled = rect.sizeDelta.y >= 0.1f;
             }
         }
 

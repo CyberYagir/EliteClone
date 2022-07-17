@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.TDS
@@ -27,7 +28,21 @@ namespace Core.TDS
         {
             return inventory.items.Count > 0;
         }
-        
+
+        public void Disable(Transform target, bool state, bool look)
+        {
+            controller.enabled = state;
+            controller.GetRigidbody().isKinematic = !state;
+            if (target != null)
+            {
+                controller.SetPointPose(target.position);
+            }
+
+            if (look)
+            {
+                transform.DOLookAt(new Vector3(target.position.x, transform.position.y, target.position.z), 0.5f);
+            }
+        }
         
 
     }

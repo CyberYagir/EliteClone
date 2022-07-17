@@ -10,7 +10,7 @@ namespace Core.TDS
     {
         [SerializeField] private List<Rigidbody> bones;
         [SerializeField] private List<Collider> colliders;
-
+        public bool isActived {get; set;}
         public void AutoRagdoll()
         {
             ActivateRagdoll(GetComponentInChildren<Animator>());
@@ -18,6 +18,7 @@ namespace Core.TDS
 
         public void ActivateRagdoll(Animator animator, Vector3 pos = default)
         {
+            isActived = true;
             foreach (var rb in bones)
             {
                 rb.isKinematic = false;
