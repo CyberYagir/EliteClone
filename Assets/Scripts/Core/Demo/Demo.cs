@@ -4,6 +4,7 @@ using Core.PlayerScripts;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Core.Demo
 {
@@ -17,7 +18,7 @@ namespace Core.Demo
         [SerializeField] private GameObject cube, mars;
         [SerializeField] private ParticleSystem shootParticles;
         [SerializeField] private Camera camera;
-
+        [SerializeField] private Image skipImage;
         private float skipTime;
         
         private float textShowTimer;
@@ -43,15 +44,17 @@ namespace Core.Demo
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                skipTime += Time.deltaTime;
+                skipTime += Time.unscaledDeltaTime;
                 if (skipTime >= 5)
                 {
                     DemoMoveToGalaxy.LoadGalaxyLocation();
-                    skipTime = 0;
+                    skipTime = -1000;
+                    return;
                 }
             }
             else skipTime = 0;
             lateTime += Time.unscaledDeltaTime;
+            skipImage.fillAmount = skipTime / 5f;
         }
 
         IEnumerator DemoWaiter()

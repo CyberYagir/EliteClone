@@ -5,9 +5,8 @@ namespace Core.Demo
     [System.Serializable]
     public class TDSQuest
     {
-        [SerializeField] protected string text;
+        public string Text { get; set; }
         [SerializeField] protected bool isCompleted;
-
         public bool IsComplited => isCompleted;
         public virtual void Calculate(){}
 
@@ -15,7 +14,7 @@ namespace Core.Demo
 
         public string GetText()
         {
-            return text;
+            return Text;
         }
     }
 }

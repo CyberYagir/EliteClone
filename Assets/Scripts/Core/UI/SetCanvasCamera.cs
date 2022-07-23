@@ -8,7 +8,10 @@ namespace Core.UI
         // Start is called before the first frame update
         void Start()
         {
-            GetComponent<Canvas>().worldCamera = Player.inst.GetCamera();
+            if (Player.inst != null)
+            {
+                GetComponent<Canvas>().worldCamera = Player.inst.GetCamera();
+            }
         }
     }
 }

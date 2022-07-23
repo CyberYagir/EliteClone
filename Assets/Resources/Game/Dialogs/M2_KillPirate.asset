@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c039fe1e53d96849a98563b9a5569de, type: 3}
+  m_Name: M2_KillPirate
+  m_EditorClassIdentifier: 
+  replicas:
+  - character: 0
+    text: Connecting...
+    finishMethodName: 
+  - character: 1
+    text: "Listen, I was captured by a commie and apparently they sewed a chip into
+      me that could kill me, I don\u2019t know if this is a bluff or not, but if
+      this chip really exists, is it possible to deactivate it somehow? Over."
+    finishMethodName: 
+  - character: 2
+    text: I told you it wouldn't be that easy for you. There is one idea, every Pirate
+      in any system has a circuit on the ship that transmits data in a special way,
+      they do not use the "Tachyon Communication" as it is easy to intercept, they
+      use data transmission to a large server in the void between two galaxies.
+    finishMethodName: 
+  - character: 2
+    text: Communication is rare, but instantaneous through the fourth dimension.
+      During data transfer, they create a strong electromagnetic pulse that can disrupt
+      your chip if manually activated.
+    finishMethodName: 
+  - character: 2
+    text: 'First you need to visit the space station, and equip the lasers there,
+      which, according to your ship, are disabled here for greater autonomy, they
+      must be reflashed and assigned to the control panel.
+
+      End of connection.'
+    finishMethodName: M2Quest

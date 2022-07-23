@@ -26,32 +26,49 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     private void Start()
     {
         tutorial = TutorialsManager.LoadTutorial();
-        M1Init();
-
+        Init();
     }
-
-    #region M1
-
-    public void M1Init()
+    public void Init()
     {
         var activator = FindObjectOfType<LocationUIActivator>();
-        if (!tutorial.m1_Dialog1)
+        Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+        if (tutorial.CommunitsBaseStats == null)
         {
-            var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-            messenger.dialog = (Dialog)Resources.Load("Game/Dialogs/M1", typeof(Dialog));
-            tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
-            TutorialsManager.SaveTutorial(tutorial);
-            EnablePlayer(false);
+            if (!tutorial.m1_Dialog1)
+            {
+                var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
+                messenger.dialog = (Dialog) Resources.Load("Game/Dialogs/M1", typeof(Dialog));
+                tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
+                TutorialsManager.SaveTutorial(tutorial);
+                EnablePlayer(false);
+            }
+            else if (tutorial.startSystemName != "")
+            {
+                M1GenerateQuest(false);
+            }
         }
-        else if (tutorial.startSystemName != "")
+        else if (tutorial.CommunitsBaseStats.isSeeDemo)
         {
-            M1GenerateQuest(false);
+            if (!tutorial.m2_Dialog2)
+            {
+                var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
+                messenger.dialog = (Dialog) Resources.Load("Game/Dialogs/M2", typeof(Dialog));
+                TutorialsManager.SaveTutorial(tutorial);
+                EnablePlayer(false);
+            }
+            else
+            {
+                M2GenerateQuest(true);
+            }
+            AddStation();
         }
     }
+    #region M1
     
     public void M1AddStation()
     {
-        if (Player.inst.quests.quests.Find(x => x.questID == int.MaxValue).GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)
+        if (Player.inst.quests.quests.Find(x => x.questID == int.MaxValue).GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ||
+            tutorial.baseSystemName == PlayerDataManager.CurrentSolarSystem.name)
         {
             var rnd = new System.Random(NamesHolder.StringToSeed(tutorial.startSystemName));
             var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
@@ -80,10 +97,40 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         tutorial.m1_Dialog1 = true;
         TutorialsManager.SaveTutorial(tutorial);
     }
-
-    public void M1GenerateQuest(bool notify)
+    
+    private void M1GenerateQuest(bool notify)
     {
         Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+        
+        var quest = GetEmptyQuest();
+        quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
+        quest.appliedSolar = tutorial.startSystemName;
+        quest.appliedStation = "";
+        quest.GetPath(new System.Random(int.MaxValue), "Communists Base", tutorial.startSystemName, 1, 3, false);
+        quest.GetLastQuestPath().targetName = "Communists Base";
+        quest.toTransfer = new List<Item>();
+        Player.inst.quests.ApplyQuest(quest, notify);
+        AddStation();
+    }
+
+    public void AddStation()
+    {
+        Player.OnSceneChanged += M1AddStation;
+        M1AddStation();
+    }
+    #endregion
+
+    #region M2
+
+    public void M2Quest()
+    {
+        M2GenerateQuest(true);
+        tutorial.m2_Dialog2 = true;
+        TutorialsManager.SaveTutorial(tutorial);
+    }
+
+    public Quest GetEmptyQuest()
+    {
         Quest quest = new Quest();
         Character character = new Character();
         character.fraction = WorldDataItem.Fractions.NameToID("Libertarians");
@@ -93,19 +140,18 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         quest.Init(0, character, true);
         quest.questType = -1;
         quest.questID = int.MaxValue;
-        quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
-        quest.appliedSolar = tutorial.startSystemName;
-        quest.appliedStation = "";
-        quest.GetPath(new System.Random(int.MaxValue), "Communists Base", tutorial.startSystemName, 1, 3, false);
-        quest.GetLastQuestPath().targetName = "Communists Base";
         quest.toTransfer = new List<Item>();
-        Player.inst.quests.ApplyQuest(quest, notify);
-        Player.OnSceneChanged += M1AddStation;
-        M1AddStation();
-    }
-    #endregion
 
+        return quest;
+    }
+    public void M2GenerateQuest(bool notify)
+    {
+        var quest = GetEmptyQuest();
+        quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
+        Player.inst.quests.ApplyQuest(quest, notify);
+    }
     
+    #endregion
 
     public static void EnablePlayer(bool enable)
     {

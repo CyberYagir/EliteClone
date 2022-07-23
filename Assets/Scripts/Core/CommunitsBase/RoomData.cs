@@ -38,7 +38,10 @@ namespace Core.CommunistsBase
             stateActive = state;
             foreach (var n in renderers)
             {
-                n.enabled = state;
+                if (n != null)
+                {
+                    n.enabled = state;
+                }
             }
 
             foreach (var l in lights)

@@ -16,7 +16,7 @@ namespace Core.CommunistsBase
         [SerializeField] private Item weapon;
         [SerializeField] private List<CapsuleCollider> toEnable;
         [SerializeField] private List<ShooterInteractor> terminals;
-
+        [SerializeField] private CommunistsQuests quests;
         public void Trigger(Actions action)
         {
             if (action == Actions.Negative)
@@ -40,6 +40,7 @@ namespace Core.CommunistsBase
                 {
                     coll.enabled = true;
                 }
+                quests.GetInformationFromComputers();
             }
         }
     }

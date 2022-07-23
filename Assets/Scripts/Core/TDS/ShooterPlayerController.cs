@@ -34,6 +34,7 @@ namespace Core.TDS
             
             startPointL = LHand.localPosition;
             startPointR = RHand.localPosition;
+            CursorState(false);
         }
 
         public Camera GetCamera() => camera;
@@ -52,6 +53,14 @@ namespace Core.TDS
         private void OnDisable()
         {
             IKPoint.gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                CursorState(false);
+            }
         }
 
         public void FixedUpdate()

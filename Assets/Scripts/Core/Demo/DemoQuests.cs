@@ -14,7 +14,7 @@ namespace Core.Demo
 
             public StillWeaponQuest()
             {
-                text = "Steal weapons from guards.";
+                Text = "Steal weapons from guards.";
             }
             public override void Calculate()
             {
@@ -38,7 +38,7 @@ namespace Core.Demo
                 {
                     slaves[i].speed = Random.Range(0.6f, 1.4f);
                 }
-                text = "Kill all guards.";
+                Text = "Kill all guards.";
             }
 
             public override void Calculate()
@@ -72,7 +72,7 @@ namespace Core.Demo
                     isCompleted = true;
                 });
 
-                text = "Break into ShipYard";
+                Text = "Break into ShipYard";
             }
         }
         public class OpenDoorQuest: TDSQuest
@@ -86,7 +86,7 @@ namespace Core.Demo
                     isCompleted = true;
                 });
                 
-                text = "Exit to the shipyard.";
+                Text = "Exit to the shipyard.";
             }
 
             public override void Calculate()
@@ -100,7 +100,7 @@ namespace Core.Demo
         {
             public SitInShip()
             {
-                text = "Sit in a spaceship and go out into space.";
+                Text = "Sit in a spaceship and go out into space.";
             }
         }
 

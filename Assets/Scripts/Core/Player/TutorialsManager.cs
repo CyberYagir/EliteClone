@@ -20,18 +20,26 @@ namespace Core.PlayerScripts
             public class CommBaseData
             {
                 public List<string> killedDialogs;
-                public bool completeBarmanQuest;
                 public bool isSeeDemo;
             }
             
-            
+            /// ============= M1
             public bool isDemoEnd;
             public bool m1_Dialog1;
-            public CommBaseData CommunitsBaseStats = null;
             
-            
+            /// ============= M2
             public string startSystemName = "";
             public string baseSystemName = "";
+            
+            public CommBaseData CommunitsBaseStats = null;
+            
+            public bool m2_Dialog2;
+            
+            public bool haveTranslator;
+            
+            
+            /// ============= M3
+            
             
             public Tutorial()
             {
