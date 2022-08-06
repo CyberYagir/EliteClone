@@ -42,6 +42,11 @@ namespace Core.UI
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
             Player.inst.land.OnLand += Enable;
+            
+            if (upDownUI.selectedIndex == -1)
+            {
+                upDownUI.ForceChangeSelect(0);
+            }
         }
 
         // private void OnDestroy()

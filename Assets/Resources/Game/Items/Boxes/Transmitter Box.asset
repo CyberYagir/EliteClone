@@ -10,41 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d9dcf28c220964a9a0e8bc4e33dc82, type: 3}
-  m_Name: TDS_Minigun
+  m_Name: Transmitter Box
   m_EditorClassIdentifier: 
   id:
-    id: 527367
-    idname: minigun_f1
-  itemName: Minigun F1
-  icon: {fileID: 21300000, guid: f66be4f8b02e9934caf86284b53e2b07, type: 3}
+    id: 872964
+    idname: transmitter_box
+  itemName: Transmitter Box
+  icon: {fileID: 21300000, guid: 16aba9da4e27bb84a9d86294c70a9f1c, type: 3}
   amount:
     value: 1
-    minValue: 0
-    maxValue: 1
+    minValue: 1
+    maxValue: 10
     MaxCount: 10
-  itemType: 1
+  itemType: 0
   keysData:
-  - KeyPairValue: 0
-    KeyPairType: 0
-    customName: 
-    num: 10
-    str: 
-    obj: {fileID: 0}
-  - KeyPairValue: 1
-    KeyPairType: 2
-    customName: 
-    num: 0.02
-    str: 
-    obj: {fileID: 0}
-  - KeyPairValue: 4
+  - KeyPairValue: 3
     KeyPairType: 0
     customName: 
     num: 1
     str: 
     obj: {fileID: 0}
-  - KeyPairValue: 5
+  - KeyPairValue: 2
     KeyPairType: 2
     customName: 
-    num: 0.5
+    num: 1
     str: 
     obj: {fileID: 0}

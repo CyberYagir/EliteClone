@@ -3612,6 +3612,9 @@ MonoBehaviour:
   orbitRotation: {x: 0, y: 0, z: 0}
   speed: 0
   width: 0.002
+  OnRotate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2668834985363250068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3651,6 +3654,7 @@ MonoBehaviour:
   quests: []
   characters: []
   additionalCharacters: 
+  methods: {fileID: 11400000, guid: b4b6dc82fe218514fa4f57e298a8274c, type: 2}
 --- !u!114 &7480830169613052181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3729,37 +3733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d6a0d7c71b4de4d922cd01b59a9a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuestsMethods:
-  - questType: 0
-    script: {fileID: 3023727576613223236}
-    initEvents:
-    - InitKill
-    isCompliteEvents:
-    - IsKillIsComplete
-    OnButtonDisplay:
-    - KillButtonDisplay
-    OnComplitedEvents:
-    - IsKillCompleted
-  - questType: 1
-    script: {fileID: 3023727576613223236}
-    initEvents:
-    - InitMine
-    isCompliteEvents:
-    - IsMinerTransferIsComplete
-    OnButtonDisplay:
-    - MineButtonDisplay
-    OnComplitedEvents:
-    - IsMinerTransferIsCompleted
-  - questType: 2
-    script: {fileID: 3023727576613223236}
-    initEvents:
-    - InitTransfer
-    isCompliteEvents:
-    - IsMinerTransferIsComplete
-    OnButtonDisplay:
-    - TransferButtonDisplay
-    OnComplitedEvents:
-    - IsMinerTransferIsCompleted
+  QuestsMethods: {fileID: 11400000, guid: b4b6dc82fe218514fa4f57e298a8274c, type: 2}
 --- !u!114 &3023727576613223236
 MonoBehaviour:
   m_ObjectHideFlags: 0

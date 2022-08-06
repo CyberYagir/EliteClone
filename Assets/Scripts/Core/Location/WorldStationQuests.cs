@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Quests;
 using UnityEngine;
 
 namespace Core.Location
@@ -71,11 +72,11 @@ namespace Core.Location
             }
         }
 
-        public List<QuestFunction> QuestsMethods = new List<QuestFunction>();
+        [SerializeField] private QuestsMethodObject QuestsMethods;
 
         public QuestFunction GetEventByID(int id)
         {
-            return QuestsMethods.Find(x => x.questType == id);
+            return QuestsMethods.Methods.Find(x => x.questType == id);
         }
     }
 

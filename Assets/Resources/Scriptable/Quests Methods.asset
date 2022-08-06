@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cbb0443cb6473409a7dd061a78d1c4, type: 3}
+  m_Name: Quests Methods
+  m_EditorClassIdentifier: 
+  methods:
+  - questType: 0
+    script: {fileID: 3023727576613223236, guid: 79b0a36e84df4164cb269812dd14af20, type: 3}
+    initEvents:
+    - InitKill
+    isCompliteEvents:
+    - IsKillIsComplete
+    OnButtonDisplay:
+    - KillButtonDisplay
+    OnComplitedEvents:
+    - IsKillCompleted
+  - questType: 1
+    script: {fileID: 3023727576613223236, guid: 79b0a36e84df4164cb269812dd14af20, type: 3}
+    initEvents:
+    - InitMine
+    isCompliteEvents:
+    - IsMinerTransferIsComplete
+    OnButtonDisplay:
+    - MineButtonDisplay
+    OnComplitedEvents:
+    - IsMinerTransferIsCompleted
+  - questType: 2
+    script: {fileID: 3023727576613223236, guid: 79b0a36e84df4164cb269812dd14af20, type: 3}
+    initEvents:
+    - InitTransfer
+    isCompliteEvents:
+    - IsMinerTransferIsComplete
+    OnButtonDisplay:
+    - TransferButtonDisplay
+    OnComplitedEvents:
+    - IsMinerTransferIsCompleted

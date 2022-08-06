@@ -54,7 +54,8 @@ namespace Core.Location
         {
             Random rnd = new Random(quest.questID);
             quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
-            var ships = SolarSystemShips.GetShips(PlayerDataManager.CurrentSolarSystem).FindAll(x => x.fraction != quest.quester.fraction);
+            var solarShipsData = SolarSystemShips.InitShipsPoses(quest.appliedSolar);
+            var ships = solarShipsData.allships.FindAll(x => x.fraction != quest.quester.fraction);
             if (ships.Count != 0)
             {
                 var id = rnd.Next(0, ships.Count);

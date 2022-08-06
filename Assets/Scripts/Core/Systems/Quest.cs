@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using Core.Galaxy;
 using Core.Game;
 using Core.PlayerScripts;
+using Core.Quests;
 using Core.Systems;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Core.Location
 {
@@ -37,12 +40,11 @@ namespace Core.Location
 
 
 
-        public Quest(int questSeed , Character character, string stationName, string appliedSolar)
+        public Quest(int questSeed , Character character, string stationName, string appliedSolar, QuestsMethodObject methods)
         {
             appliedStation = stationName;
             this.appliedSolar = appliedSolar;
-            
-            Init(questSeed, character);
+            Init(questSeed, character, methods);
         }
 
         public Quest(){}
@@ -52,11 +54,13 @@ namespace Core.Location
         public QuestPath GetLastQuestPath()
         {
             var last = pathToTarget;
-            while (!last.isLast)
+            if (last != null)
             {
-                last = last.nextPath;
+                while (!last.isLast)
+                {
+                    last = last.nextPath;
+                }
             }
-
             return last;
         }
 
@@ -87,7 +91,7 @@ namespace Core.Location
             return count;
         }
 
-        public void Init(int questSeed, Character character, bool notStation = false)
+        public void Init(int questSeed, Character character, QuestsMethodObject methdos, bool notStation = false)
         {
             var rnd = new Random(questSeed);
             quester = character;
@@ -96,13 +100,9 @@ namespace Core.Location
             questCost = rnd.Next(1, 5);
             if (!notStation)
             {
-                if (WorldStationQuests.Instance != null)
+                if (methdos != null)
                 {
-                    WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-                }
-                else
-                {
-                    Player.inst.StartCoroutine(Wait());
+                    methdos.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
                 }
             }
         }
@@ -139,37 +139,44 @@ namespace Core.Location
             pathToTarget = last;
             int trys = 0;
             bool stopPath = false;
+            if (pathLength == 0) return last;
             for (int i = 0; i < pathLength; i++)
             {
-                if (GalaxyGenerator.systems[last.solarName].sibligs.Count != 0)
-                {
-                    var sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
-                    trys = 0;
-                    while (pathNames.Contains(sibling.solarName) || GalaxyGenerator.systems[last.solarName].stations.Count == 0)
+                if (last.solarName != null){
+                    if (GalaxyGenerator.systems[last.solarName].sibligs.Count != 0)
                     {
-                        sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
-                        trys++;
-                        if (trys > 5)
+                        var sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
+                        trys = 0;
+                        while (pathNames.Contains(sibling.solarName) || GalaxyGenerator.systems[last.solarName].stations.Count == 0)
                         {
-                            stopPath = true;
-                            break;
+                            sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
+                            trys++;
+                            if (trys > 5)
+                            {
+                                stopPath = true;
+                                break;
+                            }
                         }
+
+                        if (stopPath) break;
+
+                        pathNames.Add(sibling.solarName);
+                        var newPath = new QuestPath {prevPath = last, solarName = sibling.solarName};
+                        last.nextPath = newPath;
+                        last = newPath;
                     }
-
-                    if (stopPath) break;
-
-                    pathNames.Add(sibling.solarName);
-                    var newPath = new QuestPath {prevPath = last, solarName = sibling.solarName};
-                    last.nextPath = newPath;
-                    last = newPath;
                 }
                 else
                 {
                     break;
                 }
             }
-
+            if (last.solarName == null)
+            {
+                return last.prevPath;
+            }
             var lastSolar = GalaxyGenerator.systems[last.solarName];
+ 
 
             if (lastSolar.stations.Count != 0)
             {

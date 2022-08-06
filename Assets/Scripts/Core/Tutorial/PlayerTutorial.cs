@@ -139,7 +139,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         character.firstName = "Khatuna";
         character.lastName = "Tupaq";
         character.characterID = 0;
-        quest.Init(0, character, true);
+        quest.Init(0, character, null, true);
         quest.questType = -1;
         quest.questID = int.MaxValue;
         quest.toTransfer = new List<Item>();

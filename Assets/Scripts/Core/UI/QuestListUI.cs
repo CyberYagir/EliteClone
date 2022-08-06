@@ -32,11 +32,18 @@ namespace Core.UI
 
         public void ChangeSelected()
         {
+            if (questsList.Count == 0) return;
             for (int i = 0; i < items.Count; i++)
             {
                 items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
             }
-            OnChangeSelected.Run(questsList[Mathf.Clamp(0, questsList.Count-1, upDownUI.selectedIndex)]);
+
+            if (upDownUI.selectedIndex <= -1 || questsList.Count <= upDownUI.selectedIndex)
+            {
+                upDownUI.selectedIndex = 0;
+            }
+
+            OnChangeSelected.Run(questsList[upDownUI.selectedIndex]);
         }
 
         public override void OnUpdate()
@@ -46,6 +53,11 @@ namespace Core.UI
             {
                 skipFrame = false;
                 return;
+            }
+
+            if (upDownUI.selectedIndex == -1)
+            {
+                upDownUI.ForceChangeSelect(0);
             }
             if (InputM.GetAxisDown(KAction.TabsHorizontal))
             {

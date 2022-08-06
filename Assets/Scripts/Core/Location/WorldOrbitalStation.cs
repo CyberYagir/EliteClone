@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.PlayerScripts;
+using Core.Quests;
 using Core.Systems;
 using UnityEngine;
 using Random = System.Random;
@@ -76,7 +77,7 @@ namespace Core.Location
         public List<Quest> quests;
         public List<Character> characters;
         public List<int> additionalCharacters = new List<int>();
-
+        
         public static Event OnInit = new Event();
 
         public static void InitNames()
@@ -195,7 +196,7 @@ namespace Core.Location
             {
                 if (quest.questState == Quest.QuestCompleted.Rewarded) continue;
             
-                if (quest.GetLastQuestPath().targetName == transform.name)
+                if (quest.GetLastQuestPath()?.targetName == transform.name)
                 {
                     if (quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)
                     {
@@ -209,6 +210,7 @@ namespace Core.Location
             return questInStation;
         }
 
+        [SerializeField] private QuestsMethodObject methods;
         public List<Quest> InitQuests(int seed, List<Character> _characters)
         {
             var list = new List<Quest>();
@@ -217,7 +219,7 @@ namespace Core.Location
             for (int i = 0; i < quests; i++)
             {
                 var questid = rnd.Next(-9999999, 9999999);
-                var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name);
+                var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name, methods);
                 if (q.questState != Quest.QuestCompleted.BrokeQuest)
                 {
                     list.Add(q);

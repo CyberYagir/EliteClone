@@ -8,7 +8,7 @@ using Random = System.Random;
 
 namespace Core.Bot
 {
-    public class BotBuilder : MonoBehaviour, IDamagable
+    public sealed class BotBuilder : MonoBehaviour, IDamagable
     {
         public int uniqID = -1;
         [SerializeField] private BotAttackController attackControl;
@@ -21,6 +21,8 @@ namespace Core.Bot
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private Ship ship;
         [SerializeField] private GameObject dropPrefab;
+        
+        private SolarSystemShips.HumanShip human;
         private Damager damager;
 
         private void Awake()
@@ -128,17 +130,25 @@ namespace Core.Bot
             }
         }
 
+        private bool isDead;
         public void Death()
         {
-            if (uniqID != -1)
+            if (!isDead)
             {
-                SolarSystemShips.Instance.AddDead(this);
-            }
+                if (uniqID != -1)
+                {
+                    SolarSystemShips.Instance.AddDead(this);
+                }
+                else
+                {
+                    SolarSystemShips.Instance.ExplodeShip(this);
+                }
 
-            Drop();
-        
-            SolarSystemShips.Instance.ExplodeShip(this);
-            Destroy(gameObject);
+                Drop();
+
+                isDead = true;
+                Destroy(gameObject);
+            }
         }
 
         public void Drop()
@@ -154,6 +164,17 @@ namespace Core.Bot
                 var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
                 drop.GetComponent<BoxCollider>().isTrigger = true;
                 drop.Init(ItemsManager.GetRewardItem(rnd));
+                if (Player.inst.quests.quests.Count >= 1)
+                {
+                    if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
+                    {
+                        var chance = rnd.Next(0, 100);
+                        if (chance > 50)
+                        {
+                            drop.Init(ItemsManager.GetItem("transmitter_box"));
+                        }
+                    }
+                }
                 drop.GetComponent<Rigidbody>().AddForce(UnityEngine.Random.insideUnitSphere, ForceMode.Impulse);
             }   
         }
@@ -172,6 +193,11 @@ namespace Core.Bot
         {
             attackControl.SetTarget(Player.inst.transform);
             SetBehaviour(BotState.Attack);
+        }
+
+        public void SetHuman(SolarSystemShips.HumanShip humanShip)
+        {
+            human = humanShip;
         }
     }
 }

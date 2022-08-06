@@ -55,7 +55,10 @@ namespace Core.Bot
         {
             for (int i = 0; i < engines.Count; i++)
             {
-                Destroy(engines[i].gameObject);
+                if (engines[i] != null)
+                {
+                    Destroy(engines[i].gameObject);
+                }
             }
         }
 

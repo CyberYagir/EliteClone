@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Location;
+using Core.Quests;
 using Core.Systems;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ namespace Core.PlayerScripts
         public List<Quest> quests { get; private set; } = new List<Quest>();
         public Event OnChangeQuests = new Event();
         public Event OnNotify = new Event();
-    
+
+        [SerializeField] private QuestsMethodObject methods;
+        
         public class QuestData
         {
             public int seed;
@@ -49,7 +52,7 @@ namespace Core.PlayerScripts
         {
             for (int i = 0; i < qts.Count; i++)
             {
-                var qust = new Quest(qts[i].seed, qts[i].character, qts[i].stationName, qts[i].solarName);
+                var qust = new Quest(qts[i].seed, qts[i].character, qts[i].stationName, qts[i].solarName, methods);
                 qust.questState = qts[i].state;
                 quests.Add(qust);
             }

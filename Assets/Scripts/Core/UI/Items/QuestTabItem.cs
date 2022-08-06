@@ -23,7 +23,12 @@ namespace Core.UI
                 questIcon = WorldDataItem.GetData().playerQuest;
             }
             icon.sprite = questIcon;
-            targetT.text = questsQuest.GetLastQuestPath().targetName;
+            var path = questsQuest.GetLastQuestPath();
+            if (path != null)
+            {
+                targetT.text =  path.targetName;
+            }
+
             QuestPath first = questsQuest.pathToTarget;
             QuestPath questPath = first;
             QuestPath current = null;
@@ -43,10 +48,17 @@ namespace Core.UI
                 questPath = questPath.nextPath;
             }
 
-            if (isOnPath)
-                jumpToT.text = questsQuest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
-            else
-                jumpToT.text = $"Unown path [{first.solarName}]";
+            if (questsQuest.GetLastQuestPath() != null)
+            {
+                if (isOnPath)
+                {
+                    jumpToT.text = questsQuest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
+                }
+                else
+                {
+                    jumpToT.text = $"Unown path [{first.solarName}]";
+                }
+            }
 
             UITweaks.ClearHolder(rewardHolder);
             UITweaks.ClearHolder(requireHolder);
