@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Core.UI
 {
-    public class MapUI : MonoBehaviour
+    public class MapUI : MonoUI
     {
         [SerializeField] private GameObject fader;
         private void Start()
@@ -25,8 +25,9 @@ namespace Core.UI
             }
         }
 
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
             if (InputM.GetAxisDown(KAction.Map))
             {
                 Player.inst.saves.SetKey("MapActive", (int) World.Scene);
@@ -34,6 +35,8 @@ namespace Core.UI
                 var fd = Instantiate(fader.gameObject).GetComponent<FaderMultiScenes>();
                 fd.LoadScene(Scenes.Map);
             }
+
         }
+
     }
 }

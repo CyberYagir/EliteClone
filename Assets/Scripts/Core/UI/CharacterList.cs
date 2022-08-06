@@ -58,34 +58,39 @@ namespace Core.UI
             ChangeSelect.Run();
         }
 
-
-    
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
             if (Player.inst.land.isLanded)
             {
-                if (InputM.GetAxisDown(KAction.TabsHorizontal))
-                {
-                    if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
-                    {
-                        questList.ChangeSelected();
-                        questList.Enable();
-                        Disable();
-                    }
+                ChangeTab();
+            }
+        }
 
-                    if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
-                    {
-                        buttonsUI.enabled = true;
-                        buttonsUI.SkipFrame();
-                        Disable();
-                    }
+        public void ChangeTab()
+        {
+            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            {
+                if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                {
+                    questList.SkipFrame();
+                    questList.ChangeSelected();
+                    questList.Enable();
+                    Disable();
                 }
 
-                if (upDownUI.itemsCount != 0)
+                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
                 {
-                    var rect = holder.GetComponent<RectTransform>();
-                    rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(0, upDownUI.selectedIndex * 255f), 10 * Time.deltaTime); //255 - Высота итема магическим числом так как лень
+                    buttonsUI.SkipFrame();
+                    buttonsUI.enabled = true;
+                    Disable();
                 }
+            }
+
+            if (upDownUI.itemsCount != 0)
+            {
+                var rect = holder.GetComponent<RectTransform>();
+                rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(0, upDownUI.selectedIndex * 255f), 10 * Time.deltaTime); //255 - Высота итема магическим числом так как лень
             }
         }
 

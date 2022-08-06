@@ -12,8 +12,15 @@ namespace Core.UI
         {
             selectedIndex = -1;
         }
+        
+        public void ForceChangeSelect(int newSelected)
+        {
+            selectedIndex = newSelected;
+            OnNavigateChange.Run();
+            OnChangeSelected.Run();
+        }
 
-        private void Update()
+        public void UpdateObject()
         {
             if (gameObject.active && itemsCount != 0)
             {
@@ -53,13 +60,7 @@ namespace Core.UI
                 if (itemsCount == 0)
                     selectedIndex = -1;
             }
-        }
 
-        public void ForceChangeSelect(int newSelected)
-        {
-            selectedIndex = newSelected;
-            OnNavigateChange.Run();
-            OnChangeSelected.Run();
         }
     }
 }

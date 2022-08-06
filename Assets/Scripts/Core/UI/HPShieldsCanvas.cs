@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class HPShieldsCanvas : MonoBehaviour
+    public class HPShieldsCanvas : MonoUI
     {
         [Serializable]
         public class Bar
@@ -16,15 +16,16 @@ namespace Core.UI
             public TMP_Text text;
         }
         [SerializeField] Bar hp, shield;
-        private void Update()
+
+        public override void OnUpdate()
         {
             var hpValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health);
             hp.img.fillAmount = (hpValue.value / hpValue.max);
-            hp.text.text = "Corpus " + (int)(hp.img.fillAmount * 100) + "%";
-        
+            hp.text.text = "Corpus " + (int) (hp.img.fillAmount * 100) + "%";
+
             var shValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
             shield.img.fillAmount = (shValue.value / shValue.max);
-            shield.text.text = "Shields " + (int)(shield.img.fillAmount * 100) + "%";
+            shield.text.text = "Shields " + (int) (shield.img.fillAmount * 100) + "%";
         }
     }
 }

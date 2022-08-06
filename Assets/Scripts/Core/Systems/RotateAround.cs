@@ -45,13 +45,9 @@ namespace Core.Systems
         void Update()
         {
             transform.RotateAround(point.position, Vector3.up, speed * Time.deltaTime);
-        }
-
-    
-        public void LateUpdate()
-        {
             UpdateLine();
         }
+        
         public void UpdateLine()
         {
             var curve = new AnimationCurve();

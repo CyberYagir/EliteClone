@@ -32,16 +32,21 @@ namespace Core.UI
 
         public void ChangeSelected()
         {
-                for (int i = 0; i < items.Count; i++)
-                {
-                    items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
-                }
-
-                OnChangeSelected.Run(questsList[upDownUI.selectedIndex]);
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
+            }
+            OnChangeSelected.Run(questsList[Mathf.Clamp(0, questsList.Count-1, upDownUI.selectedIndex)]);
         }
 
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
+            if (skipFrame)
+            {
+                skipFrame = false;
+                return;
+            }
             if (InputM.GetAxisDown(KAction.TabsHorizontal))
             {
                 if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
@@ -57,6 +62,7 @@ namespace Core.UI
             }
         }
 
+        private bool skipFrame = false;
         public void UpdateQuests(List<Quest> quests)
         {
             questsList = quests;
@@ -82,6 +88,11 @@ namespace Core.UI
 
             upDownUI.selectedIndex = 0;
             upDownUI.itemsCount = count;
+        }
+
+        public void SkipFrame()
+        {
+            skipFrame = true;
         }
     }
 }

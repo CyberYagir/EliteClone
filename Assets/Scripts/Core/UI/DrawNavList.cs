@@ -150,6 +150,7 @@ namespace Core.UI
         private void Update()
         {
             updown.enabled = tabControl.Active;
+            updown.UpdateObject();
 
             if (tabControl.Active)
             {

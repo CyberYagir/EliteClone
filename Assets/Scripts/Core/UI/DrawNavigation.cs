@@ -28,7 +28,6 @@ namespace Core.UI
         public override void RedrawList()
         {
             base.RedrawList(); 
-        
             var objects = FindObjectsOfType<WorldSpaceObject>();
             objects = objects.Reverse().ToArray();
             for (int i = 0; i < objects.Length; i++)

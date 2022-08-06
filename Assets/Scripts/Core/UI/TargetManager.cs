@@ -92,6 +92,10 @@ namespace Core.UI
             float angle = 9999;
             for (int i = 0; i < objectsList.Count; i++)
             {
+                if (objectsList[i] is WorldSpaceObject)
+                {
+                    (objectsList[i] as WorldSpaceObject).UpdateVisibility();
+                }
                 if (Vector3.Dot(camera.transform.forward, objectsList[i].transform.position - camera.transform.position) > 0)
                 {
                     var ang = Vector3.Angle(objectsList[i].transform.position - camera.transform.position, camera.transform.forward);

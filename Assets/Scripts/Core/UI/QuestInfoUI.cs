@@ -88,8 +88,9 @@ namespace Core.UI
             }
         }
 
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
             if (Player.inst.land.isLanded)
             {
                 if (InputM.GetAxisDown(KAction.TabsHorizontal))
@@ -106,7 +107,9 @@ namespace Core.UI
                     items[i].over = upDownUI.selectedIndex == i ? ButtonEffect.ActionType.Over : ButtonEffect.ActionType.None;
                 }
             }
+
         }
+
 
         public void Clear()
         {

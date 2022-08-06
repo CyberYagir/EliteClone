@@ -28,7 +28,7 @@ namespace Core.UI
         }
     }
 
-    public class StatsDisplayCanvas : MonoBehaviour
+    public class StatsDisplayCanvas : MonoUI
     {
         [SerializeField] private StatsDisplayCanvasRow speedValue;
         [SerializeField] private StatsDisplayCanvasRow fuelValue;
@@ -43,14 +43,16 @@ namespace Core.UI
             player = Player.inst;
         }
 
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
             var ship = player.control;
             speedValue.SetValue(ship.speed, player.Ship().data.maxSpeedUnits, $"{ship.moveMode.ToString()} {(ship.speed * World.unitSize).ToString("F0")} u/s");
             fuelValue.SetValue(player.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).value, player.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).max);
             heatValue.SetValue(player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).value, player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).max);
             warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
             warpDisplayRow.UpdateColor();
+
         }
     }
 }

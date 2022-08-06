@@ -15,7 +15,7 @@ namespace Core.UI
         {
             cargo = Player.inst.cargo;
             cargo.OnChangeInventory += OnChangeItems;
-            height = item.sizeDelta.y;
+            height = item.sizeDelta.y;  
             upDownUI.OnNavigateChange += ChangeButtonColors;
         }
 
@@ -26,6 +26,7 @@ namespace Core.UI
 
         private void Update()
         {
+            upDownUI.UpdateObject();
             if (upDownUI.selectedIndex != -1 && drops.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex 
             {
                 holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);

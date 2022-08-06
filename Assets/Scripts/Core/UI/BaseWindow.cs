@@ -7,7 +7,7 @@ using static Core.Game.ItemShip.ShipValuesTypes;
 
 namespace Core.UI
 {
-    public class BaseWindow : MonoBehaviour
+    public class BaseWindow : MonoUI
     {
         private RectTransform rect;
         [SerializeField] private float height = 1400;
@@ -45,13 +45,9 @@ namespace Core.UI
             UpdateCosts();
         }
 
-        public void UpdateCosts()
+        public override void OnUpdate()
         {
-            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().GetValue(Health).max - Player.inst.Ship().GetValue(Health).value));
-            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().GetValue(Fuel).max - Player.inst.Ship().GetValue(Fuel).value));
-        }
-        private void Update()
-        {
+            base.OnUpdate();
             Animation();
             if (Player.inst.land.isLanded)
             {
@@ -60,6 +56,13 @@ namespace Core.UI
                                 $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
                                 "Credits: " + Player.inst.cargo.GetCredits();
             }
+
+        }
+
+        public void UpdateCosts()
+        {
+            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().GetValue(Health).max - Player.inst.Ship().GetValue(Health).value));
+            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().GetValue(Fuel).max - Player.inst.Ship().GetValue(Fuel).value));
         }
 
         public void RedrawAll()

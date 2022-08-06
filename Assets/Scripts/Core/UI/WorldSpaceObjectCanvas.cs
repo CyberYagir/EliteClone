@@ -131,7 +131,8 @@ namespace Core.UI
             
                 foreach (var wsp in spaceObjects)
                 {
-                    if (wsp.Obj.isVisible)
+                    wsp.Obj.UpdateVisibility();
+                    if (wsp.Obj.isVisible && wsp.CanvasPoint)
                     {
                         wsp.CanvasPoint.transform.position = (Vector2) camera.WorldToScreenPoint(wsp.Obj.transform.position, Camera.MonoOrStereoscopicEye.Mono);
                     

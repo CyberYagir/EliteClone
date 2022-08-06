@@ -18,11 +18,7 @@ namespace Core.Systems
         {
             camera = Player.inst.GetCamera().transform;
         }
-
-        private void Update()
-        {
-            UpdateVisibility();
-        }
+        
 
         public void UpdateVisibility()
         {

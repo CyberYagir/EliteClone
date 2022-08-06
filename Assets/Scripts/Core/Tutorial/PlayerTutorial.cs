@@ -18,6 +18,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     private TutorialsManager.Tutorial tutorial;
     [SerializeField] private GameObject dialogue;
     [SerializeField] private GameObject questPoint;
+    [SerializeField] private Dialog m1, m2;
     private void Awake()
     {
         Single(this);
@@ -37,7 +38,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             if (!tutorial.m1_Dialog1)
             {
                 var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-                messenger.dialog = (Dialog) Resources.Load("Game/Dialogs/M1", typeof(Dialog));
+                messenger.dialog = m1;
                 tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
                 TutorialsManager.SaveTutorial(tutorial);
                 EnablePlayer(false);
@@ -52,7 +53,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             if (!tutorial.m2_Dialog2)
             {
                 var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-                messenger.dialog = (Dialog) Resources.Load("Game/Dialogs/M2", typeof(Dialog));
+                messenger.dialog = m2;
                 TutorialsManager.SaveTutorial(tutorial);
                 EnablePlayer(false);
             }
@@ -67,7 +68,8 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     
     public void M1AddStation()
     {
-        if (Player.inst.quests.quests.Find(x => x.questID == int.MaxValue).GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ||
+        var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+        if ((quest != null && quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name) ||
             tutorial.baseSystemName == PlayerDataManager.CurrentSolarSystem.name)
         {
             var rnd = new System.Random(NamesHolder.StringToSeed(tutorial.startSystemName));

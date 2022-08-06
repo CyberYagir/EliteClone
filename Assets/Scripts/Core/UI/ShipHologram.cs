@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class ShipHologram : Singleton<ShipHologram>
+    public class ShipHologram : SingletonUI<ShipHologram>
     {
         private Quaternion startRotation;
         private Player player;
@@ -36,13 +36,17 @@ namespace Core.UI
             shipModel.GetComponent<Renderer>().materials = matsCount;
         }
 
-        private void Update()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
+            
             var shields = player.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
             shieldIndicator.fillAmount = Mathf.Lerp(shieldIndicator.fillAmount, shields.value / shields.max, Time.deltaTime);
+            
             var ship = player.control;
             shipModel.transform.localRotation = Quaternion.Lerp(shipModel.transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * player.Ship().data.XRotSpeed, ship.yaw * player.Ship().data.YRotSpeed * player.Ship().data.YRotSpeed, -ship.horizontal * player.Ship().data.ZRotSpeed), 10 * Time.deltaTime);
             LandHologram();
+
         }
 
         public void LandHologram()

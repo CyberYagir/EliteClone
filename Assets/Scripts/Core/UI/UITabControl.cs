@@ -10,7 +10,7 @@ namespace Core.UI
         public GameObject content;
     }
 
-    public class UITabControl : MonoBehaviour
+    public class UITabControl : MonoUI
     {
         [SerializeField] Vector2 sizeOpen, sizeClose;
         [SerializeField] Vector3 openY, closeY;
@@ -27,7 +27,8 @@ namespace Core.UI
         {
             rectTransform = GetComponent<RectTransform>();
         }
-        private void Update()
+
+        public override void OnUpdate()
         {
             time += Time.deltaTime;
             active = time < 25;
@@ -56,6 +57,7 @@ namespace Core.UI
                     }
                 }
             }
+
         }
 
         public void Scroll()

@@ -6,8 +6,8 @@ namespace Core.Bot
     {
         private Transform point;
         public static Transform holder;
-        
-        private void Start()
+
+        public void Init()
         {
             point = new GameObject("EnginePoint").transform;
             point.parent = transform.parent;
@@ -23,16 +23,9 @@ namespace Core.Bot
             transform.parent = holder;
         }
 
-
-        private void Update()
+        public void UpdateObject()
         {
-            if (point == null)
-            {
-                Destroy(gameObject);
-                return;
-            }
             transform.position = point.position;
         }
-    
     }
 }

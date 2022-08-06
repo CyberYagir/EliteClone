@@ -31,6 +31,7 @@ namespace Core.UI
         }
         private void Update()
         {
+            upDownUI.UpdateObject();
             if (upDownUI.selectedIndex != -1)
             {
                 holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);

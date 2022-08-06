@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -6,8 +8,8 @@ namespace Core.Bot
 {
     public class BotVisual : MonoBehaviour
     {
-        public List<GameObject> ships = new List<GameObject>();
-        private List<GameObject> engines = new List<GameObject>();
+        [SerializeField] private List<EngineParticles> engines = new List<EngineParticles>();
+        [SerializeField] private List<GameObject> ships = new List<GameObject>();
         private int visualID;
 
         public string GetShipName()
@@ -19,7 +21,27 @@ namespace Core.Bot
         {
             foreach (var lights in GetComponentsInChildren<Light>(true))
             {
-                engines.Add(lights.transform.parent.gameObject);
+                var engine = lights.transform.parent.gameObject.GetComponent<EngineParticles>();
+                engines.Add(engine);
+                engine.Init();
+                
+                
+            }
+
+            StartCoroutine(UpdateEngines());
+        }
+
+
+        IEnumerator UpdateEngines()
+        {
+            while (true)
+            {
+                for (int i = 0; i < engines.Count; i++)
+                {
+                    engines[i].UpdateObject();
+                }
+
+                yield return null;
             }
         }
 
@@ -27,6 +49,14 @@ namespace Core.Bot
         {
             var id = rnd.Next(0, ships.Count);
             SetVisual(id);
+        }
+
+        private void OnDestroy()
+        {
+            for (int i = 0; i < engines.Count; i++)
+            {
+                Destroy(engines[i].gameObject);
+            }
         }
 
         public void SetVisual(int id)
@@ -44,7 +74,7 @@ namespace Core.Bot
         {
             foreach (var lights in engines)
             {
-                lights.SetActive(true);
+                lights.gameObject.SetActive(true);
             }
         }
 
