@@ -35,7 +35,7 @@ namespace Core.PlayerScripts
             
             public bool m2_Dialog2;
             
-            public bool haveTranslator;
+            public bool seeTranslatorDemo;
             
             
             /// ============= M3

@@ -19,6 +19,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     [SerializeField] private GameObject dialogue;
     [SerializeField] private GameObject questPoint;
     [SerializeField] private Dialog m1, m2;
+    [SerializeField] private Item transmitterItem;
     private void Awake()
     {
         Single(this);
@@ -48,7 +49,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
                 M1GenerateQuest(false);
             }
         }
-        else if (tutorial.CommunitsBaseStats.isSeeDemo)
+        else if (tutorial.CommunitsBaseStats.isSeeDemo && !tutorial.seeTranslatorDemo)
         {
             if (!tutorial.m2_Dialog2)
             {
@@ -60,6 +61,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             else
             {
                 M2GenerateQuest(true);
+                M2Events();
             }
             AddStation();
         }
@@ -128,7 +130,24 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         M2GenerateQuest(true);
         tutorial.m2_Dialog2 = true;
+        M2Events();
         TutorialsManager.SaveTutorial(tutorial);
+    }
+
+
+    public void M2Events()
+    {
+        Player.inst.cargo.OnChangeInventory += HaveTranslator;
+        HaveTranslator();
+    }
+
+    public void HaveTranslator()
+    {
+        if (Player.inst.cargo.ContainItem(transmitterItem.id.id))
+        {
+            PlayerPrefs.SetInt("last_level", (int) World.Scene);
+            World.LoadLevel(Scenes.ActivatorDemo);
+        }
     }
 
     public Quest GetEmptyQuest()

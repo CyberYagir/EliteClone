@@ -7,7 +7,7 @@ namespace Core
     {
         Init, Galaxy, System, Location, Garage, Death, Map,
         Demo, CommunistsBase,
-        OutBaseDemo
+        OutBaseDemo, ActivatorDemo
     }
 
     public static class World
