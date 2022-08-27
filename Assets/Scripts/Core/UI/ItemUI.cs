@@ -8,7 +8,7 @@ namespace Core.UI
     public class ItemUI : MonoBehaviour
     {
         [SerializeField] private Image image;
-        [SerializeField] private TMP_Text text; 
+        [SerializeField] private TMP_Text text, val; 
         public Item item;
 
         public void Init(Item it)
@@ -16,13 +16,30 @@ namespace Core.UI
             item = it;
 
             image.sprite = it.icon;
-            if (it.IsHaveKeyPair(KeyPairValue.Mineral))
+            if (val == null)
             {
-                text.text = it.itemName + $" [{(int)((it.amount.Value/it.amount.Max) * 100)}%]";
+                if (it.IsHaveKeyPair(KeyPairValue.Mineral))
+                {
+                    text.text = it.itemName + $" [{(int) ((it.amount.Value / it.amount.Max) * 100)}%]";
+                }
+                else
+                {
+                    text.text = it.itemName + $" [{it.amount.Value}]";
+                }
             }
             else
             {
-                text.text = it.itemName + $" [{it.amount.Value}]";
+                text.text = it.itemName;
+                
+                
+                if (it.IsHaveKeyPair(KeyPairValue.Mineral))
+                {
+                    val.text = $" [{(int) ((it.amount.Value / it.amount.Max) * 100)}%]";
+                }
+                else
+                {
+                    val.text = $" [{it.amount.Value}]";
+                }
             }
         }
     }

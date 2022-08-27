@@ -139,7 +139,6 @@ namespace Core.Location
             pathToTarget = last;
             int trys = 0;
             bool stopPath = false;
-            if (pathLength == 0) return last;
             for (int i = 0; i < pathLength; i++)
             {
                 if (last.solarName != null){

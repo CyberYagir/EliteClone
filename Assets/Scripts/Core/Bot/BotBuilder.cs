@@ -51,19 +51,18 @@ namespace Core.Bot
         public void InitBot(Random rnd = null)
         {
             NamesHolder.Init();
-            var firstName = "";
-            var lastName = "";
+
             if (rnd == null)
             {
-                firstName = NamesHolder.ToUpperFist(NamesHolder.Instance.FirstNames[UnityEngine.Random.Range(0, NamesHolder.Instance.FirstNames.Length)]);
-                lastName = NamesHolder.ToUpperFist(NamesHolder.Instance.LastNames[UnityEngine.Random.Range(0, NamesHolder.Instance.LastNames.Length)]);
+                rnd = new Random();
             }
-            else
-            {
-                firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
-                lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
-            }
+            
+            var firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
+            var lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
+            var fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
 
+            human = new SolarSystemShips.HumanShip(firstName, lastName, fraction, GetVisual().GetShipID());
+            
             transform.name = GetVisual().GetShipName() + $" [{firstName} {lastName}]";
         }
 
@@ -135,6 +134,7 @@ namespace Core.Bot
         {
             if (!isDead)
             {
+                isDead = true;
                 if (uniqID != -1)
                 {
                     SolarSystemShips.Instance.AddDead(this);
@@ -146,7 +146,6 @@ namespace Core.Bot
 
                 Drop();
 
-                isDead = true;
                 Destroy(gameObject);
             }
         }
@@ -166,6 +165,7 @@ namespace Core.Bot
                 drop.Init(ItemsManager.GetRewardItem(rnd));
                 if (Player.inst.quests.quests.Count >= 1)
                 {
+                    print(WorldDataItem.Fractions.NameToID("Pirates"));
                     if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
                     {
                         var chance = rnd.Next(0, 100);

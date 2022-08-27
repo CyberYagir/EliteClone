@@ -93,5 +93,9 @@ namespace Core.Bot
             }
         }
 
+        public int GetShipID()
+        {
+            return visualID;
+        }
     }
 }

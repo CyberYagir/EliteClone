@@ -1,3 +1,4 @@
+using System;
 using Core.Systems;
 using UnityEngine;
 using static Core.Game.ItemShip.ShipValuesTypes;
@@ -22,6 +23,7 @@ namespace Core.PlayerScripts
         public bool headView { get; private set; }
         public MoveMode moveMode { get; private set; } = MoveMode.S;
         public float speed { get; private set; }
+        public float speedPercent => speed / player.Ship().data.maxSpeedUnits;
         public Camera Camera => mainCamera;
 
         [SerializeField] private Camera mainCamera;
@@ -31,6 +33,8 @@ namespace Core.PlayerScripts
         private Rigidbody rigidbody;
         private float collisionCooldown;
 
+        public WarpManager warp => player.warp;
+        
         private void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
@@ -63,6 +67,16 @@ namespace Core.PlayerScripts
             collisionCooldown += Time.deltaTime;
             headView = InputM.GetAxisIsActive(KAction.HeadView);
             RotationControl();
+        }
+        
+
+        private void FixedUpdate()
+        {
+
+            if (!freezeControl && !headView)
+            {
+                yaw = Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
+            }
             ForwardBackward();
         }
 
@@ -81,7 +95,6 @@ namespace Core.PlayerScripts
 
                 horizontal = Mathf.Clamp(horizontal, -1, 1);
                 vertical = Mathf.Clamp(vertical, -1, 1);
-                yaw = Input.GetAxis("Horizontal") * Time.deltaTime;
 
             }
 

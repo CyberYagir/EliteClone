@@ -176,6 +176,11 @@ namespace Core.UI
             {
                 jumpsCount.text += names + ">\n";
             }
+
+            if (currentQuest.IsTypeQuest("Transfer"))
+            {
+                jumpsCount.text += "Target: " + quest.GetLastQuestPath().targetName;
+            }
             buttonText.transform.parent.gameObject.SetActive(true);
 
         }

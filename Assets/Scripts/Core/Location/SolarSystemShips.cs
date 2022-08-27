@@ -55,6 +55,15 @@ namespace Core.Location
                 uniqID = uid;
                 fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
             }
+
+            public HumanShip(string first, string last, int fraction, int shipID)
+            {
+                uniqID = -1;
+                firstName = first;
+                lastName = last;
+                this.fraction = fraction;
+                this.shipID = shipID;
+            }
         }
 
         public class HumanShipDead

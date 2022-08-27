@@ -16,6 +16,8 @@ namespace Core.PlayerScripts
 
         public float maxLocationSpeed = 60;
 
+        public Event<bool> OnChangeWarp = new Event<bool>();
+        
         private void Update()
         {
             if (activeLocationPoint)
@@ -27,6 +29,7 @@ namespace Core.PlayerScripts
             JumpToSystem();
         }
 
+        public const float speedToWarp = 1f;
         public void WarpCheck()
         {
             if (warpSpeed > maxWarpSpeed)
@@ -43,10 +46,11 @@ namespace Core.PlayerScripts
             {
                 if (!isWarp)
                 {
-                    if (Player.inst.control.speed > 1f)
+                    if (Player.inst.control.speed > speedToWarp)
                     {
                         warpParticle.Play();
                         isWarp = true;
+                        OnChangeWarp.Run(isWarp);
                     }
                 }
                 else
@@ -164,6 +168,7 @@ namespace Core.PlayerScripts
                 warpParticle.Play();
             warpSpeed = 0;
             isWarp = false;
+            OnChangeWarp.Run(isWarp);
         }
 
         public void SetActiveLocation(LocationPoint locationPoint)

@@ -25,6 +25,10 @@ namespace Core.Location
             }
 
             quest.pathToTarget = quest.GetPath(rnd, quest.appliedStation, quest.appliedSolar);
+            if (quest.GetLastQuestPath().targetName == null)
+            {
+                quest.questState = Quest.QuestCompleted.BrokeQuest;
+            }
             quest.reward.Init(quest.questID);
         }
 
