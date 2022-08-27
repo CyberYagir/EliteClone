@@ -31,6 +31,9 @@ namespace Core.PlayerScripts
         private Rigidbody rigidbody;
         private float collisionCooldown;
 
+        public WarpManager warp => player.warp;
+        public float speedPercent => speed / player.Ship().data.maxSpeedUnits;
+
         private void Start()
         {
             rigidbody = GetComponent<Rigidbody>();

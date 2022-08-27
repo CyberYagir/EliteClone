@@ -34,6 +34,8 @@ namespace Core.Game
             this.max = max;
         }
 
+        public float percent => value / max;
+
         public void Clamp()
         {
             if (value > max)

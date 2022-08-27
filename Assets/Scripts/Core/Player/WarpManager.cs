@@ -1,8 +1,10 @@
+using System;
 using Core.Galaxy;
 using Core.Garage;
 using Core.Location;
 using Core.Systems;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.PlayerScripts
 {
@@ -15,6 +17,10 @@ namespace Core.PlayerScripts
         public float warpSpeed, maxWarpSpeed, warpSpeedUp, warpSpeedAdd;
 
         public float maxLocationSpeed = 60;
+        public Event<bool> OnChangeWarp;
+        
+        
+        public static float speedToWarp = 1f;
 
         private void Update()
         {
@@ -43,7 +49,7 @@ namespace Core.PlayerScripts
             {
                 if (!isWarp)
                 {
-                    if (Player.inst.control.speed > 1f)
+                    if (Player.inst.control.speed > speedToWarp)
                     {
                         warpParticle.Play();
                         isWarp = true;
@@ -139,6 +145,7 @@ namespace Core.PlayerScripts
                             if (warpSpeed >= maxWarpSpeed / 2f)
                             {
                                 isWarp = false;
+                                OnChangeWarp.Invoke(isWarp);
                                 warpSpeed = 0;
                                 warpParticle.Play();
                                 Player.inst.HardStop();
@@ -164,6 +171,7 @@ namespace Core.PlayerScripts
                 warpParticle.Play();
             warpSpeed = 0;
             isWarp = false;
+            OnChangeWarp.Invoke(isWarp);
         }
 
         public void SetActiveLocation(LocationPoint locationPoint)
@@ -186,5 +194,6 @@ namespace Core.PlayerScripts
                 activeLocationPoint = null;
             }
         }
+
     }
 }
