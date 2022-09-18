@@ -45,7 +45,7 @@ namespace Core.Location
             public int shipID;
             public string firstName, lastName;
             public int fraction;
-
+            public BotBuilder builder;
             public HumanShip(Random rnd, int maxID, int uid)
             {
                 NamesHolder.Init();
@@ -54,6 +54,7 @@ namespace Core.Location
                 lastName = NamesHolder.GetLastName(rnd);
                 uniqID = uid;
                 fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
+                this.builder = builder;
             }
         }
 
@@ -230,11 +231,16 @@ namespace Core.Location
             
             for (int i = 0; i < count; i++)
             {
-                var ship = new HumanShip(rnd, rnd.Next(0,4), seed + i);
+                var ship = GenerateHuman(rnd, seed, i);
                 ships.Add(ship);
             }
 
             return ships;
+        }
+
+        public static HumanShip GenerateHuman(System.Random rnd, int seed, int i)
+        {
+            return new HumanShip(rnd, rnd.Next(0,4), seed + i);
         }
 
 

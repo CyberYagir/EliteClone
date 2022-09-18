@@ -63,7 +63,6 @@ namespace Core.Bot
                 firstName = NamesHolder.ToUpperFist(NamesHolder.GetFirstName(rnd));
                 lastName = NamesHolder.ToUpperFist(NamesHolder.GetLastName(rnd));
             }
-
             transform.name = GetVisual().GetShipName() + $" [{firstName} {lastName}]";
         }
 
@@ -169,7 +168,7 @@ namespace Core.Bot
                     if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
                     {
                         var chance = rnd.Next(0, 100);
-                        if (chance > 50)
+                        if (chance < 80)
                         {
                             drop.Init(ItemsManager.GetItem("transmitter_box"));
                         }

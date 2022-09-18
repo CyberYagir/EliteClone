@@ -20,6 +20,9 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     [SerializeField] private GameObject questPoint;
     [SerializeField] private Dialog m1, m2;
     [SerializeField] private Item transmitterItem;
+
+
+    private GameObject station;
     private void Awake()
     {
         Single(this);
@@ -70,6 +73,10 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     
     public void M1AddStation()
     {
+        if (station != null)
+        {
+            Destroy(station.gameObject);
+        }
         var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
         if ((quest != null && quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name) ||
             tutorial.baseSystemName == PlayerDataManager.CurrentSolarSystem.name)
@@ -80,6 +87,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             point.transform.localPosition = pos;
             point.GetComponent<ContactObject>().Init();
             point.name = "Communist Space Unorbital Station";
+            station = point;
             tutorial.baseSystemName = PlayerDataManager.CurrentSolarSystem.name;
             TutorialsManager.SaveTutorial(tutorial);
             StartCoroutine(M1AddStationUpdate());
@@ -121,6 +129,11 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         Player.OnSceneChanged += M1AddStation;
         M1AddStation();
+    }
+
+    public void DestroyStation()
+    {
+        Destroy(station.gameObject);
     }
     #endregion
 

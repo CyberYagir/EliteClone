@@ -327,7 +327,15 @@ MonoBehaviour:
   botLocation: {fileID: 1889831862909443935, guid: f351c8e122af71641bff771f9248fe7c, type: 3}
   garbageContact: {fileID: 4861265520670190703, guid: 86e1e479422992c4d906c8be0d9db9b7, type: 3}
   botPrefabVisuals: {fileID: 4551080036014000068, guid: cad73af33cced1f43a229e00487e96ed, type: 3}
-  locations: []
+  locations:
+  - locationName: 
+    humans:
+    - uniqID: 0
+      shipID: 0
+      firstName: 
+      lastName: 
+      fraction: 0
+      builder: {fileID: 0}
   ships: []
   allships: []
   points: []

@@ -36,6 +36,7 @@ namespace Core.Location
                         builder.GetVisual().SetLights(false);
                         builder.GetShield().isActive = true;
                         builder.AddContact(false);
+                        builder.SetHuman(SolarSystemShips.GenerateHuman(rnd, 0, 0));
                         builder.InitBot(rnd);
                         builder.GetVisual().SetVisual(rnd);
                         builder.SetBehaviour(BotBuilder.BotState.Land);
@@ -67,14 +68,17 @@ namespace Core.Location
             bool isEnded = false;
             int trys = 0;
             Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
+            int id = 0;
             while (!isEnded)
             {
                 var landPoint = landPoints[UnityEngine.Random.Range(0, landPoints.Count)];
-
+                id++;
                 if (!landPoint.isFilled)
                 {
                     foreach (var spawns in botPoints)
                     {
+                        id++;
+
                         if (Physics.Raycast(spawns.position, landPoint.transform.GetChild(0).position - spawns.position, out RaycastHit hit))
                         {
                             Debug.DrawRay(spawns.position, landPoint.transform.GetChild(0).position - spawns.position, Color.cyan, 999999);
@@ -86,7 +90,8 @@ namespace Core.Location
                                 builder.GetShield().isActive = true;
                                 landPoint.isFilled = true;
                                 isEnded = true;
-                                builder.InitBot();
+                                builder.InitBot(rnd);
+                                builder.SetHuman(SolarSystemShips.GenerateHuman(rnd, id, rnd.Next(0, 999)));
                                 builder.GetVisual().SetVisual(rnd);
                                 builder.AddContact(true);
                                 builder.SetLandPoint(landPoint);

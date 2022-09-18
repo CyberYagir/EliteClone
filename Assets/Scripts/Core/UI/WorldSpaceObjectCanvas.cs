@@ -141,7 +141,7 @@ namespace Core.UI
                         wsp.CanvasPoint.SetSelect(wsp.Obj == target);
                         if (Player.inst.GetTarget() == wsp.Obj)
                         {
-                            wsp.CanvasPoint.SetText(wsp.Obj.transform.name + $" [{Vector3.Distance(wsp.Obj.transform.position, Player.inst.transform.position).ToString("F5")}]");
+                            wsp.CanvasPoint.SetText(wsp.Obj.transform.name + $" [{(Vector3.Distance(wsp.Obj.transform.position, Player.inst.transform.position)*World.unitSize).ToString("F5")}]");
                         }
                         else
                         {

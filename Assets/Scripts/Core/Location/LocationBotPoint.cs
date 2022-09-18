@@ -87,6 +87,7 @@ namespace Core.Location
             bot.transform.position = pos;
             bot.InitBot(rnd);
             bot.GetVisual().SetVisual(visuals);
+            bot.SetHuman(SolarSystemShips.GenerateHuman(rnd, 0, 0));
             bot.SetName();
             return bot.gameObject;
         }

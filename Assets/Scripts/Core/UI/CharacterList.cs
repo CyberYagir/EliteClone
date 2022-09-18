@@ -78,10 +78,13 @@ namespace Core.UI
             {
                 if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
                 {
-                    questList.SkipFrame();
-                    questList.ChangeSelected();
-                    questList.Enable();
-                    Disable();
+                    if (questList.QuestsCount != 0)
+                    {
+                        questList.SkipFrame();
+                        questList.ChangeSelected();
+                        questList.Enable();
+                        Disable();
+                    }
                 }
 
                 if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)

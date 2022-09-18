@@ -14,7 +14,9 @@ namespace Core.UI
 
         private List<Quest> questsList;
         public Event<Quest> OnChangeSelected = new Event<Quest>();
-    
+
+
+        public int QuestsCount => questsList == null ? 0 : questsList.Count;
 
         private void Start()
         {
@@ -66,6 +68,7 @@ namespace Core.UI
                     characterList.Enable();
                     Disable();
                 }
+
                 if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
                 {
                     questInfo.Enable();
@@ -80,7 +83,29 @@ namespace Core.UI
             questsList = quests;
         
             UITweaks.ClearHolder(holder);
-        
+
+            List<Quest> questsToRemove = new List<Quest>();
+            for (int i = 0; i < quests.Count; i++)
+            {
+                var questData = WorldDataItem.Quests.ByID(quests[i].questType);
+                if (questData.typeName == "Kill")
+                {
+                    var targetID = (int) quests[i].keyValues["BotTarget"];
+                    if (SolarSystemShips.Instance != null)
+                    {
+                        if (SolarSystemShips.Instance.IsDead(targetID) && AppliedQuests.Instance.quests.Find(x=>x.questID == quests[i].questID) == null)
+                        {
+                            questsToRemove.Add(quests[i]);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < questsToRemove.Count; i++)
+            {
+                quests.Remove(questsToRemove[i]);
+            }
+            
             items = new List<ButtonEffect>();
             int count = 0;
             for (int i = 0; i < quests.Count; i++)
@@ -90,7 +115,7 @@ namespace Core.UI
                 {
                     var questItem = Instantiate(item, holder);
                     var questData = WorldDataItem.Quests.ByID(quests[i].questType);
-
+                    
                     questItem.GetComponent<QuestItemUI>().Init(questData.icon, questData.typeName, count);
                     questItem.gameObject.SetActive(true);
                     items.Add(questItem.GetComponent<ButtonEffect>());
