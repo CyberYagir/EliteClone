@@ -38,6 +38,9 @@ namespace Core.PlayerScripts
             public bool seeTranslatorDemo;
             
             
+            public bool m3_Dialog3;
+            public bool m3_Dialog4;
+            
             /// ============= M3
             
             

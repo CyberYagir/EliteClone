@@ -12,7 +12,7 @@ namespace Core.Dialogs.Visuals
 {
     public class DialogMessenger : MonoBehaviour
     {
-        public Dialog dialog;
+        public Dialog dialog { get; set; }
 
         [SerializeField] private DialogMessengerMessage message;
         [SerializeField] private RectTransform holder;
@@ -20,7 +20,7 @@ namespace Core.Dialogs.Visuals
 
         private List<GameObject> replicas = new List<GameObject>();
 
-        void Start()
+        public void Init()
         {
             for (int i = 0; i < dialog.replicas.Count; i++)
             {

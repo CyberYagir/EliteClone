@@ -18,7 +18,8 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     private TutorialsManager.Tutorial tutorial;
     [SerializeField] private GameObject dialogue;
     [SerializeField] private GameObject questPoint;
-    [SerializeField] private Dialog m1, m2;
+    [SerializeField] private Dialog m1, m2, m3, m3_2;
+    [SerializeField] private ItemShip knight;
     [SerializeField] private Item transmitterItem;
 
 
@@ -41,25 +42,21 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         {
             if (!tutorial.m1_Dialog1)
             {
-                var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-                messenger.dialog = m1;
-                tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
-                TutorialsManager.SaveTutorial(tutorial);
-                EnablePlayer(false);
+                CreateMessenger(activator.transform, m1, () =>
+                {
+                    tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
+                });
             }
             else if (tutorial.startSystemName != "")
             {
                 M1GenerateQuest(false);
             }
         }
-        else if (tutorial.CommunitsBaseStats.isSeeDemo && !tutorial.seeTranslatorDemo)
+        else if (tutorial.CommunitsBaseStats.isSeeDemo && !tutorial.seeTranslatorDemo && !tutorial.m3_Dialog3)
         {
             if (!tutorial.m2_Dialog2)
             {
-                var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-                messenger.dialog = m2;
-                TutorialsManager.SaveTutorial(tutorial);
-                EnablePlayer(false);
+                CreateMessenger(activator.transform, m2, null);
             }
             else
             {
@@ -68,7 +65,31 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             }
             AddStation();
         }
+        else if (tutorial.CommunitsBaseStats.isSeeDemo && tutorial.seeTranslatorDemo)
+        {
+            if (!tutorial.m3_Dialog3)
+            {
+                CreateMessenger(activator.transform, m3, null);
+            }
+            else
+            {
+                M3GenerateQuest(true);
+               
+            }
+            AddStation();
+        }
     }
+
+    public void CreateMessenger(Transform activator, Dialog dialog, Action actionBeforeSave)
+    {
+        var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
+        messenger.dialog = dialog;
+        messenger.Init();
+        actionBeforeSave?.Invoke();
+        TutorialsManager.SaveTutorial(tutorial);
+        EnablePlayer(false);
+    }
+    
     #region M1
     
     public void M1AddStation()
@@ -182,6 +203,38 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         var quest = GetEmptyQuest();
         quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
+        Player.inst.quests.ApplyQuest(quest, notify);
+    }
+    
+    #endregion
+
+    #region M3
+
+    public void M3Quest()
+    {
+        M3GenerateQuest(true);
+        tutorial.m3_Dialog3 = true;
+        TutorialsManager.SaveTutorial(tutorial);
+    }
+
+    public void M3GenerateQuest(bool notify)
+    {
+        var quest = GetEmptyQuest();
+        if (Player.inst.Ship().shipName != knight.shipName)
+        {
+            quest.keyValues.Add("Text", "Get on the ship \"Knight\".");
+        }
+        else
+        {
+            quest.keyValues.Add("Text", "Obtain one or more full zinc stores.");
+            if (!tutorial.m3_Dialog4)
+            {
+                var activator = FindObjectOfType<LocationUIActivator>();
+                CreateMessenger(activator.transform, m3_2, null);
+                tutorial.m3_Dialog4 = true;
+                TutorialsManager.SaveTutorial(tutorial);
+            }
+        }
         Player.inst.quests.ApplyQuest(quest, notify);
     }
     

@@ -170,7 +170,7 @@ namespace Core.Bot
                     if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
                     {
                         var chance = rnd.Next(0, 100);
-                        if (chance < 80)
+                        if (chance <= 40)
                         {
                             drop.Init(ItemsManager.GetItem("transmitter_box"));
                         }
