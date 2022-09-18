@@ -24,6 +24,8 @@ namespace Core.Bot
         
         private SolarSystemShips.HumanShip human;
         private Damager damager;
+        
+        public int Fraction => human.fraction;
 
         private void Awake()
         {
