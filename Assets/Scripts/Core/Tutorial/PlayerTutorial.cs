@@ -21,6 +21,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     [SerializeField] private Dialog m1, m2, m3, m3_2;
     [SerializeField] private ItemShip knight;
     [SerializeField] private Item transmitterItem;
+    [SerializeField] private Item zincItem;
 
 
     private GameObject station;
@@ -174,6 +175,12 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         Player.inst.cargo.OnChangeInventory += HaveTranslator;
         HaveTranslator();
     }
+    
+    public void M3Events()
+    {
+        Player.inst.cargo.OnChangeInventory += HaveZincVoid;
+        HaveZinc();
+    }
 
     public void HaveTranslator()
     {
@@ -217,16 +224,19 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         TutorialsManager.SaveTutorial(tutorial);
     }
 
+
+    private string getKnight = "Get on the ship \"Knight\".";
+    private string getZinc = "Obtain one or more full zinc stores.";
+    private string flyToStation = "Fly to the communist station and make your way to the rear";
     public void M3GenerateQuest(bool notify)
     {
         var quest = GetEmptyQuest();
         if (Player.inst.Ship().shipName != knight.shipName)
         {
-            quest.keyValues.Add("Text", "Get on the ship \"Knight\".");
+            quest.keyValues.Add("Text", getKnight);
         }
         else
         {
-            quest.keyValues.Add("Text", "Obtain one or more full zinc stores.");
             if (!tutorial.m3_Dialog4)
             {
                 var activator = FindObjectOfType<LocationUIActivator>();
@@ -234,9 +244,56 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
                 tutorial.m3_Dialog4 = true;
                 TutorialsManager.SaveTutorial(tutorial);
             }
+            
+            if (!HaveZinc())
+            {
+                quest.keyValues.Add("Text",getZinc);
+            }
+            else
+            {
+                quest.keyValues.Add("Text", flyToStation);
+                Player.inst.cargo.OnChangeInventory -= HaveZincVoid;
+            }
+            M3Events();
         }
         Player.inst.quests.ApplyQuest(quest, notify);
     }
+
+    private bool haveZinc;
+    public bool HaveZinc()
+    {
+        var contain = Player.inst.cargo.ContainItem(zincItem.id.id);
+        var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+        if (quest != null)
+        {
+            if (contain)
+            {
+                var isFull = Player.inst.cargo.FindItem(zincItem.id.id).amount.IsFull();
+                if (isFull != haveZinc)
+                {
+                    quest.keyValues["Text"] = flyToStation;
+                    Player.inst.quests.OnChangeQuests.Run();
+                    haveZinc = true;
+                }
+
+                return isFull;
+            }
+            else if (haveZinc)
+            {
+                quest.keyValues["Text"] = getZinc;
+                Player.inst.quests.OnChangeQuests.Run();
+            }
+        }
+        else
+        {
+            return contain;
+        }
+
+        haveZinc = false;
+        return false;
+    }
+
+    public void HaveZincVoid() => HaveZinc();
     
     #endregion
 

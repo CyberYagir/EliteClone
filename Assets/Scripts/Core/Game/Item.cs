@@ -73,6 +73,12 @@ namespace Core.Game
         {
             value = Mathf.Clamp(value, minValue, maxValue);
         }
+
+        public bool IsFull()
+        {
+            Clamp();
+            return value >= maxValue;
+        }
     }
 
     [Serializable]
