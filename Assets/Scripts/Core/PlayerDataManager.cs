@@ -16,6 +16,8 @@ namespace Core
         public static InitOptions.PlayerConfig PlayerConfig;
 
         public static int galaxySeed = -1;
+        
+        
         public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
         public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile, MapFile, TutorialsFile;
         public static float GenerateProgress;
