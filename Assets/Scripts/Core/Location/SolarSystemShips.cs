@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Core.Bot;
+using Core.Core.Inject.FoldersManagerService;
+using Core.Core.Inject.GlobalDataService;
 using Core.Galaxy;
 using Core.Game;
 using Core.PlayerScripts;
@@ -9,6 +11,7 @@ using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using Zenject;
 using Random = System.Random;
 
 namespace Core.Location
@@ -65,31 +68,35 @@ namespace Core.Location
             public DVector deadPos;
         }
 
-        private void Awake()
+        [Inject]
+        private void Constructor(SolarSystemService solarSystemService, FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
+            this.solarSystemService = solarSystemService;
+            
             Single(this);
         }
 
-        public static void LoadDeads()
+        public static void LoadDeads(FolderManagerService folderManagerService)
         {
-            if (File.Exists(PlayerDataManager.DeadsNPCFile) && deadList.Count == 0)
+            if (File.Exists(folderManagerService.DeadsNpcFile) && deadList.Count == 0)
             {
-                deadList = JsonConvert.DeserializeObject<Dictionary<string, List<HumanShipDead>>>(File.ReadAllText(PlayerDataManager.DeadsNPCFile));
+                deadList = JsonConvert.DeserializeObject<Dictionary<string, List<HumanShipDead>>>(File.ReadAllText(folderManagerService.DeadsNpcFile));
             }
         }
         public void SaveDeads()
         {
-            File.WriteAllText(PlayerDataManager.DeadsNPCFile, JsonConvert.SerializeObject(deadList));
+            File.WriteAllText(folderManagerService.DeadsNpcFile, JsonConvert.SerializeObject(deadList));
         }
 
         public void AddDead(BotBuilder builder)
         {
-            if (!deadList.ContainsKey(PlayerDataManager.CurrentSolarSystem.name))
+            if (!deadList.ContainsKey(solarSystemService.CurrentSolarSystem.name))
             {
-                deadList.Add(PlayerDataManager.CurrentSolarSystem.name, new List<HumanShipDead>());
+                deadList.Add(solarSystemService.CurrentSolarSystem.name, new List<HumanShipDead>());
             }
 
-            deadList[PlayerDataManager.CurrentSolarSystem.name].Add(new HumanShipDead {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
+            deadList[solarSystemService.CurrentSolarSystem.name].Add(new HumanShipDead {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
 
             ExplodeShip(builder);
         
@@ -246,11 +253,11 @@ namespace Core.Location
 
         public void InitPre()
         {
-            if (PlayerDataManager.CurrentSolarSystem != null)
+            if (solarSystemService.CurrentSolarSystem != null)
             {
                 Single(this);
                 LoadDeads();
-                var data = InitShipsPoses(PlayerDataManager.CurrentSolarSystem.name);
+                var data = InitShipsPoses(solarSystemService.CurrentSolarSystem.name);
 
                 ships = data.ships;
                 allships = data.allships;
@@ -265,7 +272,7 @@ namespace Core.Location
     
         public void Init()
         {
-            if (PlayerDataManager.CurrentSolarSystem != null)
+            if (solarSystemService.CurrentSolarSystem != null)
             {
                 InitPre();
                 CreateBots();
@@ -282,7 +289,7 @@ namespace Core.Location
                 {
                     for (int i = 0; i < location.humans.Count; i++)
                     {
-                        if (!deadList.ContainsKey(PlayerDataManager.CurrentSolarSystem.name) || deadList[PlayerDataManager.CurrentSolarSystem.name].Find(x => x.uniqID == location.humans[i].uniqID) == null)
+                        if (!deadList.ContainsKey(solarSystemService.CurrentSolarSystem.name) || deadList[solarSystemService.CurrentSolarSystem.name].Find(x => x.uniqID == location.humans[i].uniqID) == null)
                         {
                             if (!IsDead(location.humans[i].uniqID))
                             {
@@ -361,6 +368,9 @@ namespace Core.Location
         }
 
         public List<WorldInteractivePoint> points = new List<WorldInteractivePoint>();
+        private SolarSystemService solarSystemService;
+        private FolderManagerService folderManagerService;
+
         public void SpawnEnviromentBots(GameObject prefab)
         {
             for (int i = 0; i < ships.Count; i++)
@@ -415,9 +425,9 @@ namespace Core.Location
         {
             if (World.Scene == Scenes.Location)
             {
-                if (deadList.ContainsKey(PlayerDataManager.CurrentSolarSystem.name))
+                if (deadList.ContainsKey(solarSystemService.CurrentSolarSystem.name))
                 {
-                    var deadOnLoc = deadList[PlayerDataManager.CurrentSolarSystem.name].FindAll(x => x.locationName == LocationGenerator.CurrentSave.locationName);
+                    var deadOnLoc = deadList[solarSystemService.CurrentSolarSystem.name].FindAll(x => x.locationName == LocationGenerator.CurrentSave.locationName);
                     for (int i = 0; i < deadOnLoc.Count; i++)
                     {
                         var bot = allships.Find(x => x.uniqID == deadOnLoc[i].uniqID);

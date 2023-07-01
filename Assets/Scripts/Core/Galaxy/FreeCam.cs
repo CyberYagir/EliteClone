@@ -56,19 +56,19 @@ namespace Core.Galaxy
             var acceleration = Vector3.zero;
 
             //key input detection
-            if (InputM.GetAxisIsActive(KAction.Vertical))
+            if (InputService.GetAxisIsActive(KAction.Vertical))
             {
-                acceleration.z += InputM.GetAxisRaw(KAction.Vertical);
+                acceleration.z += InputService.GetAxisRaw(KAction.Vertical);
             }
 
-            if (InputM.GetAxisIsActive(KAction.Horizontal))
+            if (InputService.GetAxisIsActive(KAction.Horizontal))
             {
-                acceleration.x += InputM.GetAxisRaw(KAction.Horizontal);
+                acceleration.x += InputService.GetAxisRaw(KAction.Horizontal);
             }
 
-            if (InputM.GetAxisIsActive(KAction.GalaxyVertical))
+            if (InputService.GetAxisIsActive(KAction.GalaxyVertical))
             {
-                acceleration.y -= InputM.GetAxisRaw(KAction.GalaxyVertical);
+                acceleration.y -= InputService.GetAxisRaw(KAction.GalaxyVertical);
             }
 
             return acceleration.normalized * AccelerationMod;

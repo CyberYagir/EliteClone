@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Core.Core.Inject.FoldersManagerService;
 using Core.Game;
 using Core.Location;
 using Core.Systems;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
+using Zenject;
 
 namespace Core.PlayerScripts
 {
@@ -51,16 +53,16 @@ namespace Core.PlayerScripts
         }
 
 
-
-
-        public static Tutorial LoadTutorial()
+        
+        
+        public static Tutorial LoadTutorial(FolderManagerService folderManagerService)
         {
-            if (File.Exists(PlayerDataManager.TutorialsFile) && tutorial == null)
+            if (File.Exists(folderManagerService.TutorialsFile) && tutorial == null)
             {
-                tutorial = JsonConvert.DeserializeObject<Tutorial>(File.ReadAllText(PlayerDataManager.TutorialsFile));
+                tutorial = JsonConvert.DeserializeObject<Tutorial>(File.ReadAllText(folderManagerService.TutorialsFile));
             }
 
-            if (!File.Exists(PlayerDataManager.TutorialsFile))
+            if (!File.Exists(folderManagerService.TutorialsFile))
             {
                 tutorial = new Tutorial();
                 SaveTutorial(tutorial);
@@ -69,10 +71,10 @@ namespace Core.PlayerScripts
             return tutorial;
         }
 
-        public static void SaveTutorial(Tutorial tutor)
+        public static void SaveTutorial(Tutorial tutor, FolderManagerService folderManagerService)
         {
             tutorial = tutor;
-            File.WriteAllText(PlayerDataManager.TutorialsFile, JsonConvert.SerializeObject(tutor));
+            File.WriteAllText(folderManagerService.TutorialsFile, JsonConvert.SerializeObject(tutor));
         }
     }
 }

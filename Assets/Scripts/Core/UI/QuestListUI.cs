@@ -61,15 +61,15 @@ namespace Core.UI
             {
                 upDownUI.ForceChangeSelect(0);
             }
-            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            if (InputService.GetAxisDown(KAction.TabsHorizontal))
             {
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) < 0)
                 {
                     characterList.Enable();
                     Disable();
                 }
 
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) > 0)
                 {
                     questInfo.Enable();
                     Disable();

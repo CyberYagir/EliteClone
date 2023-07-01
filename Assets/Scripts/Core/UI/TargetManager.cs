@@ -49,7 +49,7 @@ namespace Core.UI
         
         private void Update()
         {
-            if (InputM.GetAxisDown(KAction.SetTarget))
+            if (InputService.GetAxisDown(KAction.SetTarget))
             {
                 if (target == null)
                 {

@@ -1,4 +1,5 @@
 using System.IO;
+using Core.Core.Inject.FoldersManagerService;
 using Core.Galaxy;
 using Core.Garage;
 using Core.Init;
@@ -6,22 +7,17 @@ using Core.Location;
 using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
+using Zenject;
 
 namespace Core
 {
-    public class PlayerDataManager : Singleton<PlayerDataManager>
+    public class PlayerDataManager : MonoBehaviour
     {
-        public static SolarSystem CurrentSolarSystem { get; set; }
-
-        public static InitOptions.PlayerConfig PlayerConfig;
-
-        public static int galaxySeed = -1;
-        
-        
-        public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-        public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile, MapFile, TutorialsFile;
         public static float GenerateProgress;
         private bool loading;
+        
+        
+        private FolderManagerService foldersService;
 
         private void Update()
         {
@@ -38,18 +34,15 @@ namespace Core
             }
         }
 
-        private void Awake()
+        [Inject]
+        public void Constructor(FolderManagerService folderManagerService)
         {
+            foldersService = folderManagerService;
             Init();
         }
 
         public void Init()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
             LoadStatic();
             InitDataManager();
         }
@@ -70,71 +63,23 @@ namespace Core
 
         public void InitDataManager()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-
-            }
-
-            Single(this);
             DontDestroyOnLoad(gameObject);
-            FoldersManage();
-        }
-
-
-        public static void FoldersManage()
-        {
-            if (!Directory.Exists(Directory.GetParent(Application.dataPath).FullName + "/Saves"))
-            {
-                Directory.CreateDirectory(Directory.GetParent(Application.dataPath).FullName + "/Saves");
-            }
-
-            RootFolder = Directory.GetParent(Application.dataPath)?.FullName + "/Saves";
-
-            if (!Directory.Exists(RootFolder + "/Player"))
-            {
-                Directory.CreateDirectory(RootFolder + "/Player/");
-            }
-
-            PlayerFolder = RootFolder + "/Player/";
-            if (!Directory.Exists(PlayerFolder + "/Global"))
-            {
-                Directory.CreateDirectory(PlayerFolder + "/Global");
-            }
-
-            GlobalFolder = PlayerFolder + "/Global/";
-            if (!Directory.Exists(PlayerFolder + "/Locations"))
-            {
-                Directory.CreateDirectory(PlayerFolder + "/Locations");
-            }
-
-            CacheSystemsFolder = PlayerFolder + "/Locations/";
-
-            GalaxyFile = GlobalFolder + "galaxy.json";
-            CurrentSystemFile = GlobalFolder + "system.json";
-            CurrentLocationFile = GlobalFolder + "location.json";
-            DeadsNPCFile = GlobalFolder + "npcs.json";
-            MapFile = GlobalFolder + "map.json";
-            PlayerDataFile = GlobalFolder + "player.json";
-            TutorialsFile = GlobalFolder + "tutorials.config";
-            ConfigFile = PlayerFolder + "options.config";
         }
 
         public void LoadScene()
         {
             var haveGalaxy = GalaxyGenerator.LoadSystems();
-            if (File.Exists(CurrentLocationFile) && haveGalaxy)
+            if (File.Exists(foldersService.CurrentLocationFile) && haveGalaxy)
             {
                 World.LoadLevel(Scenes.Location);
             }
-            else if (File.Exists(CurrentSystemFile) && haveGalaxy)
+            else if (File.Exists(foldersService.CurrentSystemFile) && haveGalaxy)
             {
                 World.LoadLevel(Scenes.System);
             }
             else
             {
-                if (File.Exists(GalaxyFile))
+                if (File.Exists(foldersService.GalaxyFile))
                 {
                     loading = true;
                     GenerateProgress = 1;

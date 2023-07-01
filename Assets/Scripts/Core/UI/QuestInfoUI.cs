@@ -93,9 +93,9 @@ namespace Core.UI
             base.OnUpdate();
             if (Player.inst.land.isLanded)
             {
-                if (InputM.GetAxisDown(KAction.TabsHorizontal))
+                if (InputService.GetAxisDown(KAction.TabsHorizontal))
                 {
-                    if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                    if (InputService.GetAxisRaw(KAction.TabsHorizontal) < 0)
                     {
                         questList.Enable();
                         Disable();

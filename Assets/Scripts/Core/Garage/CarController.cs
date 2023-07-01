@@ -19,13 +19,13 @@ namespace Core.Garage
         {
             rigidbody.centerOfMass = Vector3.down;
             var oldY = rigidbody.velocity.y;
-            rigidbody.velocity = (((transform.forward * InputM.GetAxis(KAction.Vertical))) * speed * Time.deltaTime);
+            rigidbody.velocity = (((transform.forward * InputService.GetAxis(KAction.Vertical))) * speed * Time.deltaTime);
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, oldY, rigidbody.velocity.z);
-            rigidbody.MoveRotation(transform.rotation * Quaternion.Euler(0, rotspeed * Time.deltaTime * InputM.GetAxis(KAction.Horizontal), 0));
+            rigidbody.MoveRotation(transform.rotation * Quaternion.Euler(0, rotspeed * Time.deltaTime * InputService.GetAxis(KAction.Horizontal), 0));
 
             var mats = tracks.materials;
-            var sp = InputM.GetAxisRaw(KAction.Vertical) * Time.deltaTime * speed;
-            var sidesp = InputM.GetAxisRaw(KAction.Horizontal) * Time.deltaTime * speed;
+            var sp = InputService.GetAxisRaw(KAction.Vertical) * Time.deltaTime * speed;
+            var sidesp = InputService.GetAxisRaw(KAction.Horizontal) * Time.deltaTime * speed;
 
             AddScroll(mats, 0, sp + sidesp);
             AddScroll(mats, 2, sp - sidesp);

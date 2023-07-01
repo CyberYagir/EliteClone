@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
+using Core.Core.Inject.FoldersManagerService;
+using Core.Core.Inject.GlobalDataService;
 using Core.Dialogs;
 using Core.Dialogs.Visuals;
 using Core.Game;
@@ -10,6 +12,7 @@ using Core.PlayerScripts;
 using Core.Systems;
 using Core.UI;
 using UnityEngine;
+using Zenject;
 using Random = System.Random;
 
 
@@ -25,16 +28,17 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
 
 
     private GameObject station;
-    private void Awake()
+
+    [Inject]
+    public void Constructor(SolarSystemService solarSystemService, FolderManagerService folderManagerService)
     {
         Single(this);
-    }
-
-    private void Start()
-    {
-        tutorial = TutorialsManager.LoadTutorial();
+        
+        this.solarSystemService = solarSystemService;
+        tutorial = TutorialsManager.LoadTutorial(folderManagerService);
         Init();
     }
+    
     public void Init()
     {
         var activator = FindObjectOfType<LocationUIActivator>();
@@ -45,7 +49,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             {
                 CreateMessenger(activator.transform, m1, () =>
                 {
-                    tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
+                    tutorial.startSystemName = solarSystemService.CurrentSolarSystem.name;
                 });
             }
             else if (tutorial.startSystemName != "")
@@ -87,7 +91,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         messenger.dialog = dialog;
         messenger.Init();
         actionBeforeSave?.Invoke();
-        TutorialsManager.SaveTutorial(tutorial);
+        TutorialsManager.SaveTutorial(tutorial, folderManagerService);
         EnablePlayer(false);
     }
     
@@ -100,8 +104,8 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             Destroy(station.gameObject);
         }
         var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
-        if ((quest != null && quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name) ||
-            tutorial.baseSystemName == PlayerDataManager.CurrentSolarSystem.name)
+        if ((quest != null && quest.GetLastQuestPath().solarName == solarSystemService.CurrentSolarSystem.name) ||
+            tutorial.baseSystemName == solarSystemService.CurrentSolarSystem.name)
         {
             var rnd = new System.Random(NamesHolder.StringToSeed(tutorial.startSystemName));
             var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
@@ -110,8 +114,8 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
             point.GetComponent<ContactObject>().Init();
             point.name = "Communist Space Unorbital Station";
             station = point;
-            tutorial.baseSystemName = PlayerDataManager.CurrentSolarSystem.name;
-            TutorialsManager.SaveTutorial(tutorial);
+            tutorial.baseSystemName = solarSystemService.CurrentSolarSystem.name;
+            TutorialsManager.SaveTutorial(tutorial, folderManagerService);
             StartCoroutine(M1AddStationUpdate());
         }
     }
@@ -129,7 +133,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         M1GenerateQuest(true);
         tutorial.m1_Dialog1 = true;
-        TutorialsManager.SaveTutorial(tutorial);
+        TutorialsManager.SaveTutorial(tutorial, folderManagerService);
     }
     
     private void M1GenerateQuest(bool notify)
@@ -166,7 +170,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
         M2GenerateQuest(true);
         tutorial.m2_Dialog2 = true;
         M2Events();
-        TutorialsManager.SaveTutorial(tutorial);
+        TutorialsManager.SaveTutorial(tutorial, folderManagerService);
     }
 
 
@@ -221,7 +225,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     {
         M3GenerateQuest(true);
         tutorial.m3_Dialog3 = true;
-        TutorialsManager.SaveTutorial(tutorial);
+        TutorialsManager.SaveTutorial(tutorial, folderManagerService);
     }
 
 
@@ -242,7 +246,7 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
                 var activator = FindObjectOfType<LocationUIActivator>();
                 CreateMessenger(activator.transform, m3_2, null);
                 tutorial.m3_Dialog4 = true;
-                TutorialsManager.SaveTutorial(tutorial);
+                TutorialsManager.SaveTutorial(tutorial, folderManagerService);
             }
             
             if (!HaveZinc())
@@ -260,6 +264,9 @@ public class PlayerTutorial : Singleton<PlayerTutorial>
     }
 
     private bool haveZinc;
+    private FolderManagerService folderManagerService;
+    private SolarSystemService solarSystemService;
+
     public bool HaveZinc()
     {
         var contain = Player.inst.cargo.ContainItem(zincItem.id.id);

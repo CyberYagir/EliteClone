@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.IO;
+using Core.Core.Inject.FoldersManagerService;
+using Core.Core.Inject.GlobalDataService;
 using Core.Galaxy;
 using DG.Tweening;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using Zenject;
 
 namespace Core.Init
 {
@@ -18,17 +21,26 @@ namespace Core.Init
         [SerializeField] private DOTweenAnimation menuback;
         [SerializeField] private DOTweenAnimation loading;
         [SerializeField] private TMP_Text loadingText;
+        [SerializeField] private PlayerDataManager playerDataManager;
+        
+        
+        private SolarSystemService solarSystemService;
+        private FolderManagerService folderManagerService;
 
-        private void Awake()
+        [Inject]
+        private void Constructor(SolarSystemService solarSystemService, FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
+            this.solarSystemService = solarSystemService;
+            
             Application.targetFrameRate = 120;
-            PlayerDataManager.CurrentSolarSystem = null;
+            solarSystemService.SetSolarSystem(null);
             options.Awake();
         }
 
         public void Play()
         {
-            if (File.Exists(PlayerDataManager.GalaxyFile))
+            if (File.Exists(folderManagerService.GalaxyFile))
             {
                 GenerateGalaxy();
             }
@@ -41,13 +53,13 @@ namespace Core.Init
         public void GenerateGalaxy()
         {
             GalaxyGenerator.Clear();
-            if (GalaxyGenerator.LoadSystems())
+            if (GalaxyGenerator.LoadSystems(folderManagerService))
             {
                 WindowManager.Instance.OpenWindow(null);
                 menuback.DOPlayForward();
                 ActiveLoading();
                 loadingText.text = "Loading Galaxy";
-                PlayerDataManager.Instance.LoadScene();
+                playerDataManager.LoadScene();
             }
         }
 
@@ -101,14 +113,14 @@ namespace Core.Init
             
                 if (webRequest.result != UnityWebRequest.Result.Success)
                 {
-                    File.Delete(PlayerDataManager.GalaxyFile);
+                    File.Delete(folderManagerService.GalaxyFile);
                     GalaxyGenerator.ThrowLoadError("Dowloading failed, generate galaxy manually.\nInfo: " + webRequest.error);
                 }
                 else
                 {
                     try
                     {
-                        File.WriteAllText(PlayerDataManager.GalaxyFile, webRequest.downloadHandler.text);
+                        File.WriteAllText(folderManagerService.GalaxyFile, webRequest.downloadHandler.text);
                     }
                     catch (Exception e)
                     {

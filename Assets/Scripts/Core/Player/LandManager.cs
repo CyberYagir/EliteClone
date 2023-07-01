@@ -78,7 +78,7 @@ namespace Core.PlayerScripts
                 }
                 else
                 {
-                    if (InputM.GetAxisDown(KAction.JumpIn))
+                    if (InputService.GetAxisDown(KAction.JumpIn))
                     {
                         SetLand(false);
                     }
@@ -103,7 +103,7 @@ namespace Core.PlayerScripts
                     if (!land.isFilled)
                     {
                         WarningManager.AddWarning("Press 'Jump' to land", WarningTypes.GoLocation);
-                        if (InputM.GetAxisDown(KAction.JumpIn))
+                        if (InputService.GetAxisDown(KAction.JumpIn))
                         {
                             SetLand(true, land.point.position, land.point.rotation);
                         }

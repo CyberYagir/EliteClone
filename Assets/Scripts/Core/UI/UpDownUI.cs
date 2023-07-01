@@ -25,19 +25,19 @@ namespace Core.UI
             if (gameObject.active && itemsCount != 0)
             {
             
-                if (InputM.GetAxisDown(KAction.TabsVertical))
+                if (InputService.GetAxisDown(KAction.TabsVertical))
                 {
                     if (selectedIndex == -1)
                     {
                         selectedIndex = 0;
                     }
-                    selectedIndex -= InputM.GetAxisRaw(KAction.TabsVertical);
+                    selectedIndex -= InputService.GetAxisRaw(KAction.TabsVertical);
                     if (selectedIndex < 0) selectedIndex = itemsCount - 1;
                     if (selectedIndex >= itemsCount) selectedIndex = 0;
                     OnNavigateChange.Run();
                 }
 
-                if (InputM.GetAxisDown(KAction.Select))
+                if (InputService.GetAxisDown(KAction.Select))
                 {
                     if (selectedIndex == -1)
                     {

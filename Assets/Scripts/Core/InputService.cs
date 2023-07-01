@@ -6,17 +6,17 @@ namespace Core
 {
     public enum KAction { Horizontal, Vertical, Tabs, TabsVertical, TabsHorizontal, Select, Click, GalaxyVertical, HeadView, SetTarget, JumpIn, StartWarp, Stop, Drop, Map, MapRotate, Shoot, Interact, SlowDialog}
 
-    public class InputM : MonoBehaviour
+    public class InputService : MonoBehaviour
     {
 
-        private static InputM Instance;
+        private static InputService Instance;
 
 
-        public static InputM GetData()
+        public static InputService GetData()
         {
             if (Instance == null)
             {
-                Instance = FindObjectOfType<InputM>();
+                Instance = FindObjectOfType<InputService>();
             }
             return Instance;
         }

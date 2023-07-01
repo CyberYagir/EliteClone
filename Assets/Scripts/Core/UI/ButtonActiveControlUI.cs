@@ -25,15 +25,15 @@ namespace Core.UI
                 skipFrame = false;
                 return;
             }
-            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            if (InputService.GetAxisDown(KAction.TabsHorizontal))
             {
                 enabled = false;
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) < 0)
                 {
                     ActiveMono(true, left);
                     ActiveMono(false, right);
                 }
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) > 0)
                 {
                     ActiveMono(false, left);
                     ActiveMono(true, right);
@@ -44,7 +44,7 @@ namespace Core.UI
             {
                 GetComponent<ButtonEffect>().over = ButtonEffect.ActionType.Over;
 
-                if (InputM.GetAxisDown(KAction.Select))
+                if (InputService.GetAxisDown(KAction.Select))
                 {
                     GetComponent<Button>().onClick.Invoke();
                 }

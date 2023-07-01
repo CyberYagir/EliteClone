@@ -1,10 +1,13 @@
 using System;
+using Core.Core.Inject.FoldersManagerService;
+using Core.Core.Inject.GlobalDataService;
 using Core.Galaxy;
 using Core.Garage;
 using Core.Location;
 using Core.Systems;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace Core.PlayerScripts
 {
@@ -18,14 +21,27 @@ namespace Core.PlayerScripts
 
         public float maxLocationSpeed = 60;
         public Event<bool> OnChangeWarp;
-        
-        
         public static float speedToWarp = 1f;
+        
+        
+        private SolarSystemService solarSystemService;
+        private FolderManagerService folderManagerService;
 
+        [Inject]
+        public void Constructor(
+            SolarSystemService solarSystemService,
+            FolderManagerService folderManagerService
+            )
+        {
+            this.folderManagerService = folderManagerService;
+            this.solarSystemService = solarSystemService;
+        }
+        
+        
         private void Update()
         {
             if (activeLocationPoint)
-                WarningManager.AddWarning($"Press {InputM.GetData().GetButtonByKAction(KAction.JumpIn)} to enter the station.", WarningTypes.GoLocation);
+                WarningManager.AddWarning($"Press {InputService.GetData().GetButtonByKAction(KAction.JumpIn)} to enter the station.", WarningTypes.GoLocation);
         
             WarpCheck();
             JumpToLocation();
@@ -45,7 +61,7 @@ namespace Core.PlayerScripts
                 WarpStop();
             }
 
-            if (InputM.GetAxisDown(KAction.StartWarp))
+            if (InputService.GetAxisDown(KAction.StartWarp))
             {
                 if (!isWarp)
                 {
@@ -67,14 +83,14 @@ namespace Core.PlayerScripts
 
         public void JumpToLocation()
         {
-            if (InputM.GetAxisDown(KAction.JumpIn))
+            if (InputService.GetAxisDown(KAction.JumpIn))
             {
                 if (activeLocationPoint)
                 {
                     if (World.Scene == Scenes.System)
                     {
                         warpParticle.Play();
-                        SolarSystemGenerator.SaveSystem();
+                        SolarSystemGenerator.SaveSystem(solarSystemService, folderManagerService);
                         if (activeLocationPoint.Location != LocationPoint.LocationType.Scene)
                         {
                             LocationGenerator.SaveLocationFile(activeLocationPoint.Root.name, activeLocationPoint.Location, activeLocationPoint.data);
@@ -103,7 +119,7 @@ namespace Core.PlayerScripts
                 {
                     if (warpSpeed >= 50)
                     {
-                        if (InputM.GetAxisDown(KAction.JumpIn))
+                        if (InputService.GetAxisDown(KAction.JumpIn))
                         {
                             JumpFromAnimation();
                         }
@@ -125,7 +141,7 @@ namespace Core.PlayerScripts
         {
             warpParticle.Play();
             DontDestroyOnLoad(Player.inst);
-            PlayerDataManager.CurrentSolarSystem = null;
+            solarSystemService.SetSolarSystem(null);
             LocationGenerator.RemoveLocationFile();
             Player.OnPreSceneChanged.Run();
             World.LoadLevel(Scenes.System);
@@ -150,8 +166,10 @@ namespace Core.PlayerScripts
                                 warpParticle.Play();
                                 Player.inst.HardStop();
                                 DontDestroyOnLoad(Player.inst);
-                                SolarSystemGenerator.DeleteSystemFile();
-                                PlayerDataManager.CurrentSolarSystem = GalaxyGenerator.systems[Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName];
+                                
+                                SolarSystemGenerator.DeleteSystemFile(solarSystemService, folderManagerService);
+                                
+                                solarSystemService.SetSolarSystem(GalaxyGenerator.systems[Player.inst.GetTarget().GetComponent<SolarSystemPoint>().systemName]);
                             
                                 Player.OnPreSceneChanged.Run();
                                 World.LoadLevel(Scenes.System);

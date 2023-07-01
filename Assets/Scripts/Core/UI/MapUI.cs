@@ -28,7 +28,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (InputM.GetAxisDown(KAction.Map))
+            if (InputService.GetAxisDown(KAction.Map))
             {
                 Player.inst.saves.SetKey("MapActive", (int) World.Scene);
                 PlayerDataManager.SaveAll();

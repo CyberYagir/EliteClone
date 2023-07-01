@@ -1,27 +1,24 @@
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+using Core.Core.Inject.FoldersManagerService;
 using OmniSARTechnologies.LiteFPSCounter;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Init
 {
     public class InitOptions : MonoBehaviour
     {
-        public class PlayerConfig
-        {
-            public List<InputM.Axis> axes = new List<InputM.Axis>();
-            public int quality;
-            public bool showFPS;
 
-        }
-
+        [SerializeField] private PlayerConfigSO playerConfig;
         [SerializeField] private TMP_Dropdown qualityD, apiD;
         [SerializeField] private Toggle showFpsTgToggle;
         [SerializeField] private GameObject fpsHolder;
         [SerializeField] private InitOptionsControlsDrawer controlsDrawer;
+        
+        
+        private InputService inputService;
+        private FolderManagerService folderManagerService;
 
         public void Awake()
         {
@@ -31,8 +28,11 @@ namespace Core.Init
             }
         }
 
-        private void Start()
+        [Inject]
+        public void Constructor(InputService input, FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
+            this.inputService = input;
             LoadConfig();
         }
 
@@ -49,57 +49,45 @@ namespace Core.Init
         {
             fpsHolder.gameObject.SetActive(bl);
         }
-
-        public void SaveConfig()
+        
+        public void UILoad()
         {
-            PlayerConfig cfg = new PlayerConfig();
-            cfg.axes = FindObjectOfType<InputM>().axes;
-            cfg.quality = QualitySettings.GetQualityLevel();
-            cfg.showFPS = showFpsTgToggle.isOn;
-            File.WriteAllText(PlayerDataManager.ConfigFile, JsonConvert.SerializeObject(cfg));
-            PlayerDataManager.PlayerConfig = cfg;
-        }
-
-        public void UILoad(PlayerConfig cfg)
-        {
-            qualityD.value = cfg.quality;
             ChangeQuality(qualityD);
 
-            showFpsTgToggle.isOn = cfg.showFPS;
+            showFpsTgToggle.isOn = playerConfig.showFPS;
             FPSCounterToggle(showFpsTgToggle);
         
+            qualityD.value = playerConfig.quality;
             controlsDrawer.DrawControls();
         }
 
+        public void SaveConfig()
+        {
+            
+            playerConfig.axes = inputService.axes;
+            playerConfig.quality = QualitySettings.GetQualityLevel();
+            playerConfig.showFPS = showFpsTgToggle.isOn;
+
+            playerConfig.SaveConfig();
+        }
+        
         public void LoadConfig()
         {
-            if (!File.Exists(PlayerDataManager.ConfigFile))
-            {
-                QualitySettings.SetQualityLevel(0);
-                SaveConfig();
-            }
-
-            PlayerConfig cfg = JsonConvert.DeserializeObject<PlayerConfig>(File.ReadAllText(PlayerDataManager.ConfigFile));
-            FindObjectOfType<InputM>().SetAxesList(cfg.axes);
-            QualitySettings.SetQualityLevel(cfg.quality);
-            FPSCounterToggle(cfg.showFPS);
-            PlayerDataManager.PlayerConfig = cfg;
-            UILoad(PlayerDataManager.PlayerConfig);
+            inputService.SetAxesList(playerConfig.axes);
+            QualitySettings.SetQualityLevel(playerConfig.quality);
+            FPSCounterToggle(playerConfig.showFPS);
+            
+            UILoad(playerConfig);
         }
 
         public void ResetKeys()
         {
-            var input = InputM.GetData();
+            var input = InputService.GetData();
             input.SetAxesList(input.startAxes);
             controlsDrawer.DrawControls();
         }
-        
-        public void RemoveSave()
-        {
-            Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
-            Directory.Delete(PlayerDataManager.GlobalFolder, true);
-        
-            PlayerDataManager.FoldersManage();
-        }
+
+
+        public void RemoveSave() => folderManagerService.RemoveSave();
     }
 }

@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Core.Core.Inject.FoldersManagerService;
+using Core.Core.Inject.GlobalDataService;
 using Core.Galaxy;
 using Core.Location;
 using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Death
 {
     public class DeathDataCollector : Singleton<DeathDataCollector>
     {
         public PlayerData playerData { get; private set; }
-        public SavedSolarSystem savedSolarSystem;
         public SaveLoadData saves { get; private set; }
     
         public OrbitStation findNearStation { get; private set; }
@@ -22,9 +24,18 @@ namespace Core.Death
         public Event OnInited = new Event();
 
         private Cargo cargo;
-    
-        private void Awake()
+        
+        private SolarSystemService solarSystemService;
+        private FolderManagerService folderManagerService;
+
+        [Inject]
+        public void Constructor(
+            SolarSystemService solarSystemService, 
+            FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
+            this.solarSystemService = solarSystemService;
+            
             Single(this);
             InitDataCollector();
         }
@@ -50,12 +61,14 @@ namespace Core.Death
 
         public void SystemLoad()
         {
-            GalaxyGenerator.LoadSystems();
-            savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
+            GalaxyGenerator.LoadSystems(folderManagerService);
+            var savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(folderManagerService.CurrentSystemFile));
             findNearStation = null;
         
             var solar = GalaxyGenerator.systems[savedSolarSystem.systemName.Split('.')[0]];
-            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(solar);
+            
+            solarSystemService.SetSolarSystem(SolarSystemGenerator.Generate(solar));;
+            
             StartCoroutine(FindStation(solar));
 
         }
@@ -90,13 +103,16 @@ namespace Core.Death
 
         public void Back()
         {
-            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
+            
+            solarSystemService.SetSolarSystem(SolarSystemGenerator.Generate(findNear));
+            
+            
             LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station, new Dictionary<string, object>());
-            if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
+            if (!File.Exists(SolarSystemGenerator.GetSystemFileName(solarSystemService, folderManagerService)))
             {
-                SolarSystemGenerator.SaveSystem();
+                SolarSystemGenerator.SaveSystem(solarSystemService, folderManagerService);
             }
-            SolarSystemGenerator.Load();
+            SolarSystemGenerator.Load(folderManagerService);
 
             var newShip = ItemsManager.GetShipItem(0).SaveShip();
             if (newShip.shipName == playerData.Ship.shipName)

@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Core.Core.Inject.FoldersManagerService;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
+using Zenject;
 using Random = System.Random;
 
 namespace Core.Galaxy
@@ -26,14 +28,17 @@ namespace Core.Galaxy
     
         public static float siblingDist = 4500;
         public static float scale = 100;
+        
+        
+        private FolderManagerService folderManagerService;
 
-        private void Awake()
+
+        [Inject]
+        public void Constructor(FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
             World.SetScene(Scenes.Galaxy);
-        }
-
-        private void Start()
-        {
+            
             systems = null;
             Init();
             DrawsSystems();
@@ -53,22 +58,22 @@ namespace Core.Galaxy
         {
             World.SetScene(Scenes.Galaxy);
             GetWords();
-            LoadSystems();
+            LoadSystems(folderManagerService);
         }
 
         public static void Clear()
         {
             systems = null;
         }
-        public static bool LoadSystems()
+        public static bool LoadSystems(FolderManagerService folderManagerService)
         {
             if (systems == null)
             {
-                if (File.Exists(PlayerDataManager.GalaxyFile))
+                if (File.Exists(folderManagerService.GalaxyFile))
                 {
                     try
                     {
-                        var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(PlayerDataManager.GalaxyFile));
+                        var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(folderManagerService.GalaxyFile));
 
                         if (saved.version == Application.version)
                         {
@@ -76,13 +81,13 @@ namespace Core.Galaxy
                             return true;
                         }
 
-                        File.Delete(PlayerDataManager.GalaxyFile);
+                        File.Delete(folderManagerService.GalaxyFile);
                         //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
                     }
                     catch (Exception e)
                     {
-                        Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
+                        Directory.Move(folderManagerService.GlobalFolder, folderManagerService.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
                         //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError("Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                     }
@@ -102,8 +107,8 @@ namespace Core.Galaxy
         public static void ThrowLoadError(string text)
         {
             PlayerPrefs.SetString("Error", text);
-            Destroy(PlayerDataManager.Instance.gameObject);
-            PlayerDataManager.Instance?.Clear();
+            // Destroy(PlayerDataManager.Instance.gameObject);
+            // PlayerDataManager.Instance?.Clear();
             World.LoadLevel(Scenes.Init);
         }
 
@@ -198,7 +203,7 @@ namespace Core.Galaxy
 
             return SolarSystemGenerator.GenerateOrbitStations(basesCount, system.name, pos);
         }
-        public static IEnumerator GenerateGalaxy(int seed)
+        public static IEnumerator GenerateGalaxy(int seed, FolderManagerService folderManagerService)
         {
             GetWords();
             PlayerDataManager.GenerateProgress = 0;
@@ -224,7 +229,7 @@ namespace Core.Galaxy
                     yield return null;
                 }
             }
-            SaveGalaxy();
+            SaveGalaxy(folderManagerService);
         }
 
     
@@ -233,10 +238,10 @@ namespace Core.Galaxy
             public Dictionary<string, SolarSystem> systems = new Dictionary<string, SolarSystem>();
             public string version = "";
         }
-        public static void SaveGalaxy()
+        public static void SaveGalaxy(FolderManagerService folderManagerService)
         {
             var galaxy = new SavedGalaxy {systems = systems, version = Application.version};
-            File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
+            File.WriteAllText(folderManagerService.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
             PlayerDataManager.GenerateProgress = 1f;
         }
 

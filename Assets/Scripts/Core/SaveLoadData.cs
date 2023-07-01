@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Core.Core.Inject.FoldersManagerService;
 using Core.Game;
 using Core.PlayerScripts;
 using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
+using Zenject;
 
 namespace Core
 {
@@ -26,7 +28,22 @@ namespace Core
         public decimal playedTime;
         public int startSaveTime;
     }
+    
+    [Serializable]
+    public class SavedSolarSystem
+    {
+        public string systemName;
+        public Vector3 playerPos;
+        public Vector3 worldPos;
 
+
+
+
+        public void Save()
+        {
+            
+        }
+    }
 
     [Serializable]
     public class LandLocation
@@ -42,6 +59,8 @@ namespace Core
         private List<string> systemsHistory = new List<string>();
         private static decimal startTime, playedTime;
         private static int startSaveTime;
+        private FolderManagerService folderManagerService;
+
         private void Awake()
         {
             if (Player.inst)
@@ -51,6 +70,12 @@ namespace Core
             }
         }
 
+        [Inject]
+        public void Constructor(FolderManagerService folderManagerService)
+        {
+            this.folderManagerService = folderManagerService;
+        }
+        
         public static int GetCurrentSaveSeed()
         {
             return Mathf.FloorToInt((((float)startTime + (float)playedTime) * 2) / 60f / 60f) + startSaveTime;
@@ -221,9 +246,9 @@ namespace Core
         }
         public PlayerData LoadData()
         {
-            if (File.Exists(PlayerDataManager.PlayerDataFile))
+            if (File.Exists(folderManagerService.PlayerDataFile))
             {
-                var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
+                var json = File.ReadAllText(folderManagerService.PlayerDataFile);
                 var playerData = JsonConvert.DeserializeObject<PlayerData>(json);
                 if (playerData != null)
                 {
@@ -265,7 +290,7 @@ namespace Core
         public void SaveData(PlayerData playerData)
         {
             var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-            File.WriteAllText(PlayerDataManager.PlayerDataFile, data);
+            File.WriteAllText(folderManagerService.PlayerDataFile, data);
         }
     
     

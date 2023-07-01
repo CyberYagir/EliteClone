@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using Core.Galaxy;
 using Core.PlayerScripts;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Tutorial
 {
     public class GalaxyStartDemo : MonoBehaviour
     {
-        private void Awake()
+        [Inject]
+        private void Constructor()
         {
             var tutor = TutorialsManager.LoadTutorial();
             if (!tutor.isDemoEnd)

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Core.Core.Inject.FoldersManagerService;
 using Core.Galaxy;
 using Core.Game;
 using Core.Systems;
 using Core.UI;
 using UnityEngine;
+using Zenject;
 
 namespace Core.PlayerScripts
 {
@@ -36,8 +38,10 @@ namespace Core.PlayerScripts
     
         private float heatTime;
 
-        private void Awake()
+        [Inject]
+        private void Constructor(FolderManagerService folderManagerService)
         {
+            this.folderManagerService = folderManagerService;
             OnSceneChanged = new Event();
             OnPreSceneChanged = new Event();
             Init();
@@ -75,6 +79,8 @@ namespace Core.PlayerScripts
         }
 
         private float coolerValue = -1;
+        private FolderManagerService folderManagerService;
+
         public void DownHeat()
         {
             heatTime += Time.deltaTime;
@@ -108,7 +114,7 @@ namespace Core.PlayerScripts
             {
                 inst = this;
                 spaceShip = GetComponent<Ship>();
-                GalaxyGenerator.LoadSystems();
+                GalaxyGenerator.LoadSystems(folderManagerService);
                 control = GetComponent<ShipController>();
                 cargo = GetComponent<Cargo>();
                 targets = GetComponent<TargetManager>();
