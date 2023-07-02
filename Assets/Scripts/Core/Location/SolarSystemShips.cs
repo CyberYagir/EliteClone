@@ -6,6 +6,7 @@ using Core.Galaxy;
 using Core.Game;
 using Core.PlayerScripts;
 using Core.Systems;
+using Core.Systems.InteractivePoints;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
@@ -275,6 +276,8 @@ namespace Core.Location
         }
 
         public List<WorldInteractivePoint> points = new List<WorldInteractivePoint>();
+        
+        
         public void SpawnEnviromentBots(GameObject prefab)
         {
             for (int i = 0; i < ships.Count; i++)

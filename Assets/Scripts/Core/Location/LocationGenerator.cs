@@ -5,6 +5,7 @@ using System.IO;
 using Core.Galaxy;
 using Core.PlayerScripts;
 using Core.Systems;
+using Core.Systems.InteractivePoints;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -39,7 +40,6 @@ namespace Core.Location
         [SerializeField] private GameObject station;
         [SerializeField] private GameObject systemPoint;
         [SerializeField] private GameObject beltPoint;
-        [SerializeField] private GameObject botsLocation;
 
         public Event OnSetSystemToLocation = new Event();
 
@@ -60,11 +60,11 @@ namespace Core.Location
             }
 
 
-            InitLocation();
+            InitLocation(playerDataManager);
 
         }
         
-        private void InitLocation()
+        private void InitLocation(PlayerDataManager playerDataManager)
         {
             CurrentSave = null;
             OrbitalStationStaticBuilder.ClearEvent();
@@ -78,7 +78,7 @@ namespace Core.Location
 
             LoadLocation();
             SetSystemToLocation();
-            InitFirstFrame();
+            InitFirstFrame(playerDataManager);
         
         
             worldHandler.ShipPlayer.transform.parent = transform;
@@ -133,35 +133,29 @@ namespace Core.Location
             }
         }
 
-        public void InitFirstFrame()
+        public void InitFirstFrame(PlayerDataManager playerDataManager)
         {
             var location = MoveWorld();
             var locationObject = location.GetComponent<WorldInteractivePoint>();
             if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
             {
-                locationObject.initEvent.AddListener(delegate
-                {
-                    worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
-                    worldHandler.ShipPlayer.transform.rotation = locationObject.SpawnPoint.rotation;
-                });
+                worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
+                worldHandler.ShipPlayer.transform.rotation = locationObject.SpawnPoint.rotation;
             }
             else if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
             {
-                locationObject.initEvent.AddListener(delegate
-                {
-                    var allPoints = WorldOrbitalStation.Instance.GetComponentInChildren<WorldOrbitalStationPoints>().GetLandPoint();
-                    var point = allPoints[Random.Range(0, allPoints.Count)];
+                var allPoints = WorldOrbitalStation.Instance.GetComponentInChildren<WorldOrbitalStationPoints>().GetLandPoint();
+                var point = allPoints[Random.Range(0, allPoints.Count)];
             
-                    worldHandler.ShipPlayer.transform.position = point.point.position;
-                    worldHandler.ShipPlayer.transform.rotation = point.point.rotation;
+                worldHandler.ShipPlayer.transform.position = point.point.position;
+                worldHandler.ShipPlayer.transform.rotation = point.point.rotation;
             
-                    worldHandler.ShipPlayer.land.SetLand(true, point.point.position, point.point.rotation);
+                worldHandler.ShipPlayer.land.SetLand(true, point.point.position, point.point.rotation);
 
-                    point.isFilled = true;
-                });
+                point.isFilled = true;
             }
-            
-            locationObject.initEvent.Invoke();
+
+            locationObject.InitLocation(playerDataManager, this);
         }
 
         private void Start()

@@ -2,81 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28d1471d-6fb6-4144-9459-c3b0f63c89e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/StartupObject.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/StartupObject.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBelt.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBelt.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBotsLocation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBotsLocation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointStation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointStation.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Mods/EffectsDisabler/EffectsDisabler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Mods/EffectsDisabler/EffectsDisabler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/Base.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/Base.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/Belt.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/Belt.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/LocationBots.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/LocationBots.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SystemManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SystemManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Location.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Location.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotAttackController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotAttackController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Death/DeathDataCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Death/DeathDataCollector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Garage/UIGarageMover.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Garage/UIGarageMover.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/ItemUIDrop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/ItemUIDrop.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationBotPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationBotPoint.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/QuestsStandardMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/QuestsStandardMethods.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/SolarSystemShips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/SolarSystemShips.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/StationRefiller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/StationRefiller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStationPoints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStationPoints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Map/MapGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Map/MapGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/AppliedQuests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/AppliedQuests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Cargo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Cargo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/LandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/LandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/PlayerHead.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/PlayerHead.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipMeshSlotRotate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipMeshSlotRotate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipModels.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/Weapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/WeaponCannon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/WeaponCannon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/WeaponLaser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Weapon/WeaponLaser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/PlayerDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/PlayerDataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/SaveLoadData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SaveLoadData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/SpaceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SpaceManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/ContactObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/ContactObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/FloatingPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/FloatingPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Meteor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Meteor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/PosToPlayerPos.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/PosToPlayerPos.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Quest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Quest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/RotateAround.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/RotateAround.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarStaticBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarStaticBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldSpaceObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldSpaceObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Tutorial/PlayerTutorial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Tutorial/PlayerTutorial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/BaseWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/BaseWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/CharacterList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/CharacterList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DisplayInfoText.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DisplayInfoText.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawContacts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawContacts.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawInventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawInventory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawNavList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawNavList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawNavigation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawNavigation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawQuests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawQuests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/EscapeUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/EscapeUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/HPShieldsCanvas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/HPShieldsCanvas.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/InputArrowUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/InputArrowUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/MapUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/MapUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ParticlesFromSpeed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ParticlesFromSpeed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestInfoUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestInfoUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestListUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestListUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ReloadIndicsUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ReloadIndicsUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/SetCanvasCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/SetCanvasCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ShipHologram.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ShipHologram.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ShipStatsWorld.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/ShipStatsWorld.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/StatsDisplayCanvas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/StatsDisplayCanvas.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/TargetHologram.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/TargetHologram.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/TargetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/TargetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/WorldSpaceObjectCanvas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/WorldSpaceObjectCanvas.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDataHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDrop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDrop.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/player.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/player.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saves/Player/Global/system.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/system.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -579,7 +520,7 @@
       <workItem from="1662206865697" duration="1809000" />
       <workItem from="1663497513689" duration="10238000" />
       <workItem from="1664708061973" duration="2604000" />
-      <workItem from="1688309447872" duration="11221000" />
+      <workItem from="1688309447872" duration="12295000" />
     </task>
     <servers />
   </component>

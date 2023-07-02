@@ -4,6 +4,7 @@ using System.Text;
 using Core.PlayerScripts;
 using Core.Quests;
 using Core.Systems;
+using Core.Systems.InteractivePoints;
 using UnityEngine;
 using Random = System.Random;
 
@@ -90,7 +91,6 @@ namespace Core.Location
 
         public void Init()
         {
-
             worldHandler = PlayerDataManager.Instance.WorldHandler;
             
             Single(this);

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2185213301358685397}
-  - component: {fileID: 2185213301358685402}
   - component: {fileID: 2185213301358685403}
   - component: {fileID: 2391050267683903490}
+  - component: {fileID: 2730468826988717717}
   m_Layer: 0
   m_Name: Belt
   m_TagString: Untagged
@@ -35,34 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2185213301358685402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2185213301358685400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708120384df53ee41aa179f536d9e6bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 5141365378359136680}
-  initEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2391050267683903490}
-        m_TargetAssemblyTypeName: BeltGenerator, Assembly-CSharp
-        m_MethodName: Init
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2185213301358685403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +86,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 023dbabe37907a14bab781f813da6f2e, type: 2}
   - {fileID: 11400000, guid: 7a10b897c7212b54f8fbe3e5747ff8a6, type: 2}
   maxMineralsCount: 6
+--- !u!114 &2730468826988717717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185213301358685400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af468762d72467b97926a5cb3d5eb6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 5141365378359136680}
 --- !u!1 &5808298094966570563
 GameObject:
   m_ObjectHideFlags: 0

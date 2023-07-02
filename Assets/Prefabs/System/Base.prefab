@@ -3559,9 +3559,9 @@ GameObject:
   - component: {fileID: 3101146828782972115}
   - component: {fileID: 7480830169613052181}
   - component: {fileID: 6435990425029014538}
-  - component: {fileID: 7027503982551602678}
   - component: {fileID: 6588544915542637205}
   - component: {fileID: 3023727576613223236}
+  - component: {fileID: 443620149775421974}
   m_Layer: 6
   m_Name: Base
   m_TagString: Obstacle
@@ -3643,10 +3643,10 @@ MonoBehaviour:
     spawnPoint: {fileID: 6314141931336691940}
   uniqSeed: 0
   refiller: {fileID: 6435990425029014538}
+  methods: {fileID: 11400000, guid: b4b6dc82fe218514fa4f57e298a8274c, type: 2}
   quests: []
   characters: []
   additionalCharacters: 
-  methods: {fileID: 11400000, guid: b4b6dc82fe218514fa4f57e298a8274c, type: 2}
 --- !u!114 &7480830169613052181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3685,34 +3685,6 @@ MonoBehaviour:
       minValue: 1
       maxValue: 10
       MaxCount: 0
---- !u!114 &7027503982551602678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2617981788508908819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708120384df53ee41aa179f536d9e6bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1108521677289577216}
-  initEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3101146828782972115}
-        m_TargetAssemblyTypeName: WorldOrbitalStation, Assembly-CSharp
-        m_MethodName: Init
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &6588544915542637205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3738,6 +3710,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933d57d5bef2e5a41acedf6d25933244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &443620149775421974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617981788508908819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af7da1fba3e42cdab3119218db677c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 1108521677289577216}
 --- !u!1 &2658357464610396213
 GameObject:
   m_ObjectHideFlags: 0
