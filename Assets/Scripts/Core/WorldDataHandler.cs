@@ -8,8 +8,9 @@ namespace Core
     public class WorldDataHandler
     {
         private SolarSystem currentSolarSystem;
+        private Player shipPlayer;
         [SerializeField] private int galaxySeed = -1;
-        [SerializeField] private Player shipPlayer;
+        [SerializeField] private Player playerPrefab;
 
         public SolarSystem CurrentSolarSystem => currentSolarSystem;
         public int GalaxySeed => galaxySeed;
@@ -26,6 +27,18 @@ namespace Core
             if (shipPlayer != null)
             {
                 Object.Destroy(shipPlayer.gameObject);
+            }
+        }
+
+        public Player TryCreatePlayerShip()
+        {
+            if (shipPlayer == null)
+            {
+                return Object.Instantiate(playerPrefab);
+            }
+            else
+            {
+                return shipPlayer;
             }
         }
     }

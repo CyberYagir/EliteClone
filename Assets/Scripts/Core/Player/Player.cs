@@ -172,6 +172,6 @@ namespace Core.PlayerScripts
         public void SetTarget(GalaxyObject target) => targets.SetTarget(target);
         public ItemShip Ship() => spaceShip.GetShip();
         public void HardStop() => control.HardStop();
-
+        
     }
 }

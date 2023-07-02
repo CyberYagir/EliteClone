@@ -828,6 +828,22 @@ MonoBehaviour:
     itemsManager: {fileID: 8982965036286891313}
     cursorManager: {fileID: 3500592859733239217}
     tutorialsManager: {fileID: 1377392805459564332}
+  filesSystemHandler:
+    rootFolder: 
+    playerFolder: 
+    globalFolder: 
+    cacheSystemsFolder: 
+    galaxyFile: 
+    currentSystemFile: 
+    currentLocationFile: 
+    playerDataFile: 
+    configFile: 
+    deadsNPCFile: 
+    mapFile: 
+    tutorialsFile: 
+  worldHandler:
+    galaxySeed: -1
+    playerPrefab: {fileID: 594618446116798302, guid: 64649fe7cad36b743ba4245f11b26686, type: 3}
 --- !u!1 &7192748286561400119
 GameObject:
   m_ObjectHideFlags: 0

@@ -294,25 +294,28 @@ namespace Core.Location
                         contact.Init(false);
                         var loc = worldBot.GetComponentInChildren<LocationPoint>();
 
-                        var data = new Dictionary<string, object>();
-                        data.Add("tag", "ships");
-
-                        LocationBotType type;
-                        do
+                        if (loc)
                         {
-                            type = (LocationBotType) rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length);
-                            if (type != LocationBotType.OCG)
+                            var data = new Dictionary<string, object>();
+                            data.Add("tag", "ships");
+
+                            LocationBotType type;
+                            do
                             {
-                                break;
-                            }
-                        } while (type == LocationBotType.OCG && (ships[i].fraction != WorldDataItem.Fractions.NameToID("Pirates") || ships[i].fraction != WorldDataItem.Fractions.NameToID("OCG")));
+                                type = (LocationBotType) rnd.Next(0, Enum.GetNames(typeof(LocationBotType)).Length);
+                                if (type != LocationBotType.OCG)
+                                {
+                                    break;
+                                }
+                            } while (type == LocationBotType.OCG && (ships[i].fraction != WorldDataItem.Fractions.NameToID("Pirates") || ships[i].fraction != WorldDataItem.Fractions.NameToID("OCG")));
 
 
-                        data.Add("tag-type", type);
-                        data.Add("uniqID", ships[i].uniqID);
+                            data.Add("tag-type", type);
+                            data.Add("uniqID", ships[i].uniqID);
 
 
-                        loc.SetData(data);
+                            loc.SetData(data);
+                        }
                     }
                     else
                     {

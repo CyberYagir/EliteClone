@@ -28,6 +28,9 @@ namespace Core.Death
         
         private void Awake()
         {
+            filesSystemHandler = PlayerDataManager.Instance.FSHandler;
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            
             Single(this);
             InitDataCollector();
         }

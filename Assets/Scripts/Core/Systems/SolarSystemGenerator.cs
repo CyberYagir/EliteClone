@@ -12,7 +12,6 @@ namespace Core.Systems
         [SerializeField] private GameObject sunPrefab;
         [SerializeField] private GameObject planetPrefab;
         [SerializeField] private GameObject stationPointPrefab;
-        [SerializeField] private GameObject player;
         [SerializeField] private GameObject systemPoint;
         [SerializeField] private GameObject beltPoint;
         
@@ -97,12 +96,7 @@ namespace Core.Systems
         {
             if (worldHandler.CurrentSolarSystem != null)
             {
-                if (FindObjectOfType<Player>() == null)
-                {
-                    Instantiate(player.gameObject).GetComponent<Player>().Init();
-                }
-
-                var playerInst = PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform;
+                var playerInst = worldHandler.TryCreatePlayerShip().transform;
                 playerInst.parent = transform;
                 playerInst.parent = null;
                 playerInst.position = Vector3.zero;

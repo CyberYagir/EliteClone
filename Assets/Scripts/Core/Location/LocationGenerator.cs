@@ -34,7 +34,6 @@ namespace Core.Location
     {
         public static Location CurrentSave;
 
-        [SerializeField] private GameObject player;
         [SerializeField] private GameObject planet;
         [SerializeField] private GameObject sunPrefab;
         [SerializeField] private GameObject station;
@@ -54,10 +53,9 @@ namespace Core.Location
             filesSystemHandler = playerDataManager.FSHandler;
             
             World.SetScene(Scenes.Location);
-            if (worldHandler.ShipPlayer == null)
-            {
-                Instantiate(player.gameObject).GetComponent<Player>().Init();
-            }
+
+            worldHandler.TryCreatePlayerShip().Init();
+            
 
 
             InitLocation(playerDataManager);

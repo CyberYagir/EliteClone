@@ -2,22 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28d1471d-6fb6-4144-9459-c3b0f63c89e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBelt.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBelt.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBotsLocation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointBotsLocation.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointStation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePointStation.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/Base.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/Base.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/Belt.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/Belt.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/System/LocationBots.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/System/LocationBots.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/[DATAMANAGER].prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/[DATAMANAGER].prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Location.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Location.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Death/DeathDataCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Death/DeathDataCollector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/LocationGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/SolarSystemShips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/SolarSystemShips.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/WorldOrbitalStation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/WorldInteractivePoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarStaticBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarStaticBuilder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/WorldDataHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saves/Player/Global/location.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/location.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/player.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/player.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saves/Player/Global/system.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/system.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +34,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/GraphView/Views/VFXPaste.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/TDS/Bot/InteractPoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/TDS/AutoRepath.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Systems/StructureCreator.cs" root0="FORCE_HIGHLIGHTING" />
@@ -99,6 +98,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ad3eaa0878d94cbe8e45f9c494d7164713bc00/26/4c8b5b89/LineRenderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d2ac4227d2c34eaf86632b57f42af586b400/b7/979962a9/UnityWebRequest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/eb/e67ca58f/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.15.13/Editor/PlasticSCM/UI/UIElements/LoadingSpinner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/Core/VFXSettingAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/Core/VFXLibrary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Mods/EffectsDisabler/EffectsDisabler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/Utilities/pCache/BakeTool/PointCacheBakeTool.Mesh.cs" root0="SKIP_HIGHLIGHTING" />
@@ -145,6 +146,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3be1a7ff939c43f181c0a10b5a0189ac13c800/81/706e3a9d/Component.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Slider/SliderTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/Models/VFXErrorManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@10.8.1/Editor/Drawing/Controls/ChannelMixerControl.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMPro_UGUI_Private.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.searcher@4.3.2/Editor/Searcher/SearcherControl.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a15c1357c622451e82e69876cf76af4311000/1b/40463657/AndroidJavaClass.cs" root0="SKIP_HIGHLIGHTING" />
@@ -163,6 +165,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Slider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@10.8.1/Editor/Data/Legacy/SpriteUnlitMasterNode1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/Volume/Drawers/ColorParameterDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/Utils/TextureLerper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a92ad44406b431896773a464e9ec96e52e5b0/26/3902ee1b/Type.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@10.8.1/Editor/Models/Operators/Implementations/Branch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/LookDev/Compositor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -191,6 +194,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestRunner/EditModeRunner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/ParameterOverride.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/5a92ad44406b431896773a464e9ec96e52e5b0/e1/78d07331/020004AF.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.15.13/Editor/PlasticSCM/UI/UnityStyles.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ad3eaa0878d94cbe8e45f9c494d7164713bc00/12/9022b789/ScriptableObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Image/ImageTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/00a477ed1abf4030be646c3244bd366728200/d0/f3f5c328/GUILayout.cs" root0="SKIP_HIGHLIGHTING" />
@@ -240,6 +244,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/UI/MapUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/3be1a7ff939c43f181c0a10b5a0189ac13c800/ad/f5d10cb8/020000FB.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ad3eaa0878d94cbe8e45f9c494d7164713bc00/18/eeaa5490/Material.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerCanvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ad3eaa0878d94cbe8e45f9c494d7164713bc00/3e/d7dccfbf/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/UI/Items/ReputationItemUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.15.13/Tests/Editor/Collaborate/Models/ChangesModelTests.cs" root0="SKIP_HIGHLIGHTING" />
@@ -520,7 +525,8 @@
       <workItem from="1662206865697" duration="1809000" />
       <workItem from="1663497513689" duration="10238000" />
       <workItem from="1664708061973" duration="2604000" />
-      <workItem from="1688309447872" duration="12295000" />
+      <workItem from="1688309447872" duration="12693000" />
+      <workItem from="1688336148096" duration="476000" />
     </task>
     <servers />
   </component>
