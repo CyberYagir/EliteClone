@@ -13,7 +13,7 @@ namespace Core.CommunistsBase
 
         private void Start()
         {
-            var tutor = TutorialsManager.tutorial;
+            var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
             if (tutor == null || tutor.CommunitsBaseStats == null || tutor.CommunitsBaseStats.isSeeDemo == false)
             {
                 quests.SetToBarmanQuests();

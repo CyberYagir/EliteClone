@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core;
 using Core.Dialogs;
 using Core.Dialogs.Visuals;
 using Core.Game;
@@ -10,298 +9,312 @@ using Core.PlayerScripts;
 using Core.Systems;
 using Core.UI;
 using UnityEngine;
-using Random = System.Random;
 
 
-public class PlayerTutorial : Singleton<PlayerTutorial>
+namespace Core.Core.Tutorial
 {
-    private TutorialsManager.Tutorial tutorial;
-    [SerializeField] private GameObject dialogue;
-    [SerializeField] private GameObject questPoint;
-    [SerializeField] private Dialog m1, m2, m3, m3_2;
-    [SerializeField] private ItemShip knight;
-    [SerializeField] private Item transmitterItem;
-    [SerializeField] private Item zincItem;
+    public class PlayerTutorial : Singleton<PlayerTutorial>
+    {
+        [SerializeField] private GameObject dialogue;
+        [SerializeField] private GameObject questPoint;
+        [SerializeField] private Dialog m1, m2, m3, m3_2;
+        [SerializeField] private ItemShip knight;
+        [SerializeField] private Item transmitterItem;
+        [SerializeField] private Item zincItem;
 
 
-    private GameObject station;
-    private void Awake()
-    {
-        Single(this);
-    }
 
-    private void Start()
-    {
-        tutorial = TutorialsManager.LoadTutorial();
-        Init();
-    }
-    public void Init()
-    {
-        var activator = FindObjectOfType<LocationUIActivator>();
-        Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
-        if (tutorial.CommunitsBaseStats == null)
+        private GameObject station;
+
+        private TutorialsManager tutorialsManager;
+        private WorldDataHandler worldDataHandler;
+        
+        
+        private TutorialSO TutorialData => tutorialsManager.TutorialData;
+        
+        
+        private void Awake()
         {
-            if (!tutorial.m1_Dialog1)
+            Single(this);
+            
+            
+            tutorialsManager = PlayerDataManager.Instance.Services.TutorialsManager;
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+        }
+
+        private void Start()
+        {
+            Init();
+        }
+        public void Init()
+        {
+            var activator = FindObjectOfType<LocationUIActivator>();
+            Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+        
+            if (TutorialData.CommunitsBaseStats == null)
             {
-                CreateMessenger(activator.transform, m1, () =>
+                if (!TutorialData.m1_Dialog1)
                 {
-                    tutorial.startSystemName = PlayerDataManager.CurrentSolarSystem.name;
-                });
+                    CreateMessenger(activator.transform, m1, () =>
+                    {
+                        TutorialData.startSystemName = worldDataHandler.CurrentSolarSystem.name;
+                    });
+                }
+                else if (TutorialData.startSystemName != "")
+                {
+                    M1GenerateQuest(false);
+                }
             }
-            else if (tutorial.startSystemName != "")
+            else if (TutorialData.CommunitsBaseStats.isSeeDemo && !TutorialData.seeTranslatorDemo && !TutorialData.m3_Dialog3)
             {
-                M1GenerateQuest(false);
+                if (!TutorialData.m2_Dialog2)
+                {
+                    CreateMessenger(activator.transform, m2, null);
+                }
+                else
+                {
+                    M2GenerateQuest(true);
+                    M2Events();
+                }
+                AddStation();
             }
-        }
-        else if (tutorial.CommunitsBaseStats.isSeeDemo && !tutorial.seeTranslatorDemo && !tutorial.m3_Dialog3)
-        {
-            if (!tutorial.m2_Dialog2)
+            else if (TutorialData.CommunitsBaseStats.isSeeDemo && TutorialData.seeTranslatorDemo)
             {
-                CreateMessenger(activator.transform, m2, null);
-            }
-            else
-            {
-                M2GenerateQuest(true);
-                M2Events();
-            }
-            AddStation();
-        }
-        else if (tutorial.CommunitsBaseStats.isSeeDemo && tutorial.seeTranslatorDemo)
-        {
-            if (!tutorial.m3_Dialog3)
-            {
-                CreateMessenger(activator.transform, m3, null);
-            }
-            else
-            {
-                M3GenerateQuest(true);
+                if (!TutorialData.m3_Dialog3)
+                {
+                    CreateMessenger(activator.transform, m3, null);
+                }
+                else
+                {
+                    M3GenerateQuest(true);
                
+                }
+                AddStation();
             }
+        }
+
+        public void CreateMessenger(Transform activator, Dialog dialog, Action actionBeforeSave)
+        {
+            var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
+            messenger.dialog = dialog;
+            messenger.Init();
+            actionBeforeSave?.Invoke();
+            tutorialsManager.SaveTutorial();
+            EnablePlayer(false);
+        }
+    
+        #region M1
+    
+        public void M1AddStation()
+        {
+            if (station != null)
+            {
+                Destroy(station.gameObject);
+            }
+            var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+            if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
+                TutorialData.baseSystemName == worldDataHandler.CurrentSolarSystem.name)
+            {
+                var rnd = new System.Random(NamesHolder.StringToSeed(TutorialData.startSystemName));
+                var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
+                var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1) , rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
+                point.transform.localPosition = pos;
+                point.GetComponent<ContactObject>().Init();
+                point.name = "Communist Space Unorbital Station";
+                station = point;
+                TutorialData.baseSystemName = worldDataHandler.CurrentSolarSystem.name;
+                tutorialsManager.SaveTutorial();
+                StartCoroutine(M1AddStationUpdate());
+            }
+        }
+
+        IEnumerator M1AddStationUpdate()
+        {
+            yield return null;
+            Player.OnSceneChanged -= M1AddStation;
+            Player.OnSceneChanged.Run();
+            Player.OnSceneChanged += M1AddStation;
+            Player.inst.targets.ContactsChanges.Run();
+        }
+    
+        public void M1Quest()
+        {
+            M1GenerateQuest(true);
+            TutorialData.m1_Dialog1 = true;
+            tutorialsManager.SaveTutorial();
+        }
+    
+        private void M1GenerateQuest(bool notify)
+        {
+            Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+        
+            var quest = GetEmptyQuest();
+            quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
+            quest.appliedSolar = TutorialData.startSystemName;
+            quest.appliedStation = "";
+            quest.GetPath(new System.Random(int.MaxValue), "Communists Base", TutorialData.startSystemName, 1, 3, false);
+            quest.GetLastQuestPath().targetName = "Communists Base";
+            quest.toTransfer = new List<Item>();
+            Player.inst.quests.ApplyQuest(quest, notify);
             AddStation();
         }
-    }
 
-    public void CreateMessenger(Transform activator, Dialog dialog, Action actionBeforeSave)
-    {
-        var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
-        messenger.dialog = dialog;
-        messenger.Init();
-        actionBeforeSave?.Invoke();
-        TutorialsManager.SaveTutorial(tutorial);
-        EnablePlayer(false);
-    }
-    
-    #region M1
-    
-    public void M1AddStation()
-    {
-        if (station != null)
+        public void AddStation()
+        {
+            Player.OnSceneChanged += M1AddStation;
+            M1AddStation();
+        }
+
+        public void DestroyStation()
         {
             Destroy(station.gameObject);
         }
-        var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
-        if ((quest != null && quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name) ||
-            tutorial.baseSystemName == PlayerDataManager.CurrentSolarSystem.name)
+        #endregion
+
+        #region M2
+
+        public void M2Quest()
         {
-            var rnd = new System.Random(NamesHolder.StringToSeed(tutorial.startSystemName));
-            var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
-            var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1) , rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
-            point.transform.localPosition = pos;
-            point.GetComponent<ContactObject>().Init();
-            point.name = "Communist Space Unorbital Station";
-            station = point;
-            tutorial.baseSystemName = PlayerDataManager.CurrentSolarSystem.name;
-            TutorialsManager.SaveTutorial(tutorial);
-            StartCoroutine(M1AddStationUpdate());
+            M2GenerateQuest(true);
+            TutorialData.m2_Dialog2 = true;
+            M2Events();
+            tutorialsManager.SaveTutorial();
         }
-    }
-
-    IEnumerator M1AddStationUpdate()
-    {
-        yield return null;
-        Player.OnSceneChanged -= M1AddStation;
-        Player.OnSceneChanged.Run();
-        Player.OnSceneChanged += M1AddStation;
-        Player.inst.targets.ContactsChanges.Run();
-    }
-    
-    public void M1Quest()
-    {
-        M1GenerateQuest(true);
-        tutorial.m1_Dialog1 = true;
-        TutorialsManager.SaveTutorial(tutorial);
-    }
-    
-    private void M1GenerateQuest(bool notify)
-    {
-        Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
-        
-        var quest = GetEmptyQuest();
-        quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
-        quest.appliedSolar = tutorial.startSystemName;
-        quest.appliedStation = "";
-        quest.GetPath(new System.Random(int.MaxValue), "Communists Base", tutorial.startSystemName, 1, 3, false);
-        quest.GetLastQuestPath().targetName = "Communists Base";
-        quest.toTransfer = new List<Item>();
-        Player.inst.quests.ApplyQuest(quest, notify);
-        AddStation();
-    }
-
-    public void AddStation()
-    {
-        Player.OnSceneChanged += M1AddStation;
-        M1AddStation();
-    }
-
-    public void DestroyStation()
-    {
-        Destroy(station.gameObject);
-    }
-    #endregion
-
-    #region M2
-
-    public void M2Quest()
-    {
-        M2GenerateQuest(true);
-        tutorial.m2_Dialog2 = true;
-        M2Events();
-        TutorialsManager.SaveTutorial(tutorial);
-    }
 
 
-    public void M2Events()
-    {
-        Player.inst.cargo.OnChangeInventory += HaveTranslator;
-        HaveTranslator();
-    }
-    
-    public void M3Events()
-    {
-        Player.inst.cargo.OnChangeInventory += HaveZincVoid;
-        HaveZinc();
-    }
-
-    public void HaveTranslator()
-    {
-        if (Player.inst.cargo.ContainItem(transmitterItem.id.id))
+        public void M2Events()
         {
-            PlayerPrefs.SetInt("last_level", (int) World.Scene);
-            World.LoadLevel(Scenes.ActivatorDemo);
+            Player.inst.cargo.OnChangeInventory += HaveTranslator;
+            HaveTranslator();
         }
-    }
-
-    public Quest GetEmptyQuest()
-    {
-        Quest quest = new Quest();
-        Character character = new Character();
-        character.fraction = WorldDataItem.Fractions.NameToID("Libertarians");
-        character.firstName = "Khatuna";
-        character.lastName = "Tupaq";
-        character.characterID = 0;
-        quest.Init(0, character, null, true);
-        quest.questType = -1;
-        quest.questID = int.MaxValue;
-        quest.toTransfer = new List<Item>();
-
-        return quest;
-    }
-    public void M2GenerateQuest(bool notify)
-    {
-        var quest = GetEmptyQuest();
-        quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
-        Player.inst.quests.ApplyQuest(quest, notify);
-    }
     
-    #endregion
-
-    #region M3
-
-    public void M3Quest()
-    {
-        M3GenerateQuest(true);
-        tutorial.m3_Dialog3 = true;
-        TutorialsManager.SaveTutorial(tutorial);
-    }
-
-
-    private string getKnight = "Get on the ship \"Knight\".";
-    private string getZinc = "Obtain one or more full zinc stores.";
-    private string flyToStation = "Fly to the communist station and make your way to the rear";
-    public void M3GenerateQuest(bool notify)
-    {
-        var quest = GetEmptyQuest();
-        if (Player.inst.Ship().shipName != knight.shipName)
+        public void M3Events()
         {
-            quest.keyValues.Add("Text", getKnight);
+            Player.inst.cargo.OnChangeInventory += HaveZincVoid;
+            HaveZinc();
         }
-        else
+
+        public void HaveTranslator()
         {
-            if (!tutorial.m3_Dialog4)
+            if (Player.inst.cargo.ContainItem(transmitterItem.id.id))
             {
-                var activator = FindObjectOfType<LocationUIActivator>();
-                CreateMessenger(activator.transform, m3_2, null);
-                tutorial.m3_Dialog4 = true;
-                TutorialsManager.SaveTutorial(tutorial);
+                PlayerPrefs.SetInt("last_level", (int) World.Scene);
+                World.LoadLevel(Scenes.ActivatorDemo);
             }
-            
-            if (!HaveZinc())
+        }
+
+        public Quest GetEmptyQuest()
+        {
+            Quest quest = new Quest();
+            Character character = new Character();
+            character.fraction = WorldDataItem.Fractions.NameToID("Libertarians");
+            character.firstName = "Khatuna";
+            character.lastName = "Tupaq";
+            character.characterID = 0;
+            quest.Init(0, character, null, true);
+            quest.questType = -1;
+            quest.questID = int.MaxValue;
+            quest.toTransfer = new List<Item>();
+
+            return quest;
+        }
+        public void M2GenerateQuest(bool notify)
+        {
+            var quest = GetEmptyQuest();
+            quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
+            Player.inst.quests.ApplyQuest(quest, notify);
+        }
+    
+        #endregion
+
+        #region M3
+
+        public void M3Quest()
+        {
+            M3GenerateQuest(true);
+            TutorialData.m3_Dialog3 = true;
+            tutorialsManager.SaveTutorial();
+        }
+
+
+        private string getKnight = "Get on the ship \"Knight\".";
+        private string getZinc = "Obtain one or more full zinc stores.";
+        private string flyToStation = "Fly to the communist station and make your way to the rear";
+        public void M3GenerateQuest(bool notify)
+        {
+            var quest = GetEmptyQuest();
+            if (Player.inst.Ship().shipName != knight.shipName)
             {
-                quest.keyValues.Add("Text",getZinc);
+                quest.keyValues.Add("Text", getKnight);
             }
             else
             {
-                quest.keyValues.Add("Text", flyToStation);
-                Player.inst.cargo.OnChangeInventory -= HaveZincVoid;
-            }
-            M3Events();
-        }
-        Player.inst.quests.ApplyQuest(quest, notify);
-    }
-
-    private bool haveZinc;
-    public bool HaveZinc()
-    {
-        var contain = Player.inst.cargo.ContainItem(zincItem.id.id);
-        var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
-        if (quest != null)
-        {
-            if (contain)
-            {
-                var isFull = Player.inst.cargo.FindItem(zincItem.id.id).amount.IsFull();
-                if (isFull != haveZinc)
+                if (!TutorialData.m3_Dialog4)
                 {
-                    quest.keyValues["Text"] = flyToStation;
-                    Player.inst.quests.OnChangeQuests.Run();
-                    haveZinc = true;
+                    var activator = FindObjectOfType<LocationUIActivator>();
+                    CreateMessenger(activator.transform, m3_2, null);
+                    TutorialData.m3_Dialog4 = true;
+                    tutorialsManager.SaveTutorial();
                 }
-
-                return isFull;
+            
+                if (!HaveZinc())
+                {
+                    quest.keyValues.Add("Text",getZinc);
+                }
+                else
+                {
+                    quest.keyValues.Add("Text", flyToStation);
+                    Player.inst.cargo.OnChangeInventory -= HaveZincVoid;
+                }
+                M3Events();
             }
-            else if (haveZinc)
-            {
-                quest.keyValues["Text"] = getZinc;
-                Player.inst.quests.OnChangeQuests.Run();
-            }
+            Player.inst.quests.ApplyQuest(quest, notify);
         }
-        else
+
+        private bool haveZinc;
+        public bool HaveZinc()
         {
-            return contain;
+            var contain = Player.inst.cargo.ContainItem(zincItem.id.id);
+            var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+            if (quest != null)
+            {
+                if (contain)
+                {
+                    var isFull = Player.inst.cargo.FindItem(zincItem.id.id).amount.IsFull();
+                    if (isFull != haveZinc)
+                    {
+                        quest.keyValues["Text"] = flyToStation;
+                        Player.inst.quests.OnChangeQuests.Run();
+                        haveZinc = true;
+                    }
+
+                    return isFull;
+                }
+                else if (haveZinc)
+                {
+                    quest.keyValues["Text"] = getZinc;
+                    Player.inst.quests.OnChangeQuests.Run();
+                }
+            }
+            else
+            {
+                return contain;
+            }
+
+            haveZinc = false;
+            return false;
         }
 
-        haveZinc = false;
-        return false;
-    }
-
-    public void HaveZincVoid() => HaveZinc();
+        public void HaveZincVoid() => HaveZinc();
     
-    #endregion
+        #endregion
 
-    public static void EnablePlayer(bool enable)
-    {
-        Player.inst.land.enabled = enable;
-        Player.inst.control.enabled = enable;
-        WorldSpaceObjectCanvas.Instance.gameObject.SetActive(enable);
+        public static void EnablePlayer(bool enable)
+        {
+            Player.inst.land.enabled = enable;
+            Player.inst.control.enabled = enable;
+            WorldSpaceObjectCanvas.Instance.gameObject.SetActive(enable);
 
+        }
     }
 }

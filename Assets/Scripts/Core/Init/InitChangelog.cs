@@ -64,7 +64,7 @@ namespace Core.Init
 
                 if (webRequest.result != UnityWebRequest.Result.Success)
                 {
-                    File.Delete(PlayerDataManager.GalaxyFile);
+                    File.Delete(PlayerDataManager.Instance.FSHandler.GalaxyFile);
                     GalaxyGenerator.ThrowLoadError("Error getting data.\nInfo: " + webRequest.error);
                 }
                 else

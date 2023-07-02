@@ -27,7 +27,7 @@ public class TradeWindow : EditorWindow
             }
             else
             {
-                ItemsManager.Init();
+                ItemsManager.LoadResources();
             }
         }
     }

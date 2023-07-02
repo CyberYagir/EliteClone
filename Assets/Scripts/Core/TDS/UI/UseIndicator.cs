@@ -15,7 +15,7 @@ namespace Core.TDS.UI
         private void Start()
         {
             text = GetComponent<TMP_Text>();
-            var data = InputM.GetAxisData(KAction.Interact);
+            var data = InputService.GetAxisData(KAction.Interact);
             text.text = $"Use [{data.plus.ToString()}/{data.minus.ToString()}]";
             interactor.OnAddInter.AddListener(UpdateText);
             interactor.OnRemInter.AddListener(UpdateText);

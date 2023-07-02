@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Core.PlayerScripts;
@@ -65,39 +66,36 @@ namespace Core.Location
 
     public class WorldOrbitalStation : Singleton<WorldOrbitalStation>
     {
-        [System.Serializable]
+        [Serializable]
         public class OrbitalStationMesh
         {
             public GameObject worldObject;
             public Transform spawnPoint;
         }
+        
+        
         public List<OrbitalStationMesh> meshList;
+        
         [SerializeField] private int uniqSeed;
         [SerializeField] private StationRefiller refiller;
+        [SerializeField] private QuestsMethodObject methods;
+        
+        
         public List<Quest> quests;
         public List<Character> characters;
         public List<int> additionalCharacters = new List<int>();
-        
-        public static Event OnInit = new Event();
-
-        public static void InitNames()
-        {
-            NamesHolder.Init();
-        }
-
-        public static void ClearEvent()
-        {
-            OnInit = new Event();
-            Instance?.Clear();
-        }
 
 
+        private WorldDataHandler worldHandler;
 
         public void Init()
         {
+
+            worldHandler = PlayerDataManager.Instance.WorldHandler;
+            
             Single(this);
-            InitNames();
-            uniqSeed = CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
+            OrbitalStationStaticBuilder.InitNames();
+            uniqSeed = OrbitalStationStaticBuilder.CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
 
             int meshType = new Random(uniqSeed).Next(0, meshList.Count);
             for (int i = 0; i < meshList.Count; i++)
@@ -134,15 +132,9 @@ namespace Core.Location
 
         private void Start()
         {
-            OnInit.Run();
+            OrbitalStationStaticBuilder.OnInit.Run();
         }
 
-        public static int CalcSeed(string stationName, string systemName)
-        {
-            int uniqSeed = NamesHolder.StringToSeed(stationName + systemName);
-            uniqSeed *= uniqSeed;
-            return uniqSeed;
-        }
 
         public List<Character> InitCharacters(int seed)
         {
@@ -198,7 +190,7 @@ namespace Core.Location
             
                 if (quest.GetLastQuestPath()?.targetName == transform.name)
                 {
-                    if (quest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name)
+                    if (quest.GetLastQuestPath().solarName == worldHandler.CurrentSolarSystem.name)
                     {
                         if (questInStation.Find(x => x.quester.characterID == quest.quester.characterID) == null)
                         {
@@ -210,7 +202,6 @@ namespace Core.Location
             return questInStation;
         }
 
-        [SerializeField] private QuestsMethodObject methods;
         public List<Quest> InitQuests(int seed, List<Character> _characters)
         {
             var list = new List<Quest>();
@@ -219,7 +210,7 @@ namespace Core.Location
             for (int i = 0; i < quests; i++)
             {
                 var questid = rnd.Next(-9999999, 9999999);
-                var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, PlayerDataManager.CurrentSolarSystem.name, methods);
+                var q = new Quest(questid, _characters[rnd.Next(0, _characters.Count)], transform.name, worldHandler.CurrentSolarSystem.name, methods);
                 if (q.questState != Quest.QuestCompleted.BrokeQuest)
                 {
                     list.Add(q);

@@ -15,6 +15,9 @@ namespace Core.CommunistsBase.OutDemo
         [SerializeField] private TimelineAsset secondDemo;
         [SerializeField] private Transform secondDemoObject;
         [SerializeField] private FaderMultiScenes fader;
+        
+        
+        
         private void Start()
         {
             StartCoroutine(Animation());
@@ -29,9 +32,12 @@ namespace Core.CommunistsBase.OutDemo
             secondDemoObject.gameObject.SetActive(true);
             yield return new WaitForSeconds((float)secondDemo.duration-1);
             fader.LoadScene(Scenes.System);
-            var tutor = TutorialsManager.LoadTutorial();
+
+            var tutorManager = PlayerDataManager.Instance.Services.TutorialsManager;
+
+            var tutor = tutorManager.TutorialData;
             tutor.CommunitsBaseStats.isSeeDemo = true;
-            TutorialsManager.SaveTutorial(tutor);
+            tutorManager.SaveTutorial();
         }
     }
 }

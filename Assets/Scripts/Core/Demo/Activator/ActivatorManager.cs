@@ -9,9 +9,11 @@ namespace Core.ActivatorDemo
     {
         public void ChangeLevel()
         {
-            var tutor = TutorialsManager.LoadTutorial();
+            var tutorManager = PlayerDataManager.Instance.Services.TutorialsManager;
+            var tutor = tutorManager.TutorialData;
+                
             tutor.seeTranslatorDemo = true;
-            TutorialsManager.SaveTutorial(tutor);
+            tutorManager.SaveTutorial();
             World.LoadLevel((Scenes) PlayerPrefs.GetInt("last_level"));
         }
     }

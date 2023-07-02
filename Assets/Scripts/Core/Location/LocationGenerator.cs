@@ -35,21 +35,28 @@ namespace Core.Location
         public static Location CurrentSave;
 
         public Event OnSetSystemToLocation = new Event();
+
+        private WorldDataHandler worldHandler;
+        
+        
         private void Awake()
         {
+            worldHandler = PlayerDataManager.Instance.WorldHandler;
+                
             World.SetScene(Scenes.Location);
+            
         }
         private void OnEnable()
         {
             CurrentSave = null;
-            WorldOrbitalStation.ClearEvent();
+            OrbitalStationStaticBuilder.ClearEvent();
             if (FindObjectOfType<Player>() == null)
             {
                 Instantiate(player.gameObject).GetComponent<Player>().Init();
             }
 
 
-            if (!File.Exists(PlayerDataManager.CurrentLocationFile))
+            if (!File.Exists(PlayerDataManager.Instance.FSHandler.CurrentLocationFile))
             {
                 World.LoadLevel(Scenes.System);
                 return;
@@ -70,10 +77,10 @@ namespace Core.Location
 
         public void LoadLocation()
         {
-            CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
-            var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
-            PlayerDataManager.CurrentSolarSystem = system;
-            SolarSystemGenerator.DrawAll(PlayerDataManager.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, 15, false);
+            CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CurrentLocationFile));
+            var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
+            worldHandler.ChangeSolarSystem(system);
+            SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, 15, false);
         }
 
         public void SetSystemToLocation()
@@ -191,17 +198,17 @@ namespace Core.Location
         {
             var n = new Location
             {
-                systemName = Path.GetFileNameWithoutExtension(SolarSystemGenerator.GetSystemFileName()),
+                systemName = Path.GetFileNameWithoutExtension(SolarStaticBuilder.GetSystemFileName()),
                 locationName = locName,
                 type = type,
                 otherKeys = otherData
             };
-            File.WriteAllText(PlayerDataManager.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
+            File.WriteAllText(PlayerDataManager.Instance.FSHandler.CurrentLocationFile, JsonConvert.SerializeObject(n, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore} ));
         }
 
         public static void RemoveLocationFile()
         {
-            File.Delete(PlayerDataManager.CurrentLocationFile);
+            File.Delete(PlayerDataManager.Instance.FSHandler.CurrentLocationFile);
         }
     }
 }

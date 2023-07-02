@@ -12,12 +12,13 @@ namespace Core.CommunistsBase
         [SerializeField] private FaderMultiScenes scenes;
         public void Init()
         {
-            var tutorial = TutorialsManager.tutorial;
+            var manager = PlayerDataManager.Instance.Services.TutorialsManager;
+            var tutorial = manager.TutorialData;
             if (tutorial.CommunitsBaseStats == null)
             {
-                tutorial.CommunitsBaseStats = new TutorialsManager.Tutorial.CommBaseData();
+                tutorial.CommunitsBaseStats = new TutorialSO.CommBaseData();
                 tutorial.CommunitsBaseStats.killedDialogs = list.GetDead();
-                TutorialsManager.SaveTutorial(tutorial);
+                manager.SaveTutorial();
                 scenes.LoadScene(Scenes.OutBaseDemo);
             }
         }

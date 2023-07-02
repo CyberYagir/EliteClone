@@ -47,7 +47,7 @@ namespace Core.Location
     
         public void SetActiveLocation()
         {
-            if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarSystemGenerator.scale < minDist * SolarSystemGenerator.scale)
+            if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarStaticBuilder.GalaxyScale < minDist * SolarStaticBuilder.GalaxyScale)
             {
                 Player.inst.warp.SetActiveLocation(this);
             }

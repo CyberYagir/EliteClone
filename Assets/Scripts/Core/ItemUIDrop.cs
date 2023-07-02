@@ -29,15 +29,15 @@ namespace Core
         public void EditVal()
         {
             timer += Time.deltaTime;
-            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            if (InputService.GetAxisDown(KAction.TabsHorizontal))
             {
                 speed = 0.15f;
                 valSpeedAdd = 0;
             }
             if (timer >= speed)
             {
-                var axis = InputM.GetAxisRaw(KAction.TabsHorizontal);
-                val += InputM.GetAxisRaw(KAction.TabsHorizontal) + (valSpeedAdd * axis);
+                var axis = InputService.GetAxisRaw(KAction.TabsHorizontal);
+                val += InputService.GetAxisRaw(KAction.TabsHorizontal) + (valSpeedAdd * axis);
                 val = Mathf.Clamp(val, 1f, itemUI.item.amount.value);
                 text.text = "-" + val;
                 speed -= Time.deltaTime / 2f;

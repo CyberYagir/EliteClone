@@ -26,7 +26,14 @@ namespace Core
         public decimal playedTime;
         public int startSaveTime;
     }
-
+    
+    [Serializable]
+    public class SavedSolarSystem
+    {
+        public string systemName;
+        public Vector3 playerPos;
+        public Vector3 worldPos;
+    }
 
     [Serializable]
     public class LandLocation
@@ -81,7 +88,7 @@ namespace Core
 
         public void AddCurrentToHistory()
         {
-            var solarName = SolarSystemGenerator.GetSystemName();
+            var solarName = SolarStaticBuilder.GetSystemName();
             if (solarName != "")
             {
                 AddToHistory(solarName);
@@ -221,9 +228,9 @@ namespace Core
         }
         public PlayerData LoadData()
         {
-            if (File.Exists(PlayerDataManager.PlayerDataFile))
+            if (File.Exists(PlayerDataManager.Instance.FSHandler.PlayerDataFile))
             {
-                var json = File.ReadAllText(PlayerDataManager.PlayerDataFile);
+                var json = File.ReadAllText(PlayerDataManager.Instance.FSHandler.PlayerDataFile);
                 var playerData = JsonConvert.DeserializeObject<PlayerData>(json);
                 if (playerData != null)
                 {
@@ -265,7 +272,7 @@ namespace Core
         public void SaveData(PlayerData playerData)
         {
             var data = JsonConvert.SerializeObject(playerData, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-            File.WriteAllText(PlayerDataManager.PlayerDataFile, data);
+            File.WriteAllText(PlayerDataManager.Instance.FSHandler.PlayerDataFile, data);
         }
     
     

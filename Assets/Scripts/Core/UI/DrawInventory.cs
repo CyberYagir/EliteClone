@@ -32,7 +32,7 @@ namespace Core.UI
                 holder.anchoredPosition = Vector2.Lerp(holder.anchoredPosition, new Vector2(0, height * upDownUI.selectedIndex), 10 * Time.deltaTime);
                 if (buttons.Count != 0)
                 {
-                    if (InputM.GetAxisDown(KAction.Drop))
+                    if (InputService.GetAxisDown(KAction.Drop))
                     {
                         if (!drops[upDownUI.selectedIndex].isDrop)
                         {

@@ -11,7 +11,7 @@ namespace Core.TDS
         public Event OnShoot = new Event();
         public void Update()
         {
-            if (InputM.GetAxisIsActive(KAction.Shoot))
+            if (InputService.GetAxisIsActive(KAction.Shoot))
             {
                 OnShoot.Run();
             }

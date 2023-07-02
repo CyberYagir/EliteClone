@@ -11,15 +11,48 @@ namespace Core
 {
     public class PlayerDataManager : Singleton<PlayerDataManager>
     {
-        public static SolarSystem CurrentSolarSystem { get; set; }
-
         public static InitOptions.PlayerConfig PlayerConfig;
-
-        public static int galaxySeed = -1;
-        public static string PlayerFolder, GlobalFolder, CacheSystemsFolder, RootFolder;
-        public static string GalaxyFile, CurrentSystemFile, CurrentLocationFile, PlayerDataFile, ConfigFile, DeadsNPCFile, MapFile, TutorialsFile;
         public static float GenerateProgress;
+        
+        [SerializeField] private ServicesHandler servicesHandler;
+        [SerializeField] private FilesSystemHandler filesSystemHandler;
+        [SerializeField] private WorldDataHandler worldHandler;
+
+
+
+        
+        
         private bool loading;
+
+        public ServicesHandler Services => servicesHandler;
+        public FilesSystemHandler FSHandler => filesSystemHandler;
+
+        public WorldDataHandler WorldHandler => worldHandler;
+
+
+        private void Awake()
+        {
+            print("Init");
+            Init();
+        }
+
+        public void Init()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Single(this);
+
+            LoadStatic();
+            InitDataManager();
+            servicesHandler.Init();
+
+            SolarStaticBuilder.InitStaticBuilder(worldHandler, FSHandler);
+            GalaxyManager.InitStaticBuilder(worldHandler);
+        }
 
         private void Update()
         {
@@ -36,26 +69,11 @@ namespace Core
             }
         }
 
-        private void Awake()
-        {
-            Init();
-        }
-
-        public void Init()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            LoadStatic();
-            InitDataManager();
-        }
 
         public void LoadStatic()
         {
             GalaxyGenerator.GetWords();
-            WorldOrbitalStation.InitNames();
+            OrbitalStationStaticBuilder.InitNames();
         }
 
         private void Start()
@@ -68,71 +86,25 @@ namespace Core
 
         public void InitDataManager()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-
-            }
-
-            Single(this);
             DontDestroyOnLoad(gameObject);
-            FoldersManage();
+            filesSystemHandler.CreateFolders();
         }
 
-
-        public static void FoldersManage()
-        {
-            if (!Directory.Exists(Directory.GetParent(Application.dataPath).FullName + "/Saves"))
-            {
-                Directory.CreateDirectory(Directory.GetParent(Application.dataPath).FullName + "/Saves");
-            }
-
-            RootFolder = Directory.GetParent(Application.dataPath)?.FullName + "/Saves";
-
-            if (!Directory.Exists(RootFolder + "/Player"))
-            {
-                Directory.CreateDirectory(RootFolder + "/Player/");
-            }
-
-            PlayerFolder = RootFolder + "/Player/";
-            if (!Directory.Exists(PlayerFolder + "/Global"))
-            {
-                Directory.CreateDirectory(PlayerFolder + "/Global");
-            }
-
-            GlobalFolder = PlayerFolder + "/Global/";
-            if (!Directory.Exists(PlayerFolder + "/Locations"))
-            {
-                Directory.CreateDirectory(PlayerFolder + "/Locations");
-            }
-
-            CacheSystemsFolder = PlayerFolder + "/Locations/";
-
-            GalaxyFile = GlobalFolder + "galaxy.json";
-            CurrentSystemFile = GlobalFolder + "system.json";
-            CurrentLocationFile = GlobalFolder + "location.json";
-            DeadsNPCFile = GlobalFolder + "npcs.json";
-            MapFile = GlobalFolder + "map.json";
-            PlayerDataFile = GlobalFolder + "player.json";
-            TutorialsFile = GlobalFolder + "tutorials.config";
-            ConfigFile = PlayerFolder + "options.config";
-        }
 
         public void LoadScene()
         {
             var haveGalaxy = GalaxyGenerator.LoadSystems();
-            if (File.Exists(CurrentLocationFile) && haveGalaxy)
+            if (File.Exists(filesSystemHandler.CurrentLocationFile) && haveGalaxy)
             {
                 World.LoadLevel(Scenes.Location);
             }
-            else if (File.Exists(CurrentSystemFile) && haveGalaxy)
+            else if (File.Exists(filesSystemHandler.CurrentSystemFile) && haveGalaxy)
             {
                 World.LoadLevel(Scenes.System);
             }
             else
             {
-                if (File.Exists(GalaxyFile))
+                if (File.Exists(filesSystemHandler.GalaxyFile))
                 {
                     loading = true;
                     GenerateProgress = 1;
@@ -141,7 +113,7 @@ namespace Core
                 {
                     if (!loading)
                     {
-                        StartCoroutine(GalaxyGenerator.GenerateGalaxy(galaxySeed));
+                        StartCoroutine(GalaxyGenerator.GenerateGalaxy(WorldHandler.GalaxySeed));
                         loading = true;
                     }
                 }
@@ -160,7 +132,7 @@ namespace Core
                 Player.inst.saves.Save();
                 if (World.Scene == Scenes.System)
                 {
-                    SolarSystemGenerator.SaveSystem();
+                    SolarStaticBuilder.SaveSystem();
                 }
             }
         }

@@ -30,9 +30,9 @@ namespace Core.Systems
 
         private void OnDestroy()
         {
-            if (SolarSystemGenerator.objects != null)
+            if (SolarStaticBuilder.Objects != null)
             {
-                SolarSystemGenerator.objects.Remove(this);
+                SolarStaticBuilder.Objects.Remove(this);
             }
         }
     }

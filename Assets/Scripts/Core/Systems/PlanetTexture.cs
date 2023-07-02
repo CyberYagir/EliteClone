@@ -11,21 +11,21 @@ namespace Core.Systems
         public int setted;
         public void SetTexture(int id)
         {
-            if (SolarSystemGenerator.planetTextures == null)
+            if (SolarStaticBuilder.PlanetTextures == null)
             {
-                SolarSystemGenerator.GetPlanetTextures();
+                SolarStaticBuilder.GetPlanetTextures();
             }
 
             setted = id;
             for (int i = 0; i < renderers.Length; i++)
             {
-                renderers[i].material = SolarSystemGenerator.planetTextures.textures[id].material;
+                renderers[i].material = SolarStaticBuilder.PlanetTextures.textures[id].material;
             }
         
         }
         public int GetLen()
         {
-            return SolarSystemGenerator.planetTextures.textures.Count;
+            return SolarStaticBuilder.PlanetTextures.textures.Count;
         }
     }
 }

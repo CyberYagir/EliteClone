@@ -17,7 +17,10 @@ namespace Core.Systems
 
         public void Init()
         {
-            seed = WorldOrbitalStation.CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
+
+            WorldDataHandler worldHandler = PlayerDataManager.Instance.WorldHandler;
+            
+            seed = OrbitalStationStaticBuilder.CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
             var rnd = new Random(seed);
             var mineralsCount = rnd.Next(maxMineralsCount/2, maxMineralsCount);
 
@@ -27,7 +30,7 @@ namespace Core.Systems
                 mineMinerals.Add(item);
             }
         
-            var beltData = PlayerDataManager.CurrentSolarSystem.belts.Find(x => x.name == transform.name).beltData;
+            var beltData = worldHandler.CurrentSolarSystem.belts.Find(x => x.name == transform.name).beltData;
             List<GameObject> meteors = new List<GameObject>();
             for (int i = 0; i < beltData.meteorsCount; i++)
             {

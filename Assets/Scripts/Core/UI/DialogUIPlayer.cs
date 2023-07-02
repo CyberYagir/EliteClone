@@ -32,10 +32,10 @@ namespace Core.Dialogs.Game.UI
             dialoger.OnShowChoice.AddListener(ShowChoices);
             dialoger.OnChangeChoice.AddListener(ChangeChoice);
             dialoger.OnEnd.AddListener(Disable);
-            tutorialText.text = $"Up - {InputM.GetAxisData(KAction.TabsVertical).plus.ToString()}\n" +
-                                $"Down - {InputM.GetAxisData(KAction.TabsVertical).minus.ToString()}\n" +
-                                $"Select - {InputM.GetAxisData(KAction.Interact).plus.ToString()}/{InputM.GetAxisData(KAction.Interact).minus.ToString()}\n" +
-                                $"Slow - {InputM.GetAxisData(KAction.SlowDialog).plus}";
+            tutorialText.text = $"Up - {InputService.GetAxisData(KAction.TabsVertical).plus.ToString()}\n" +
+                                $"Down - {InputService.GetAxisData(KAction.TabsVertical).minus.ToString()}\n" +
+                                $"Select - {InputService.GetAxisData(KAction.Interact).plus.ToString()}/{InputService.GetAxisData(KAction.Interact).minus.ToString()}\n" +
+                                $"Slow - {InputService.GetAxisData(KAction.SlowDialog).plus}";
         }
 
         public void Disable()

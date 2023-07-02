@@ -12,7 +12,7 @@ namespace Core.Garage
         void FixedUpdate()
         {
             var oldY = rigidbody.velocity.y;
-            var dir = new Vector3(InputM.GetAxis(KAction.Horizontal) * speed * Time.fixedDeltaTime, 0, InputM.GetAxis(KAction.Vertical) * speed * Time.fixedDeltaTime);
+            var dir = new Vector3(InputService.GetAxis(KAction.Horizontal) * speed * Time.fixedDeltaTime, 0, InputService.GetAxis(KAction.Vertical) * speed * Time.fixedDeltaTime);
             var forwardDir = forward.TransformDirection(dir);
             rigidbody.velocity = forwardDir;
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, oldY - 1, rigidbody.velocity.z);

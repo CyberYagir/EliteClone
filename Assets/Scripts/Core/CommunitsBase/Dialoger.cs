@@ -158,7 +158,7 @@ namespace Core.Dialogs.Game
 
         IEnumerator Slow()
         {
-            while (InputM.GetAxisRaw(KAction.SlowDialog) != 0)
+            while (InputService.GetAxisRaw(KAction.SlowDialog) != 0)
             {
                 yield return null;
             }
@@ -169,9 +169,9 @@ namespace Core.Dialogs.Game
             while (true)
             {
                 yield return null;
-                if (InputM.GetAxisDown(KAction.TabsVertical))
+                if (InputService.GetAxisDown(KAction.TabsVertical))
                 {
-                    choice -= InputM.GetAxisRaw(KAction.TabsVertical);
+                    choice -= InputService.GetAxisRaw(KAction.TabsVertical);
                     if (choice >= replicas.Count)
                     {
                         choice = 0;
@@ -182,7 +182,7 @@ namespace Core.Dialogs.Game
                     }
                 }
 
-                if (InputM.GetAxisDown(KAction.Interact))
+                if (InputService.GetAxisDown(KAction.Interact))
                 {
                     break;
                 }
@@ -200,7 +200,7 @@ namespace Core.Dialogs.Game
             }
 
             SetAnim(true);
-            while (timer < time && !InputM.GetAxisDown(KAction.Interact))
+            while (timer < time && !InputService.GetAxisDown(KAction.Interact))
             {
                 timer += Time.deltaTime;
                 yield return null;

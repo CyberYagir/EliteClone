@@ -70,7 +70,7 @@ namespace Core.UI
                     Destroy(tr.gameObject);
                 }
             }
-            foreach (var wsp in SolarSystemGenerator.objects)
+            foreach (var wsp in SolarStaticBuilder.Objects)
             {
                 SpawnPoint(wsp);
             }

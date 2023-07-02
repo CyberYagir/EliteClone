@@ -31,6 +31,8 @@ namespace Core.PlayerScripts
         public static Event OnSceneChanged = new Event();
         public static Event OnPreSceneChanged = new Event();
 
+        
+        private float coolerValue = -1;
         private ShipModels models;
         Ship spaceShip;
     
@@ -74,7 +76,6 @@ namespace Core.PlayerScripts
             DownHeat();
         }
 
-        private float coolerValue = -1;
         public void DownHeat()
         {
             heatTime += Time.deltaTime;
@@ -98,10 +99,6 @@ namespace Core.PlayerScripts
             OnSceneChanged.Run(); 
         }
 
-        public void HardStop()
-        {
-            control.HardStop();
-        }
         public void Init()
         {
             if (inst == null)
@@ -121,15 +118,14 @@ namespace Core.PlayerScripts
                 damager = GetComponent<Damager>();
                 rep = GetComponent<ReputationManager>();
                 
+                
+                warp.Init(this);
+                
                 spaceShip.OnChangeShip += models.InitShip;
                 spaceShip.SetShip(spaceShip.CloneShip());
             }
         }
 
-        public ItemShip Ship()
-        {
-            return spaceShip.GetShip();
-        }
     
         public void LoadShip(ShipData data)
         {
@@ -138,22 +134,10 @@ namespace Core.PlayerScripts
             TakeDamage(0);
             TakeDamageHeath(0);
         }
-    
-    
-        public  GalaxyObject GetTarget()
-        {
-            return  targets.target;
-        }
-        public void SetTarget(GalaxyObject target)
-        {
-            targets.SetTarget(target);
-        }
-    
-    
-        public List<ContactObject> GetContacts()
-        {
-            return targets.contacts;
-        }
+
+
+
+        public List<ContactObject> GetContacts() => targets.contacts;
 
         public void TakeDamage(float damage)
         {
@@ -178,9 +162,11 @@ namespace Core.PlayerScripts
             }
         }
 
-        public Camera GetCamera()
-        {
-            return control.Camera;
-        }
+        public Camera GetCamera() => control.Camera;
+        public GalaxyObject GetTarget() => targets.target;
+        public void SetTarget(GalaxyObject target) => targets.SetTarget(target);
+        public ItemShip Ship() => spaceShip.GetShip();
+        public void HardStop() => control.HardStop();
+
     }
 }

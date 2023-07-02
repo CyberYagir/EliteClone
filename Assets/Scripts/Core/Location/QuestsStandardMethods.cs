@@ -54,7 +54,7 @@ namespace Core.Location
         {
             Random rnd = new Random(quest.questID);
             quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
-            var solarShipsData = SolarSystemShips.InitShipsPoses(quest.appliedSolar);
+            var solarShipsData = SolarSystemShipsStaticBuilder.InitShipsPoses(quest.appliedSolar);
             var ships = solarShipsData.allships.FindAll(x => x.fraction != quest.quester.fraction);
             if (ships.Count != 0)
             {
@@ -89,7 +89,7 @@ namespace Core.Location
                 var last = quest.GetLastQuestPath();
                 if (allItemInInventory)
                 {
-                    if (last.solarName == PlayerDataManager.CurrentSolarSystem.name)
+                    if (last.solarName == PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem.name)
                     {
                         if (WorldOrbitalStation.Instance.transform.name == last.targetName)
                         {
@@ -104,8 +104,8 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Kill"))
             {
-                SolarSystemShips.LoadDeads();
-                foreach (var deads in SolarSystemShips.deadList)
+                SolarSystemShipsStaticBuilder.LoadDeads();
+                foreach (var deads in SolarSystemShipsStaticBuilder.deadList)
                 {
                     foreach (var ship in deads.Value)
                     {

@@ -8,8 +8,8 @@ namespace Core.Init
         [SerializeField] private TMP_Text axieName;
         [SerializeField] private TMP_Text plus, minus;
 
-        private InputM.Axis current;
-        public void Init(InputM.Axis axis)
+        private InputService.Axis current;
+        public void Init(InputService.Axis axis)
         {
             current = axis;
             axieName.text = axis.name;

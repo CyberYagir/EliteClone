@@ -15,8 +15,13 @@ namespace Core.UI
         [SerializeField] private Transform rewardHolder, rewardItem;
         [SerializeField] private Transform requireHolder, requireItemList, rewardItemList, questTextHolder, rewardText;
 
+
+        private WorldDataHandler worldHandler;
         public void Init(Quest questsQuest)
         {
+
+            worldHandler = PlayerDataManager.Instance.WorldHandler;
+            
             var questIcon = WorldDataItem.Quests.IconByID(questsQuest.questType);
             if (questsQuest.questType == -1)
             {
@@ -37,7 +42,7 @@ namespace Core.UI
             {
                 if (!isOnPath)
                 {
-                    isOnPath = questPath.solarName == PlayerDataManager.CurrentSolarSystem.name;
+                    isOnPath = questPath.solarName == worldHandler.CurrentSolarSystem.name;
                     if (isOnPath)
                     {
                         current = questPath;
@@ -52,7 +57,7 @@ namespace Core.UI
             {
                 if (isOnPath)
                 {
-                    jumpToT.text = questsQuest.GetLastQuestPath().solarName == PlayerDataManager.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
+                    jumpToT.text = questsQuest.GetLastQuestPath().solarName == worldHandler.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
                 }
                 else
                 {

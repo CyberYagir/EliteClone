@@ -51,11 +51,11 @@ namespace Core.Death
         public void SystemLoad()
         {
             GalaxyGenerator.LoadSystems();
-            savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.CurrentSystemFile));
+            savedSolarSystem = JsonConvert.DeserializeObject<SavedSolarSystem>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CurrentSystemFile));
             findNearStation = null;
         
             var solar = GalaxyGenerator.systems[savedSolarSystem.systemName.Split('.')[0]];
-            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(solar);
+            PlayerDataManager.Instance.WorldHandler.ChangeSolarSystem(SolarStaticBuilder.Generate(solar));
             StartCoroutine(FindStation(solar));
 
         }
@@ -90,13 +90,13 @@ namespace Core.Death
 
         public void Back()
         {
-            PlayerDataManager.CurrentSolarSystem = SolarSystemGenerator.Generate(findNear);
+            PlayerDataManager.Instance.WorldHandler.ChangeSolarSystem(SolarStaticBuilder.Generate(findNear));
             LocationGenerator.SaveLocationFile(findNearStation.name, LocationPoint.LocationType.Station, new Dictionary<string, object>());
-            if (!File.Exists(SolarSystemGenerator.GetSystemFileName()))
+            if (!File.Exists(SolarStaticBuilder.GetSystemFileName()))
             {
-                SolarSystemGenerator.SaveSystem();
+                SolarStaticBuilder.SaveSystem();
             }
-            SolarSystemGenerator.Load();
+            SolarStaticBuilder.SystemLoad();
 
             var newShip = ItemsManager.GetShipItem(0).SaveShip();
             if (newShip.shipName == playerData.Ship.shipName)

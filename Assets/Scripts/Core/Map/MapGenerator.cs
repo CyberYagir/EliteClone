@@ -148,7 +148,7 @@ namespace Core.Map
         
         public void DrawWorld(List<string> historyList)
         {
-            var tutorial = TutorialsManager.LoadTutorial();
+            var tutorial = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];
@@ -168,7 +168,7 @@ namespace Core.Map
                     DrawLine(line, spawn.transform, system.sibligs[i]);
                 }
 
-                var saved = SolarSystemGenerator.Load();
+                var saved = SolarStaticBuilder.SystemLoad();
                 var name = saved.systemName.Split('.')[0];
                 if (system.name == name)
                 {

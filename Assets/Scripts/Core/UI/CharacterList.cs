@@ -37,7 +37,7 @@ namespace Core.UI
         private void Start()
         {
             baseWindow = GetComponentInParent<BaseWindow>();
-            WorldOrbitalStation.OnInit += UpdateList;
+            OrbitalStationStaticBuilder.OnInit += UpdateList;
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
@@ -74,9 +74,9 @@ namespace Core.UI
 
         public void ChangeTab()
         {
-            if (InputM.GetAxisDown(KAction.TabsHorizontal))
+            if (InputService.GetAxisDown(KAction.TabsHorizontal))
             {
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) > 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) > 0)
                 {
                     if (questList.QuestsCount != 0)
                     {
@@ -87,7 +87,7 @@ namespace Core.UI
                     }
                 }
 
-                if (InputM.GetAxisRaw(KAction.TabsHorizontal) < 0)
+                if (InputService.GetAxisRaw(KAction.TabsHorizontal) < 0)
                 {
                     buttonsUI.SkipFrame();
                     buttonsUI.enabled = true;

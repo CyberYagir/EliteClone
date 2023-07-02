@@ -25,9 +25,9 @@ namespace Core
 
         public void Load()
         {
-            if (data == null && File.Exists(PlayerDataManager.MapFile))
+            if (data == null && File.Exists(PlayerDataManager.Instance.FSHandler.MapFile))
             {
-                data = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(PlayerDataManager.MapFile));
+                data = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.MapFile));
             }
             if (data != null && data.start != "" && data.end != "")
             {
@@ -41,7 +41,7 @@ namespace Core
         public void Save()
         {
             data = new MapData() {start = MapPathfinder.Instance.start, end = MapPathfinder.Instance.end};
-            File.WriteAllText(PlayerDataManager.MapFile, JsonConvert.SerializeObject(data));
+            File.WriteAllText(PlayerDataManager.Instance.FSHandler.MapFile, JsonConvert.SerializeObject(data));
         }
     }
 }

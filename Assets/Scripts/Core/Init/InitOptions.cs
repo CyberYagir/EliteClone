@@ -12,7 +12,7 @@ namespace Core.Init
     {
         public class PlayerConfig
         {
-            public List<InputM.Axis> axes = new List<InputM.Axis>();
+            public List<InputService.Axis> axes = new List<InputService.Axis>();
             public int quality;
             public bool showFPS;
 
@@ -53,10 +53,10 @@ namespace Core.Init
         public void SaveConfig()
         {
             PlayerConfig cfg = new PlayerConfig();
-            cfg.axes = FindObjectOfType<InputM>().axes;
+            cfg.axes = FindObjectOfType<InputService>().axes;
             cfg.quality = QualitySettings.GetQualityLevel();
             cfg.showFPS = showFpsTgToggle.isOn;
-            File.WriteAllText(PlayerDataManager.ConfigFile, JsonConvert.SerializeObject(cfg));
+            File.WriteAllText(PlayerDataManager.Instance.FSHandler.ConfigFile, JsonConvert.SerializeObject(cfg));
             PlayerDataManager.PlayerConfig = cfg;
         }
 
@@ -73,14 +73,14 @@ namespace Core.Init
 
         public void LoadConfig()
         {
-            if (!File.Exists(PlayerDataManager.ConfigFile))
+            if (!File.Exists(PlayerDataManager.Instance.FSHandler.ConfigFile))
             {
                 QualitySettings.SetQualityLevel(0);
                 SaveConfig();
             }
 
-            PlayerConfig cfg = JsonConvert.DeserializeObject<PlayerConfig>(File.ReadAllText(PlayerDataManager.ConfigFile));
-            FindObjectOfType<InputM>().SetAxesList(cfg.axes);
+            PlayerConfig cfg = JsonConvert.DeserializeObject<PlayerConfig>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.ConfigFile));
+            FindObjectOfType<InputService>().SetAxesList(cfg.axes);
             QualitySettings.SetQualityLevel(cfg.quality);
             FPSCounterToggle(cfg.showFPS);
             PlayerDataManager.PlayerConfig = cfg;
@@ -89,17 +89,11 @@ namespace Core.Init
 
         public void ResetKeys()
         {
-            var input = InputM.GetData();
+            var input = InputService.GetData();
             input.SetAxesList(input.startAxes);
             controlsDrawer.DrawControls();
         }
-        
-        public void RemoveSave()
-        {
-            Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
-            Directory.Delete(PlayerDataManager.GlobalFolder, true);
-        
-            PlayerDataManager.FoldersManage();
-        }
+
+        public void RemoveSave() => PlayerDataManager.Instance.FSHandler.RemoveSave();
     }
 }

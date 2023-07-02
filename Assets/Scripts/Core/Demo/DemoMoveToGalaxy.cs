@@ -9,9 +9,10 @@ namespace Core.Demo
     {
         public static void LoadGalaxyLocation()
         {
-            var tutor = TutorialsManager.LoadTutorial();
+            var manager = PlayerDataManager.Instance.Services.TutorialsManager;
+            var tutor = manager.TutorialData;
             tutor.isDemoEnd = true;
-            TutorialsManager.SaveTutorial(tutor);
+            manager.SaveTutorial();
             World.LoadLevelAsync(Scenes.Galaxy);
         }
 

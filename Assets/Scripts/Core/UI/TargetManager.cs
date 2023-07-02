@@ -49,11 +49,11 @@ namespace Core.UI
         
         private void Update()
         {
-            if (InputM.GetAxisDown(KAction.SetTarget))
+            if (InputService.GetAxisDown(KAction.SetTarget))
             {
                 if (target == null)
                 {
-                    var worldBody = TargetFromArray(SolarSystemGenerator.objects.Cast<GalaxyObject>().ToList());
+                    var worldBody = TargetFromArray(SolarStaticBuilder.Objects.Cast<GalaxyObject>().ToList());
                     var contactBody = TargetFromArray(contacts.Cast<GalaxyObject>().ToList());
                     if (worldBody == null && contactBody == null)
                     {
@@ -61,7 +61,7 @@ namespace Core.UI
                     }
                     else if (worldBody != null && contactBody != null)
                     {
-                        if (Vector3.Distance(transform.position, worldBody.transform.position * SolarSystemGenerator.scale) < Vector3.Distance(transform.position, contactBody.transform.position))
+                        if (Vector3.Distance(transform.position, worldBody.transform.position * SolarStaticBuilder.GalaxyScale) < Vector3.Distance(transform.position, contactBody.transform.position))
                         {
                             SetTarget(worldBody);
                         }

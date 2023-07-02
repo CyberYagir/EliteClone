@@ -9,15 +9,12 @@ namespace Core.Galaxy
     {
         public static GalaxyPoint selectedPoint { get; private set; }
         public static Event onUpdateSelected = new Event();
-
+        private static WorldDataHandler worldHandler;
+        
+        
         private void Awake()
         {
             onUpdateSelected = new Event();
-        }
-
-        private void Start()
-        {
-            //Application.targetFrameRate = 120;
         }
 
         private void Update()
@@ -28,7 +25,12 @@ namespace Core.Galaxy
             }
         }
 
-    
+
+
+        public static void InitStaticBuilder(WorldDataHandler handler)
+        {
+            worldHandler = handler;
+        }
 
         public static bool Select(GalaxyPoint newSel)
         {
@@ -53,7 +55,7 @@ namespace Core.Galaxy
 
         public static void JumpToSolarSystem()
         {
-            PlayerDataManager.CurrentSolarSystem = selectedPoint.solarSystem;
+            worldHandler.ChangeSolarSystem(selectedPoint.solarSystem);
             World.LoadLevel(Scenes.System);
         }
 

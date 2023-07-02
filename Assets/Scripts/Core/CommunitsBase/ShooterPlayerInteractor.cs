@@ -52,7 +52,7 @@ namespace Core.CommunistsBase.Intacts
 
         private void Update()
         {
-            if (interacted == false && InputM.GetAxisDown(KAction.Interact))
+            if (interacted == false && InputService.GetAxisDown(KAction.Interact))
             {
                 if (interactors.Count != 0)
                 {

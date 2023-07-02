@@ -21,14 +21,15 @@ namespace Core.Init
 
         private void Awake()
         {
+            print("Init");
             Application.targetFrameRate = 120;
-            PlayerDataManager.CurrentSolarSystem = null;
+            PlayerDataManager.Instance.WorldHandler.ClarSolarSystem();
             options.Awake();
         }
 
         public void Play()
         {
-            if (File.Exists(PlayerDataManager.GalaxyFile))
+            if (File.Exists(PlayerDataManager.Instance.FSHandler.GalaxyFile))
             {
                 GenerateGalaxy();
             }
@@ -101,14 +102,14 @@ namespace Core.Init
             
                 if (webRequest.result != UnityWebRequest.Result.Success)
                 {
-                    File.Delete(PlayerDataManager.GalaxyFile);
+                    File.Delete(PlayerDataManager.Instance.FSHandler.GalaxyFile);
                     GalaxyGenerator.ThrowLoadError("Dowloading failed, generate galaxy manually.\nInfo: " + webRequest.error);
                 }
                 else
                 {
                     try
                     {
-                        File.WriteAllText(PlayerDataManager.GalaxyFile, webRequest.downloadHandler.text);
+                        File.WriteAllText(PlayerDataManager.Instance.FSHandler.GalaxyFile, webRequest.downloadHandler.text);
                     }
                     catch (Exception e)
                     {

@@ -14,7 +14,7 @@ namespace Core.CommunistsBase
 
         public void KillDeads()
         {
-            var tutor = TutorialsManager.LoadTutorial();
+            var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
             if (tutor.CommunitsBaseStats != null)
             {
                 foreach (var dialogs in tutor.CommunitsBaseStats.killedDialogs)

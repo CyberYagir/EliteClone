@@ -29,9 +29,9 @@ namespace Core.Garage
         {
             saves = GetComponent<SaveLoadData>();
             playerData = saves.LoadData();
-            if (File.Exists(PlayerDataManager.CurrentLocationFile))
+            if (File.Exists(PlayerDataManager.Instance.FSHandler.CurrentLocationFile))
             {
-                playerLocation = JsonConvert.DeserializeObject<Location.Location>(File.ReadAllText(PlayerDataManager.CurrentLocationFile));
+                playerLocation = JsonConvert.DeserializeObject<Location.Location>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CurrentLocationFile));
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Core.Garage
                 return;
             }
 
-            stationSeed = WorldOrbitalStation.CalcSeed(playerLocation.locationName, playerLocation.GetSystemCode());
+            stationSeed = OrbitalStationStaticBuilder.CalcSeed(playerLocation.locationName, playerLocation.GetSystemCode());
             cargo = GetComponent<Cargo>();
             ChangeShip(playerData.Ship.GetShip());
             cargo.CustomInit(playerData, ship);

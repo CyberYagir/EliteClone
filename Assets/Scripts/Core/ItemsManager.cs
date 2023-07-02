@@ -13,12 +13,13 @@ namespace Core
         private static QuestsRewards itemRewards;
         private static ShipList shipList;
 
-        private void Awake()
-        {
-            Init();
-        }
 
-        public static void Init()
+        public void Init()
+        {
+            LoadResources();
+        }
+        
+        public static void LoadResources()
         {
             itemList = Resources.LoadAll<ItemList>("").ToList().First();
             itemRewards = Resources.LoadAll<QuestsRewards>("").ToList().First();

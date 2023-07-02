@@ -14,7 +14,8 @@ namespace Core.Init
 
         public static CursorsSheetItem currentSheet;
         public static CursorType currentType;
-        private void Awake()
+
+        public void Init()
         {
             SetCurrentSheet(Resources.LoadAll<CursorsSheetItem>("")[0]);
         }

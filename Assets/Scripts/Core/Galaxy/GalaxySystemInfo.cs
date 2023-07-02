@@ -26,7 +26,7 @@ namespace Core.Galaxy
             preview.color = s.particles.startColor;
             nameT.text = s.solarSystem.stars[0].name;
             typeT.text = s.solarSystem.stars[0].starType.ToString();
-            if (SolarSystemGenerator.GetStarsCount(s.solarSystem.position) == 1)
+            if (SolarStaticBuilder.GetStarsCount(s.solarSystem.position) == 1)
             {
                 if (s.solarSystem.stars[0].starType != Star.StarType.Hole && new System.Random((int) GalaxyManager.selectedPoint.solarSystem.position.ToVector().magnitude * 10000).Next(0, 5) == 1)
                 {

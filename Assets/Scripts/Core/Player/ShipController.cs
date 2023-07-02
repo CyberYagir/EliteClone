@@ -64,7 +64,7 @@ namespace Core.PlayerScripts
             }
 
             collisionCooldown += Time.deltaTime;
-            headView = InputM.GetAxisIsActive(KAction.HeadView);
+            headView = InputService.GetAxisIsActive(KAction.HeadView);
             RotationControl();
             ForwardBackward();
         }
@@ -110,14 +110,14 @@ namespace Core.PlayerScripts
         {
             if (World.Scene == Scenes.System)
             {
-                if (SolarSystemGenerator.objects != null)
+                if (SolarStaticBuilder.Objects != null)
                 {
-                    foreach (var obj in SolarSystemGenerator.objects)
+                    foreach (var obj in SolarStaticBuilder.Objects)
                     {
                         if (Vector3.Distance(obj.transform.position, transform.position) <
                             obj.transform.localScale.magnitude * 0.9f)
                         {
-                            var dir = transform.forward * (InputM.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputM.GetAxisRaw(KAction.Vertical));
+                            var dir = transform.forward * (InputService.GetAxisRaw(KAction.Vertical) == 0 ? 1 : InputService.GetAxisRaw(KAction.Vertical));
                             if (Physics.Raycast(transform.position, dir, float.MaxValue, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
                             {
                                 player.HardStop();
@@ -143,12 +143,12 @@ namespace Core.PlayerScripts
             if (moveMode == MoveMode.S)
             {
                 speed = 0;
-                if (InputM.GetAxis(KAction.Vertical) > 0)
+                if (InputService.GetAxis(KAction.Vertical) > 0)
                 {
                     moveMode = MoveMode.F;
                 }
 
-                if (InputM.GetAxis(KAction.Vertical) < 0)
+                if (InputService.GetAxis(KAction.Vertical) < 0)
                 {
                     moveMode = MoveMode.B;
                 }
@@ -159,12 +159,12 @@ namespace Core.PlayerScripts
         {
             if (!player.warp.isWarp)
             {
-                speed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
+                speed += InputService.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
             }
             else
             {
                 CameraShake.Shake();
-                player.warp.warpSpeed += InputM.GetAxis(KAction.Vertical) * Time.deltaTime * player.warp.warpSpeedUp;
+                player.warp.warpSpeed += InputService.GetAxis(KAction.Vertical) * Time.deltaTime * player.warp.warpSpeedUp;
                 if (World.Scene == Scenes.Location)
                 {
                     if (player.warp.warpSpeed > player.warp.maxLocationSpeed)
@@ -187,7 +187,7 @@ namespace Core.PlayerScripts
             else if (moveMode == MoveMode.B)
                 speed = Mathf.Clamp(speed, -player.Ship().data.maxSpeedUnits / 2f, 0);
 
-            if (speed == 0 && InputM.GetAxisRaw(KAction.Vertical) == 0)
+            if (speed == 0 && InputService.GetAxisRaw(KAction.Vertical) == 0)
             {
                 moveMode = MoveMode.S;
             }
@@ -195,7 +195,7 @@ namespace Core.PlayerScripts
 
         public bool IsStoping()
         {
-            if (InputM.GetAxisIsActive(KAction.Stop))
+            if (InputService.GetAxisIsActive(KAction.Stop))
             {
                 StopPlayer();
                 return true;

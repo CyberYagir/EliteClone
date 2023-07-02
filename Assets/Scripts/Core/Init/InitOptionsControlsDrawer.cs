@@ -8,7 +8,7 @@ namespace Core.Init
     {
         [SerializeField] private GameObject item, holder;
         [HideInInspector]
-        public InputM.Axis chageAxis;
+        public InputService.Axis chageAxis;
         public bool plus;
         public bool isChange;
     
@@ -21,7 +21,7 @@ namespace Core.Init
         public void DrawControls()
         {
             UITweaks.ClearHolder(holder.transform);
-            var input = InputM.GetData();
+            var input = InputService.GetData();
             foreach (var axis in input.GetAxesList())
             {
                 var it = Instantiate(item, holder.transform).GetComponent<InitAxieItem>();
@@ -30,7 +30,7 @@ namespace Core.Init
             }
         }
 
-        public void ChangeAxis(InputM.Axis axis, bool isplus)
+        public void ChangeAxis(InputService.Axis axis, bool isplus)
         {
             if (!isChange)
             {
@@ -77,7 +77,7 @@ namespace Core.Init
                         chageAxis.minus = finalKey;
                     }
 
-                    var input = InputM.GetData();
+                    var input = InputService.GetData();
                     input.LoadControls();
                     DrawControls();
                     isChange = false;

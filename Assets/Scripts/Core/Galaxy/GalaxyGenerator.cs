@@ -64,11 +64,11 @@ namespace Core.Galaxy
         {
             if (systems == null)
             {
-                if (File.Exists(PlayerDataManager.GalaxyFile))
+                if (File.Exists(PlayerDataManager.Instance.FSHandler.GalaxyFile))
                 {
                     try
                     {
-                        var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(PlayerDataManager.GalaxyFile));
+                        var saved = JsonConvert.DeserializeObject<SavedGalaxy>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.GalaxyFile));
 
                         if (saved.version == Application.version)
                         {
@@ -76,13 +76,13 @@ namespace Core.Galaxy
                             return true;
                         }
 
-                        File.Delete(PlayerDataManager.GalaxyFile);
+                        File.Delete(PlayerDataManager.Instance.FSHandler.GalaxyFile);
                         //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError($"Your game version [{Application.version}], galaxy version [{saved.version}]. Generate galaxy manually.");
                     }
                     catch (Exception e)
                     {
-                        Directory.Move(PlayerDataManager.GlobalFolder, PlayerDataManager.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
+                        Directory.Move(PlayerDataManager.Instance.FSHandler.GlobalFolder, PlayerDataManager.Instance.FSHandler.PlayerFolder + "/Global Error Save " + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss"));
                         //Directory.Delete(PlayerDataManager.CacheSystemsFolder, true);
                         ThrowLoadError("Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                     }
@@ -196,7 +196,7 @@ namespace Core.Galaxy
             var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
             var basesCount = rnd.Next(0, planetsCount);
 
-            return SolarSystemGenerator.GenerateOrbitStations(basesCount, system.name, pos);
+            return SolarStaticBuilder.GenerateOrbitStations(basesCount, system.name, pos);
         }
         public static IEnumerator GenerateGalaxy(int seed)
         {
@@ -212,7 +212,7 @@ namespace Core.Galaxy
             for (int i = 0; i < systemsCount; i++)
             {
                 var system = GetBaseSystem(rnd);
-                system.stars.Add(SolarSystemGenerator.GenStars(1, system.name, system.position)[0]);
+                system.stars.Add(SolarStaticBuilder.GenStars(1, system.name, system.position)[0]);
                 system.SetName();
                 system.stations = GetStaions(system);
                 GetSiblings(system);
@@ -236,7 +236,7 @@ namespace Core.Galaxy
         public static void SaveGalaxy()
         {
             var galaxy = new SavedGalaxy {systems = systems, version = Application.version};
-            File.WriteAllText(PlayerDataManager.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
+            File.WriteAllText(PlayerDataManager.Instance.FSHandler.GalaxyFile, JsonConvert.SerializeObject(galaxy, Formatting.None));
             PlayerDataManager.GenerateProgress = 1f;
         }
 

@@ -23,7 +23,7 @@ namespace Core.Systems
                     {
                         go.transform.position -= cameraPos;
                     }
-                    foreach (var wsp in SolarSystemGenerator.objects)
+                    foreach (var wsp in SolarStaticBuilder.Objects)
                     {
                         wsp.UpdateVisibility();
                     }

@@ -11,7 +11,7 @@ namespace Core.Tutorial
     {
         private void Awake()
         {
-            var tutor = TutorialsManager.LoadTutorial();
+            var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
             if (!tutor.isDemoEnd)
             {
                 World.LoadLevel(Scenes.Demo);
