@@ -30,7 +30,7 @@ namespace Core.UI
             base.OnUpdate();
             if (InputService.GetAxisDown(KAction.Map))
             {
-                Player.inst.saves.SetKey("MapActive", (int) World.Scene);
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves.SetKey("MapActive", (int) World.Scene);
                 PlayerDataManager.SaveAll();
                 var fd = Instantiate(fader.gameObject).GetComponent<FaderMultiScenes>();
                 fd.LoadScene(Scenes.Map);

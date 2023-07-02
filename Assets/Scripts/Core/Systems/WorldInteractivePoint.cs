@@ -7,5 +7,7 @@ namespace Core.Systems
     {
         public Transform spawnPoint;
         public UnityEvent initEvent;
+
+        public Transform SpawnPoint => spawnPoint;
     }
 }

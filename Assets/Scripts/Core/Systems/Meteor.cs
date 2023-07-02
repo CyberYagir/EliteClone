@@ -70,7 +70,7 @@ namespace Core.Systems
                 var drop = item.GetComponent<WorldDrop>();
                 var itemData = resource.Clone();
                 itemData.amount.SetValue(new Random(DateTime.Now.Millisecond + DateTime.Now.Second).Next(10, 25));
-                drop.Init(itemData);
+                drop.Init(itemData, PlayerDataManager.Instance.WorldHandler);
                 item.GetComponent<Rigidbody>().AddForce((normal + UnityEngine.Random.insideUnitSphere) * 0.5f, ForceMode.Impulse);
             }
         }

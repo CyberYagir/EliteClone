@@ -14,19 +14,25 @@ namespace Core.Location
     
         [SerializeField] private int uniqID;
         [SerializeField] private LocationBotType type;
-        [SerializeField] private BotBuilder botPrefab;
 
         private SolarSystemShips.HumanShip currentPerson;
-        public void Init()
+        private SolarSystemShips solarSystemShips;
+        private WorldDataHandler worldDataHandler;
+
+        public void Init(SolarSystemShips solarSystemShips, WorldDataHandler worldDataHandler)
         {
+            this.worldDataHandler = worldDataHandler;
+            this.solarSystemShips = solarSystemShips;
+            
+            
             var data = LocationGenerator.CurrentSave.otherKeys;
             if ((string)data["tag"] == "ships")
             {
                 uniqID = int.Parse(data["uniqID"].ToString());
                 type = (LocationBotType)int.Parse(data["tag-type"].ToString());
-                currentPerson = SolarSystemShips.Instance.GetShips().Find(x => x.uniqID == uniqID);
+                currentPerson = solarSystemShips.GetShips().Find(x => x.uniqID == uniqID);
 
-                if (currentPerson == null || SolarSystemShips.Instance.IsDead(currentPerson.uniqID))
+                if (currentPerson == null || solarSystemShips.IsDead(currentPerson.uniqID))
                 {
                     return;
                 }
@@ -83,9 +89,9 @@ namespace Core.Location
         public GameObject SpawnRandomBot(int visuals, Random rnd)
         {
             var pos = new Vector3(rnd.Next(-300, 300), rnd.Next(-300, 300), rnd.Next(-300, 300));
-            var bot = SolarSystemShips.Instance.CreateBot(null, BotBuilder.BotState.Stationary);
+            var bot = solarSystemShips.CreateBot(null, BotBuilder.BotState.Stationary);
             bot.transform.position = pos;
-            bot.InitBot(rnd);
+            bot.InitBot(worldDataHandler,rnd);
             bot.GetVisual().SetVisual(visuals);
             bot.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, 0, 0));
             bot.SetName();
@@ -96,7 +102,7 @@ namespace Core.Location
         {
             var rnd = new Random(uniqID);
             var pos = new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100));
-            var bot = SolarSystemShips.Instance.CreateBot(currentPerson, BotBuilder.BotState.Stationary);
+            var bot = solarSystemShips.CreateBot(currentPerson, BotBuilder.BotState.Stationary);
             bot.transform.position = pos;
 
             return bot.gameObject;

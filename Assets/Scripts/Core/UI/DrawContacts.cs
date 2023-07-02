@@ -13,13 +13,13 @@ namespace Core.UI
         protected override void Start()
         {
             base.Start();
-            Player.inst.targets.ContactsChanges += UpdateList;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.ContactsChanges += UpdateList;
         }
 
         public override void RedrawList()
         {
             base.RedrawList();
-            var objects = Player.inst.targets.contacts;
+            var objects = PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.contacts;
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] != null)

@@ -10,8 +10,13 @@ namespace Core
     {
         [SerializeField] private Item item;
         private float cooldown;
-        public void Init(Item dropped, float delay = 0)
+        private WorldDataHandler worldDataHandler;
+
+        public void Init(Item dropped, WorldDataHandler worldDataHandler, float delay = 0)
         {
+            this.worldDataHandler = worldDataHandler;
+            
+            
             item = dropped;
             cooldown = delay;
             GetComponent<BoxCollider>().enabled = true;
@@ -30,7 +35,7 @@ namespace Core
             {
                 if (other.GetComponent<ShipMeshManager>())
                 {
-                    if (Player.inst.cargo.AddItem(item))
+                    if (worldDataHandler.ShipPlayer.cargo.AddItem(item))
                     {
                         transform.DOMove(other.transform.position, 0.7f);
                         transform.DOScale(Vector3.zero, 0.4f);

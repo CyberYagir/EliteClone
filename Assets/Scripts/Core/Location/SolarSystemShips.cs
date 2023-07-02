@@ -13,9 +13,8 @@ using Random = System.Random;
 
 namespace Core.Location
 {
-    public class SolarSystemShips : Singleton<SolarSystemShips>
+    public class SolarSystemShips : StartupObject 
     {
-        
         [Serializable]
         public class LocationHolder
         {
@@ -76,15 +75,19 @@ namespace Core.Location
         private FilesSystemHandler filesSystemHandler;
         private WorldDataHandler worldHandler;
 
-        private void Awake()
+
+        public override void Init(PlayerDataManager playerDataManager)
         {
-            Single(this);
-
-
-            worldHandler = PlayerDataManager.Instance.WorldHandler;
-            filesSystemHandler = PlayerDataManager.Instance.FSHandler;
+            base.Init(playerDataManager);
+            worldHandler = playerDataManager.WorldHandler;
+            filesSystemHandler = playerDataManager.FSHandler;
+            
+            if (worldHandler.CurrentSolarSystem != null)
+            {
+                InitPre();
+                CreateBots();
+            }
         }
-
 
         public void SaveDeads()
         {
@@ -160,8 +163,6 @@ namespace Core.Location
         }
         
         
-
-
         public void InitPre()
         {
             worldHandler = PlayerDataManager.Instance.WorldHandler;
@@ -169,7 +170,6 @@ namespace Core.Location
             
             if (worldHandler.CurrentSolarSystem != null)
             {
-                Single(this);
                 SolarSystemShipsStaticBuilder.LoadDeads();
                 var data = SolarSystemShipsStaticBuilder.InitShipsPoses(worldHandler.CurrentSolarSystem.name);
 
@@ -183,18 +183,8 @@ namespace Core.Location
         {
             return ref ships;
         }
-    
-        public void Init()
-        {
-            worldHandler = PlayerDataManager.Instance.WorldHandler;
-            filesSystemHandler = PlayerDataManager.Instance.FSHandler;
-            
-            if (worldHandler.CurrentSolarSystem != null)
-            {
-                InitPre();
-                CreateBots();
-            }
-        }
+        
+        
         public void CreateBots()
         {
             var isLocation = World.Scene == Scenes.Location;
@@ -244,7 +234,7 @@ namespace Core.Location
             var bot = Instantiate(botPrefab.gameObject, pos, Quaternion.Euler(-pos)).GetComponent<BotBuilder>();
             if (ship != null)
             {
-                bot.InitBot(NamesHolder.ToUpperFist(ship.firstName), NamesHolder.ToUpperFist(ship.lastName));
+                bot.InitBot(worldHandler, NamesHolder.ToUpperFist(ship.firstName), NamesHolder.ToUpperFist(ship.lastName), this);
                 bot.GetVisual().SetVisual(ship.shipID);
                 bot.uniqID = ship.uniqID;
                 bot.SetHuman(ship);
@@ -292,7 +282,7 @@ namespace Core.Location
                 var botName = NamesHolder.ToUpperFist(ships[i].firstName) + " " + NamesHolder.ToUpperFist(ships[i].lastName);
                 if (!IsDead(ships[i].uniqID) || (World.Scene == Scenes.Location && LocationGenerator.CurrentSave.locationName == botName))
                 {
-                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) Player.inst.saves.GetTime() / 60f / 60f));
+                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) worldHandler.ShipPlayer.saves.GetTime() / 60f / 60f));
                     var pos = (new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100)) / 100f) * 10000f;
                     var worldBot = Instantiate(prefab.gameObject, pos, Quaternion.identity);
                     worldBot.name = botName;

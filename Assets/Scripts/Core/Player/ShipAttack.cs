@@ -11,7 +11,8 @@ namespace Core.PlayerScripts
     
         void LateUpdate()
         {
-            if (Player.inst != null && !Player.inst.land.isLanded)
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player != null && !player.land.isLanded)
             {
                 for (int i = 0; i < 9; i++)
                 {

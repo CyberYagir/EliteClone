@@ -16,7 +16,7 @@ namespace Core.UI
         private float height;
         private void Awake()
         {
-            quests = Player.inst.GetComponent<AppliedQuests>();
+            quests = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetComponent<AppliedQuests>();
             quests.OnChangeQuests += OnChangeQuests;
             quests.OnNotify += Notify;
             Player.OnSceneChanged += OnChangeQuests;

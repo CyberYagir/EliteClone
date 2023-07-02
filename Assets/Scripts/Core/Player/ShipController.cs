@@ -37,7 +37,7 @@ namespace Core.PlayerScripts
         private void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
-            player = Player.inst;
+            player = GetComponent<Player>();
         }
 
 
@@ -206,7 +206,7 @@ namespace Core.PlayerScripts
 
         public bool CheckFuel()
         {
-            var fuel = Player.inst.Ship().GetValue(Fuel);
+            var fuel = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel);
             if (fuel.value < fuel.max * 0.3f)
             {
                 WarningManager.AddWarning("Not enough fuel in the tank.", WarningTypes.Fuel);
@@ -229,7 +229,7 @@ namespace Core.PlayerScripts
             ForceAndWarpControl();
             if (CheckFuel())
             {
-                Player.inst.Ship().GetValue(Fuel).value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel).value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
 
                 if (!IsStoping())
                 {

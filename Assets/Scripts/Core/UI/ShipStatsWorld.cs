@@ -82,7 +82,7 @@ namespace Core.UI
         
         private void Start()
         {
-            controller = Player.inst.control;
+            controller = PlayerDataManager.Instance.WorldHandler.ShipPlayer.control;
             speed.Active();
             warpSpeed.Disable();
             temperature.Active();
@@ -103,27 +103,27 @@ namespace Core.UI
             warpSpeed.SetValue(controller.warp.warpSpeed/controller.warp.maxWarpSpeed);
             warpSpeed.SetText((controller.warp.warpSpeed * World.unitSize).ToString("F2"));
 
-            var temperatureVal = Player.inst.Ship().GetValue(Temperature);
+            var temperatureVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Temperature);
             temperature.SetValue(temperatureVal.percent);
             temperature.SetText((int)(temperatureVal.value * 50) + " K");
             
             
-            var fuelVal = Player.inst.Ship().GetValue(Fuel);
+            var fuelVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel);
             fuel.SetValue(fuelVal.percent);
             fuel.SetText((int)(fuelVal.value) + " t.");
             
             
             
-            var cargoVal = Player.inst.cargo.tons/Player.inst.Ship().data.maxCargoWeight;
+            var cargoVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons/PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight;
             cargo.SetValue(cargoVal);
-            cargo.SetText((int)(Player.inst.cargo.tons) + " t.");
+            cargo.SetText((int)(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons) + " t.");
             
-            var healthVal = Player.inst.Ship().GetValue(Health);
+            var healthVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Health);
             health.SetValue(healthVal.percent);
             health.SetText((int)(healthVal.value) + " %");
             
             
-            var shieldVal = Player.inst.Ship().GetValue(Shields);
+            var shieldVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Shields);
             shield.SetValue(shieldVal.percent);
             shield.SetText((int)(shieldVal.value) + " %");
 

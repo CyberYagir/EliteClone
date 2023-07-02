@@ -5,18 +5,28 @@ using UnityEngine.SceneManagement;
 
 namespace Core.Systems
 {
-    public class FloatingPoint : MonoBehaviour
+    public class FloatingPoint : StartupObject
     {
+        [SerializeField] private float threshold = 10000.0f;
+        [SerializeField] private float cooldown = 2;
+        [SerializeField] private int clamp = 100000;
 
-        public float threshold = 10000.0f;
-
-        private float cooldown = 2;
-
-        void Update()
+        private WorldDataHandler worldDataHandler;
+        
+        
+        public override void Init(PlayerDataManager playerDataManager)
         {
-            if (Player.inst)
+            base.Init(playerDataManager);
+            worldDataHandler = playerDataManager.WorldHandler;
+        }
+
+        public override void Loop()
+        {
+            base.Loop();
+            
+            if (worldDataHandler.ShipPlayer)
             {
-                Vector3 cameraPos = Player.inst.transform.position;
+                Vector3 cameraPos = worldDataHandler.ShipPlayer.transform.position;
                 if (cameraPos.magnitude > threshold)
                 {
                     foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
@@ -28,13 +38,13 @@ namespace Core.Systems
                         wsp.UpdateVisibility();
                     }
                     WorldSpaceObjectCanvas.Instance.SkipFrame();
-                    //print("Moved");
                 }
 
-                transform.position = new Vector3(Mathf.Clamp(transform.position.x, -100000, 100000),
-                    Mathf.Clamp(transform.position.y, -100000, 100000), Mathf.Clamp(transform.position.z, -100000, 100000));
-                
-                
+                transform.position = 
+                    new Vector3(
+                        Mathf.Clamp(transform.position.x, -clamp, clamp),
+                        Mathf.Clamp(transform.position.y, -clamp, clamp), 
+                        Mathf.Clamp(transform.position.z, -clamp, clamp));
             }
         }
     }

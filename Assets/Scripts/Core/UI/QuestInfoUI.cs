@@ -27,7 +27,7 @@ namespace Core.UI
             (questList as QuestListUI).OnChangeSelected += UpdateData;
             upDownUI.OnChangeSelected += SelectButton;
             Player.OnSceneChanged += UpdateQuestInfo;
-            Player.inst.land.OnUnLand += Disable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnUnLand += Disable;
         }
 
         // private void OnDestroy()
@@ -51,7 +51,7 @@ namespace Core.UI
 
         public void SelectButton()
         {
-            if (Player.inst.land.isLanded)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded)
             {
                 if (upDownUI.selectedIndex == 0 && currentQuest != null)
                 {
@@ -77,7 +77,7 @@ namespace Core.UI
                             {
                                 UpdateData(currentQuest);
                                 GetComponentInParent<BaseWindow>().RedrawAll();
-                                Player.inst.quests.OnChangeQuests.Run();
+                                PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
                                 var list = (questList as QuestListUI);
                                 (list.characterList as CharacterList).RedrawQuests();
                                 Clear();
@@ -91,7 +91,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (Player.inst.land.isLanded)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded)
             {
                 if (InputService.GetAxisDown(KAction.TabsHorizontal))
                 {

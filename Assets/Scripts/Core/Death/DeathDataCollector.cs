@@ -22,7 +22,10 @@ namespace Core.Death
         public Event OnInited = new Event();
 
         private Cargo cargo;
-    
+        private FilesSystemHandler filesSystemHandler;
+        private WorldDataHandler worldDataHandler;
+        
+        
         private void Awake()
         {
             Single(this);
@@ -31,11 +34,9 @@ namespace Core.Death
 
         public virtual void InitDataCollector()
         {
-            if (Player.inst != null)
-            {
-                Destroy(Player.inst.gameObject);
-            }
-
+            
+            worldDataHandler.DestroyShipPlayer();
+            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             saves = GetComponent<SaveLoadData>();

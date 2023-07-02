@@ -8,9 +8,10 @@ namespace Core.UI
         // Start is called before the first frame update
         void Start()
         {
-            if (Player.inst != null)
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player != null)
             {
-                GetComponent<Canvas>().worldCamera = Player.inst.GetCamera();
+                GetComponent<Canvas>().worldCamera = player.GetCamera();
             }
         }
     }

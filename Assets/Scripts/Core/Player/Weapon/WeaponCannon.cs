@@ -34,8 +34,8 @@ namespace Core.PlayerScripts.Weapon
             if (time >= cooldown)
             {
                 var rocket = Instantiate(options.GetObject("Rocket") as GameObject, transform.position, transform.rotation).GetComponent<Rocket>();
-                Transform target = Player.inst.GetTarget() == null ? null : Player.inst.GetTarget().transform;
-                rocket.Init(isPlayer ? target : Player.inst.transform, damage, isPlayer);
+                Transform target = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() == null ? null : PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget().transform;
+                rocket.Init(isPlayer ? target : PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform, damage, isPlayer);
                 time = 0;
             }
         }

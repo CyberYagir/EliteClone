@@ -65,13 +65,13 @@ namespace Core.UI
             int selectedIndex = updown.selectedIndex;
             if (selectedIndex != -1)
             {
-                if (items[selectedIndex].SpaceObject != Player.inst.GetTarget())
+                if (items[selectedIndex].SpaceObject != PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget())
                 {
-                    Player.inst.SetTarget(items[selectedIndex].SpaceObject);
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.SetTarget(items[selectedIndex].SpaceObject);
                 }
                 else
                 {
-                    Player.inst.SetTarget(null);
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.SetTarget(null);
                 }
 
                 UpdateColors();
@@ -91,7 +91,7 @@ namespace Core.UI
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Over;
                         }
-                        else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        else if (items[i].SpaceObject == PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() && items[i].SpaceObject != null)
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Selected;
                         }
@@ -131,7 +131,7 @@ namespace Core.UI
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Over;
                         }
-                        else if (items[i].SpaceObject == Player.inst.GetTarget() && items[i].SpaceObject != null)
+                        else if (items[i].SpaceObject == PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() && items[i].SpaceObject != null)
                         {
                             items[i].Button.over = ButtonEffect.ActionType.Selected;
                         }

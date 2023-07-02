@@ -51,7 +51,7 @@ namespace Core
         private static int startSaveTime;
         private void Awake()
         {
-            if (Player.inst)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer)
             {
                 Player.OnSceneChanged += AddCurrentToHistory;
                 Load();
@@ -191,7 +191,7 @@ namespace Core
             if (playerData != null)
             {
                 var world = GameObject.FindGameObjectWithTag("WorldHolder");
-                var p = Player.inst;
+                var p = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
 
                 if (playerData != null)
                 {
@@ -245,7 +245,7 @@ namespace Core
         public void Save()
         {
             var world = GameObject.FindGameObjectWithTag("WorldHolder");
-            var p = Player.inst;
+            var p = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
             if (startSaveTime == 0)
             {
                 startSaveTime = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour * DateTime.Now.Minute * DateTime.Now.Millisecond;
@@ -278,7 +278,7 @@ namespace Core
     
         private void OnApplicationQuit()
         {
-            if (Player.inst)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer)
             {
                 Save();
             }

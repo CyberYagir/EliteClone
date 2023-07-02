@@ -12,7 +12,7 @@ namespace Core.UI
         private LayerMask mask;
         private void Start()
         {
-            camera = Player.inst.GetCamera();
+            camera = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetCamera();
             mask = LayerMask.GetMask("Main");
         }
 

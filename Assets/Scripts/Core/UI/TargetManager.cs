@@ -21,7 +21,7 @@ namespace Core.UI
         
         private void Start()
         {
-            camera = Player.inst.GetCamera();
+            camera = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetCamera();
             Player.OnPreSceneChanged += SaveLastSelected;
             Player.OnSceneChanged += LoadLastSelected;
         }

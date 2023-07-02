@@ -120,9 +120,9 @@ namespace Core.Map
 
         public List<string> GetHistory()
         {
-            if (mode == MapSelect.MapMode.Frame && Player.inst)
+            if (mode == MapSelect.MapMode.Frame && PlayerDataManager.Instance.WorldHandler.ShipPlayer)
             {
-                saves = Player.inst.saves;
+                saves = PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves;
             }
             else
             {

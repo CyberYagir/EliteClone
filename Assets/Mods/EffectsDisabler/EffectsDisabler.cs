@@ -1,4 +1,5 @@
 using System.Collections;
+using Core;
 using Core.PlayerScripts;
 using Core.Systems;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace EffectsDisabler
         private bool isadded;
         private void LateUpdate()
         {
-            if (Player.inst != null)
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player != null)
                 mustAddEvent = true;
-            if (mustAddEvent && Player.inst != null && !isadded)
+            if (mustAddEvent && player != null && !isadded)
             {
                 Player.OnSceneChanged += OnSceneChanges;
                 mustAddEvent = false;

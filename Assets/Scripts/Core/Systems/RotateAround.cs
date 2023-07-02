@@ -22,7 +22,7 @@ namespace Core.Systems
         {
             DrawCircle(Vector3.Distance(transform.position, point.position));
             lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
-            camera = Player.inst.GetCamera();
+            camera = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetCamera();
             Rotate();
         }
 

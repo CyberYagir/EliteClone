@@ -26,7 +26,7 @@ namespace Core
         {
             item.gameObject.SetActive(false);
             UITweaks.ClearHolder(transform);
-            var weapons = Player.inst.GetComponentsInChildren<Weapon>(false).ToList();
+            var weapons = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetComponentsInChildren<Weapon>(false).ToList();
             spawnedItems = new Dictionary<Weapon, List<Image>>();
             for (int i = 0; i < weapons.Count; i++)
             {

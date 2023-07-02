@@ -32,12 +32,12 @@ namespace Core.PlayerScripts
             landPoint = point;
             landRot = rot;
             isLanded = land;
-            var rb = Player.inst.GetComponent<Rigidbody>();
+            var rb = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetComponent<Rigidbody>();
             rb.isKinematic = isLanded;
 
             if (isLanded)
             {
-                Player.inst.StopAxis();
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.StopAxis();
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 OnLand.Run();
@@ -69,7 +69,7 @@ namespace Core.PlayerScripts
     
         private void Update()
         {
-            Player.inst.control.enabled = !isLanded;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.enabled = !isLanded;
             if (World.Scene == Scenes.Location)
             {
                 if (!isLanded)

@@ -24,7 +24,8 @@ namespace Core.UI
         private void Start()
         {
             startRotation = transform.localRotation;
-            player = Player.inst;
+            player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            
             shipModel.sharedMesh = player.Ship().shipModel.GetComponent<MeshFilter>().sharedMesh;
 
             var matsCount = new Material[10];

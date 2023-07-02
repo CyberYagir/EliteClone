@@ -120,7 +120,7 @@ namespace Core.Location
                 }
 
                 WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-                Player.inst.quests.OnChangeQuests.Run();
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
             }
         }
         

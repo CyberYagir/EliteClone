@@ -28,7 +28,7 @@ namespace Core.Location
 
         private void Start()
         {
-            mainCamera = Player.inst.GetCamera();
+            mainCamera = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetCamera();
         }
         void Update()
         {
@@ -49,11 +49,11 @@ namespace Core.Location
         {
             if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarStaticBuilder.GalaxyScale < minDist * SolarStaticBuilder.GalaxyScale)
             {
-                Player.inst.warp.SetActiveLocation(this);
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.SetActiveLocation(this);
             }
             else
             {
-                Player.inst.warp.RemoveActiveLocation(this);
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.RemoveActiveLocation(this);
             }
         }
 

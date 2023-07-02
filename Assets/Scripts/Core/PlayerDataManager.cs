@@ -127,9 +127,12 @@ namespace Core
                 FindObjectOfType<GarageExitButton>().SaveIfCan();
             }
 
-            if (Player.inst != null)
+
+            var player = Instance.WorldHandler.ShipPlayer;
+            
+            if (player != null)
             {
-                Player.inst.saves.Save();
+                player.saves.Save();
                 if (World.Scene == Scenes.System)
                 {
                     SolarStaticBuilder.SaveSystem();

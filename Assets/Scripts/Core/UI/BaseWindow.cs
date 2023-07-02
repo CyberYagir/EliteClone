@@ -34,7 +34,7 @@ namespace Core.UI
 
         public void Init()
         {
-            Player.inst.land.OnLand += RedrawAll;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnLand += RedrawAll;
             rect = GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
         }
@@ -49,20 +49,20 @@ namespace Core.UI
         {
             base.OnUpdate();
             Animation();
-            if (Player.inst.land.isLanded)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded)
             {
                 var date = DateTime.Now.Date.AddYears(1025);    
                 infoText.text = $"Date: {date:d}\n" +
                                 $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
-                                "Credits: " + Player.inst.cargo.GetCredits();
+                                "Credits: " + PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.GetCredits();
             }
 
         }
 
         public void UpdateCosts()
         {
-            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (Player.inst.Ship().GetValue(Health).max - Player.inst.Ship().GetValue(Health).value));
-            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (Player.inst.Ship().GetValue(Fuel).max - Player.inst.Ship().GetValue(Fuel).value));
+            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Health).max - PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Health).value));
+            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel).max - PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel).value));
         }
 
         public void RedrawAll()
@@ -78,7 +78,7 @@ namespace Core.UI
         {
             if (rect)
             {
-                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, Player.inst.land.isLanded ? height : 0), 5 * Time.deltaTime);
+                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded ? height : 0), 5 * Time.deltaTime);
                 canvas.enabled = rect.sizeDelta.y >= 0.1f;
             }
         }

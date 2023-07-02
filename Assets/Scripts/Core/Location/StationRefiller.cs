@@ -51,20 +51,20 @@ namespace Core.Location
             {
                 case Refiller.RefillType.Fuel:
                     cost = GetRefillerValue(Refiller.RefillType.Fuel);
-                    ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel), cost);
+                    ApplyType(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel), cost);
                     break;
                 case Refiller.RefillType.Curpus:
                     cost = GetRefillerValue(Refiller.RefillType.Curpus);
-                    ApplyType(Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health), cost);
+                    ApplyType(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(ItemShip.ShipValuesTypes.Health), cost);
                     break;
             }
         }
 
         public void ApplyType(ShipClaped data, float cost)
         {
-            while (Player.inst.cargo.GetCredits() > 0 && data.value < data.max)
+            while (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.GetCredits() > 0 && data.value < data.max)
             {
-                if(Player.inst.cargo.RemoveCredits(cost))
+                if(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.RemoveCredits(cost))
                 {
                     data.value++;
                 }
@@ -74,7 +74,7 @@ namespace Core.Location
                 }
             }
             data.Clamp();
-            Player.inst.cargo.UpdateInventory();
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.UpdateInventory();
         }
     }
 }

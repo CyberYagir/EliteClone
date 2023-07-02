@@ -20,6 +20,8 @@ namespace Core.UI
         [SerializeField] private GameObject selfDestructionButton;
         [SerializeField] private bool isPause;
 
+        private WorldDataHandler worldDataHandler;
+        
         private void Awake()
         {
             holder.anchoredPosition = new Vector2(min, 0);
@@ -28,6 +30,9 @@ namespace Core.UI
             pausePlay.transform.localScale = Vector3.one * 3;
             pausePlay.DOFade(0, 0);
             canvas.enabled = false;
+
+
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
         }
 
         private const float speed = 0.3f;
@@ -47,7 +52,7 @@ namespace Core.UI
             if (isPause)
             {
                 canvas.enabled = true;
-                selfDestructionButton.SetActive(Player.inst != null);
+                selfDestructionButton.SetActive(worldDataHandler.ShipPlayer != null);
 
                 background.raycastTarget = true;
                 background.DOFade(0.95f, speed).SetUpdate(true);
@@ -81,9 +86,10 @@ namespace Core.UI
 
         public void SelfDestruct()
         {
-            if (Player.inst != null)
+            
+            if (worldDataHandler.ShipPlayer != null)
             {
-                Player.inst.TakeDamageHeath(Mathf.Infinity);
+                worldDataHandler.ShipPlayer.TakeDamageHeath(Mathf.Infinity);
                 PlayerDataManager.SaveAll();
                 SetPause(false);
             }
@@ -92,9 +98,9 @@ namespace Core.UI
         public void GoToMenu()
         {
             PlayerDataManager.SaveAll();
-            if (Player.inst != null)
+            if (worldDataHandler.ShipPlayer != null)
             {
-                Destroy(Player.inst.gameObject);
+                Destroy(worldDataHandler.ShipPlayer.gameObject);
             }
             SetPause(false);
             World.LoadLevel(Scenes.Init);

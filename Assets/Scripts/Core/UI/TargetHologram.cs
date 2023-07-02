@@ -20,11 +20,11 @@ namespace Core.UI
 
         public override void OnUpdate()
         {
-            if (Player.inst.GetTarget() != oldTarget)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() != oldTarget)
             {   
                 StopAllCoroutines();
                 StartCoroutine(Transition());
-                oldTarget = Player.inst.GetTarget();
+                oldTarget = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget();
             }
         }
 
@@ -32,16 +32,16 @@ namespace Core.UI
 
         IEnumerator Transition()
         {
-            while (Player.inst.GetTarget() != null ? alpha < 1 : alpha > 0)
+            while (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() != null ? alpha < 1 : alpha > 0)
             {
-                if (Player.inst.GetTarget() == null)
+                if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() == null)
                 {
                     alpha -= Time.deltaTime;
                 }
                 else
                 {
                     alpha += Time.deltaTime;
-                    arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(Player.inst.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
+                    arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
                 }
 
                 alpha = Mathf.Clamp(alpha, 0, 0.2f);

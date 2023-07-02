@@ -7,11 +7,45 @@ using UnityEngine;
 
 namespace Core.Systems
 {
-    public class SolarSystemGenerator : MonoBehaviour
+    public class SolarSystemGenerator : StartupObject
     {
-        public GameObject sunPrefab, planetPrefab, stationPointPrefab, player, systemPoint, beltPoint;
+        [SerializeField] private GameObject sunPrefab;
+        [SerializeField] private GameObject planetPrefab;
+        [SerializeField] private GameObject stationPointPrefab;
+        [SerializeField] private GameObject player;
+        [SerializeField] private GameObject systemPoint;
+        [SerializeField] private GameObject beltPoint;
+        
+        
         private WorldDataHandler worldHandler;
         private FilesSystemHandler filesSystemHandler;
+
+
+        public override void Init(PlayerDataManager playerDataManager)
+        {
+            base.Init(playerDataManager);
+            
+            
+            World.SetScene(Scenes.System);
+            this.filesSystemHandler = playerDataManager.FSHandler;
+            this.worldHandler = playerDataManager.WorldHandler;
+            
+            
+            SolarStaticBuilder.ClearSavedSystem();
+            InitSystem();
+            CreateSystem();
+        }
+
+        public override void Loop()
+        {
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves.ExKey("system_start_on"))
+            {
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform.position = GameObject.Find((string) PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves.GetKeys()["system_start_on"]).transform.position;
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves.DelKey("system_start_on");
+            }
+
+            enabled = false;
+        }
 
 
         public void InitSystem()
@@ -68,7 +102,7 @@ namespace Core.Systems
                     Instantiate(player.gameObject).GetComponent<Player>().Init();
                 }
 
-                var playerInst = Player.inst.transform;
+                var playerInst = PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform;
                 playerInst.parent = transform;
                 playerInst.parent = null;
                 playerInst.position = Vector3.zero;
@@ -82,37 +116,7 @@ namespace Core.Systems
                 SolarStaticBuilder.SaveSystem();
             }
         }
-
-        private void Awake()
-        {
-            World.SetScene(Scenes.System);
-            
-            this.filesSystemHandler = PlayerDataManager.Instance.FSHandler;
-            this.worldHandler = PlayerDataManager.Instance.WorldHandler;
-            
-        }
-
-        private void OnEnable()
-        {
-            SolarStaticBuilder.ClearSavedSystem();
-            
-            InitSystem();
-            CreateSystem();
-            GetComponent<SolarSystemShips>().Init();
-        }
-
-        private void Update()
-        {
-            if (Player.inst.saves.ExKey("system_start_on"))
-            {
-                Player.inst.transform.position = GameObject.Find((string) Player.inst.saves.GetKeys()["system_start_on"]).transform.position;
-                Player.inst.saves.DelKey("system_start_on");
-            }
-
-            enabled = false;
-        }
-
-
+        
         private void OnApplicationQuit()
         {
             SolarStaticBuilder.SaveSystem();

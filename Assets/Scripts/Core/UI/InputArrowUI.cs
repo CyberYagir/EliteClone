@@ -17,7 +17,7 @@ namespace Core.UI
 
         private void Update()
         {
-            rect.anchoredPosition = new Vector2(Player.inst.control.horizontal, Player.inst.control.vertical) * 100;
+            rect.anchoredPosition = new Vector2(PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.horizontal, PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.vertical) * 100;
 
             Vector3 diff = rect.anchoredPosition - Vector2.zero;
             diff.Normalize();

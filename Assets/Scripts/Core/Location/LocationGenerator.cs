@@ -29,33 +29,46 @@ namespace Core.Location
             return systemName;
         }
     }
-    public class LocationGenerator : MonoBehaviour
+    public class LocationGenerator : StartupObject
     {
-        public GameObject player, planet, sunPrefab, station, systemPoint, beltPoint, botsLocation;
         public static Location CurrentSave;
+
+        [SerializeField] private GameObject player;
+        [SerializeField] private GameObject planet;
+        [SerializeField] private GameObject sunPrefab;
+        [SerializeField] private GameObject station;
+        [SerializeField] private GameObject systemPoint;
+        [SerializeField] private GameObject beltPoint;
+        [SerializeField] private GameObject botsLocation;
 
         public Event OnSetSystemToLocation = new Event();
 
         private WorldDataHandler worldHandler;
-        
-        
-        private void Awake()
+        private FilesSystemHandler filesSystemHandler;
+
+        public override void Init(PlayerDataManager playerDataManager)
         {
-            worldHandler = PlayerDataManager.Instance.WorldHandler;
-                
-            World.SetScene(Scenes.Location);
+            base.Init(playerDataManager);
             
-        }
-        private void OnEnable()
-        {
-            CurrentSave = null;
-            OrbitalStationStaticBuilder.ClearEvent();
-            if (FindObjectOfType<Player>() == null)
+            worldHandler = playerDataManager.WorldHandler;
+            filesSystemHandler = playerDataManager.FSHandler;
+            
+            World.SetScene(Scenes.Location);
+            if (worldHandler.ShipPlayer == null)
             {
                 Instantiate(player.gameObject).GetComponent<Player>().Init();
             }
 
 
+            InitLocation();
+
+        }
+        
+        private void InitLocation()
+        {
+            CurrentSave = null;
+            OrbitalStationStaticBuilder.ClearEvent();
+            
             if (!File.Exists(PlayerDataManager.Instance.FSHandler.CurrentLocationFile))
             {
                 World.LoadLevel(Scenes.System);
@@ -68,17 +81,15 @@ namespace Core.Location
             InitFirstFrame();
         
         
-            Player.inst.transform.parent = transform;
-            Player.inst.transform.parent = null;
-        
-            GetComponent<SolarSystemShips>().Init();
+            worldHandler.ShipPlayer.transform.parent = transform;
+            worldHandler.ShipPlayer.transform.parent = null;
         }
 
 
         public void LoadLocation()
         {
-            CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CurrentLocationFile));
-            var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(PlayerDataManager.Instance.FSHandler.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
+            CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(filesSystemHandler.CurrentLocationFile));
+            var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(filesSystemHandler.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
             worldHandler.ChangeSolarSystem(system);
             SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, 15, false);
         }
@@ -116,9 +127,9 @@ namespace Core.Location
 
         private void Update()
         {
-            if (Player.inst)
+            if (worldHandler.ShipPlayer)
             {
-                transform.position = Player.inst.transform.position;
+                transform.position = worldHandler.ShipPlayer.transform.position;
             }
         }
 
@@ -126,29 +137,30 @@ namespace Core.Location
         {
             var location = MoveWorld();
             var locationObject = location.GetComponent<WorldInteractivePoint>();
-            if (Player.inst.saves.ExKey("loc_start"))
+            if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
             {
                 locationObject.initEvent.AddListener(delegate
                 {
-                    Player.inst.transform.position = locationObject.spawnPoint.position;
-                    Player.inst.transform.rotation = locationObject.spawnPoint.rotation;
+                    worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
+                    worldHandler.ShipPlayer.transform.rotation = locationObject.SpawnPoint.rotation;
                 });
             }
-            else if (Player.inst.saves.ExKey("loc_start_on_pit"))
+            else if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
             {
                 locationObject.initEvent.AddListener(delegate
                 {
                     var allPoints = WorldOrbitalStation.Instance.GetComponentInChildren<WorldOrbitalStationPoints>().GetLandPoint();
                     var point = allPoints[Random.Range(0, allPoints.Count)];
             
-                    Player.inst.transform.position = point.point.position;
-                    Player.inst.transform.rotation = point.point.rotation;
+                    worldHandler.ShipPlayer.transform.position = point.point.position;
+                    worldHandler.ShipPlayer.transform.rotation = point.point.rotation;
             
-                    Player.inst.land.SetLand(true, point.point.position, point.point.rotation);
+                    worldHandler.ShipPlayer.land.SetLand(true, point.point.position, point.point.rotation);
 
                     point.isFilled = true;
                 });
             }
+            
             locationObject.initEvent.Invoke();
         }
 
@@ -159,19 +171,19 @@ namespace Core.Location
 
         public void SetSpaceObjectDistance()
         {
-            if (Player.inst.saves.ExKey("loc_start"))
+            if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
             {   
-                Player.inst.saves.DelKey("loc_start");
+                worldHandler.ShipPlayer.saves.DelKey("loc_start");
             }else
-            if (Player.inst.saves.ExKey("loc_start_on_pit"))
+            if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
             {
-                Player.inst.saves.DelKey("loc_start_on_pit");
+                worldHandler.ShipPlayer.saves.DelKey("loc_start_on_pit");
             }
             else
             {
                 foreach (Transform spaceObject in transform)
                 {
-                    spaceObject.transform.position += Player.inst.transform.position;
+                    spaceObject.transform.position += worldHandler.ShipPlayer.transform.position;
                 } 
             }
         }

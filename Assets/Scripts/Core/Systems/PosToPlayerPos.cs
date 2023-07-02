@@ -7,9 +7,10 @@ namespace Core.Systems
     {
         public void Update()
         {
-            if (Player.inst)
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player)
             {
-                transform.position = Player.inst.transform.position;
+                transform.position = player.transform.position;
             }
         }
     }

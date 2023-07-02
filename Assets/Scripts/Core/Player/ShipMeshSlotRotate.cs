@@ -28,16 +28,17 @@ namespace Core.PlayerScripts
 
         public void Rotate()
         {
-            if (Player.inst)
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player)
             {
-                var target = Player.inst.GetTarget();
+                var target = player.GetTarget();
                 if (target && target.GetComponent<IDamagable>() != null && Vector3.Distance(transform.position, target.transform.position) < weapon.GetDistance())
                 {
                     Quaternion targetRotation = Quaternion.identity;
-                    var dir = target.transform.position - Player.inst.transform.position;
-                    if (Vector3.Dot(Player.inst.transform.forward, dir) > 0)
+                    var dir = target.transform.position - player.transform.position;
+                    if (Vector3.Dot(player.transform.forward, dir) > 0)
                     {
-                        var ang = Vector3.Angle(Player.inst.transform.forward, dir);
+                        var ang = Vector3.Angle(player.transform.forward, dir);
                         if (ang < 30)
                         {
                             targetRotation = Quaternion.LookRotation(dir);

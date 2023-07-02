@@ -241,6 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1065620151}
+  - component: {fileID: 1065620155}
   - component: {fileID: 1065620152}
   - component: {fileID: 1065620153}
   - component: {fileID: 1065620154}
@@ -339,6 +340,22 @@ MonoBehaviour:
   ships: []
   allships: []
   points: []
+--- !u!114 &1065620155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065620150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a75783ee0f2e8f4596423965a52b0ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupObjects:
+  - {fileID: 1065620152}
+  - {fileID: 1065620154}
+  - {fileID: 1065620153}
 --- !u!1 &1415199212
 GameObject:
   m_ObjectHideFlags: 1

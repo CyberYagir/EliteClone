@@ -22,7 +22,7 @@ namespace Core.UI
         protected override void Start()
         {
             base.Start();
-            Player.inst.targets.OnChangeTarget += UpdateList;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.OnChangeTarget += UpdateList;
         }
 
         public override void RedrawList()

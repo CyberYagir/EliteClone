@@ -15,7 +15,7 @@ namespace Core.PlayerScripts
 
         private void Start()
         {
-            player = Player.inst;
+            player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
             headcamera = transform.GetChild(0);
         }
 

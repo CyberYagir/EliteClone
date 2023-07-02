@@ -134,9 +134,9 @@ namespace Core.Bot
 
         public void SetPlayerPoint()
         {
-            if (Player.inst != null && targetShip != null)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer != null && targetShip != null)
             {
-                target = targetShip.position + Player.inst.transform.up * 5 + -targetShip.forward * Random.Range(100, 600);
+                target = targetShip.position + PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform.up * 5 + -targetShip.forward * Random.Range(100, 600);
             }
         }
 

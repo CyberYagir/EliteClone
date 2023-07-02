@@ -19,11 +19,11 @@ namespace Core.UI
 
         public override void OnUpdate()
         {
-            var hpValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Health);
+            var hpValue = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(ItemShip.ShipValuesTypes.Health);
             hp.img.fillAmount = (hpValue.value / hpValue.max);
             hp.text.text = "Corpus " + (int) (hp.img.fillAmount * 100) + "%";
 
-            var shValue = Player.inst.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
+            var shValue = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
             shield.img.fillAmount = (shValue.value / shValue.max);
             shield.text.text = "Shields " + (int) (shield.img.fillAmount * 100) + "%";
         }

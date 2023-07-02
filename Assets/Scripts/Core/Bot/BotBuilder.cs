@@ -10,6 +10,11 @@ namespace Core.Bot
 {
     public sealed class BotBuilder : MonoBehaviour, IDamagable
     {
+        public enum BotState
+        {
+            Attack, Land, Moving, Stationary
+        }
+        
         public int uniqID = -1;
         [SerializeField] private BotAttackController attackControl;
         [SerializeField] private BotLandController landControl;
@@ -24,7 +29,10 @@ namespace Core.Bot
         
         private SolarSystemShips.HumanShip human;
         private Damager damager;
-        
+        private bool isDead;
+        private SolarSystemShips solarSystemShips;
+        private WorldDataHandler worldDataHandler;
+
         public int Fraction => human.fraction;
 
         private void Awake()
@@ -33,6 +41,15 @@ namespace Core.Bot
         }
 
         public Damager GetDamager() => damager;
+        public void SetName() => transform.name = GetVisual().GetShipName() + " [" + transform.name.Split('[')[1];
+        public ShieldActivator GetShield() => shield;        
+        public BotVisual GetVisual() => visual;
+        public void AddContact(bool trigger) => contactManager.Init(trigger);
+        public ItemShip GetShip() => ship.GetShip();        
+        public void SetLandPoint(LandPoint landPoint)=>landControl.SetLandPoint(landPoint);
+        public void SetHuman(SolarSystemShips.HumanShip humanShip) => human = humanShip;
+
+
 
         public void SetShip(ItemShip shipData)
         {
@@ -50,8 +67,11 @@ namespace Core.Bot
         }
         
 
-        public void InitBot(Random rnd = null)
+        public void InitBot(WorldDataHandler worldDataHandler, Random rnd = null)
         {
+            this.worldDataHandler = worldDataHandler;
+            
+            
             NamesHolder.Init();
             var firstName = "";
             var lastName = "";
@@ -67,13 +87,12 @@ namespace Core.Bot
             }
             transform.name = GetVisual().GetShipName() + $" [{firstName} {lastName}]";
         }
+        public void InitBot(WorldDataHandler worldDataHandler, string first, string last, SolarSystemShips solarSystemShips)
+        {
+            this.solarSystemShips = solarSystemShips;
+            this.worldDataHandler = worldDataHandler;
 
-        public void SetName()
-        {
-            transform.name = GetVisual().GetShipName() + " [" + transform.name.Split('[')[1];
-        }
-        public void InitBot(string first, string last)
-        {
+            
             NamesHolder.Init();
             transform.name = GetComponent<BotVisual>().GetShipName() + $" [{first} {last}]";
         }
@@ -82,38 +101,18 @@ namespace Core.Bot
             particles.Play();
             return particles;
         }
-
-        public enum BotState
-        {
-            Attack, Land, Moving, Stationary
-        }
-
         public void SetBehaviour(BotState botState)
         {
             attackControl.enabled = botState == BotState.Attack;
             landControl.enabled = botState == BotState.Land;
             movingControl.enabled = botState == BotState.Moving;
         }
-    
-        public ShieldActivator GetShield()
-        {
-            return shield;
-        }
 
-        public BotVisual GetVisual()
-        {
-            return visual;
-        }
-
-        public void AddContact(bool trigger)
-        {
-            contactManager.Init(trigger);
-        }
-
+        
         public void TakeDamage(float damage)
         {
             SetBehaviour(BotState.Attack);
-            attackControl.SetTarget(Player.inst.transform);
+            attackControl.SetTarget(worldDataHandler.ShipPlayer.transform);
             var ship = this.ship.GetShip();
             if (ship.GetValue(ItemShip.ShipValuesTypes.Shields).value <= 0)
             {
@@ -131,18 +130,18 @@ namespace Core.Bot
             }
         }
 
-        private bool isDead;
+
         public void Death()
         {
             if (!isDead)
             {
                 if (uniqID != -1)
                 {
-                    SolarSystemShips.Instance.AddDead(this);
+                    solarSystemShips.AddDead(this);
                 }
                 else
                 {
-                    SolarSystemShips.Instance.ExplodeShip(this);
+                    solarSystemShips.ExplodeShip(this);
                 }
 
                 Drop();
@@ -164,41 +163,27 @@ namespace Core.Bot
             {
                 var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
                 drop.GetComponent<BoxCollider>().isTrigger = true;
-                drop.Init(ItemsManager.GetRewardItem(rnd));
-                if (Player.inst.quests.quests.Count >= 1)
+                drop.Init(ItemsManager.GetRewardItem(rnd), worldDataHandler);
+                if (worldDataHandler.ShipPlayer.quests.quests.Count >= 1)
                 {
                     if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
                     {
                         var chance = rnd.Next(0, 100);
                         if (chance <= 40)
                         {
-                            drop.Init(ItemsManager.GetItem("transmitter_box"));
+                            drop.Init(ItemsManager.GetItem("transmitter_box"), worldDataHandler);
                         }
                     }
                 }
                 drop.GetComponent<Rigidbody>().AddForce(UnityEngine.Random.insideUnitSphere, ForceMode.Impulse);
             }   
         }
-    
-        public ItemShip GetShip()
-        {
-            return ship.GetShip();
-        }
-
-        public void SetLandPoint(LandPoint landPoint)
-        {
-            landControl.SetLandPoint(landPoint);
-        }
-
+        
         public void AttackPlayer()
         {
-            attackControl.SetTarget(Player.inst.transform);
+            attackControl.SetTarget(worldDataHandler.ShipPlayer.transform);
             SetBehaviour(BotState.Attack);
         }
 
-        public void SetHuman(SolarSystemShips.HumanShip humanShip)
-        {
-            human = humanShip;
-        }
     }
 }

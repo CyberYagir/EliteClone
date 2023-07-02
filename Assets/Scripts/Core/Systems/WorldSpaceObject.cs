@@ -16,7 +16,7 @@ namespace Core.Systems
         private Transform camera;
         private void Start()
         {
-            camera = Player.inst.GetCamera().transform;
+            camera = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetCamera().transform;
         }
         
 

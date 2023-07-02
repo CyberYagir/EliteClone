@@ -49,7 +49,7 @@ namespace Core.Core.Tutorial
         public void Init()
         {
             var activator = FindObjectOfType<LocationUIActivator>();
-            Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
         
             if (TutorialData.CommunitsBaseStats == null)
             {
@@ -111,7 +111,7 @@ namespace Core.Core.Tutorial
             {
                 Destroy(station.gameObject);
             }
-            var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+            var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
             if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
                 TutorialData.baseSystemName == worldDataHandler.CurrentSolarSystem.name)
             {
@@ -134,7 +134,7 @@ namespace Core.Core.Tutorial
             Player.OnSceneChanged -= M1AddStation;
             Player.OnSceneChanged.Run();
             Player.OnSceneChanged += M1AddStation;
-            Player.inst.targets.ContactsChanges.Run();
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.ContactsChanges.Run();
         }
     
         public void M1Quest()
@@ -146,7 +146,7 @@ namespace Core.Core.Tutorial
     
         private void M1GenerateQuest(bool notify)
         {
-            Player.inst.quests.CancelQuest(Player.inst.quests.quests.Find(x => x.questID == int.MaxValue));
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
         
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
@@ -155,7 +155,7 @@ namespace Core.Core.Tutorial
             quest.GetPath(new System.Random(int.MaxValue), "Communists Base", TutorialData.startSystemName, 1, 3, false);
             quest.GetLastQuestPath().targetName = "Communists Base";
             quest.toTransfer = new List<Item>();
-            Player.inst.quests.ApplyQuest(quest, notify);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
             AddStation();
         }
 
@@ -184,19 +184,19 @@ namespace Core.Core.Tutorial
 
         public void M2Events()
         {
-            Player.inst.cargo.OnChangeInventory += HaveTranslator;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory += HaveTranslator;
             HaveTranslator();
         }
     
         public void M3Events()
         {
-            Player.inst.cargo.OnChangeInventory += HaveZincVoid;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory += HaveZincVoid;
             HaveZinc();
         }
 
         public void HaveTranslator()
         {
-            if (Player.inst.cargo.ContainItem(transmitterItem.id.id))
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItem(transmitterItem.id.id))
             {
                 PlayerPrefs.SetInt("last_level", (int) World.Scene);
                 World.LoadLevel(Scenes.ActivatorDemo);
@@ -222,7 +222,7 @@ namespace Core.Core.Tutorial
         {
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
-            Player.inst.quests.ApplyQuest(quest, notify);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
         }
     
         #endregion
@@ -243,7 +243,7 @@ namespace Core.Core.Tutorial
         public void M3GenerateQuest(bool notify)
         {
             var quest = GetEmptyQuest();
-            if (Player.inst.Ship().shipName != knight.shipName)
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().shipName != knight.shipName)
             {
                 quest.keyValues.Add("Text", getKnight);
             }
@@ -264,27 +264,27 @@ namespace Core.Core.Tutorial
                 else
                 {
                     quest.keyValues.Add("Text", flyToStation);
-                    Player.inst.cargo.OnChangeInventory -= HaveZincVoid;
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory -= HaveZincVoid;
                 }
                 M3Events();
             }
-            Player.inst.quests.ApplyQuest(quest, notify);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
         }
 
         private bool haveZinc;
         public bool HaveZinc()
         {
-            var contain = Player.inst.cargo.ContainItem(zincItem.id.id);
-            var quest = Player.inst.quests.quests.Find(x => x.questID == int.MaxValue);
+            var contain = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItem(zincItem.id.id);
+            var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
             if (quest != null)
             {
                 if (contain)
                 {
-                    var isFull = Player.inst.cargo.FindItem(zincItem.id.id).amount.IsFull();
+                    var isFull = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.FindItem(zincItem.id.id).amount.IsFull();
                     if (isFull != haveZinc)
                     {
                         quest.keyValues["Text"] = flyToStation;
-                        Player.inst.quests.OnChangeQuests.Run();
+                        PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
                         haveZinc = true;
                     }
 
@@ -293,7 +293,7 @@ namespace Core.Core.Tutorial
                 else if (haveZinc)
                 {
                     quest.keyValues["Text"] = getZinc;
-                    Player.inst.quests.OnChangeQuests.Run();
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
                 }
             }
             else
@@ -311,8 +311,8 @@ namespace Core.Core.Tutorial
 
         public static void EnablePlayer(bool enable)
         {
-            Player.inst.land.enabled = enable;
-            Player.inst.control.enabled = enable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.enabled = enable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.enabled = enable;
             WorldSpaceObjectCanvas.Instance.gameObject.SetActive(enable);
 
         }

@@ -28,7 +28,7 @@ namespace Core.UI
                 Disable();
             };
 
-            Player.inst.land.OnUnLand += Disable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnUnLand += Disable;
         }
 
 
@@ -83,7 +83,7 @@ namespace Core.UI
             questsList = quests;
         
             UITweaks.ClearHolder(holder);
-
+            var solarShips = FindObjectOfType<SolarSystemShips>();
             List<Quest> questsToRemove = new List<Quest>();
             for (int i = 0; i < quests.Count; i++)
             {
@@ -91,9 +91,9 @@ namespace Core.UI
                 if (questData.typeName == "Kill")
                 {
                     var targetID = (int) quests[i].keyValues["BotTarget"];
-                    if (SolarSystemShips.Instance != null)
+                    if (solarShips != null)
                     {
-                        if (SolarSystemShips.Instance.IsDead(targetID) && AppliedQuests.Instance.quests.Find(x=>x.questID == quests[i].questID) == null)
+                        if (solarShips.IsDead(targetID) && AppliedQuests.Instance.quests.Find(x=>x.questID == quests[i].questID) == null)
                         {
                             questsToRemove.Add(quests[i]);
                         }

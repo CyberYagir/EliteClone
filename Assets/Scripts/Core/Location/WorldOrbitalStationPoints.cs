@@ -37,7 +37,7 @@ namespace Core.Location
                         builder.GetShield().isActive = true;
                         builder.AddContact(false);
                         builder.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, 0, 0));
-                        builder.InitBot(rnd);
+                        builder.InitBot(PlayerDataManager.Instance.WorldHandler, rnd);
                         builder.GetVisual().SetVisual(rnd);
                         builder.SetBehaviour(BotBuilder.BotState.Land);
                         builder.SetLandPoint(landPoints[i]);
@@ -90,7 +90,7 @@ namespace Core.Location
                                 builder.GetShield().isActive = true;
                                 landPoint.isFilled = true;
                                 isEnded = true;
-                                builder.InitBot(rnd);
+                                builder.InitBot(PlayerDataManager.Instance.WorldHandler, rnd);
                                 builder.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, id, rnd.Next(0, 999)));
                                 builder.GetVisual().SetVisual(rnd);
                                 builder.AddContact(true);

@@ -105,7 +105,7 @@ namespace Core.PlayerScripts.Weapon
                 if (particles.activeSelf)
                 {
                     particles.transform.position = hitPoint;
-                    particles.transform.LookAt(Player.inst.transform);
+                    particles.transform.LookAt(PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform);
                 }
             }
             else

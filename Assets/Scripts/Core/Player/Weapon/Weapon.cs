@@ -33,12 +33,14 @@ namespace Core.PlayerScripts.Weapon
             camera = transform;
 
             cacheHolder = SpawnCacheHolder();
-        
-            if (Player.inst != null)
+
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            
+            if (player != null)
             {
-                Player.inst.attack.OnShoot += CheckIsCurrentWeapon;
-                Player.inst.attack.OnHold += OnHold;
-                Player.inst.attack.OnHold += OnHoldDown;
+                player.attack.OnShoot += CheckIsCurrentWeapon;
+                player.attack.OnHold += OnHold;
+                player.attack.OnHold += OnHoldDown;
             }
 
             damage = (float)currentItem.GetKeyPair(KeyPairValue.Damage);

@@ -52,7 +52,7 @@ namespace Core
 
         public void DropItem()
         {
-            Player.inst.cargo.DropItem(itemUI.item.id.id, itemUI.item.amount.value, val);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.DropItem(itemUI.item.id.id, itemUI.item.amount.value, val);
         }
     }
 }

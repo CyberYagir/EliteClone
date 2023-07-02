@@ -48,9 +48,11 @@ namespace Core.Systems
         {
             var system = new SavedSolarSystem();
             system.systemName = Path.GetFileNameWithoutExtension(GetSystemFileName());
-            if (Player.inst)
+
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (player)
             {
-                system.playerPos = Player.inst.transform.position;
+                system.playerPos = player.transform.position;
             }
             if (Objects.Count != 0)
             {

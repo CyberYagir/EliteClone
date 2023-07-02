@@ -8,11 +8,6 @@ namespace Core.PlayerScripts
 {
     public class AppliedQuests : Singleton<AppliedQuests>
     {
-        public List<Quest> quests { get; private set; } = new List<Quest>();
-        public Event OnChangeQuests = new Event();
-        public Event OnNotify = new Event();
-
-        [SerializeField] private QuestsMethodObject methods;
         
         public class QuestData
         {
@@ -21,10 +16,20 @@ namespace Core.PlayerScripts
             public string stationName, solarName;
             public Quest.QuestCompleted state;
         }
+        
+        public List<Quest> quests { get; private set; } = new List<Quest>();
+        public Event OnChangeQuests = new Event();
+        public Event OnNotify = new Event();
+
+        [SerializeField] private QuestsMethodObject methods;
+
+        private WorldDataHandler worldDataHandler;
+        
     
         private void Awake()
         {
             Single(this);
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
         }
 
         private void Start()
@@ -75,7 +80,7 @@ namespace Core.PlayerScripts
     
         public void ApplyQuest(Quest quest, bool triggerNotify = true)
         {
-            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.AddItems(quest.toTransfer))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.cargo.AddItems(quest.toTransfer))
             {
                 quests.Add(quest);
             }
@@ -94,7 +99,7 @@ namespace Core.PlayerScripts
         public void CancelQuest(Quest quest)
         {
             if (quest == null) return;
-            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && Player.inst.cargo.RemoveItems(quest.toTransfer))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.cargo.RemoveItems(quest.toTransfer))
             {
                 quests.RemoveAll(x => x.questID == quest.questID);
             }

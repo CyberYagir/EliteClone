@@ -19,7 +19,7 @@ namespace Core.UI
         public void UpdateColor()
         {
             warpActiveColor = Color.Lerp(warpActiveColor,
-                Player.inst.warp.isWarp ? active : desactive,
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.isWarp ? active : desactive,
                 10 * Time.deltaTime);
             warpText.color = warpActiveColor;
             warpSpeedText.color = warpActiveColor;
@@ -40,7 +40,7 @@ namespace Core.UI
         private Color warpActiveColor;
         private void Start()
         {
-            player = Player.inst;
+            player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
         }
 
         public override void OnUpdate()

@@ -14,17 +14,20 @@ namespace Core.PlayerScripts
     
         [SerializeField] private GameObject dropPrefab;
     
-        private ItemShip currentShip;
         public List<Item> items { get; private set; } = new List<Item>();
         public Dictionary<int, List<Item>> idDictionary = new Dictionary<int, List<Item>>();
         public float tons { get; private set; }
         public Event OnChangeInventory = new Event();
-
-
+        
+        private ItemShip currentShip;
         private int creditID;
-    
+        private WorldDataHandler worldDataHandler;
+        
+        
         private void Awake()
         {
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            
             var ship = GetComponent<Ship>();
             if (ship != null)
             {
@@ -362,7 +365,7 @@ namespace Core.PlayerScripts
                 {
                     var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
                     Physics.IgnoreCollision(drop.GetComponent<BoxCollider>(), GetComponentInChildren<Collider>(), true);
-                    drop.Init(removed, 2);
+                    drop.Init(removed, worldDataHandler, 2);
                     drop.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
                 
                     OnChangeInventory.Run();

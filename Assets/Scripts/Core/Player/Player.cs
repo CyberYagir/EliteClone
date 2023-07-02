@@ -14,7 +14,6 @@ namespace Core.PlayerScripts
 
     public class Player : MonoBehaviour, IDamagable
     {
-        public static Player inst { get; private set; }
         public ShipController control { get; private set; }
         public WarpManager warp { get; private set; }
         public SaveLoadData saves { get; private set; }
@@ -34,14 +33,18 @@ namespace Core.PlayerScripts
         
         private float coolerValue = -1;
         private ShipModels models;
-        Ship spaceShip;
-    
+        private Ship spaceShip;
+        private WorldDataHandler worldDataHandler;
+        
         private float heatTime;
 
         private void Awake()
         {
             OnSceneChanged = new Event();
             OnPreSceneChanged = new Event();
+            
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            
             Init();
         }
 
@@ -101,9 +104,11 @@ namespace Core.PlayerScripts
 
         public void Init()
         {
-            if (inst == null)
+            
+            if (worldDataHandler.ShipPlayer == null)
             {
-                inst = this;
+                worldDataHandler.SetShipPlayer(this);
+                
                 spaceShip = GetComponent<Ship>();
                 GalaxyGenerator.LoadSystems();
                 control = GetComponent<ShipController>();
