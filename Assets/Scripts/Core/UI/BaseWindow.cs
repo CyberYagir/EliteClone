@@ -72,6 +72,7 @@ namespace Core.UI
 
         public void RedrawAll()
         {
+            if (LocationGenerator.CurrentSave == null) return;
             if (LocationGenerator.CurrentSave.type == LocationPoint.LocationType.Station)
             {
                 ChangeUI();

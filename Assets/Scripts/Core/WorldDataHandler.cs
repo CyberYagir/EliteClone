@@ -10,12 +10,12 @@ namespace Core
     public class WorldDataHandler
     {
         private SolarSystem currentSolarSystem;
-        private Player shipPlayer;
         
-        private LocationGenerator currentLocationGenerator;
-        private SolarSystemGenerator currentSolarGenerator;
+        [SerializeField] private Player shipPlayer;
+        [SerializeField] private LocationGenerator currentLocationGenerator;
+        [SerializeField] private SolarSystemGenerator currentSolarGenerator;
         
-        
+        [Space(50)]
         [SerializeField] private int galaxySeed = -1;
         [SerializeField] private Player playerPrefab;
 

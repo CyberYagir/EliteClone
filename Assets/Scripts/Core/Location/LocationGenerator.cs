@@ -94,7 +94,6 @@ namespace Core.Location
         {
             base.Init(playerDataManager);
             
-            playerDataManager.WorldHandler.SetLocation(this);
             
             worldHandler = playerDataManager.WorldHandler;
             filesSystemHandler = playerDataManager.FSHandler;
@@ -109,6 +108,7 @@ namespace Core.Location
 
             
             
+            playerDataManager.WorldHandler.SetLocation(this);
         }
         
         private void InitLocation(PlayerDataManager playerDataManager)
@@ -207,12 +207,9 @@ namespace Core.Location
                 point.isFilled = true;
             }
 
-        }
-
-        private void Start()
-        {
             SetSpaceObjectDistance();
         }
+        
 
         public void SetSpaceObjectDistance()
         {
