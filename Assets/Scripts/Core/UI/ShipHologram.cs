@@ -16,15 +16,13 @@ namespace Core.UI
         [SerializeField] private Material material;
         [SerializeField] private Image shieldIndicator;
 
-        private void Awake()
+        public override void Init()
         {
+            base.Init();
             Single(this);
-        }
-
-        private void Start()
-        {
+            
             startRotation = transform.localRotation;
-            player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            player = WorldDataHandler.ShipPlayer;
             
             shipModel.sharedMesh = player.Ship().shipModel.GetComponent<MeshFilter>().sharedMesh;
 
@@ -35,8 +33,10 @@ namespace Core.UI
             }
 
             shipModel.GetComponent<Renderer>().materials = matsCount;
+
         }
 
+        
         public override void OnUpdate()
         {
             base.OnUpdate();

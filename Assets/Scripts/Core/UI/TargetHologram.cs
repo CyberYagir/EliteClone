@@ -11,37 +11,43 @@ namespace Core.UI
     {
         [SerializeField] private List<Renderer> meshes;
         [SerializeField] private Transform arrow;
+        
+        
+        private GalaxyObject oldTarget = null;
         private float alpha = 1;
+        private Player player;
 
-        private void Start()
+
+        public override void Init()
         {
+            base.Init();
+            player = WorldDataHandler.ShipPlayer;
             StartCoroutine(Transition());
         }
 
         public override void OnUpdate()
         {
-            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() != oldTarget)
+            if (player.GetTarget() != oldTarget)
             {   
                 StopAllCoroutines();
                 StartCoroutine(Transition());
-                oldTarget = PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget();
+                oldTarget = player.GetTarget();
             }
         }
 
-        private GalaxyObject oldTarget = null;
 
         IEnumerator Transition()
         {
-            while (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() != null ? alpha < 1 : alpha > 0)
+            while (player.GetTarget() != null ? alpha < 1 : alpha > 0)
             {
-                if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget() == null)
+                if (player.GetTarget() == null)
                 {
                     alpha -= Time.deltaTime;
                 }
                 else
                 {
                     alpha += Time.deltaTime;
-                    arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(PlayerDataManager.Instance.WorldHandler.ShipPlayer.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
+                    arrow.rotation = Quaternion.Lerp(arrow.rotation, Quaternion.LookRotation(player.GetTarget().transform.position - transform.position, Vector3.up), 10 * Time.deltaTime);
                 }
 
                 alpha = Mathf.Clamp(alpha, 0, 0.2f);

@@ -9,8 +9,9 @@ namespace Core.UI
         [SerializeField] private UpDownUI behaviour;
         private Color color;
 
-        private void Start()
+        public override void Init()
         {
+            base.Init();
             color = image.color;
         }
 

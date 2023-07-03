@@ -108,7 +108,7 @@ namespace Core.Location
 
             
             
-            playerDataManager.WorldHandler.SetLocation(this);
+            worldHandler.SetLocation(this);
         }
         
         private void InitLocation(PlayerDataManager playerDataManager)

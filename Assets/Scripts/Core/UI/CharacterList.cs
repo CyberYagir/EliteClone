@@ -15,22 +15,20 @@ namespace Core.UI
     
         private List<ButtonEffect> items = new List<ButtonEffect>();
         private BaseWindow baseWindow;
-        
-        private WorldDataHandler worldDataHandler;
-        
-        
+
+
         public Event ChangeSelect = new Event();
 
 
 
         public void RedrawQuests()
         {
-            if (worldDataHandler.CurrentLocationGenerator != null && worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation)
+            if (WorldDataHandler.CurrentLocationGenerator != null && WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation)
             {
                 if (items.Count != 0 && upDownUI.selectedIndex != -1 && items.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex
                 {
                     var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
-                    var quests = worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.quests.FindAll(x => x.quester == character);
+                    var quests = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.quests.FindAll(x => x.quester == character);
                     quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestCompleted.Rewarded && y.questID == x.questID) != null);
                     questList.UpdateQuests(quests);
                 }
@@ -38,16 +36,16 @@ namespace Core.UI
         }
 
 
-        private void Start()
+        public override void Init()
         {
-            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            base.Init();
             
             baseWindow = GetComponentInParent<BaseWindow>();
-            worldDataHandler.OnChangeLocation += UpdateList;
+            WorldDataHandler.OnChangeLocation += UpdateList;
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
-            worldDataHandler.ShipPlayer.land.OnLand += Enable;
+            WorldDataHandler.ShipPlayer.land.OnLand += Enable;
             
             if (upDownUI.selectedIndex == -1)
             {
@@ -67,7 +65,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (worldDataHandler.ShipPlayer.land.isLanded)
+            if (WorldDataHandler.ShipPlayer.land.isLanded)
             {
                 ChangeTab();
             }
@@ -109,12 +107,7 @@ namespace Core.UI
         
             items = new List<ButtonEffect>();
 
-            if (worldDataHandler == null)
-            {
-                worldDataHandler = PlayerDataManager.Instance.WorldHandler;
-            }
-            
-            var orbitStation = worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation;
+            var orbitStation = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation;
             orbitStation.RemoveCharactersWithoutQuests();
             int id = 0;
             foreach (var character in orbitStation.characters)

@@ -15,29 +15,32 @@ namespace Core.UI
         [SerializeField] private TMP_Text infoText, nameText;
         [SerializeField] private CharacterList characters;
         [SerializeField] private TMP_Text repairT, fuelT;
-        
-        private WorldDataHandler worldDataHandler;
-        private void Start()
+        private Player player;
+
+        public override void Init()
         {
-            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            base.Init();
             
-            Init();
+            player = WorldDataHandler.ShipPlayer;
+            
+            BaseInit();
             if (World.Scene != Scenes.Location)
             {
                 gameObject.SetActive(false);
             }
             else
             {
-                if (worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation != null)
+                if (WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation != null)
                 {
                     ChangeUI();
                 }
             }
         }
 
-        public void Init()
+
+        public void BaseInit()
         {
-            worldDataHandler.ShipPlayer.land.OnLand += RedrawAll;
+            player.land.OnLand += RedrawAll;
             
             rect = GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
@@ -46,7 +49,7 @@ namespace Core.UI
 
         public void ChangeUI()
         {
-            nameText.text = worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.transform.name;
+            nameText.text = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.transform.name;
             UpdateCosts();
         }
 
@@ -54,20 +57,20 @@ namespace Core.UI
         {
             base.OnUpdate();
             Animation();
-            if (worldDataHandler.ShipPlayer.land.isLanded)
+            if (player.land.isLanded)
             {
                 var date = DateTime.Now.Date.AddYears(1025);    
                 infoText.text = $"Date: {date:d}\n" +
                                 $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
-                                "Credits: " + worldDataHandler.ShipPlayer.cargo.GetCredits();
+                                "Credits: " + player.cargo.GetCredits();
             }
 
         }
 
         public void UpdateCosts()
         {
-            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (worldDataHandler.ShipPlayer.Ship().GetValue(Health).max - worldDataHandler.ShipPlayer.Ship().GetValue(Health).value));
-            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (worldDataHandler.ShipPlayer.Ship().GetValue(Fuel).max - worldDataHandler.ShipPlayer.Ship().GetValue(Fuel).value));
+            repairT.text = "Repair: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Curpus) * (player.Ship().GetValue(Health).max - player.Ship().GetValue(Health).value));
+            fuelT.text = "Fuel: " + (StationRefiller.Instance.GetRefillerValue(StationRefiller.Refiller.RefillType.Fuel) * (player.Ship().GetValue(Fuel).max - player.Ship().GetValue(Fuel).value));
         }
 
         public void RedrawAll()
@@ -84,7 +87,7 @@ namespace Core.UI
         {
             if (rect)
             {
-                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, worldDataHandler.ShipPlayer.land.isLanded ? height : 0), 5 * Time.deltaTime);
+                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, player.land.isLanded ? height : 0), 5 * Time.deltaTime);
                 canvas.enabled = rect.sizeDelta.y >= 0.1f;
             }
         }

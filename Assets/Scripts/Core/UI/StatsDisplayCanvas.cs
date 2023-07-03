@@ -38,10 +38,13 @@ namespace Core.UI
     
         private Player player;
         private Color warpActiveColor;
-        private void Start()
+        
+        public override void Init()
         {
+            base.Init();
             player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
         }
+
 
         public override void OnUpdate()
         {
@@ -52,7 +55,6 @@ namespace Core.UI
             heatValue.SetValue(player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).value, player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).max);
             warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
             warpDisplayRow.UpdateColor();
-
         }
     }
 }

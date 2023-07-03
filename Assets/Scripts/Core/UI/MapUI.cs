@@ -10,12 +10,15 @@ namespace Core.UI
     public class MapUI : MonoUI
     {
         [SerializeField] private GameObject fader;
-        private void Start()
+
+
+        public override void Init()
         {
+            base.Init();
             Player.OnSceneChanged += Set;
             Set();
         }
-
+        
         private void Set()
         {
             if (!MapGenerator.Set)
@@ -35,8 +38,6 @@ namespace Core.UI
                 var fd = Instantiate(fader.gameObject).GetComponent<FaderMultiScenes>();
                 fd.LoadScene(Scenes.Map);
             }
-
         }
-
     }
 }

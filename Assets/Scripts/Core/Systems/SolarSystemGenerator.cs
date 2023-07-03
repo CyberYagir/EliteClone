@@ -24,8 +24,6 @@ namespace Core.Systems
         {
             base.Init(playerDataManager);
             
-            playerDataManager.WorldHandler.SetLocation(this);
-            
             World.SetScene(Scenes.System);
             this.filesSystemHandler = playerDataManager.FSHandler;
             this.worldHandler = playerDataManager.WorldHandler;
@@ -34,6 +32,8 @@ namespace Core.Systems
             SolarStaticBuilder.ClearSavedSystem();
             InitSystem();
             CreateSystem();
+            
+            worldHandler.SetLocation(this);
         }
 
         public override void Loop()

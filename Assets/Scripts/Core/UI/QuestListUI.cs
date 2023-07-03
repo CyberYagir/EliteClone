@@ -13,13 +13,17 @@ namespace Core.UI
         [SerializeField] public BaseTabUI characterList, questInfo;
 
         private List<Quest> questsList;
+        private bool skipFrame = false;
+        
         public Event<Quest> OnChangeSelected = new Event<Quest>();
 
 
         public int QuestsCount => questsList == null ? 0 : questsList.Count;
 
-        private void Start()
+        public override void Init()
         {
+            base.Init();
+            
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             Player.OnSceneChanged += () =>
@@ -28,8 +32,9 @@ namespace Core.UI
                 Disable();
             };
 
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnUnLand += Disable;
+            WorldDataHandler.ShipPlayer.land.OnUnLand += Disable;
         }
+
 
 
         public void ChangeSelected()
@@ -77,7 +82,6 @@ namespace Core.UI
             }
         }
 
-        private bool skipFrame = false;
         public void UpdateQuests(List<Quest> quests)
         {
             questsList = quests;

@@ -22,11 +22,13 @@ namespace Core.UI
     
         private float time = 60;
         private RectTransform rectTransform;
-    
-        private void Start()
+
+        public override void Init()
         {
+            base.Init();
             rectTransform = GetComponent<RectTransform>();
         }
+        
 
         public override void OnUpdate()
         {
