@@ -12,6 +12,8 @@ namespace Core.Location
     public class QuestsStandardMethods : MonoBehaviour
     {
 
+        
+        
         #region Inits
 
         
@@ -77,7 +79,6 @@ namespace Core.Location
 
         #endregion
 
-
         #region IsComplete
 
         
@@ -85,13 +86,14 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
             {
-                bool allItemInInventory = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer);
+                var worldHandler = PlayerDataManager.Instance.WorldHandler;
+                bool allItemInInventory = worldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer);
                 var last = quest.GetLastQuestPath();
                 if (allItemInInventory)
                 {
-                    if (last.solarName == PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem.name)
+                    if (last.solarName == worldHandler.CurrentSolarSystem.name)
                     {
-                        if (WorldOrbitalStation.Instance.transform.name == last.targetName)
+                        if (GetComponent<WorldOrbitalStation>().transform.name == last.targetName)
                         {
                             quest.questState = Quest.QuestCompleted.Completed;
                         }
@@ -128,7 +130,7 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Mine"))
             {
-                if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+                if (GetComponent<WorldOrbitalStation>().transform.name == quest.appliedStation)
                 {
                     if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
                     {
@@ -146,11 +148,12 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Transfer"))
             {
-                if (WorldOrbitalStation.Instance.transform.name == quest.GetLastQuestPath().targetName)
+                var worldOrbitalStation = GetComponent<WorldOrbitalStation>();
+                if (worldOrbitalStation.transform.name == quest.GetLastQuestPath().targetName)
                 {
                     quest.buttonText = "Items to transfer missing";
                 }
-                else if (WorldOrbitalStation.Instance.transform.name == quest.appliedStation)
+                else if (worldOrbitalStation.transform.name == quest.appliedStation)
                 {
                     if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer))
                     {

@@ -12,7 +12,6 @@ namespace Core.Systems.InteractivePoints
 
         public virtual void InitLocation(PlayerDataManager playerDataManager, LocationGenerator locationGenerator)
         {
-            
         }
     }
 }

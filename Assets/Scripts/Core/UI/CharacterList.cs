@@ -15,18 +15,22 @@ namespace Core.UI
     
         private List<ButtonEffect> items = new List<ButtonEffect>();
         private BaseWindow baseWindow;
+        
+        private WorldDataHandler worldDataHandler;
+        
+        
         public Event ChangeSelect = new Event();
 
 
 
         public void RedrawQuests()
         {
-            if (WorldOrbitalStation.Instance != null)
+            if (worldDataHandler.CurrentLocationGenerator != null && worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation)
             {
                 if (items.Count != 0 && upDownUI.selectedIndex != -1 && items.Count > upDownUI.selectedIndex) //Чтобы не было ошибок upDownUI.selectedIndex
                 {
                     var character = items[upDownUI.selectedIndex].GetComponent<QuesterItemUI>().GetCharacter();
-                    var quests = WorldOrbitalStation.Instance.quests.FindAll(x => x.quester == character);
+                    var quests = worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.quests.FindAll(x => x.quester == character);
                     quests.RemoveAll(x => AppliedQuests.Instance.quests.Find(y => y.questState == Quest.QuestCompleted.Rewarded && y.questID == x.questID) != null);
                     questList.UpdateQuests(quests);
                 }
@@ -36,23 +40,20 @@ namespace Core.UI
 
         private void Start()
         {
+            worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            
             baseWindow = GetComponentInParent<BaseWindow>();
-            OrbitalStationStaticBuilder.OnInit += UpdateList;
+            worldDataHandler.OnChangeLocation += UpdateList;
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnLand += Enable;
+            worldDataHandler.ShipPlayer.land.OnLand += Enable;
             
             if (upDownUI.selectedIndex == -1)
             {
                 upDownUI.ForceChangeSelect(0);
             }
         }
-
-        // private void OnDestroy()
-        // {
-        //     ChangeSelect -= RedrawQuests;
-        // }
 
         public void ChangeSelected()
         {
@@ -66,7 +67,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded)
+            if (worldDataHandler.ShipPlayer.land.isLanded)
             {
                 ChangeTab();
             }
@@ -107,23 +108,30 @@ namespace Core.UI
             UITweaks.ClearHolder(holder);
         
             items = new List<ButtonEffect>();
-            WorldOrbitalStation.Instance.RemoveCharactersWithoutQuests();
+
+            if (worldDataHandler == null)
+            {
+                worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            }
+            
+            var orbitStation = worldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation;
+            orbitStation.RemoveCharactersWithoutQuests();
             int id = 0;
-            foreach (var character in WorldOrbitalStation.Instance.characters)
+            foreach (var character in orbitStation.characters)
             {
                 var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
                 it.InitQuesterItem(character.fraction, WorldDataItem.Fractions.IconByID(character.fraction), character.firstName + " " + character.lastName, character, id);
                 it.gameObject.SetActive(true);
                 var bEffect = it.GetComponent<ButtonEffect>();
                 items.Add(bEffect);
-                if (WorldOrbitalStation.Instance.additionalCharacters.Contains(character.characterID))
+                if (orbitStation.additionalCharacters.Contains(character.characterID))
                 {
                     bEffect.SetNoneColor(Color.green);
                 }
 
                 id++;
             }
-            upDownUI.itemsCount = WorldOrbitalStation.Instance.characters.Count;
+            upDownUI.itemsCount = orbitStation.characters.Count;
 
             ChangeSelected();
         }

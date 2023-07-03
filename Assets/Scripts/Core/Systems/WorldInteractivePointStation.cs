@@ -7,7 +7,10 @@ namespace Core.Systems.InteractivePoints
         public override void InitLocation(PlayerDataManager playerDataManager, LocationGenerator locationGenerator)
         {
             base.InitLocation(playerDataManager, locationGenerator);
-            GetComponent<WorldOrbitalStation>().Init();
+            
+            locationGenerator.SetSpawnedLocation(gameObject, LocationGenerator.SpawnedLocation.SpawnedLocationType.OrbitalStation);
+            
+            GetComponent<WorldOrbitalStation>().Init(playerDataManager);
         }
     }
 }

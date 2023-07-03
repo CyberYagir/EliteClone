@@ -32,6 +32,46 @@ namespace Core.Location
     }
     public class LocationGenerator : StartupObject
     {
+        [System.Serializable]
+        public class SpawnedLocation
+        {
+            
+            public enum SpawnedLocationType
+            {
+                OrbitalStation,
+                MeteorBelt,
+                BotsLocation
+            }
+            [SerializeField] private GameObject spawnedLocation;
+
+            [SerializeField] private BeltGenerator beltGenerator;
+            [SerializeField] private WorldOrbitalStation orbitStation;
+            [SerializeField] private LocationBotPoint botPoint;
+
+
+            private SingleInitialization singleInitialization;
+            private SpawnedLocationType type;
+
+            public SpawnedLocation(GameObject spawnedLocation, SpawnedLocationType type)
+            {
+                this.spawnedLocation = spawnedLocation;
+                this.type = type;
+
+                beltGenerator = spawnedLocation.GetComponent<BeltGenerator>();
+                orbitStation = spawnedLocation.GetComponent<WorldOrbitalStation>();
+                botPoint = spawnedLocation.GetComponent<LocationBotPoint>();
+
+                singleInitialization = spawnedLocation.GetComponent<SingleInitialization>();
+            }
+
+            public SpawnedLocationType Type => type;
+            public LocationBotPoint BotPoint => botPoint;
+            public WorldOrbitalStation OrbitStation => orbitStation;
+            public BeltGenerator BeltGenerator => beltGenerator;
+            public GameObject Spawned => spawnedLocation;
+        }
+        
+        
         public static Location CurrentSave;
 
         [SerializeField] private GameObject planet;
@@ -40,32 +80,40 @@ namespace Core.Location
         [SerializeField] private GameObject systemPoint;
         [SerializeField] private GameObject beltPoint;
 
+        [SerializeField] private SpawnedLocation currentLocationData;
+
         public Event OnSetSystemToLocation = new Event();
+
 
         private WorldDataHandler worldHandler;
         private FilesSystemHandler filesSystemHandler;
 
+        public SpawnedLocation CurrentLocationData => currentLocationData;
+
         public override void Init(PlayerDataManager playerDataManager)
         {
             base.Init(playerDataManager);
+            
+            playerDataManager.WorldHandler.SetLocation(this);
             
             worldHandler = playerDataManager.WorldHandler;
             filesSystemHandler = playerDataManager.FSHandler;
             
             World.SetScene(Scenes.Location);
 
-            worldHandler.TryCreatePlayerShip().Init();
             
+            worldHandler.TryCreatePlayerShip().Init();
 
 
             InitLocation(playerDataManager);
 
+            
+            
         }
         
         private void InitLocation(PlayerDataManager playerDataManager)
         {
             CurrentSave = null;
-            OrbitalStationStaticBuilder.ClearEvent();
             
             if (!File.Exists(PlayerDataManager.Instance.FSHandler.CurrentLocationFile))
             {
@@ -135,6 +183,11 @@ namespace Core.Location
         {
             var location = MoveWorld();
             var locationObject = location.GetComponent<WorldInteractivePoint>();
+            
+            
+            locationObject.InitLocation(playerDataManager, this);
+            
+            
             if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
             {
                 worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
@@ -142,7 +195,7 @@ namespace Core.Location
             }
             else if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
             {
-                var allPoints = WorldOrbitalStation.Instance.GetComponentInChildren<WorldOrbitalStationPoints>().GetLandPoint();
+                var allPoints = CurrentLocationData.OrbitStation.Points.GetLandPoint();
                 var point = allPoints[Random.Range(0, allPoints.Count)];
             
                 worldHandler.ShipPlayer.transform.position = point.point.position;
@@ -151,9 +204,9 @@ namespace Core.Location
                 worldHandler.ShipPlayer.land.SetLand(true, point.point.position, point.point.rotation);
 
                 point.isFilled = true;
+                point.isFilled = true;
             }
 
-            locationObject.InitLocation(playerDataManager, this);
         }
 
         private void Start()
@@ -213,6 +266,11 @@ namespace Core.Location
         public static void RemoveLocationFile()
         {
             File.Delete(PlayerDataManager.Instance.FSHandler.CurrentLocationFile);
+        }
+
+        public void SetSpawnedLocation(GameObject location, SpawnedLocation.SpawnedLocationType type)
+        {
+            currentLocationData = new SpawnedLocation(location, type);
         }
     }
 }

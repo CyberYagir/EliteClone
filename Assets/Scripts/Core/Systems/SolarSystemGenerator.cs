@@ -24,6 +24,7 @@ namespace Core.Systems
         {
             base.Init(playerDataManager);
             
+            playerDataManager.WorldHandler.SetLocation(this);
             
             World.SetScene(Scenes.System);
             this.filesSystemHandler = playerDataManager.FSHandler;

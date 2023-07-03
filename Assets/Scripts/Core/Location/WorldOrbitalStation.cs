@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Core.PlayerScripts;
 using Core.Quests;
 using Core.Systems;
@@ -10,106 +9,45 @@ using Random = System.Random;
 
 namespace Core.Location
 {
-    public class NamesHolder
-    {
-        public static NamesHolder Instance;
-        public string[] FirstNames, LastNames;
-
-
-        public static void Init()
-        {
-            if (Instance == null)
-            {
-                Instance = new NamesHolder();
-                if (Instance.FirstNames == null)
-                {
-                    Instance.FirstNames = LoadFromFile("names");
-                    Instance.LastNames = LoadFromFile("lastnames");
-                }
-            }
-        }
-
-        public static string GetFirstName(Random rnd)
-        {
-            Init();
-            return Instance.FirstNames[rnd.Next(0, Instance.FirstNames.Length)];
-        }
-        public static string GetLastName(Random rnd)
-        {
-            Init();
-            return Instance.LastNames[rnd.Next(0, Instance.LastNames.Length)];
-        }
-        private static string[] LoadFromFile(string nm)
-        {
-            TextAsset mytxtData = (TextAsset) Resources.Load(nm);
-            var wrds = mytxtData.text;
-            return wrds.Split('/');
-        }
-    
-        public static string ToUpperFist(string str)
-        {
-            if (str.Length == 1)
-                return char.ToUpper(str[0]).ToString();
-            return (char.ToUpper(str[0]) + str.Substring(1).ToLower());
-        }
-
-        public static int StringToSeed(string name)
-        {
-            int seed = 0;
-            foreach (var ch in Encoding.ASCII.GetBytes(name))
-            {
-                seed += ch;
-            }
-
-            return seed;
-        }
-    }
-
-    public class WorldOrbitalStation : Singleton<WorldOrbitalStation>
+    public class WorldOrbitalStation : StartupObject
     {
         [Serializable]
         public class OrbitalStationMesh
         {
-            public GameObject worldObject;
-            public Transform spawnPoint;
+            [SerializeField] private GameObject worldObject;
+            [SerializeField] private Transform spawnPoint;
+            [SerializeField] private WorldOrbitalStationPoints points;
+
+            public GameObject WorldObject => worldObject;
+            public Transform SpawnPoint => spawnPoint;
+            public WorldOrbitalStationPoints Points => points;
         }
         
-        
-        public List<OrbitalStationMesh> meshList;
-        
+        [SerializeField] private List<OrbitalStationMesh> meshList;
         [SerializeField] private int uniqSeed;
         [SerializeField] private StationRefiller refiller;
         [SerializeField] private QuestsMethodObject methods;
-        
-        
+
         public List<Quest> quests;
         public List<Character> characters;
         public List<int> additionalCharacters = new List<int>();
 
-
+        private WorldOrbitalStationPoints points;
         private WorldDataHandler worldHandler;
 
-        public void Init()
+        public WorldOrbitalStationPoints Points => points;
+
+        public override void Init(PlayerDataManager playerDataManager)
         {
-            worldHandler = PlayerDataManager.Instance.WorldHandler;
+            base.Init(playerDataManager);
             
-            Single(this);
+            worldHandler = playerDataManager.WorldHandler;
+
             OrbitalStationStaticBuilder.InitNames();
             uniqSeed = OrbitalStationStaticBuilder.CalcSeed(transform.name, LocationGenerator.CurrentSave.GetSystemCode());
 
-            int meshType = new Random(uniqSeed).Next(0, meshList.Count);
-            for (int i = 0; i < meshList.Count; i++)
-            {
-                if (i == meshType)
-                {
-                    meshList[i].worldObject.SetActive(true);
-                    GetComponent<WorldInteractivePoint>().spawnPoint = meshList[i].spawnPoint;
-                }
-                else
-                {
-                    meshList[i].worldObject.SetActive(false);
-                }
-            }
+            RandomVisuals();
+            
             
             refiller.InitRefiller(uniqSeed);
             characters = InitCharacters(uniqSeed);
@@ -121,20 +59,34 @@ namespace Core.Location
             GetComponent<ContactObject>().Init(false);
         
             RemoveCharactersWithoutQuests();
+            
+            
+            points.Init(this);
+            
+            Debug.LogError("InitStation");
         }
 
-        public int GetUniqSeed()
+        private void RandomVisuals()
         {
-            return uniqSeed;
+            int meshType = new Random(uniqSeed).Next(0, meshList.Count);
+            for (int i = 0; i < meshList.Count; i++)
+            {
+                if (i == meshType)
+                {
+                    meshList[i].WorldObject.SetActive(true);
+                    GetComponent<WorldInteractivePoint>().spawnPoint = meshList[i].SpawnPoint;
+                    points = meshList[i].Points;
+                }
+                else
+                {
+                    meshList[i].WorldObject.SetActive(false);
+                }
+            }
         }
 
+        public int GetUniqSeed() => uniqSeed;
 
-
-        private void Start()
-        {
-            OrbitalStationStaticBuilder.OnInit.Run();
-        }
-
+        
 
         public List<Character> InitCharacters(int seed)
         {

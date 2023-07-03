@@ -14,15 +14,12 @@ namespace Core.Location
         [SerializeField] private List<LandPoint> landPoints;
         [SerializeField] private GameObject botPrefab;
         [SerializeField] private List<Transform> botPoints;
+        private WorldOrbitalStation worldOrbitalStation;
 
-        private void Start()
+        public void Init(WorldOrbitalStation worldOrbitalStation)
         {
-            Init();
-        }
-
-        private void Init()
-        {
-            Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
+            this.worldOrbitalStation = worldOrbitalStation;
+            Random rnd = new Random(worldOrbitalStation.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
             for (int i = 0; i < landPoints.Count; i++)
             {
                 if (rnd.Next(0, 100) <= 30)
@@ -67,7 +64,7 @@ namespace Core.Location
         {
             bool isEnded = false;
             int trys = 0;
-            Random rnd = new Random(WorldOrbitalStation.Instance.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
+            Random rnd = new Random(worldOrbitalStation.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed() + DateTime.Now.Hour + DateTime.Now.Second);
             int id = 0;
             while (!isEnded)
             {
