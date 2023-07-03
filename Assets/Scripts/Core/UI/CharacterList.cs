@@ -103,6 +103,8 @@ namespace Core.UI
 
         public void UpdateList()
         {
+            if (WorldDataHandler.CurrentLocationGenerator == null) return;
+            
             UITweaks.ClearHolder(holder);
         
             items = new List<ButtonEffect>();

@@ -67,9 +67,11 @@ namespace Core.Bot
         }
         
 
-        public void InitBot(WorldDataHandler worldDataHandler, Random rnd = null)
+        public void InitBot(WorldDataHandler worldDataHandler, SolarSystemShips solarSystemShips, Random rnd = null)
         {
-            this.worldDataHandler = worldDataHandler;
+            this.worldDataHandler = worldDataHandler;            
+            this.solarSystemShips = solarSystemShips;
+
             
             
             NamesHolder.Init();

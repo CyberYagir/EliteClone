@@ -15,10 +15,14 @@ namespace Core.Location
         [SerializeField] private GameObject botPrefab;
         [SerializeField] private List<Transform> botPoints;
         private WorldOrbitalStation worldOrbitalStation;
+        private SolarSystemShips solarSystemShips;
+        private WorldDataHandler worldHandler;
 
-        public void Init(WorldOrbitalStation worldOrbitalStation)
+        public void Init(WorldOrbitalStation worldOrbitalStation, SolarSystemShips solarSystemShips)
         {
             this.worldOrbitalStation = worldOrbitalStation;
+            worldHandler = PlayerDataManager.Instance.WorldHandler;
+            this.solarSystemShips = solarSystemShips;
             Random rnd = new Random(worldOrbitalStation.GetUniqSeed() + SaveLoadData.GetCurrentSaveSeed());
             for (int i = 0; i < landPoints.Count; i++)
             {
@@ -34,7 +38,7 @@ namespace Core.Location
                         builder.GetShield().isActive = true;
                         builder.AddContact(false);
                         builder.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, 0, 0));
-                        builder.InitBot(PlayerDataManager.Instance.WorldHandler, rnd);
+                        builder.InitBot(worldHandler, solarSystemShips, rnd);
                         builder.GetVisual().SetVisual(rnd);
                         builder.SetBehaviour(BotBuilder.BotState.Land);
                         builder.SetLandPoint(landPoints[i]);
@@ -87,7 +91,7 @@ namespace Core.Location
                                 builder.GetShield().isActive = true;
                                 landPoint.isFilled = true;
                                 isEnded = true;
-                                builder.InitBot(PlayerDataManager.Instance.WorldHandler, rnd);
+                                builder.InitBot(worldHandler, solarSystemShips, rnd);
                                 builder.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, id, rnd.Next(0, 999)));
                                 builder.GetVisual().SetVisual(rnd);
                                 builder.AddContact(true);

@@ -132,6 +132,11 @@ namespace Core.UI
                 foreach (var wsp in spaceObjects)
                 {
                     if (camera == null) continue;
+                    if (wsp.Obj == null)
+                    {
+                        spaceObjects.Remove(wsp);
+                        break;
+                    }
                     wsp.Obj.UpdateVisibility();
                     if (wsp.Obj.isVisible && wsp.CanvasPoint)
                     {

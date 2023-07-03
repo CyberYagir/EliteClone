@@ -91,7 +91,7 @@ namespace Core.Location
             var pos = new Vector3(rnd.Next(-300, 300), rnd.Next(-300, 300), rnd.Next(-300, 300));
             var bot = solarSystemShips.CreateBot(null, BotBuilder.BotState.Stationary);
             bot.transform.position = pos;
-            bot.InitBot(worldDataHandler,rnd);
+            bot.InitBot(worldDataHandler, solarSystemShips, rnd);
             bot.GetVisual().SetVisual(visuals);
             bot.SetHuman(SolarSystemShipsStaticBuilder.GenerateHuman(rnd, 0, 0));
             bot.SetName();

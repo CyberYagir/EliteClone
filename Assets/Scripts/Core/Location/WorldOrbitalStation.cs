@@ -34,8 +34,10 @@ namespace Core.Location
 
         private WorldOrbitalStationPoints points;
         private WorldDataHandler worldHandler;
-
+        private SolarSystemShips ships;
+        
         public WorldOrbitalStationPoints Points => points;
+        
 
         public override void Init(PlayerDataManager playerDataManager)
         {
@@ -61,9 +63,14 @@ namespace Core.Location
             RemoveCharactersWithoutQuests();
             
             
-            points.Init(this);
+            points.Init(this, ships);
             
             Debug.LogError("InitStation");
+        }
+
+        public void SetShips(SolarSystemShips ships)
+        {
+            this.ships = ships;
         }
 
         private void RandomVisuals()
