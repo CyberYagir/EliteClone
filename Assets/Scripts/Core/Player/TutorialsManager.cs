@@ -1,10 +1,4 @@
-using System.Collections;
 using System.IO;
-using Core.Game;
-using Core.Location;
-using Core.Systems;
-using JetBrains.Annotations;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Core.PlayerScripts
@@ -15,6 +9,11 @@ namespace Core.PlayerScripts
 
         public TutorialSO TutorialData => tutorialData;
 
+        public void Clear()
+        {
+            tutorialData = null;
+        }
+        
         public void LoadTutorial()
         {
             if (TutorialData == null)

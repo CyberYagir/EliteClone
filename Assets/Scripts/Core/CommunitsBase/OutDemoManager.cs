@@ -36,7 +36,9 @@ namespace Core.CommunistsBase.OutDemo
             var tutorManager = PlayerDataManager.Instance.Services.TutorialsManager;
 
             var tutor = tutorManager.TutorialData;
-            tutor.CommunitsBaseStats.isSeeDemo = true;
+            tutor.ValuesData.AddWatchDemo(Demos.BaseDemo);
+            tutor.TutorialQuestsData.NextTutorialQuest();
+            
             tutorManager.SaveTutorial();
         }
     }

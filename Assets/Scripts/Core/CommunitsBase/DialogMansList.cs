@@ -10,18 +10,20 @@ namespace Core.CommunistsBase
 {
     public class DialogMansList : MonoBehaviour
     {
-        public List<Dialoger> dialogers;
+        [SerializeField] private List<Dialoger> dialogers;
 
         public void KillDeads()
         {
+            
             var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
-            if (tutor.CommunitsBaseStats != null)
+            if (!tutor.ValuesData.HaveWatchDemo(Demos.BaseDemo))
             {
-                foreach (var dialogs in tutor.CommunitsBaseStats.killedDialogs)
-                {
-                    var dialoger = dialogers.Find(x => x.Dialog.name == dialogs);
-                    Destroy(dialoger.gameObject);
-                }
+                tutor.MainBaseData.SetKilled(new List<string>());
+            }
+            foreach (var dialogs in tutor.MainBaseData.KilledDialogs)
+            {
+                var dialoger = dialogers.Find(x => x.Dialog.name == dialogs);
+                Destroy(dialoger.gameObject);
             }
 
             dialogers.RemoveAll(x => x == null);

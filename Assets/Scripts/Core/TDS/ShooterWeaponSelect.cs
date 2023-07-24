@@ -16,11 +16,13 @@ namespace Core.TDS
         [SerializeField] private ShooterInventory weapons;
         [SerializeField] private Transform leftH, rightH;
 
+        [HideInInspector] public Event<int> OnChangeCurrentWeapon= new Event<int>();
+
         private void Update()
         {
             for (int i = 0; i < weapons.items.Count; i++)
             {
-                if (Input.GetKeyDown((i+1).ToString()))
+                if (Input.GetKeyDown((i + 1).ToString()))
                 {
                     ChangeWeapon(i);
                 }
@@ -41,18 +43,21 @@ namespace Core.TDS
                 ActiveWeapon();
             }
 
+            OnChangeCurrentWeapon.Run(currentWeapon);
         }
-        
+
         public void ActiveWeapon()
         {
             var data = weaponsData.weapons[(int) (float) weapons.items[currentWeapon].GetKeyPair(KeyPairValue.Value)];
-            var weapon = (TDSWeapon)gameObject.AddComponent(Type.GetType(data.weaponScript + data.script.name));
+            var weapon = (TDSWeapon) gameObject.AddComponent(Type.GetType(data.weaponScript + data.script.name));
             data.mesh.SetActive(true);
             data.options.leftH.Set(leftH);
             data.options.rightH.Set(rightH);
             weapon.Init(weapons.items[currentWeapon].Clone(), data.options, data.bulletPoint);
         }
-        public void RemoveWeapon(){
+
+        public void RemoveWeapon()
+        {
             ShooterPlayer.Instance.animator.SetLayerValue(1, 0);
             if (currentWeapon != -1)
             {

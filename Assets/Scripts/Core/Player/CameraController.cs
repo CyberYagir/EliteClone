@@ -8,9 +8,17 @@ namespace Core.PlayerScripts
         [SerializeField] private FreeCam freeCam;
         private void Update()
         {
-            freeCam.enabled = InputService.GetAxisIsActive(KAction.Click);
-            Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
-            Cursor.visible = !freeCam.enabled;
+            if (!PlayerDataManager.Instance.RunHandler.IsPaused)
+            {
+                freeCam.enabled = InputService.GetAxisIsActive(KAction.Click);
+                Cursor.lockState = freeCam.enabled ? CursorLockMode.Locked : CursorLockMode.Confined;
+                Cursor.visible = !freeCam.enabled;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
         }
     }
 }

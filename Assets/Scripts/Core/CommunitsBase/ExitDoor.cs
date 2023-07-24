@@ -14,10 +14,10 @@ namespace Core.CommunistsBase
         {
             var manager = PlayerDataManager.Instance.Services.TutorialsManager;
             var tutorial = manager.TutorialData;
-            if (tutorial.CommunitsBaseStats == null)
+
+            if (tutorial.MainBaseData.KilledDialogs.Count == 0)
             {
-                tutorial.CommunitsBaseStats = new TutorialSO.CommBaseData();
-                tutorial.CommunitsBaseStats.killedDialogs = list.GetDead();
+                tutorial.MainBaseData.SetKilled(list.GetDead());
                 manager.SaveTutorial();
                 scenes.LoadScene(Scenes.OutBaseDemo);
             }

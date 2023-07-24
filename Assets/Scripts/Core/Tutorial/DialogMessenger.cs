@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Core.Tutorial;
+using Core.PlayerScripts;
 using Core.Tutorial;
 using DG.Tweening;
 using TMPro;
@@ -18,11 +19,17 @@ namespace Core.Dialogs.Visuals
         [SerializeField] private DialogMessengerMessage message;
         [SerializeField] private RectTransform holder;
         [SerializeField] private TMP_Text buttonText;
-
+        
+        private int replica = -1;
+        private Action onClose;
         private List<GameObject> replicas = new List<GameObject>();
-
-        public void Init()
+        private TutorialsManager tutorialsManager;
+        
+        public void Init(Action OnClose)
         {
+            tutorialsManager = PlayerDataManager.Instance.Services.TutorialsManager;
+            
+            onClose = OnClose;
             for (int i = 0; i < dialog.replicas.Count; i++)
             {
                 var messge = Instantiate(message, holder);
@@ -42,13 +49,16 @@ namespace Core.Dialogs.Visuals
             holder.GetComponent<VerticalLayoutGroup>().spacing = Random.Range(0.99f, 1f);
         }
 
-        private int replica = -1;
+
         public void NextReplica()
         {
             if (buttonText.text == "Close")
             {
-                PlayerTutorial.Instance.Invoke(dialog.replicas[replica].finishMethodName, 0);
                 PlayerTutorial.EnablePlayer(true);
+                onClose?.Invoke();
+                
+                tutorialsManager.SaveTutorial();
+                
                 Destroy(gameObject);
                 return;
             }

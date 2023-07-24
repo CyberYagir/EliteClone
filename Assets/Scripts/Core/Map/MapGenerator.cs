@@ -155,7 +155,7 @@ namespace Core.Map
                 systems.Add(system.name);
                 var spawn = Instantiate(star.gameObject, system.position.ToVector() / size, Quaternion.identity);
 
-                if (system.name == tutorial.baseSystemName)
+                if (system.name == tutorial.MainBaseData.BaseSystemName)
                 {
                     var render = spawn.GetComponentInChildren<Renderer>();
                     render.material.color = Color.red;

@@ -31,7 +31,8 @@ namespace Core.Core.Tutorial
         
         
         private TutorialSO TutorialData => tutorialsManager.TutorialData;
-        
+
+        public string CurrentTutorialQuestIsReaded => $"tutorQuest[{TutorialData.TutorialQuestsData.QuestID}-MessageRead";
         
         private void Awake()
         {
@@ -46,83 +47,155 @@ namespace Core.Core.Tutorial
         {
             Init();
         }
+
         public void Init()
         {
             var activator = FindObjectOfType<LocationUIActivator>();
+
+            CheckTutorialQuests(activator);
+        }
+
+        private void CheckTutorialQuests(LocationUIActivator activator)
+        {
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
-        
-            if (TutorialData.CommunitsBaseStats == null)
+            var questID = TutorialData.TutorialQuestsData.QuestID;
+            if (questID == 0)
             {
-                if (!TutorialData.m1_Dialog1)
-                {
-                    CreateMessenger(activator.transform, m1, () =>
+                CreateMessenger(activator.transform, m1,
+                    () => TutorialData.MainBaseData.SetFistSystem(worldDataHandler.CurrentSolarSystem.name),
+                    () =>
                     {
-                        TutorialData.startSystemName = worldDataHandler.CurrentSolarSystem.name;
+                        M1GenerateQuest(true);
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
                     });
-                }
-                else if (TutorialData.startSystemName != "")
-                {
-                    M1GenerateQuest(false);
-                }
             }
-            else if (TutorialData.CommunitsBaseStats.isSeeDemo && !TutorialData.seeTranslatorDemo && !TutorialData.m3_Dialog3)
+
+            if (questID == 1)
             {
-                if (!TutorialData.m2_Dialog2)
-                {
-                    CreateMessenger(activator.transform, m2, null);
-                }
-                else
-                {
-                    M2GenerateQuest(true);
-                    M2Events();
-                }
-                AddStation();
+                M1GenerateQuest(false);
             }
-            else if (TutorialData.CommunitsBaseStats.isSeeDemo && TutorialData.seeTranslatorDemo)
+
+            if (questID == 2)
             {
-                if (!TutorialData.m3_Dialog3)
-                {
-                    CreateMessenger(activator.transform, m3, null);
-                }
-                else
-                {
-                    M3GenerateQuest(true);
-               
-                }
+                CreateMessenger(activator.transform, m2,
+                    null,
+                    () =>
+                    {
+                        M2GenerateQuest(true);
+                        M2Events();
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
+                    });
+            }
+
+            if (questID == 3)
+            {
+                M2GenerateQuest(false);
+                M2Events();
+            }
+
+            if (questID == 4)
+            {
+                CreateMessenger(activator.transform, m3,
+                    null,
+                    () =>
+                    {
+                        M3GenerateQuest(true);
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
+                    });
+            }
+
+            if (questID == 5)
+            {
+                M3GenerateQuest(false);
+            }
+
+            if (questID == 6)
+            {
+                CreateMessenger(activator.transform, m3_2, null, null);
+            }
+
+            if (questID > 0)
+            {
                 AddStation();
             }
         }
 
-        public void CreateMessenger(Transform activator, Dialog dialog, Action actionBeforeSave)
+        // private void OldQuestsSystem(LocationUIActivator activator)
+        // {
+        //     PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
+        //     if (TutorialData.CommunitsBaseStats == null)
+        //     {
+        //         if (!TutorialData.m1_Dialog1)
+        //         {
+        //             CreateMessenger(activator.transform, m1, () => { TutorialData.startSystemName = worldDataHandler.CurrentSolarSystem.name; });
+        //         }
+        //         else if (TutorialData.startSystemName != "")
+        //         {
+        //             M1GenerateQuest(false);
+        //         }
+        //     }
+        //     else if (TutorialData.CommunitsBaseStats.isSeeDemo && !TutorialData.seeTranslatorDemo && !TutorialData.m3_Dialog3)
+        //     {
+        //         if (!TutorialData.m2_Dialog2)
+        //         {
+        //             CreateMessenger(activator.transform, m2, null);
+        //         }
+        //         else
+        //         {
+        //             M2GenerateQuest(true);
+        //             M2Events();
+        //         }
+        //
+        //         AddStation();
+        //     }
+        //     else if (TutorialData.CommunitsBaseStats.isSeeDemo && TutorialData.seeTranslatorDemo)
+        //     {
+        //         if (!TutorialData.m3_Dialog3)
+        //         {
+        //             CreateMessenger(activator.transform, m3, null);
+        //         }
+        //         else
+        //         {
+        //             M3GenerateQuest(true);
+        //         }
+        //
+        //         AddStation();
+        //     }
+        // }
+
+        public void CreateMessenger(Transform activator, Dialog dialog, Action beforeOpen, Action onClose)
         {
             var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
             messenger.dialog = dialog;
-            messenger.Init();
-            actionBeforeSave?.Invoke();
+            beforeOpen?.Invoke();
+            messenger.Init(onClose);
             tutorialsManager.SaveTutorial();
             EnablePlayer(false);
         }
     
         #region M1
-    
+
         public void M1AddStation()
         {
             if (station != null)
             {
                 Destroy(station.gameObject);
             }
+
             var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
             if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
-                TutorialData.baseSystemName == worldDataHandler.CurrentSolarSystem.name)
+                TutorialData.MainBaseData.BaseSystemName == worldDataHandler.CurrentSolarSystem.name)
             {
-                var rnd = new System.Random(NamesHolder.StringToSeed(TutorialData.startSystemName));
+                var rnd = new System.Random(NamesHolder.StringToSeed(TutorialData.MainBaseData.StartSystemName));
                 var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
-                var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1) , rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
+                var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
                 point.transform.localPosition = pos;
                 point.GetComponent<ContactObject>().Init();
                 point.name = "Communist Space Unorbital Station";
                 station = point;
-                TutorialData.baseSystemName = worldDataHandler.CurrentSolarSystem.name;
+                
+                TutorialData.MainBaseData.SetBase(worldDataHandler.CurrentSolarSystem.name);
+                
                 tutorialsManager.SaveTutorial();
                 StartCoroutine(M1AddStationUpdate());
             }
@@ -136,23 +209,17 @@ namespace Core.Core.Tutorial
             Player.OnSceneChanged += M1AddStation;
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.ContactsChanges.Run();
         }
-    
-        public void M1Quest()
-        {
-            M1GenerateQuest(true);
-            TutorialData.m1_Dialog1 = true;
-            tutorialsManager.SaveTutorial();
-        }
-    
+        
+
         private void M1GenerateQuest(bool notify)
         {
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
-        
+
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
-            quest.appliedSolar = TutorialData.startSystemName;
+            quest.appliedSolar = TutorialData.MainBaseData.StartSystemName;
             quest.appliedStation = "";
-            quest.GetPath(new System.Random(int.MaxValue), "Communists Base", TutorialData.startSystemName, 1, 3, false);
+            quest.GetPath(new System.Random(int.MaxValue), "Communists Base", TutorialData.MainBaseData.StartSystemName, 2, 4, false);
             quest.GetLastQuestPath().targetName = "Communists Base";
             quest.toTransfer = new List<Item>();
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
@@ -172,14 +239,7 @@ namespace Core.Core.Tutorial
         #endregion
 
         #region M2
-
-        public void M2Quest()
-        {
-            M2GenerateQuest(true);
-            TutorialData.m2_Dialog2 = true;
-            M2Events();
-            tutorialsManager.SaveTutorial();
-        }
+        
 
 
         public void M2Events()
@@ -228,14 +288,7 @@ namespace Core.Core.Tutorial
         #endregion
 
         #region M3
-
-        public void M3Quest()
-        {
-            M3GenerateQuest(true);
-            TutorialData.m3_Dialog3 = true;
-            tutorialsManager.SaveTutorial();
-        }
-
+        
 
         private string getKnight = "Get on the ship \"Knight\".";
         private string getZinc = "Obtain one or more full zinc stores.";
@@ -249,14 +302,13 @@ namespace Core.Core.Tutorial
             }
             else
             {
-                if (!TutorialData.m3_Dialog4)
-                {
-                    var activator = FindObjectOfType<LocationUIActivator>();
-                    CreateMessenger(activator.transform, m3_2, null);
-                    TutorialData.m3_Dialog4 = true;
-                    tutorialsManager.SaveTutorial();
-                }
-            
+                var activator = FindObjectOfType<LocationUIActivator>();
+                
+                
+                TutorialData.TutorialQuestsData.NextTutorialQuest();
+                CheckTutorialQuests(activator);
+                
+
                 if (!HaveZinc())
                 {
                     quest.keyValues.Add("Text",getZinc);

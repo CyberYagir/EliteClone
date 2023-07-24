@@ -9,11 +9,26 @@ using UnityEngine;
 
 namespace Core
 {
+    [System.Serializable]
+    public class RunHandler
+    {
+        [SerializeField] private bool isPaused;
+
+        public bool IsPaused => isPaused;
+
+
+        public void SetPause(bool state)
+        {
+            isPaused = state;
+        }
+    }
+    
     public class PlayerDataManager : Singleton<PlayerDataManager>
     {
         public static InitOptions.PlayerConfig PlayerConfig;
         public static float GenerateProgress;
-        
+
+        [SerializeField] private RunHandler runHandler;
         [SerializeField] private ServicesHandler servicesHandler;
         [SerializeField] private FilesSystemHandler filesSystemHandler;
         [SerializeField] private WorldDataHandler worldHandler;
@@ -29,10 +44,11 @@ namespace Core
 
         public WorldDataHandler WorldHandler => worldHandler;
 
+        public RunHandler RunHandler => runHandler;
+
 
         private void Awake()
         {
-            print("Init");
             Init();
         }
 
@@ -93,6 +109,9 @@ namespace Core
 
         public void LoadScene()
         {
+            servicesHandler.TutorialsManager.Clear();
+            servicesHandler.TutorialsManager.LoadTutorial();
+            
             var haveGalaxy = GalaxyGenerator.LoadSystems();
             if (File.Exists(filesSystemHandler.CurrentLocationFile) && haveGalaxy)
             {

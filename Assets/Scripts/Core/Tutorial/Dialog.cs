@@ -18,8 +18,6 @@ namespace Core.Dialogs
             public Character character;
             [TextArea(5, 60)]
             public string text;
-
-            public string finishMethodName;
         }
 
         public List<DialogPart> replicas;

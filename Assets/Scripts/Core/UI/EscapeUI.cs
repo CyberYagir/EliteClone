@@ -42,6 +42,7 @@ namespace Core.UI
             {
                 isPause = !isPause;
                 SetPause(isPause);
+                PlayerDataManager.Instance.RunHandler.SetPause(isPause);
             }
         }
 

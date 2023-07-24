@@ -14,7 +14,7 @@ namespace Core.CommunistsBase
         private void Start()
         {
             var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
-            if (tutor == null || tutor.CommunitsBaseStats == null || tutor.CommunitsBaseStats.isSeeDemo == false)
+            if (tutor == null || tutor.MainBaseData.HaveBase == false || tutor.ValuesData.HaveWatchDemo(Demos.BaseDemo) == false)
             {
                 quests.SetToBarmanQuests();
                 doorDemo.SetActive(true);

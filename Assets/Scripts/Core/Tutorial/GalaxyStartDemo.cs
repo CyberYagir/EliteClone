@@ -12,7 +12,7 @@ namespace Core.Tutorial
         private void Awake()
         {
             var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
-            if (!tutor.isDemoEnd)
+            if (!tutor.ValuesData.HaveWatchDemo(Demos.Start))
             {
                 World.LoadLevel(Scenes.Demo);
                 FindObjectOfType<GalaxyGenerator>().enabled = false;

@@ -19,8 +19,6 @@ namespace Core
             inputService.Init();
             itemsManager.Init();
             cursorManager.Init();
-            tutorialsManager.LoadTutorial();
-
         }
     }
 }

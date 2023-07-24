@@ -3824,6 +3824,21 @@ MonoBehaviour:
   weapons: {fileID: 8247541345845424693}
   leftH: {fileID: 452621883015767371}
   rightH: {fileID: 4401258046130843577}
+  OnChangeWeapon:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6075623428495604008}
+        m_TargetAssemblyTypeName: Core.TDS.UI.UIWeaponDisplay, CoreDef
+        m_MethodName: OnChangeWeapon
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &375828154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4864,6 +4879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 4884821234731229774}
   icon: {fileID: 5255397747495796761}
+  rect: {fileID: 558417540360272725}
 --- !u!1 &5062103633247080889
 GameObject:
   m_ObjectHideFlags: 0

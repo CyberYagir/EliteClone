@@ -34,6 +34,8 @@ namespace Core.Galaxy
         // Update is called once per frame
         private void Update()
         {
+            if (PlayerDataManager.Instance.RunHandler.IsPaused) return;
+            
             HandleMouseRotation();
 
             var acceleration = HandleKeyInput();
