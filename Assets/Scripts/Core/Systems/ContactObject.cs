@@ -17,7 +17,11 @@ namespace Core.Systems
 
         public void RemoveContact()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.RemoveContact(this);
+            var playerShip = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            if (playerShip != null)
+            {
+                playerShip.targets.RemoveContact(this);
+            }
         }
     }
 }

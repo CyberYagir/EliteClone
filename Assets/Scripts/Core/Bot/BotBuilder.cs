@@ -32,12 +32,15 @@ namespace Core.Bot
         private bool isDead;
         private SolarSystemShips solarSystemShips;
         private WorldDataHandler worldDataHandler;
-
+        private TutorialSO tutorialData;
+        
+        
         public int Fraction => human.fraction;
 
         private void Awake()
         {
             damager = GetComponent<Damager>();
+            tutorialData = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
         }
 
         public Damager GetDamager() => damager;
@@ -166,7 +169,7 @@ namespace Core.Bot
                 var drop = Instantiate(dropPrefab, transform.position, transform.rotation).GetComponent<WorldDrop>();
                 drop.GetComponent<BoxCollider>().isTrigger = true;
                 drop.Init(ItemsManager.GetRewardItem(rnd), worldDataHandler);
-                if (worldDataHandler.ShipPlayer.quests.quests.Count >= 1)
+                if (tutorialData.TutorialQuestsData.QuestID == 3)
                 {
                     if (human.fraction == WorldDataItem.Fractions.NameToID("Pirates"))
                     {
