@@ -23,4 +23,10 @@ public class ShooterWorldUI : MonoBehaviour
         energy.localScale = new Vector3(energy.localScale.x, data.GetEnergy() * maxScaleEnergy, energy.localScale.z) ;
         heath.localScale = new Vector3(heath.localScale.x, data.GetHealth() * maxScaleHeath, heath.localScale.z) ;
     }
+
+
+    public void DisableWorldUI()
+    {
+        energy.transform.parent.gameObject.SetActive(false);
+    }
 }
