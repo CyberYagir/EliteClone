@@ -10,27 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c039fe1e53d96849a98563b9a5569de, type: 3}
-  m_Name: M3_GetKnight
+  m_Name: 3. M3_GetKnight
   m_EditorClassIdentifier: 
   replicas:
   - character: 0
     text: Connecting...
-    finishMethodName: 
   - character: 2
     text: 'There was just a burst of energy out of your head, by the looks of it
       they weren''t bluffing. Are you dead or did you activate the transmitter? Over. '
-    finishMethodName: 
   - character: 1
     text: Alive, looks like your plan worked. It really shook me. But it pleases
       that now there is no dependence on them, but they are also not idiots and probably
       already know that the transmitter is not working. And I know that he is at
       this station. Tell me, is there any way to sneak into their base somehow? Over.
-    finishMethodName: 
   - character: 2
     text: The communists in your sector are the biggest suppliers of zinc. They have
       an approach for cargo ships in the station. You can try to make money on simple
       orders, and buy a Knight ship. It is very cheap and popular.
-    finishMethodName: 
   - character: 2
     text: 'The average price of an empty ship without modules is about 6k credits,
       with modules you can buy somewhere for 10k for sure.
@@ -38,4 +34,3 @@ MonoBehaviour:
       The price is different
       at each shipyard, and depends on the shortage of modules and demand. End of
       connection.'
-    finishMethodName: M3Quest

@@ -29,6 +29,8 @@ namespace Core.Init
 
         public void Play()
         {
+            
+            
             if (File.Exists(PlayerDataManager.Instance.FSHandler.GalaxyFile))
             {
                 GenerateGalaxy();
@@ -41,6 +43,9 @@ namespace Core.Init
 
         public void GenerateGalaxy()
         {
+            PlayerDataManager.Instance.Services.TutorialsManager.Clear();
+            PlayerDataManager.Instance.Services.TutorialsManager.LoadTutorial();
+            
             GalaxyGenerator.Clear();
             if (GalaxyGenerator.LoadSystems())
             {
@@ -48,6 +53,7 @@ namespace Core.Init
                 menuback.DOPlayForward();
                 ActiveLoading();
                 loadingText.text = "Loading Galaxy";
+
                 PlayerDataManager.Instance.LoadScene();
             }
         }

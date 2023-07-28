@@ -17,7 +17,7 @@ namespace Core.Core.Tutorial
     {
         [SerializeField] private GameObject dialogue;
         [SerializeField] private GameObject questPoint;
-        [SerializeField] private Dialog m1, m2, m3, m3_2;
+        [SerializeField] private Dialog m1, m2, m3, m3_2, m3_3;
         [SerializeField] private ItemShip knight;
         [SerializeField] private Item transmitterItem;
         [SerializeField] private Item zincItem;
@@ -111,7 +111,18 @@ namespace Core.Core.Tutorial
 
             if (questID == 6)
             {
-                CreateMessenger(activator.transform, m3_2, null, null);
+                CreateMessenger(activator.transform, m3_3,
+                    null,
+                    () =>
+                    {
+                        M3GenerateQuest(true);
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
+                    });
+            }
+
+            if (questID == 7)
+            {
+                M3GenerateQuest(false);
             }
 
             if (questID > 0)
@@ -292,7 +303,7 @@ namespace Core.Core.Tutorial
 
         private string getKnight = "Get on the ship \"Knight\".";
         private string getZinc = "Obtain one or more full zinc stores.";
-        private string flyToStation = "Fly to the communist station and make your way to the rear";
+
         public void M3GenerateQuest(bool notify)
         {
             var quest = GetEmptyQuest();
@@ -303,23 +314,24 @@ namespace Core.Core.Tutorial
             else
             {
                 var activator = FindObjectOfType<LocationUIActivator>();
-                
-                
+
+
                 TutorialData.TutorialQuestsData.NextTutorialQuest();
                 CheckTutorialQuests(activator);
-                
+
 
                 if (!HaveZinc())
                 {
-                    quest.keyValues.Add("Text",getZinc);
+                    quest.keyValues.Add("Text", getZinc);
                 }
                 else
                 {
-                    quest.keyValues.Add("Text", flyToStation);
                     PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory -= HaveZincVoid;
                 }
+
                 M3Events();
             }
+
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
         }
 
@@ -335,7 +347,6 @@ namespace Core.Core.Tutorial
                     var isFull = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.FindItem(zincItem.id.id).amount.IsFull();
                     if (isFull != haveZinc)
                     {
-                        quest.keyValues["Text"] = flyToStation;
                         PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
                         haveZinc = true;
                     }
