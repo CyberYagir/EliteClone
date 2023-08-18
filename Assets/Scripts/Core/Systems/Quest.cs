@@ -74,11 +74,14 @@ namespace Core.Location
             questType = rnd.Next(0, WorldDataItem.Quests.Count);
             questID = questSeed;
             questCost = rnd.Next(1, 5);
-            if (!notStation)
+            if (!IsEmptyQuest())
             {
-                if (methdos != null)
+                if (!notStation)
                 {
-                    methdos.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
+                    if (methdos != null)
+                    {
+                        methdos.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
+                    }
                 }
             }
         }
@@ -180,7 +183,7 @@ namespace Core.Location
         {
             if (currentPath.Contains(PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem.name)) return;
 
-            if (string.IsNullOrEmpty(appliedSolar) || string.IsNullOrEmpty(targetSolar)) return;
+            if (IsEmptyQuest()) return;
 
             isOnLoading = true;
             var path = new List<string>();
@@ -190,6 +193,11 @@ namespace Core.Location
                 isOnLoading = false;
                 PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
             });
+        }
+
+        public bool IsEmptyQuest()
+        {
+            return string.IsNullOrEmpty(appliedSolar) || string.IsNullOrEmpty(targetSolar);
         }
 
         public void GetButtonText()

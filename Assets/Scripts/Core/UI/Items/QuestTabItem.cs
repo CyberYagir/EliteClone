@@ -36,7 +36,15 @@ namespace Core.UI
 
             if (questsQuest.CurrentPath.Count == 0 || questsQuest.isOnLoading)
             {
-                jumpToT.text = "Calculating...";
+                if (!questsQuest.IsEmptyQuest())
+                {
+                    jumpToT.text = "Calculating...";
+                }
+                else
+                {
+                    
+                    jumpToT.text = "<color=#FFFFFF10>Empty";
+                }
             }
             else
             {

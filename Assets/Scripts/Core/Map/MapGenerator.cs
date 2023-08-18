@@ -39,9 +39,9 @@ namespace Core.Map
 
         public List<string> systems = new List<string>();
         public Event OnInited;
-        
-        
-        
+        private static readonly int EmissiveColor = Shader.PropertyToID("_EmissiveColor");
+
+
         private void Awake()
         {
             Single(this);
@@ -148,19 +148,20 @@ namespace Core.Map
         
         public void DrawWorld(List<string> historyList)
         {
-            var tutorial = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
+            var worldStructures = PlayerDataManager.Instance.Services.WorldStructuresManager;
+            
             foreach (var history in historyList)
             {
                 var system = GalaxyGenerator.systems[history.Split('.')[0]];
                 systems.Add(system.name);
                 var spawn = Instantiate(star.gameObject, system.position.ToVector() / size, Quaternion.identity);
 
-                // if (system.name == tutorial.MainBaseData.BaseSystemName)
-                // {
-                //     var render = spawn.GetComponentInChildren<Renderer>();
-                //     render.material.color = Color.red;
-                //     render.material.SetColor("_EmissiveColor", new Color(0.5f, 0.074f, 0.074f));
-                // }
+                if (worldStructures.IsHaveStructure(system.name, StructureNames.ComunistsBase))
+                {
+                    var render = spawn.GetComponentInChildren<Renderer>();
+                    render.material.color = Color.red;
+                    render.material.SetColor(EmissiveColor, new Color(0.5f, 0.074f, 0.074f));
+                }
 
                 for (int i = 0; i < system.sibligs.Count; i++)
                 {

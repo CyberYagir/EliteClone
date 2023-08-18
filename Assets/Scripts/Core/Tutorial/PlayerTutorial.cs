@@ -300,6 +300,7 @@ namespace Core.Core.Tutorial
         }
         public void M2GenerateQuest(bool notify)
         {
+            CancelBaseQuests();
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
             worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);

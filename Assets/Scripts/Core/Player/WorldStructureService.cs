@@ -100,5 +100,10 @@ namespace Core
                 player.TargetsManager.UpdateContacts();
             }
         }
+
+        public bool IsHaveStructure(string systemName, StructureNames type)
+        {
+            return scriptable.IsHaveStructure(systemName, type);
+        }
     }
 }

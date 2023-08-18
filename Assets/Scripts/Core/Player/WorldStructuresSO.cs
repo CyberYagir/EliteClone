@@ -85,5 +85,13 @@ namespace Core
 
             return str;
         }
+
+        public bool IsHaveStructure(string systemName, StructureNames type)
+        {
+            var system = systemsData.Find(x => x.SystemName == systemName);
+            if (system == null) return false;
+
+            return system.Structures.Find(x => x.Structure == type) != null;
+        }
     }
 }
