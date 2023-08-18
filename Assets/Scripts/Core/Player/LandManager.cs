@@ -69,7 +69,7 @@ namespace Core.PlayerScripts
     
         private void Update()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.enabled = !isLanded;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.Control.enabled = !isLanded;
             if (World.Scene == Scenes.Location)
             {
                 if (!isLanded)

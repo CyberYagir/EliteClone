@@ -133,5 +133,10 @@ namespace Core.UI
             if (trigger)
                 ContactsChanges.Run();
         }
+
+        public void UpdateContacts()
+        {
+            ContactsChanges.Run();
+        }
     }
 }

@@ -11,14 +11,18 @@ namespace Core
         [SerializeField] private ItemsManager itemsManager;
         [SerializeField] private CursorManager cursorManager;
         [SerializeField] private TutorialsManager tutorialsManager;
+        [SerializeField] private WorldStructureService worldStructuresManager;
 
         public TutorialsManager TutorialsManager => tutorialsManager;
+        public WorldStructureService WorldStructuresManager => worldStructuresManager;
 
-        public void Init()
+        public void Init(FilesSystemHandler filesSystemHandler)
         {
             inputService.Init();
             itemsManager.Init();
             cursorManager.Init();
+            tutorialsManager.Init(filesSystemHandler.TutorialsFile);
+            worldStructuresManager.Init(filesSystemHandler.StructuresFile);
         }
     }
 }

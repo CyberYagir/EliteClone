@@ -28,40 +28,32 @@ namespace Core.UI
                 questIcon = WorldDataItem.GetData().playerQuest;
             }
             icon.sprite = questIcon;
-            var path = questsQuest.GetLastQuestPath();
-            if (path != null)
+
+            targetT.text = questsQuest.targetStructure;
+
+
+
+
+            if (questsQuest.CurrentPath.Count == 0 || questsQuest.isOnLoading)
             {
-                targetT.text =  path.targetName;
+                jumpToT.text = "Calculating...";
             }
-
-            QuestPath first = questsQuest.pathToTarget;
-            QuestPath questPath = first;
-            QuestPath current = null;
-            bool isOnPath = false;
-            while (questPath != null)
+            else
             {
-                if (!isOnPath)
+                if (worldHandler.CurrentSolarSystem.name == questsQuest.targetSolar)
                 {
-                    isOnPath = questPath.solarName == worldHandler.CurrentSolarSystem.name;
-                    if (isOnPath)
-                    {
-                        current = questPath;
-                        break;
-                    }
-                }
-
-                questPath = questPath.nextPath;
-            }
-
-            if (questsQuest.GetLastQuestPath() != null)
-            {
-                if (isOnPath)
-                {
-                    jumpToT.text = questsQuest.GetLastQuestPath().solarName == worldHandler.CurrentSolarSystem.name ? "Arrival point" : "Next : " + current.nextPath.solarName;
+                    jumpToT.text = "Arrival point";
                 }
                 else
                 {
-                    jumpToT.text = $"Unown path [{first.solarName}]";
+                    for (int i = 0; i < questsQuest.CurrentPath.Count-1; i++)
+                    {
+                        if (questsQuest.CurrentPath[i] == worldHandler.CurrentSolarSystem.name)
+                        {
+                            jumpToT.text = "Next : " + questsQuest.CurrentPath[i + 1];
+                            break;
+                        }
+                    }
                 }
             }
 

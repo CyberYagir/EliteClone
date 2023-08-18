@@ -40,7 +40,7 @@ namespace Core.UI
 
         public void BaseInit()
         {
-            player.land.OnLand += RedrawAll;
+            player.LandManager.OnLand += RedrawAll;
             
             rect = GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
@@ -57,12 +57,12 @@ namespace Core.UI
         {
             base.OnUpdate();
             Animation();
-            if (player.land.isLanded)
+            if (player.LandManager.isLanded)
             {
                 var date = DateTime.Now.Date.AddYears(1025);    
                 infoText.text = $"Date: {date:d}\n" +
                                 $"Time: {DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + ":" + DateTime.Now.Second.ToString("00")}\n" +
-                                "Credits: " + player.cargo.GetCredits();
+                                "Credits: " + player.Cargo.GetCredits();
             }
 
         }
@@ -87,7 +87,7 @@ namespace Core.UI
         {
             if (rect)
             {
-                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, player.land.isLanded ? height : 0), 5 * Time.deltaTime);
+                rect.sizeDelta = Vector2.Lerp(rect.sizeDelta, new Vector2(rect.sizeDelta.x, player.LandManager.isLanded ? height : 0), 5 * Time.deltaTime);
                 canvas.enabled = rect.sizeDelta.y >= 0.1f;
             }
         }

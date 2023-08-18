@@ -20,6 +20,7 @@ namespace Core
         [SerializeField] private string deadsNPCFile;
         [SerializeField] private string mapFile;
         [SerializeField] private string tutorialsFile;
+        [SerializeField] private string structuresFile;
 
         public string TutorialsFile => tutorialsFile;
         public string MapFile => mapFile;
@@ -33,7 +34,7 @@ namespace Core
         public string CacheSystemsFolder => cacheSystemsFolder;
         public string GlobalFolder => globalFolder;
         public string PlayerFolder => playerFolder;
-
+        public string StructuresFile => structuresFile;
 
 
         public void CreateFolders()
@@ -70,6 +71,7 @@ namespace Core
             deadsNPCFile = globalFolder + "npcs.json";
             mapFile = globalFolder + "map.json";
             playerDataFile = globalFolder + "player.json";
+            structuresFile = globalFolder + "structures.json";
             tutorialsFile = globalFolder + "tutorials.config";
             configFile = playerFolder + "options.config";
         }

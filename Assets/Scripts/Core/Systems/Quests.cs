@@ -26,6 +26,31 @@ namespace Core.Systems
                 return nextPath == null;
             }
         }
+
+        public QuestPath GetLastQuestPath()
+        {
+            var last = this;
+            while (!last.isLast)
+            {
+                last = last.nextPath;
+            }
+
+            return last;
+        }
+
+       public List<string> ConvertToStrings()
+       {
+           List<string> names = new List<string>();
+           var last = this;
+           names.Add(last.solarName);
+           while (!last.isLast)
+           {
+               last = last.nextPath;
+               names.Add(last.solarName);
+           }
+       
+           return names;
+       }
     }
 
     public class Reward

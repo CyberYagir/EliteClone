@@ -21,7 +21,7 @@ namespace Core.PlayerScripts
 
         void Update()
         {
-            if (player.control.headView)
+            if (player.Control.headView)
             {
                 LookHead();
             }

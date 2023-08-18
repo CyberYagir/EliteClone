@@ -31,7 +31,7 @@ namespace Core.PlayerScripts
         private Rigidbody rigidbody;
         private float collisionCooldown;
 
-        public WarpManager warp => player.warp;
+        public WarpManager warp => player.WarpManager;
         public float speedPercent => speed / player.Ship().data.maxSpeedUnits;
 
         private void Start()
@@ -43,8 +43,8 @@ namespace Core.PlayerScripts
 
         private void OnCollisionEnter(Collision collision)
         {
-            player.warp.WarpStop();
-            player.Ship().GetValue(Health).value -= ((speed + player.warp.warpSpeed));
+            player.WarpManager.WarpStop();
+            player.Ship().GetValue(Health).value -= ((speed + player.WarpManager.warpSpeed));
             if (collisionCooldown > 2f)
             {
                 speed = player.Ship().data.maxSpeedUnits * 0.05f;
@@ -94,16 +94,16 @@ namespace Core.PlayerScripts
         public void StopPlayer()
         {
             speed = Mathf.Lerp(speed, 0, 20 * Time.deltaTime);
-            if (player.warp.warpSpeed > 200)
+            if (player.WarpManager.warpSpeed > 200)
             {
-                player.TakeDamageHeath((player.warp.warpSpeed / 1000f) * 100);
+                player.TakeDamageHeath((player.WarpManager.warpSpeed / 1000f) * 100);
             }
 
-            player.warp.warpSpeed = Mathf.Lerp(player.warp.warpSpeed, 0, 20 * Time.deltaTime);
+            player.WarpManager.warpSpeed = Mathf.Lerp(player.WarpManager.warpSpeed, 0, 20 * Time.deltaTime);
             if (speed < 0.001f) speed = 0;
-            if (player.warp.warpSpeed < 0.001f) player.warp.warpSpeed = 0;
+            if (player.WarpManager.warpSpeed < 0.001f) player.WarpManager.warpSpeed = 0;
 
-            rigidbody.velocity = transform.forward * (speed + player.warp.warpSpeed);
+            rigidbody.velocity = transform.forward * (speed + player.WarpManager.warpSpeed);
         }
 
         public void CheckMinDistanceToObjects()
@@ -157,25 +157,25 @@ namespace Core.PlayerScripts
 
         public void ForceAndWarpControl()
         {
-            if (!player.warp.isWarp)
+            if (!player.WarpManager.isWarp)
             {
                 speed += InputService.GetAxis(KAction.Vertical) * Time.deltaTime * player.Ship().data.speedUpMultiplier;
             }
             else
             {
                 CameraShake.Shake();
-                player.warp.warpSpeed += InputService.GetAxis(KAction.Vertical) * Time.deltaTime * player.warp.warpSpeedUp;
+                player.WarpManager.warpSpeed += InputService.GetAxis(KAction.Vertical) * Time.deltaTime * player.WarpManager.warpSpeedUp;
                 if (World.Scene == Scenes.Location)
                 {
-                    if (player.warp.warpSpeed > player.warp.maxLocationSpeed)
+                    if (player.WarpManager.warpSpeed > player.WarpManager.maxLocationSpeed)
                     {
-                        player.warp.warpSpeed = player.warp.maxLocationSpeed;
+                        player.WarpManager.warpSpeed = player.WarpManager.maxLocationSpeed;
                     }
                 }
 
-                if (player.warp.warpSpeed < 0)
+                if (player.WarpManager.warpSpeed < 0)
                 {
-                    player.warp.WarpStop();
+                    player.WarpManager.WarpStop();
                 }
             }
         }
@@ -229,13 +229,13 @@ namespace Core.PlayerScripts
             ForceAndWarpControl();
             if (CheckFuel())
             {
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel).value -= (Mathf.Abs(speed + player.warp.warpSpeed) / 100f) * Time.deltaTime;
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Fuel).value -= (Mathf.Abs(speed + player.WarpManager.warpSpeed) / 100f) * Time.deltaTime;
 
                 if (!IsStoping())
                 {
                     Moving();
-                    var calcSpeed = (World.Scene == Scenes.Location && !player.warp.isWarp ? speed * locationSpeedUp : speed);
-                    rigidbody.velocity = transform.forward * (calcSpeed + player.warp.warpSpeed);
+                    var calcSpeed = (World.Scene == Scenes.Location && !player.WarpManager.isWarp ? speed * locationSpeedUp : speed);
+                    rigidbody.velocity = transform.forward * (calcSpeed + player.WarpManager.warpSpeed);
                 }
             }
         }

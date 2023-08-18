@@ -45,7 +45,7 @@ namespace Core.UI
             upDownUI.OnChangeSelected += ChangeSelected;
             upDownUI.OnNavigateChange += ChangeSelected;
             ChangeSelect += RedrawQuests;
-            WorldDataHandler.ShipPlayer.land.OnLand += Enable;
+            WorldDataHandler.ShipPlayer.LandManager.OnLand += Enable;
             
             if (upDownUI.selectedIndex == -1)
             {
@@ -65,7 +65,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (WorldDataHandler.ShipPlayer.land.isLanded)
+            if (WorldDataHandler.ShipPlayer.LandManager.isLanded)
             {
                 ChangeTab();
             }

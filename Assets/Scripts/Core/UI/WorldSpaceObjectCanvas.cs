@@ -43,13 +43,13 @@ namespace Core.UI
 
         public bool SetActiveObjects()
         {
-            if (enablePoints != !PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded)
+            if (enablePoints != !PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.isLanded)
             {
                 foreach (var wsp in spaceObjects)
                 {
-                    wsp.CanvasPoint.gameObject.SetActive(!PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded);
+                    wsp.CanvasPoint.gameObject.SetActive(!PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.isLanded);
                 }
-                enablePoints = !PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.isLanded;
+                enablePoints = !PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.isLanded;
             }
 
             return enablePoints;

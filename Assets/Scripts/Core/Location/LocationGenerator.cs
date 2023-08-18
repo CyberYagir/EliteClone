@@ -137,7 +137,7 @@ namespace Core.Location
             CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(filesSystemHandler.CurrentLocationFile));
             var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(filesSystemHandler.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
             worldHandler.ChangeSolarSystem(system);
-            SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, 15, false);
+            SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, SolarStaticBuilder.GalaxyScale, false);
         }
 
         public void SetSystemToLocation()
@@ -188,12 +188,12 @@ namespace Core.Location
             locationObject.InitLocation(playerDataManager, this);
             
             
-            if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
+            if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start"))
             {
                 worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
                 worldHandler.ShipPlayer.transform.rotation = locationObject.SpawnPoint.rotation;
             }
-            else if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
+            else if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit"))
             {
                 var allPoints = CurrentLocationData.OrbitStation.Points.GetLandPoint();
                 var point = allPoints[Random.Range(0, allPoints.Count)];
@@ -201,7 +201,7 @@ namespace Core.Location
                 worldHandler.ShipPlayer.transform.position = point.point.position;
                 worldHandler.ShipPlayer.transform.rotation = point.point.rotation;
             
-                worldHandler.ShipPlayer.land.SetLand(true, point.point.position, point.point.rotation);
+                worldHandler.ShipPlayer.LandManager.SetLand(true, point.point.position, point.point.rotation);
 
                 point.isFilled = true;
                 point.isFilled = true;
@@ -213,13 +213,13 @@ namespace Core.Location
 
         public void SetSpaceObjectDistance()
         {
-            if (worldHandler.ShipPlayer.saves.ExKey("loc_start"))
+            if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start"))
             {   
-                worldHandler.ShipPlayer.saves.DelKey("loc_start");
+                worldHandler.ShipPlayer.SaveData.DelKey("loc_start");
             }else
-            if (worldHandler.ShipPlayer.saves.ExKey("loc_start_on_pit"))
+            if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit"))
             {
-                worldHandler.ShipPlayer.saves.DelKey("loc_start_on_pit");
+                worldHandler.ShipPlayer.SaveData.DelKey("loc_start_on_pit");
             }
             else
             {

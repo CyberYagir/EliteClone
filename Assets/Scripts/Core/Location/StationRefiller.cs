@@ -62,9 +62,9 @@ namespace Core.Location
 
         public void ApplyType(ShipClaped data, float cost)
         {
-            while (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.GetCredits() > 0 && data.value < data.max)
+            while (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.GetCredits() > 0 && data.value < data.max)
             {
-                if(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.RemoveCredits(cost))
+                if(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.RemoveCredits(cost))
                 {
                     data.value++;
                 }
@@ -74,7 +74,7 @@ namespace Core.Location
                 }
             }
             data.Clamp();
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.UpdateInventory();
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.UpdateInventory();
         }
     }
 }

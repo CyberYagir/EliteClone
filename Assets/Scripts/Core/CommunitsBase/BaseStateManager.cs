@@ -6,14 +6,16 @@ using UnityEngine;
 
 namespace Core.CommunistsBase
 {
-    public class BaseStateManager : MonoBehaviour
+    public class BaseStateManager : StartupObject
     {
         [SerializeField] private GameObject doorDemo, normalDoor;
         [SerializeField] private CommunistsQuests quests;
 
-        private void Start()
+        public override void Init(PlayerDataManager playerDataManager)
         {
-            var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
+            base.Init(playerDataManager);
+            
+            var tutor = playerDataManager.Services.TutorialsManager.TutorialData;
             if (tutor == null || tutor.MainBaseData.HaveBase == false || tutor.ValuesData.HaveWatchDemo(Demos.BaseDemo) == false)
             {
                 quests.SetToBarmanQuests();

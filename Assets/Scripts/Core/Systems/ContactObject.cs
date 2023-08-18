@@ -6,7 +6,7 @@ namespace Core.Systems
     {
         public void Init(bool triggerEvent = true)
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.AddContact(this, triggerEvent);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.TargetsManager.AddContact(this, triggerEvent);
             Player.OnPreSceneChanged += RemoveContact;
         }
 
@@ -20,7 +20,7 @@ namespace Core.Systems
             var playerShip = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
             if (playerShip != null)
             {
-                playerShip.targets.RemoveContact(this);
+                playerShip.TargetsManager.RemoveContact(this);
             }
         }
     }

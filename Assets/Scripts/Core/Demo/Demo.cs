@@ -44,7 +44,7 @@ namespace Core.Demo
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                skipTime += Time.unscaledDeltaTime;
+                skipTime += Time.unscaledDeltaTime * 5;
                 if (skipTime >= 5)
                 {
                     DemoMoveToGalaxy.LoadGalaxyLocation();

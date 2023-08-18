@@ -18,7 +18,7 @@ namespace Core.CommunistsBase
             if (tutorial.MainBaseData.KilledDialogs.Count == 0)
             {
                 tutorial.MainBaseData.SetKilled(list.GetDead());
-                manager.SaveTutorial();
+                manager.Save();
                 scenes.LoadScene(Scenes.OutBaseDemo);
             }
         }

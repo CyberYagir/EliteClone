@@ -51,7 +51,7 @@ namespace Core.PlayerScripts
                 warpSpeed = maxWarpSpeed;
             }
 
-            if (player.control.speed < player.Ship().data.maxSpeedUnits / 2f)
+            if (player.Control.speed < player.Ship().data.maxSpeedUnits / 2f)
             {
                 WarpStop();
             }
@@ -60,7 +60,7 @@ namespace Core.PlayerScripts
             {
                 if (!isWarp)
                 {
-                    if (player.control.speed > speedToWarp)
+                    if (player.Control.speed > speedToWarp)
                     {
                         warpParticle.Play();
                         isWarp = true;
@@ -89,7 +89,7 @@ namespace Core.PlayerScripts
                         if (activeLocationPoint.Location != LocationPoint.LocationType.Scene)
                         {
                             LocationGenerator.SaveLocationFile(activeLocationPoint.Root.name, activeLocationPoint.Location, activeLocationPoint.data);
-                            player.saves.SetKey("loc_start", true);
+                            player.SaveData.SetKey("loc_start", true);
                             DontDestroyOnLoad(player);
                             Player.OnPreSceneChanged.Run();
                             World.LoadLevel(Scenes.Location);
@@ -97,7 +97,7 @@ namespace Core.PlayerScripts
                         else
                         {
                             player.HardStop();
-                            player.control.enabled = false;
+                            player.Control.enabled = false;
                             var fader = Instantiate(sceneFader).GetComponent<FaderMultiScenes>();
                             fader.LoadScene(activeLocationPoint.Scene);
                         }

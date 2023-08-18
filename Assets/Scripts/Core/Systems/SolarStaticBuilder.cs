@@ -23,7 +23,7 @@ namespace Core.Systems
 
         private static WorldDataHandler worldDataHandler;
         private static FilesSystemHandler filesSystemHandler;
-        
+        private static Transform baseTransform;
         
         public static List<WorldSpaceObject> Objects => objects;
         public static List<WorldSpaceObject> Suns => suns;
@@ -31,6 +31,8 @@ namespace Core.Systems
         public static PlanetTextures PlanetTextures => planetTextures;
         public static float GalaxyScale => scale;
         public static Vector3 StartPoint => startPoint;
+
+        public static Transform BaseTransform => baseTransform;
 
 
         public static void InitStaticBuilder(
@@ -290,6 +292,7 @@ namespace Core.Systems
         public static void DrawAll(SolarSystem system, Transform transform, GameObject sunPrefab, GameObject planetPrefab,
             GameObject stationPointPrefab, GameObject systemPoint, GameObject beltPoint, float _scale, bool setPos = true)
         {
+            baseTransform = transform;
             transform.position = Vector3.zero;
             suns = new List<WorldSpaceObject>();
             objects = new List<WorldSpaceObject>();
@@ -381,8 +384,10 @@ namespace Core.Systems
             
                 Objects.Add(belt.GetComponent<WorldSpaceObject>());
             }
-        
-        
+
+            RespawnCustomStructures(system, transform, _scale, false);
+
+
             startPoint = center + Vector3.one * (masses[0].radius * _scale * 4);
             if (setPos)
             {
@@ -390,6 +395,8 @@ namespace Core.Systems
                 Object.FindObjectOfType<Player>().transform.LookAt(Objects[0].transform);
             }
 
+
+            
             var systemsParent = new GameObject("SystemsHolder");
             systemsParent.AddComponent<PosToPlayerPos>();
             foreach (var sibling in system.sibligs)
@@ -398,6 +405,27 @@ namespace Core.Systems
                     Quaternion.identity, systemsParent.transform);
                 syspoint.transform.name = sibling.solarName + " S";
                 syspoint.GetComponent<SolarSystemPoint>().systemName = sibling.solarName;
+            }
+        }
+
+        public static void RespawnCustomStructures(SolarSystem system, Transform transform, float _scale, bool triggerAfterSpawn)
+        {
+            var worldStructures = PlayerDataManager.Instance.Services.WorldStructuresManager;
+            worldStructures.ClearSpawnedStructures();
+            var structures = worldStructures.GetSystemStructures(system.name);
+            foreach (var structure in structures)
+            {
+                var st = Object.Instantiate(worldStructures.GetPrefab(structure.Structure), transform);
+                st.transform.name = structure.Name;
+                st.transform.localPosition = structure.Position * _scale;
+                var wso = st.GetComponent<WorldSpaceObject>();
+                Objects.Add(wso);
+                worldStructures.AddSpawned(wso, false);
+            }
+
+            if (triggerAfterSpawn)
+            {
+                worldStructures.UpdateContacts();
             }
         }
 
@@ -425,6 +453,11 @@ namespace Core.Systems
         {
             File.Delete(filesSystemHandler.CurrentSystemFile);
             worldDataHandler.ClarSolarSystem();
+        }
+
+        public static void RemoveSpawnedObject(WorldSpaceObject spawned)
+        {
+            Objects.Remove(spawned);
         }
     }
 }

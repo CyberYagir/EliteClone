@@ -14,6 +14,7 @@ namespace Core.PlayerScripts
             public int seed;
             public Character character;
             public string stationName, solarName;
+            public string targetStructure, targetSolar;
             public Quest.QuestCompleted state;
         }
         
@@ -30,6 +31,16 @@ namespace Core.PlayerScripts
         {
             Single(this);
             worldDataHandler = PlayerDataManager.Instance.WorldHandler;
+            Player.OnSceneChanged.AddListener(UpdateQuestPaths);
+        }
+
+        private void UpdateQuestPaths()
+        {
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.GalaxyFinder.ClearTargets();
+            for (int i = 0; i < quests.Count; i++)
+            {
+                quests[i].RegeneratePathFromPlayer();
+            }
         }
 
         private void Start()
@@ -48,7 +59,9 @@ namespace Core.PlayerScripts
                     character = quests[i].quester, 
                     stationName = quests[i].appliedStation, 
                     solarName = quests[i].appliedSolar,
-                    state = quests[i].questState
+                    state = quests[i].questState,
+                    targetSolar = quests[i].targetSolar,
+                    targetStructure =  quests[i].targetStructure
                 });
             }
             return data;
@@ -61,6 +74,8 @@ namespace Core.PlayerScripts
                 qust.questState = qts[i].state;
                 quests.Add(qust);
             }
+            
+            print("Load Quests");
         }
 
         public bool FinishQuest(int questID)
@@ -80,7 +95,7 @@ namespace Core.PlayerScripts
     
         public void ApplyQuest(Quest quest, bool triggerNotify = true)
         {
-            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.cargo.AddItems(quest.toTransfer))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.Cargo.AddItems(quest.toTransfer))
             {
                 quests.Add(quest);
             }
@@ -94,12 +109,15 @@ namespace Core.PlayerScripts
                 OnNotify.Run();
             }
             OnChangeQuests.Run();
+            
+            
+            UpdateQuestPaths();
         }
 
         public void CancelQuest(Quest quest)
         {
             if (quest == null) return;
-            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.cargo.RemoveItems(quest.toTransfer))
+            if (quest.toTransfer.Count != 0 && !quest.keyValues.ContainsKey("NoAddTransfer") && worldDataHandler.ShipPlayer.Cargo.RemoveItems(quest.toTransfer))
             {
                 quests.RemoveAll(x => x.questID == quest.questID);
             }

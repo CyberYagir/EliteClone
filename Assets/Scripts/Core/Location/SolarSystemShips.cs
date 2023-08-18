@@ -285,7 +285,7 @@ namespace Core.Location
                 var botName = NamesHolder.ToUpperFist(ships[i].firstName) + " " + NamesHolder.ToUpperFist(ships[i].lastName);
                 if (!IsDead(ships[i].uniqID) || (World.Scene == Scenes.Location && LocationGenerator.CurrentSave.locationName == botName))
                 {
-                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) worldHandler.ShipPlayer.saves.GetTime() / 60f / 60f));
+                    var rnd = new Random(ships[i].uniqID + Mathf.RoundToInt((float) worldHandler.ShipPlayer.SaveData.GetTime() / 60f / 60f));
                     var pos = (new Vector3(rnd.Next(-100, 100), rnd.Next(-100, 100), rnd.Next(-100, 100)) / 100f) * 10000f;
                     var worldBot = Instantiate(prefab.gameObject, pos, Quaternion.identity);
                     worldBot.name = botName;

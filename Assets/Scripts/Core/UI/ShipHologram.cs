@@ -44,7 +44,7 @@ namespace Core.UI
             var shields = player.Ship().GetValue(ItemShip.ShipValuesTypes.Shields);
             shieldIndicator.fillAmount = Mathf.Lerp(shieldIndicator.fillAmount, shields.value / shields.max, Time.deltaTime);
             
-            var ship = player.control;
+            var ship = player.Control;
             shipModel.transform.localRotation = Quaternion.Lerp(shipModel.transform.localRotation,  startRotation * Quaternion.Euler(-ship.vertical * player.Ship().data.XRotSpeed, ship.yaw * player.Ship().data.YRotSpeed * player.Ship().data.YRotSpeed, -ship.horizontal * player.Ship().data.ZRotSpeed), 10 * Time.deltaTime);
             LandHologram();
 

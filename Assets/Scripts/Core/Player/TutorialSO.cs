@@ -11,25 +11,15 @@ namespace Core.PlayerScripts
         public class ComunistsMainBase
         {
             [SerializeField] private bool haveBase = false;
-            [SerializeField] private string startSystemName = String.Empty;
-            [SerializeField] private string baseSystemName = String.Empty;
 
             [SerializeField] private List<string> killedDialogs;
             
-            public string BaseSystemName => baseSystemName;
-            public string StartSystemName => startSystemName;
             public bool HaveBase => haveBase;
             public List<string> KilledDialogs => killedDialogs;
 
-
-            public void SetFistSystem(string startSystemName)
-            {
-                this.startSystemName = startSystemName;
-            }
             
-            public void SetBase(string baseSystemName)
+            public void SetBase()
             {
-                this.baseSystemName = baseSystemName;
                 haveBase = true;
             }
 

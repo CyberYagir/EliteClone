@@ -777,6 +777,53 @@ MonoBehaviour:
     down: 0
     up: 0
   startAxes: []
+--- !u!1 &2121084947135778148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6480872036261600137}
+  - component: {fileID: 6928711632863471403}
+  m_Layer: 0
+  m_Name: WorldStructuresService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6480872036261600137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121084947135778148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8100090852622918919}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6928711632863471403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121084947135778148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05204c30720e53942927f001bbc9a5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptable: {fileID: 0}
+  structuresList:
+  - name: 0
+    prefab: {fileID: 7500046670116494241, guid: f984ec8acbff961489a299f61cbc7963, type: 3}
 --- !u!1 &5275611199331377784
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,11 +870,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe35bd9fac05e54ca8d418f9ca31308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runHandler:
+    isPaused: 0
   servicesHandler:
     inputService: {fileID: 7333541167820698599}
     itemsManager: {fileID: 8982965036286891313}
     cursorManager: {fileID: 3500592859733239217}
     tutorialsManager: {fileID: 1377392805459564332}
+    worldStructuresManager: {fileID: 6928711632863471403}
   filesSystemHandler:
     rootFolder: 
     playerFolder: 
@@ -841,9 +891,16 @@ MonoBehaviour:
     deadsNPCFile: 
     mapFile: 
     tutorialsFile: 
+    structuresFile: 
   worldHandler:
+    shipPlayer: {fileID: 0}
+    currentLocationGenerator: {fileID: 0}
+    currentSolarGenerator: {fileID: 0}
     galaxySeed: -1
     playerPrefab: {fileID: 594618446116798302, guid: 64649fe7cad36b743ba4245f11b26686, type: 3}
+    OnChangeLocation:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &7192748286561400119
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3712a6097e8039f40aaaf220c4562cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialData: {fileID: 0}
+  scriptable: {fileID: 0}
 --- !u!1 &7650043998249913702
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,6 +977,7 @@ Transform:
   - {fileID: 1924983889314187999}
   - {fileID: 8941323739993236894}
   - {fileID: 6951978240891353276}
+  - {fileID: 6480872036261600137}
   m_Father: {fileID: 5275611199331377789}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1731,13 +1789,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
---- !u!1 &1733982136571550634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5185739836914921842, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
-  m_PrefabInstance: {fileID: 6910533354808912600}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1733982136571550635 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5185739836914921843, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
+  m_PrefabInstance: {fileID: 6910533354808912600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1733982136571550634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5185739836914921842, guid: 86584e8669ba0ac42a2ff665257f2041, type: 3}
   m_PrefabInstance: {fileID: 6910533354808912600}
   m_PrefabAsset: {fileID: 0}

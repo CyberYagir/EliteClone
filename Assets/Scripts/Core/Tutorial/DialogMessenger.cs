@@ -57,7 +57,7 @@ namespace Core.Dialogs.Visuals
                 PlayerTutorial.EnablePlayer(true);
                 onClose?.Invoke();
                 
-                tutorialsManager.SaveTutorial();
+                tutorialsManager.Save();
                 
                 Destroy(gameObject);
                 return;

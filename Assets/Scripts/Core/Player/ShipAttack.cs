@@ -12,7 +12,7 @@ namespace Core.PlayerScripts
         void LateUpdate()
         {
             var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
-            if (player != null && !player.land.isLanded)
+            if (player != null && !player.LandManager.isLanded)
             {
                 for (int i = 0; i < 9; i++)
                 {

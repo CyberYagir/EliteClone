@@ -12,7 +12,7 @@ namespace Core.Garage
         
         public void LoadLocation()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves.Save();
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.SaveData.Save();
             var fd = Instantiate(fader).GetComponent<Fader>();
             fd.SetColor(0);
             fd.Fade();

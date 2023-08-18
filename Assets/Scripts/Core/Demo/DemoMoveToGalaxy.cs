@@ -12,7 +12,7 @@ namespace Core.Demo
             var manager = PlayerDataManager.Instance.Services.TutorialsManager;
             var tutor = manager.TutorialData;
             tutor.ValuesData.AddWatchDemo(Demos.Start);
-            manager.SaveTutorial();
+            manager.Save();
             World.LoadLevelAsync(Scenes.Galaxy);
         }
 

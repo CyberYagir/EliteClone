@@ -49,11 +49,11 @@ namespace Core.Location
         {
             if (Vector3.Distance(transform.position, mainCamera.transform.position) * SolarStaticBuilder.GalaxyScale < minDist * SolarStaticBuilder.GalaxyScale)
             {
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.SetActiveLocation(this);
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.WarpManager.SetActiveLocation(this);
             }
             else
             {
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.RemoveActiveLocation(this);
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.WarpManager.RemoveActiveLocation(this);
             }
         }
 

@@ -29,7 +29,7 @@ namespace Core.UI
             (questList as QuestListUI).OnChangeSelected += UpdateData;
             upDownUI.OnChangeSelected += SelectButton;
             Player.OnSceneChanged += UpdateQuestInfo;
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.OnUnLand += Disable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.OnUnLand += Disable;
         }
 
 
@@ -49,7 +49,7 @@ namespace Core.UI
 
         public void SelectButton()
         {
-            if (WorldDataHandler.ShipPlayer.land.isLanded)
+            if (WorldDataHandler.ShipPlayer.LandManager.isLanded)
             {
                 if (upDownUI.selectedIndex == 0 && currentQuest != null)
                 {
@@ -75,7 +75,7 @@ namespace Core.UI
                             {
                                 UpdateData(currentQuest);
                                 GetComponentInParent<BaseWindow>().RedrawAll();
-                                WorldDataHandler.ShipPlayer.quests.OnChangeQuests.Run();
+                                WorldDataHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
                                 var list = (questList as QuestListUI);
                                 (list.characterList as CharacterList).RedrawQuests();
                                 Clear();
@@ -89,7 +89,7 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (WorldDataHandler.ShipPlayer.land.isLanded)
+            if (WorldDataHandler.ShipPlayer.LandManager.isLanded)
             {
                 if (InputService.GetAxisDown(KAction.TabsHorizontal))
                 {
@@ -132,10 +132,10 @@ namespace Core.UI
             }
         }
 
-        public void SetTexts(QuestPath last, Quest quest)
+        public void SetTexts(Quest quest)
         {
-            targetName.text = "Target: " + last.targetName;
-            targetSystem.text = "System: " + last.solarName;
+            targetName.text = "Target: " + quest.targetStructure;
+            targetSystem.text = "System: " + quest.targetSolar;
             rewardTypeText.text = "Reward: " + quest.reward.type;
 
             if (quest.keyValues.Count != 0 && quest.toTransfer.Count == 0 && quest.keyValues.ContainsKey("Text"))
@@ -170,7 +170,7 @@ namespace Core.UI
                 DrawItems(transferHolder, rewardItem, quest.toTransfer);
             }
         
-            foreach (var names in quest.ConvertToStrings())
+            foreach (var names in quest.CurrentPath)
             {
                 jumpsCount.text += names + ">\n";
             }
@@ -181,9 +181,8 @@ namespace Core.UI
         public void UpdateData(Quest quest)
         {
             currentQuest = quest;
-            var last = quest.GetLastQuestPath();
             quest.CheckIsQuestCompleted();
-            SetTexts(last, quest);
+            SetTexts(quest);
             ReformUI(quest);
             
             

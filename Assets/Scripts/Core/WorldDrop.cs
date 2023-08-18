@@ -35,7 +35,7 @@ namespace Core
             {
                 if (other.GetComponent<ShipMeshManager>())
                 {
-                    if (worldDataHandler.ShipPlayer.cargo.AddItem(item))
+                    if (worldDataHandler.ShipPlayer.Cargo.AddItem(item))
                     {
                         transform.DOMove(other.transform.position, 0.7f);
                         transform.DOScale(Vector3.zero, 0.4f);

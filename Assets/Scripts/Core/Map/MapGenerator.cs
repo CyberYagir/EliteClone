@@ -122,7 +122,7 @@ namespace Core.Map
         {
             if (mode == MapSelect.MapMode.Frame && PlayerDataManager.Instance.WorldHandler.ShipPlayer)
             {
-                saves = PlayerDataManager.Instance.WorldHandler.ShipPlayer.saves;
+                saves = PlayerDataManager.Instance.WorldHandler.ShipPlayer.SaveData;
             }
             else
             {
@@ -155,12 +155,12 @@ namespace Core.Map
                 systems.Add(system.name);
                 var spawn = Instantiate(star.gameObject, system.position.ToVector() / size, Quaternion.identity);
 
-                if (system.name == tutorial.MainBaseData.BaseSystemName)
-                {
-                    var render = spawn.GetComponentInChildren<Renderer>();
-                    render.material.color = Color.red;
-                    render.material.SetColor("_EmissiveColor", new Color(0.5f, 0.074f, 0.074f));
-                }
+                // if (system.name == tutorial.MainBaseData.BaseSystemName)
+                // {
+                //     var render = spawn.GetComponentInChildren<Renderer>();
+                //     render.material.color = Color.red;
+                //     render.material.SetColor("_EmissiveColor", new Color(0.5f, 0.074f, 0.074f));
+                // }
 
                 for (int i = 0; i < system.sibligs.Count; i++)
                 {

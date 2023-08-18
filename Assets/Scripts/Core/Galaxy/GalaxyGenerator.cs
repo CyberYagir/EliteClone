@@ -87,6 +87,10 @@ namespace Core.Galaxy
                         ThrowLoadError("Loading galaxy error, your corrupted save moved to Saves/Player/Global Error Save");
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
             else
             {

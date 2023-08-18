@@ -82,7 +82,7 @@ namespace Core.UI
         
         private void Start()
         {
-            controller = PlayerDataManager.Instance.WorldHandler.ShipPlayer.control;
+            controller = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Control;
             speed.Active();
             warpSpeed.Disable();
             temperature.Active();
@@ -114,9 +114,9 @@ namespace Core.UI
             
             
             
-            var cargoVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons/PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight;
+            var cargoVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.tons/PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight;
             cargo.SetValue(cargoVal);
-            cargo.SetText((int)(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons) + " t.");
+            cargo.SetText((int)(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.tons) + " t.");
             
             var healthVal = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().GetValue(Health);
             health.SetValue(healthVal.percent);

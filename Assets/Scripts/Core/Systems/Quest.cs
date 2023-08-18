@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Galaxy;
 using Core.Game;
+using Core.Map;
 using Core.PlayerScripts;
 using Core.Quests;
 using Core.Systems;
+using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
@@ -23,17 +25,25 @@ namespace Core.Location
         public Character quester { get; private set; }
         public int questType { get; set; }
         public int questID { get; set; }
-
         public int questCost { get; private set; }
 
         public string appliedStation { get; set; }
         public string appliedSolar { get; set; }
+        
+        
+        public string targetSolar { get; set; }
+        public string targetStructure { get; set; }
+        
         public List<Item> toTransfer { get; set; } = new List<Item>();
         public Reward reward { get; private set; } = new Reward();
+
+        public List<string> CurrentPath => currentPath;
+
+        public bool isOnLoading = false;
         
-        
+        private List<string> currentPath = new List<string>();
+
         public Dictionary<string, object> keyValues = new Dictionary<string, object>();
-        public QuestPath pathToTarget = new QuestPath();
         public QuestCompleted questState;
         public string buttonText;
 
@@ -51,44 +61,10 @@ namespace Core.Location
 
         public bool IsTypeQuest(string str) => questType == WorldDataItem.Quests.NameToID(str);
         
-        public QuestPath GetLastQuestPath()
-        {
-            var last = pathToTarget;
-            if (last != null)
-            {
-                while (!last.isLast)
-                {
-                    last = last.nextPath;
-                }
-            }
-            return last;
-        }
-
-        public List<string> ConvertToStrings()
-        {
-            List<string> names = new List<string>();
-            var last = pathToTarget;
-            names.Add(last.solarName);
-            while (!last.isLast)
-            {
-                last = last.nextPath;
-                names.Add(last.solarName);
-            }
-
-            return names;
-        }
 
         public int JumpsCount()
         {
-            int count = 0;
-            var last = pathToTarget;
-            while (!last.isLast)
-            {
-                last = last.nextPath;
-                count++;
-            }
-
-            return count;
+            return CurrentPath.Count;
         }
 
         public void Init(int questSeed, Character character, QuestsMethodObject methdos, bool notStation = false)
@@ -120,7 +96,7 @@ namespace Core.Location
                 }
 
                 WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
             }
         }
         
@@ -129,14 +105,13 @@ namespace Core.Location
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.IsCompleteCheck);
         }
 
-        public QuestPath GetPath(Random rnd, string stationName, string solarName, int minJumps = 0, int maxJumps = 7, bool canBroke = true)
+        public  QuestPath GenerateRandomPath(Random rnd, string stationName, string solarName, int minJumps = 0, int maxJumps = 7, bool canBroke = true)
         {
             int pathLength = rnd.Next(minJumps, maxJumps);
             List<string> pathNames = new List<string>();
             QuestPath last = new QuestPath {solarName = solarName};
             QuestPath first = last;
             pathNames.Add(last.solarName);
-            pathToTarget = last;
             int trys = 0;
             bool stopPath = false;
             if (pathLength == 0) return last;
@@ -200,6 +175,23 @@ namespace Core.Location
             return first;
         }
 
+
+        public void RegeneratePathFromPlayer()
+        {
+            if (currentPath.Contains(PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem.name)) return;
+
+            if (string.IsNullOrEmpty(appliedSolar) || string.IsNullOrEmpty(targetSolar)) return;
+
+            isOnLoading = true;
+            var path = new List<string>();
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.GalaxyFinder.FindPathFrom(path, PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem, targetSolar, delegate(List<string> list)
+            {
+                currentPath = list;
+                isOnLoading = false;
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
+            });
+        }
+
         public void GetButtonText()
         {
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.ButtonDisplay);
@@ -207,6 +199,13 @@ namespace Core.Location
         public void OnFinish()
         {
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.isCompleted);
+        }
+
+        public void SetBasePath(QuestPath generateRandomPath)
+        {
+            var lastNode = generateRandomPath.GetLastQuestPath();
+            targetSolar = lastNode.solarName;
+            targetStructure = lastNode.targetName;
         }
     }
 }

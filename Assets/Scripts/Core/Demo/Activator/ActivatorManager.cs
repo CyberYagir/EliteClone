@@ -25,7 +25,7 @@ namespace Core.ActivatorDemo
                 
             tutor.ValuesData.AddWatchDemo(Demos.Translator);
             tutor.TutorialQuestsData.NextTutorialQuest();
-            tutorManager.SaveTutorial();
+            tutorManager.Save();
             
             var data = saveLoadData.LoadData();
 

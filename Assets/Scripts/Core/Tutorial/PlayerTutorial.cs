@@ -27,44 +27,35 @@ namespace Core.Core.Tutorial
         private GameObject station;
 
         private TutorialsManager tutorialsManager;
+        private WorldStructureService worldStructureManager;
         private WorldDataHandler worldDataHandler;
         
         
         private TutorialSO TutorialData => tutorialsManager.TutorialData;
 
-        public string CurrentTutorialQuestIsReaded => $"tutorQuest[{TutorialData.TutorialQuestsData.QuestID}-MessageRead";
-        
-        private void Awake()
+        public void Init()
         {
             Single(this);
             
-            
             tutorialsManager = PlayerDataManager.Instance.Services.TutorialsManager;
+            worldStructureManager = PlayerDataManager.Instance.Services.WorldStructuresManager;
             worldDataHandler = PlayerDataManager.Instance.WorldHandler;
-        }
-
-        private void Start()
-        {
-            Init();
-        }
-
-        public void Init()
-        {
+            
+            
             var activator = FindObjectOfType<LocationUIActivator>();
-
             CheckTutorialQuests(activator);
         }
 
         private void CheckTutorialQuests(LocationUIActivator activator)
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
             var questID = TutorialData.TutorialQuestsData.QuestID;
             if (questID == 0)
             {
                 CreateMessenger(activator.transform, m1,
-                    () => TutorialData.MainBaseData.SetFistSystem(worldDataHandler.CurrentSolarSystem.name),
+                    null,
                     () =>
                     {
+                        M1GenerateQuestStructures();
                         M1GenerateQuest(true);
                         TutorialData.TutorialQuestsData.NextTutorialQuest();
                     });
@@ -81,6 +72,7 @@ namespace Core.Core.Tutorial
                     null,
                     () =>
                     {
+                        CancelBaseQuests();
                         M2GenerateQuest(true);
                         M2Events();
                         TutorialData.TutorialQuestsData.NextTutorialQuest();
@@ -124,10 +116,24 @@ namespace Core.Core.Tutorial
             {
                 M3GenerateQuest(false);
             }
+        }
 
-            if (questID > 0)
+        public void CancelBaseQuests()
+        {
+            worldDataHandler.ShipPlayer.AppliedQuests.CancelQuest(worldDataHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue));
+        }
+
+        private void AddStationStructure(string solarName)
+        {
+            var rnd = new System.Random(NamesHolder.StringToSeed(solarName));
+            var pos = new Vector3(rnd.Next(300, 500) * RandomSign(), rnd.Next(100, 300) * RandomSign(), rnd.Next(300, 500) * RandomSign());
+            
+            worldStructureManager.AddStructure("Communist Space Unorbital Station", solarName, StructureNames.ComunistsBase, pos);
+
+
+            float RandomSign()
             {
-                AddStation();
+               return (rnd.Next(-5, 5) <= 0 ? 1 : -1);
             }
         }
 
@@ -180,68 +186,71 @@ namespace Core.Core.Tutorial
             messenger.dialog = dialog;
             beforeOpen?.Invoke();
             messenger.Init(onClose);
-            tutorialsManager.SaveTutorial();
+            tutorialsManager.Save();
             EnablePlayer(false);
         }
     
         #region M1
 
-        public void M1AddStation()
-        {
-            if (station != null)
-            {
-                Destroy(station.gameObject);
-            }
+        // public void M1AddStation()
+        // {
+        //     var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
+        //     if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
+        //         TutorialData.MainBaseData.BaseSystemName == worldDataHandler.CurrentSolarSystem.name)
+        //     {
+        //         TutorialData.MainBaseData.SetBase(worldDataHandler.CurrentSolarSystem.name);
+        //         tutorialsManager.Save();
+        //     }
+        // }
 
-            var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
-            if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
-                TutorialData.MainBaseData.BaseSystemName == worldDataHandler.CurrentSolarSystem.name)
-            {
-                var rnd = new System.Random(NamesHolder.StringToSeed(TutorialData.MainBaseData.StartSystemName));
-                var point = Instantiate(questPoint, Vector3.zero, Quaternion.identity, FindObjectOfType<SpaceManager>().transform);
-                var pos = new Vector3(rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(1000, 2000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1), rnd.Next(5000, 10000) * (rnd.Next(-5, 5) <= 0 ? 1 : -1));
-                point.transform.localPosition = pos;
-                point.GetComponent<ContactObject>().Init();
-                point.name = "Communist Space Unorbital Station";
-                station = point;
-                
-                TutorialData.MainBaseData.SetBase(worldDataHandler.CurrentSolarSystem.name);
-                
-                tutorialsManager.SaveTutorial();
-                StartCoroutine(M1AddStationUpdate());
-            }
-        }
 
-        IEnumerator M1AddStationUpdate()
+        public Quest M1GenerateQuest()
         {
-            yield return null;
-            Player.OnSceneChanged -= M1AddStation;
-            Player.OnSceneChanged.Run();
-            Player.OnSceneChanged += M1AddStation;
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.targets.ContactsChanges.Run();
+            var quest = GetEmptyQuest();
+            quest.appliedSolar = worldDataHandler.CurrentSolarSystem.name;
+            var path = quest.GenerateRandomPath(new System.Random(int.MaxValue), "Communists Base", quest.appliedSolar, 2, 5, false);
+            quest.targetSolar = path.GetLastQuestPath().solarName;
+            quest.targetStructure = "Communists Base";
+            quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
+            return quest;
         }
         
-
+        private void M1GenerateQuestStructures()
+        {
+            var quest = M1GenerateQuest();
+            
+            AddStationStructure(quest.targetSolar);
+            
+            TutorialData.MainBaseData.SetBase();
+            tutorialsManager.Save();
+        }
         private void M1GenerateQuest(bool notify)
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
+            var activeQuest = worldDataHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue);
 
-            var quest = GetEmptyQuest();
-            quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
-            quest.appliedSolar = TutorialData.MainBaseData.StartSystemName;
-            quest.appliedStation = "";
-            quest.GetPath(new System.Random(int.MaxValue), "Communists Base", TutorialData.MainBaseData.StartSystemName, 2, 4, false);
-            quest.GetLastQuestPath().targetName = "Communists Base";
-            quest.toTransfer = new List<Item>();
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
-            AddStation();
-        }
+            if (activeQuest == null)
+            {
+                var quest = M1GenerateQuest();
+                worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
+                print("ADD NEW QUEST");
+            }
+            else
+            {
+                var newQuest = M1GenerateQuest();
+                
+                newQuest.appliedSolar = activeQuest.appliedSolar;
+                newQuest.appliedStation = activeQuest.appliedStation;
+                
+                newQuest.targetStructure = activeQuest.targetStructure;
+                newQuest.targetSolar = activeQuest.targetSolar;
 
-        public void AddStation()
-        {
-            Player.OnSceneChanged += M1AddStation;
-            M1AddStation();
+                CancelBaseQuests();
+                
+                worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(newQuest, false);
+                print("CHANGE EXISTING QUEST");
+            }
         }
+        
 
         public void DestroyStation()
         {
@@ -255,19 +264,19 @@ namespace Core.Core.Tutorial
 
         public void M2Events()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory += HaveTranslator;
+            worldDataHandler.ShipPlayer.Cargo.OnChangeInventory += HaveTranslator;
             HaveTranslator();
         }
     
         public void M3Events()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory += HaveZincVoid;
+            worldDataHandler.ShipPlayer.Cargo.OnChangeInventory += HaveZincVoid;
             HaveZinc();
         }
 
         public void HaveTranslator()
         {
-            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItem(transmitterItem.id.id))
+            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItem(transmitterItem.id.id))
             {
                 PlayerPrefs.SetInt("last_level", (int) World.Scene);
                 World.LoadLevel(Scenes.ActivatorDemo);
@@ -293,7 +302,7 @@ namespace Core.Core.Tutorial
         {
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
+            worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
         }
     
         #endregion
@@ -326,28 +335,28 @@ namespace Core.Core.Tutorial
                 }
                 else
                 {
-                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.OnChangeInventory -= HaveZincVoid;
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.OnChangeInventory -= HaveZincVoid;
                 }
 
                 M3Events();
             }
 
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.ApplyQuest(quest, notify);
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
         }
 
         private bool haveZinc;
         public bool HaveZinc()
         {
-            var contain = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItem(zincItem.id.id);
-            var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
+            var contain = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItem(zincItem.id.id);
+            var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue);
             if (quest != null)
             {
                 if (contain)
                 {
-                    var isFull = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.FindItem(zincItem.id.id).amount.IsFull();
+                    var isFull = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.FindItem(zincItem.id.id).amount.IsFull();
                     if (isFull != haveZinc)
                     {
-                        PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
+                        PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
                         haveZinc = true;
                     }
 
@@ -356,7 +365,7 @@ namespace Core.Core.Tutorial
                 else if (haveZinc)
                 {
                     quest.keyValues["Text"] = getZinc;
-                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.OnChangeQuests.Run();
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
                 }
             }
             else
@@ -374,8 +383,8 @@ namespace Core.Core.Tutorial
 
         public static void EnablePlayer(bool enable)
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.land.enabled = enable;
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.control.enabled = enable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.enabled = enable;
+            PlayerDataManager.Instance.WorldHandler.ShipPlayer.Control.enabled = enable;
             WorldSpaceObjectCanvas.Instance.gameObject.SetActive(enable);
 
         }

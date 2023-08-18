@@ -8,14 +8,25 @@ using UnityEngine;
 
 namespace Core.CommunistsBase
 {
-    public class DialogMansList : MonoBehaviour
+    public class DialogMansList : StartupObject
     {
         [SerializeField] private List<Dialoger> dialogers;
+        private PlayerDataManager playerDataManager;
 
+        public override void Init(PlayerDataManager playerDataManager)
+        {
+            base.Init(playerDataManager);
+            
+            this.playerDataManager = playerDataManager;
+            
+            KillDeads();
+        }
+        
+        
         public void KillDeads()
         {
             
-            var tutor = PlayerDataManager.Instance.Services.TutorialsManager.TutorialData;
+            var tutor = playerDataManager.Services.TutorialsManager.TutorialData;
             if (!tutor.ValuesData.HaveWatchDemo(Demos.BaseDemo))
             {
                 tutor.MainBaseData.SetKilled(new List<string>());
@@ -29,10 +40,7 @@ namespace Core.CommunistsBase
             dialogers.RemoveAll(x => x == null);
         }
 
-        private void Start()
-        {
-            KillDeads();
-        }
+    
 
         public List<string> GetDead()
         {

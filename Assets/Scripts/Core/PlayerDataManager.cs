@@ -64,8 +64,8 @@ namespace Core
 
             LoadStatic();
             InitDataManager();
-            servicesHandler.Init();
-
+            servicesHandler.Init(filesSystemHandler);
+            
             SolarStaticBuilder.InitStaticBuilder(worldHandler, FSHandler);
             GalaxyManager.InitStaticBuilder(worldHandler);
         }
@@ -110,7 +110,7 @@ namespace Core
         public void LoadScene()
         {
             servicesHandler.TutorialsManager.Clear();
-            servicesHandler.TutorialsManager.LoadTutorial();
+            servicesHandler.TutorialsManager.Load();
             
             var haveGalaxy = GalaxyGenerator.LoadSystems();
             if (File.Exists(filesSystemHandler.CurrentLocationFile) && haveGalaxy)
@@ -151,7 +151,7 @@ namespace Core
             
             if (player != null)
             {
-                player.saves.Save();
+                player.SaveData.Save();
                 if (World.Scene == Scenes.System)
                 {
                     SolarStaticBuilder.SaveSystem();

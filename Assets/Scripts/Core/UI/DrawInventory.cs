@@ -13,7 +13,7 @@ namespace Core.UI
         private float height;
         private void Awake()
         {
-            cargo = PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo;
+            cargo = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo;
             cargo.OnChangeInventory += OnChangeItems;
             height = item.sizeDelta.y;  
             upDownUI.OnNavigateChange += ChangeButtonColors;
@@ -21,7 +21,7 @@ namespace Core.UI
 
         private void Start()
         {
-            tonsRow.SetValue(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons, PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight);
+            tonsRow.SetValue(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.tons, PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight);
         }
 
         private void Update()
@@ -83,7 +83,7 @@ namespace Core.UI
                 drops.Add(newItem.GetComponent<ItemUIDrop>());
             }
             upDownUI.itemsCount = cargo.items.Count;
-            tonsRow.SetValue(PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.tons, PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight);
+            tonsRow.SetValue(PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.tons, PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().data.maxCargoWeight);
         }
     }
 }

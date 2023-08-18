@@ -19,7 +19,7 @@ namespace Core.UI
         public void UpdateColor()
         {
             warpActiveColor = Color.Lerp(warpActiveColor,
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.warp.isWarp ? active : desactive,
+                PlayerDataManager.Instance.WorldHandler.ShipPlayer.WarpManager.isWarp ? active : desactive,
                 10 * Time.deltaTime);
             warpText.color = warpActiveColor;
             warpSpeedText.color = warpActiveColor;
@@ -49,11 +49,11 @@ namespace Core.UI
         public override void OnUpdate()
         {
             base.OnUpdate();
-            var ship = player.control;
+            var ship = player.Control;
             speedValue.SetValue(ship.speed, player.Ship().data.maxSpeedUnits, $"{ship.moveMode.ToString()} {(ship.speed * World.unitSize).ToString("F0")} u/s");
             fuelValue.SetValue(player.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).value, player.Ship().GetValue(ItemShip.ShipValuesTypes.Fuel).max);
             heatValue.SetValue(player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).value, player.Ship().GetValue(ItemShip.ShipValuesTypes.Temperature).max);
-            warpValue.SetValue(player.warp.warpSpeed, player.warp.maxWarpSpeed, "Warp speed: " + player.warp.warpSpeed.ToString("F0") + " u/s");
+            warpValue.SetValue(player.WarpManager.warpSpeed, player.WarpManager.maxWarpSpeed, "Warp speed: " + player.WarpManager.warpSpeed.ToString("F0") + " u/s");
             warpDisplayRow.UpdateColor();
         }
     }

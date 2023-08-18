@@ -38,9 +38,9 @@ namespace Core.PlayerScripts.Weapon
             
             if (player != null)
             {
-                player.attack.OnShoot += CheckIsCurrentWeapon;
-                player.attack.OnHold += OnHold;
-                player.attack.OnHold += OnHoldDown;
+                player.Attack.OnShoot += CheckIsCurrentWeapon;
+                player.Attack.OnHold += OnHold;
+                player.Attack.OnHold += OnHoldDown;
             }
 
             damage = (float)currentItem.GetKeyPair(KeyPairValue.Damage);

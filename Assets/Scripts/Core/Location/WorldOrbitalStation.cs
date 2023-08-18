@@ -147,9 +147,9 @@ namespace Core.Location
             {
                 if (quest.questState == Quest.QuestCompleted.Rewarded) continue;
             
-                if (quest.GetLastQuestPath()?.targetName == transform.name)
+                if (quest.targetStructure == transform.name)
                 {
-                    if (quest.GetLastQuestPath().solarName == worldHandler.CurrentSolarSystem.name)
+                    if (quest.targetSolar == worldHandler.CurrentSolarSystem.name)
                     {
                         if (questInStation.Find(x => x.quester.characterID == quest.quester.characterID) == null)
                         {

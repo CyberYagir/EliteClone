@@ -2535,7 +2535,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 123224337}
+  - component: {fileID: 123224339}
   - component: {fileID: 123224338}
+  - component: {fileID: 123224340}
+  - component: {fileID: 123224341}
   m_Layer: 0
   m_Name: '[BASEMANAGER]'
   m_TagString: Untagged
@@ -2572,6 +2575,66 @@ MonoBehaviour:
   doorDemo: {fileID: 3988232378946194596}
   normalDoor: {fileID: 1884768099}
   quests: {fileID: 634616574}
+--- !u!114 &123224339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123224336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a75783ee0f2e8f4596423965a52b0ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupObjects:
+  - {fileID: 123224338}
+  - {fileID: 123224341}
+  - {fileID: 123224341}
+  - {fileID: 123224340}
+--- !u!114 &123224340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123224336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d243b11a9e0c9834f8229f8c6298d6dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogers:
+  - {fileID: 1800626688}
+  - {fileID: 417302573}
+  - {fileID: 1903335135}
+  - {fileID: 1504971329}
+  - {fileID: 1098171768}
+  - {fileID: 267923835}
+  - {fileID: 1518645494}
+  - {fileID: 270156840}
+--- !u!114 &123224341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123224336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4400fcbebe9804f8f593534a3fb3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allRooms:
+  - {fileID: 845960223}
+  - {fileID: 1835811317}
+  - {fileID: 514762390}
+  - {fileID: 2084113317}
+  - {fileID: 881575421}
+  - {fileID: 1920090381}
+  - {fileID: 34463583}
+  - {fileID: 677640480}
+  - {fileID: 1643888998}
 --- !u!1 &124308809
 GameObject:
   m_ObjectHideFlags: 0
@@ -76351,7 +76414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64331ae5abeef3046af749baee57e51f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: {fileID: 5080779912931840617}
+  list: {fileID: 123224340}
   scenes: {fileID: 674533439}
 --- !u!1 &3990219166940795050
 GameObject:
@@ -81604,8 +81667,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5605115415711598812}
   - component: {fileID: 5080779912931840615}
-  - component: {fileID: 5080779912931840616}
-  - component: {fileID: 5080779912931840617}
   m_Layer: 0
   m_Name: Rooms
   m_TagString: Untagged
@@ -81626,49 +81687,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   haveZeroPos: 1
---- !u!114 &5080779912931840616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5080779912931840614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab4400fcbebe9804f8f593534a3fb3ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allRooms:
-  - {fileID: 845960223}
-  - {fileID: 1835811317}
-  - {fileID: 514762390}
-  - {fileID: 2084113317}
-  - {fileID: 881575421}
-  - {fileID: 1920090381}
-  - {fileID: 34463583}
-  - {fileID: 677640480}
-  - {fileID: 1643888998}
---- !u!114 &5080779912931840617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5080779912931840614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d243b11a9e0c9834f8229f8c6298d6dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogers:
-  - {fileID: 1800626688}
-  - {fileID: 417302573}
-  - {fileID: 1903335135}
-  - {fileID: 1504971329}
-  - {fileID: 1098171768}
-  - {fileID: 267923835}
-  - {fileID: 1518645494}
-  - {fileID: 270156840}
 --- !u!1001 &5081664261172574780
 PrefabInstance:
   m_ObjectHideFlags: 0

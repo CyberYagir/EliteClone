@@ -32,7 +32,7 @@ namespace Core.UI
                 Disable();
             };
 
-            WorldDataHandler.ShipPlayer.land.OnUnLand += Disable;
+            WorldDataHandler.ShipPlayer.LandManager.OnUnLand += Disable;
         }
 
 

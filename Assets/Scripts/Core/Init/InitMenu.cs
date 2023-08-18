@@ -19,11 +19,16 @@ namespace Core.Init
         [SerializeField] private DOTweenAnimation loading;
         [SerializeField] private TMP_Text loadingText;
 
+        private PlayerDataManager playerDataManager;
+        
         private void Awake()
         {
             print("Init");
             Application.targetFrameRate = 120;
-            PlayerDataManager.Instance.WorldHandler.ClarSolarSystem();
+            
+            playerDataManager = PlayerDataManager.Instance;
+            playerDataManager.WorldHandler.ClarSolarSystem();
+            
             options.Awake();
         }
 
@@ -43,8 +48,8 @@ namespace Core.Init
 
         public void GenerateGalaxy()
         {
-            PlayerDataManager.Instance.Services.TutorialsManager.Clear();
-            PlayerDataManager.Instance.Services.TutorialsManager.LoadTutorial();
+            playerDataManager.Services.TutorialsManager.Reload();
+            playerDataManager.Services.WorldStructuresManager.Reload();
             
             GalaxyGenerator.Clear();
             if (GalaxyGenerator.LoadSystems())
@@ -54,7 +59,7 @@ namespace Core.Init
                 ActiveLoading();
                 loadingText.text = "Loading Galaxy";
 
-                PlayerDataManager.Instance.LoadScene();
+                playerDataManager.LoadScene();
             }
         }
 

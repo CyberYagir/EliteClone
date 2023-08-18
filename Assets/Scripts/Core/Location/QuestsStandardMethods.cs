@@ -16,7 +16,7 @@ namespace Core.Location
         
         #region Inits
 
-        
+
         public void InitTransfer(Quest quest)
         {
             Random rnd = new Random(quest.questID);
@@ -26,7 +26,8 @@ namespace Core.Location
                 quest.toTransfer.Add(ItemsManager.GetTransferedItem(rnd));
             }
 
-            quest.pathToTarget = quest.GetPath(rnd, quest.appliedStation, quest.appliedSolar);
+            quest.SetBasePath(quest.GenerateRandomPath(rnd, quest.appliedStation, quest.appliedSolar));
+                
             quest.reward.Init(quest.questID);
         }
 
@@ -41,7 +42,7 @@ namespace Core.Location
                 quest.toTransfer.Add(mineral);
             }
 
-            quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
+            quest.SetBasePath(new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation});
             quest.keyValues.Add("NoAddTransfer", true);
             var cost = 0;
             for (int i = 0; i < quest.toTransfer.Count; i++)
@@ -55,7 +56,7 @@ namespace Core.Location
         public void InitKill(Quest quest)
         {
             Random rnd = new Random(quest.questID);
-            quest.pathToTarget = new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation};
+            quest.SetBasePath(new QuestPath {solarName = quest.appliedSolar, targetName = quest.appliedStation});
             var solarShipsData = SolarSystemShipsStaticBuilder.InitShipsPoses(quest.appliedSolar);
             var ships = solarShipsData.allships.FindAll(x => x.fraction != quest.quester.fraction);
             if (ships.Count != 0)
@@ -87,13 +88,12 @@ namespace Core.Location
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
             {
                 var worldHandler = PlayerDataManager.Instance.WorldHandler;
-                bool allItemInInventory = worldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer);
-                var last = quest.GetLastQuestPath();
+                bool allItemInInventory = worldHandler.ShipPlayer.Cargo.ContainItems(quest.toTransfer);
                 if (allItemInInventory)
                 {
-                    if (last.solarName == worldHandler.CurrentSolarSystem.name)
+                    if (quest.targetSolar == worldHandler.CurrentSolarSystem.name)
                     {
-                        if (GetComponent<WorldOrbitalStation>().transform.name == last.targetName)
+                        if (GetComponent<WorldOrbitalStation>().transform.name == quest.targetStructure)
                         {
                             quest.questState = Quest.QuestCompleted.Completed;
                         }
@@ -132,7 +132,7 @@ namespace Core.Location
             {
                 if (GetComponent<WorldOrbitalStation>().transform.name == quest.appliedStation)
                 {
-                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
+                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItems(quest.toTransfer) && quest.questState == Quest.QuestCompleted.Completed)
                     {
                         quest.buttonText = "Finish";
                     }
@@ -149,13 +149,13 @@ namespace Core.Location
             if (quest.IsTypeQuest("Transfer"))
             {
                 var worldOrbitalStation = GetComponent<WorldOrbitalStation>();
-                if (worldOrbitalStation.transform.name == quest.GetLastQuestPath().targetName)
+                if (worldOrbitalStation.transform.name == quest.targetStructure)
                 {
                     quest.buttonText = "Items to transfer missing";
                 }
                 else if (worldOrbitalStation.transform.name == quest.appliedStation)
                 {
-                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer))
+                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItems(quest.toTransfer))
                     {
                         quest.buttonText = "Cancel";
                     }
@@ -192,10 +192,10 @@ namespace Core.Location
         {
             if (quest.IsTypeQuest("Transfer") || quest.IsTypeQuest("Mine"))
             {
-                if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.ContainItems(quest.toTransfer))
+                if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItems(quest.toTransfer))
                 {
-                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.RemoveItems(quest.toTransfer);
-                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.AddItems(quest.reward.rewardItems))
+                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.RemoveItems(quest.toTransfer);
+                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.AddItems(quest.reward.rewardItems))
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {
@@ -204,7 +204,7 @@ namespace Core.Location
                     }
                     else
                     {
-                        PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.AddItems(quest.toTransfer);
+                        PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.AddItems(quest.toTransfer);
                     }
                 }
             }
@@ -216,7 +216,7 @@ namespace Core.Location
             { 
                 if (quest.questState == Quest.QuestCompleted.Completed)
                 {
-                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.cargo.AddItems(quest.reward.rewardItems))
+                    if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.AddItems(quest.reward.rewardItems))
                     {
                         if (AppliedQuests.Instance.FinishQuest(quest.questID))
                         {

@@ -39,7 +39,7 @@ namespace Core.CommunistsBase.OutDemo
             tutor.ValuesData.AddWatchDemo(Demos.BaseDemo);
             tutor.TutorialQuestsData.NextTutorialQuest();
             
-            tutorManager.SaveTutorial();
+            tutorManager.Save();
         }
     }
 }

@@ -203,11 +203,11 @@ namespace Core
                     p.LoadShip(playerData.Ship);
 
                     keys = playerData.Keys;
-                    p.land.SetLand(playerData.IsLanded);
-                    p.quests.LoadList(playerData.quests);
-                    p.cargo.LoadData(playerData.items);
+                    p.LandManager.SetLand(playerData.IsLanded);
+                    p.AppliedQuests.LoadList(playerData.quests);
+                    p.Cargo.LoadData(playerData.items);
                     
-                    p.rep.ratings = playerData.Reputations;
+                    p.ReputationManager.ratings = playerData.Reputations;
                 
                     startTime = playerData.playedTime;
                 
@@ -257,14 +257,14 @@ namespace Core
                 Rot = p.transform.eulerAngles,
                 WorldPos = world.transform.position,
                 Keys = keys,
-                IsLanded = p.land.GetLand(),
-                quests = p.quests.GetData(),
-                items = p.cargo.GetData(),
+                IsLanded = p.LandManager.GetLand(),
+                quests = p.AppliedQuests.GetData(),
+                items = p.Cargo.GetData(),
                 shipsInStations = shipsInStations,
                 playedTime = GetTime(),
                 startSaveTime = startSaveTime,
                 systemsHistory = systemsHistory,
-                Reputations = p.rep.ratings
+                Reputations = p.ReputationManager.ratings
             };
             SaveData(playerData);
         }
