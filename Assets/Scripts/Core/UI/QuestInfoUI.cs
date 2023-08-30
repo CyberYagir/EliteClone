@@ -25,6 +25,7 @@ namespace Core.UI
         public override void Init()
         {
             base.Init();
+            Clear();
             
             (questList as QuestListUI).OnChangeSelected += UpdateData;
             upDownUI.OnChangeSelected += SelectButton;

@@ -137,7 +137,7 @@ namespace Core.PlayerScripts
                 spaceShip.SetShip(spaceShip.CloneShip());
                 
                 
-                
+                GetComponent<ShipShield>().Init();
             }
         }
 

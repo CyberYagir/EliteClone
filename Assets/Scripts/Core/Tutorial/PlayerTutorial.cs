@@ -42,7 +42,7 @@ namespace Core.Core.Tutorial
             worldDataHandler = PlayerDataManager.Instance.WorldHandler;
             
             
-            var activator = FindObjectOfType<LocationUIActivator>();
+            activator = FindObjectOfType<LocationUIActivator>();
             CheckTutorialQuests(activator);
         }
 
@@ -74,7 +74,6 @@ namespace Core.Core.Tutorial
                     {
                         CancelBaseQuests();
                         M2GenerateQuest(true);
-                        M2Events();
                         TutorialData.TutorialQuestsData.NextTutorialQuest();
                     });
             }
@@ -82,7 +81,6 @@ namespace Core.Core.Tutorial
             if (questID == 3)
             {
                 M2GenerateQuest(false);
-                M2Events();
             }
 
             if (questID == 4)
@@ -120,7 +118,11 @@ namespace Core.Core.Tutorial
 
         public void CancelBaseQuests()
         {
-            worldDataHandler.ShipPlayer.AppliedQuests.CancelQuest(worldDataHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue));
+            var mainQuests = worldDataHandler.ShipPlayer.AppliedQuests.quests.FindAll(x => x.questID == int.MaxValue);
+            foreach (var q in mainQuests)
+            {
+                worldDataHandler.ShipPlayer.AppliedQuests.CancelQuest(q);
+            }
         }
 
         private void AddStationStructure(string solarName)
@@ -208,7 +210,7 @@ namespace Core.Core.Tutorial
         {
             var quest = GetEmptyQuest();
             quest.appliedSolar = worldDataHandler.CurrentSolarSystem.name;
-            var path = quest.GenerateRandomPath(new System.Random(int.MaxValue), "Communists Base", quest.appliedSolar, 2, 5, false);
+            var path = quest.GenerateRandomPath(new System.Random(int.MaxValue), "Communists Base", quest.appliedSolar, 2);
             quest.targetSolar = path.GetLastQuestPath().solarName;
             quest.targetStructure = "Communists Base";
             quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
@@ -301,6 +303,18 @@ namespace Core.Core.Tutorial
         public void M2GenerateQuest(bool notify)
         {
             CancelBaseQuests();
+
+            var weapons = GetComponent<Ship>().GetShip().slots.FindAll(x => x.slotType == ItemType.Weapon);
+
+            var bindedWeapon = weapons.Find(x => x.button != -1);
+
+            if (bindedWeapon != null)
+            {
+                TutorialData.TutorialQuestsData.NextTutorialQuest();
+                CheckTutorialQuests(activator);
+                return;
+            }
+            
             var quest = GetEmptyQuest();
             quest.keyValues.Add("Text", "Activate the ship's weapons. And destroy the pirate's spaceship. Find the tachyon transmitter in the wreckage.");
             worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
@@ -316,6 +330,8 @@ namespace Core.Core.Tutorial
 
         public void M3GenerateQuest(bool notify)
         {
+            CancelBaseQuests();
+            
             var quest = GetEmptyQuest();
             if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Ship().shipName != knight.shipName)
             {
@@ -346,6 +362,8 @@ namespace Core.Core.Tutorial
         }
 
         private bool haveZinc;
+        private LocationUIActivator activator;
+
         public bool HaveZinc()
         {
             var contain = PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItem(zincItem.id.id);

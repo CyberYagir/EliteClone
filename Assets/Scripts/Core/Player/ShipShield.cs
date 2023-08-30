@@ -10,7 +10,7 @@ namespace Core.PlayerScripts
         private float withoutAttackTime;
         private float oldShield;
         private float shieldAdd;
-        private void Start()
+        public void Init()
         {
             ship = GetComponent<Ship>();
             oldShield = ship.GetShip().GetValue(ItemShip.ShipValuesTypes.Shields).value;

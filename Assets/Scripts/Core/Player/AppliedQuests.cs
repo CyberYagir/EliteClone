@@ -53,16 +53,20 @@ namespace Core.PlayerScripts
             List<QuestData> data = new List<QuestData>();
             for (int i = 0; i < quests.Count; i++)
             {
+                if (quests[i].questID == int.MaxValue) continue; //Main Quest ID
+                
+                
+                
                 data.Add(new QuestData
-                {
-                    seed = quests[i].questID, 
-                    character = quests[i].quester, 
-                    stationName = quests[i].appliedStation, 
-                    solarName = quests[i].appliedSolar,
-                    state = quests[i].questState,
-                    targetSolar = quests[i].targetSolar,
-                    targetStructure =  quests[i].targetStructure
-                });
+                    {
+                        seed = quests[i].questID,
+                        character = quests[i].quester,
+                        stationName = quests[i].appliedStation,
+                        solarName = quests[i].appliedSolar,
+                        state = quests[i].questState,
+                        targetSolar = quests[i].targetSolar,
+                        targetStructure = quests[i].targetStructure
+                    });
             }
             return data;
         }

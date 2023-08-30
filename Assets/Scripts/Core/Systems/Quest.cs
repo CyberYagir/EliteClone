@@ -52,8 +52,9 @@ namespace Core.Location
 
         public Quest(int questSeed , Character character, string stationName, string appliedSolar, QuestsMethodObject methods)
         {
-            appliedStation = stationName;
+            this.appliedStation = stationName;
             this.appliedSolar = appliedSolar;
+            
             Init(questSeed, character, methods);
         }
 
@@ -74,14 +75,12 @@ namespace Core.Location
             questType = rnd.Next(0, WorldDataItem.Quests.Count);
             questID = questSeed;
             questCost = rnd.Next(1, 5);
-            if (!IsEmptyQuest())
+
+            if (!notStation)
             {
-                if (!notStation)
+                if (methdos != null)
                 {
-                    if (methdos != null)
-                    {
-                        methdos.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
-                    }
+                    methdos.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.Init);
                 }
             }
         }
@@ -108,74 +107,71 @@ namespace Core.Location
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.IsCompleteCheck);
         }
 
-        public  QuestPath GenerateRandomPath(Random rnd, string stationName, string solarName, int minJumps = 0, int maxJumps = 7, bool canBroke = true)
+        public QuestPath GenerateRandomPath(Random rnd, string stationName, string solarName, int minJumps = 4)
         {
-            int pathLength = rnd.Next(minJumps, maxJumps);
-            List<string> pathNames = new List<string>();
-            QuestPath last = new QuestPath {solarName = solarName};
-            QuestPath first = last;
-            pathNames.Add(last.solarName);
-            int trys = 0;
-            bool stopPath = false;
-            if (pathLength == 0) return last;
-            for (int i = 0; i < pathLength; i++)
+            List<List<string>> paths = new List<List<string>>();
+            List<string> targets = new List<string>();
+            foreach (var pathStart in GalaxyGenerator.systems[solarName].sibligs)
             {
-                if (last.solarName != null){
-                    if (GalaxyGenerator.systems[last.solarName].sibligs.Count != 0)
+                var path = new List<string>();
+                path.Add(pathStart.solarName);
+                var targetSystem = GalaxyGenerator.systems[pathStart.solarName];
+                var targetStation = "";
+                while (path.Count < minJumps || targetSystem.stations.Count == 0)
+                {
+                    if (targetSystem.sibligs.Count == 0) break;
+                    var next = targetSystem.sibligs[rnd.Next(0, targetSystem.sibligs.Count)].solarName;
+
+                    path.Add(next);
+                    targetSystem = GalaxyGenerator.systems[next];
+
+                    if (targetSystem.stations.Count != 0)
                     {
-                        var sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
-                        trys = 0;
-                        while (pathNames.Contains(sibling.solarName) || GalaxyGenerator.systems[last.solarName].stations.Count == 0)
-                        {
-                            sibling = GalaxyGenerator.systems[last.solarName].sibligs[rnd.Next(0, GalaxyGenerator.systems[last.solarName].sibligs.Count)];
-                            trys++;
-                            if (trys > 5)
-                            {
-                                stopPath = true;
-                                break;
-                            }
-                        }
-
-                        if (stopPath) break;
-
-                        pathNames.Add(sibling.solarName);
-                        var newPath = new QuestPath {prevPath = last, solarName = sibling.solarName};
-                        last.nextPath = newPath;
-                        last = newPath;
+                        targetStation = targetSystem.stations[rnd.Next(0, targetSystem.stations.Count)].name;
                     }
                 }
-                else
+
+                paths.Add(path);
+                targets.Add(targetStation);
+
+                if (path.Count > minJumps && !string.IsNullOrEmpty(targetStation))
                 {
                     break;
                 }
             }
-            if (last.solarName == null)
-            {
-                return last.prevPath;
-            }
-            var lastSolar = GalaxyGenerator.systems[last.solarName];
- 
 
-            if (lastSolar.stations.Count != 0)
+            for (int i = 0; i < paths.Count; i++)
             {
-                last.targetName = lastSolar.stations[rnd.Next(0, lastSolar.stations.Count)].name;
-                trys = 0;
-                while (last.targetName == stationName)
+                if (paths[i].Count > minJumps && !string.IsNullOrEmpty(targets[i]))
                 {
-                    last.targetName = lastSolar.stations[rnd.Next(0, lastSolar.stations.Count)].name;
-                    trys++;
-                    if (trys > 5)
+                    QuestPath start = new QuestPath()
                     {
-                        break;
+                        solarName = solarName,
+                        targetName = stationName,
+                    };
+
+                    var last = start;
+
+                    for (int j = 0; j < paths[i].Count; j++)
+                    {
+                        var next = new QuestPath()
+                        {
+                            solarName = paths[i][j],
+                            targetName = ""
+                        };
+
+                        last.nextPath = next;
+
+                        last = next;
                     }
+
+                    last.GetLastQuestPath().targetName = targets[i];
+                    
+                    return start;
                 }
             }
-            else if (canBroke)
-            {
-                questState = QuestCompleted.BrokeQuest;
-            }
 
-            return first;
+            return null;
         }
 
 
@@ -211,9 +207,18 @@ namespace Core.Location
 
         public void SetBasePath(QuestPath generateRandomPath)
         {
+            if (generateRandomPath == null)
+            {
+                questState = QuestCompleted.BrokeQuest;
+                return;
+            }
             var lastNode = generateRandomPath.GetLastQuestPath();
+            
+            
             targetSolar = lastNode.solarName;
             targetStructure = lastNode.targetName;
+
+            RegeneratePathFromPlayer();
         }
     }
 }

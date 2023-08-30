@@ -26,8 +26,10 @@ namespace Core.Location
                 quest.toTransfer.Add(ItemsManager.GetTransferedItem(rnd));
             }
 
-            quest.SetBasePath(quest.GenerateRandomPath(rnd, quest.appliedStation, quest.appliedSolar));
-                
+
+            QuestPath path =  quest.GenerateRandomPath(rnd, quest.appliedStation, quest.appliedSolar, 2);
+
+            quest.SetBasePath(path);
             quest.reward.Init(quest.questID);
         }
 

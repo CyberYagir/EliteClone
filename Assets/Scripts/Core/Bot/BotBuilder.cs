@@ -35,7 +35,7 @@ namespace Core.Bot
         private TutorialSO tutorialData;
         
         
-        public int Fraction => human.fraction;
+        public int Fraction => human != null ? human.fraction : -1;
 
         private void Awake()
         {
@@ -67,17 +67,17 @@ namespace Core.Bot
 
             ship.SetShip(shipData);
             SetName();
+            GetComponent<ShipShield>().Init();
         }
         
 
+        
         public void InitBot(WorldDataHandler worldDataHandler, SolarSystemShips solarSystemShips, Random rnd = null)
         {
-            this.worldDataHandler = worldDataHandler;            
-            this.solarSystemShips = solarSystemShips;
-
+            BaseInit(worldDataHandler, solarSystemShips);
             
             
-            NamesHolder.Init();
+            
             var firstName = "";
             var lastName = "";
             if (rnd == null)
@@ -94,13 +94,19 @@ namespace Core.Bot
         }
         public void InitBot(WorldDataHandler worldDataHandler, string first, string last, SolarSystemShips solarSystemShips)
         {
-            this.solarSystemShips = solarSystemShips;
-            this.worldDataHandler = worldDataHandler;
+            BaseInit(worldDataHandler, solarSystemShips);
 
-            
-            NamesHolder.Init();
+
             transform.name = GetComponent<BotVisual>().GetShipName() + $" [{first} {last}]";
         }
+
+        private void BaseInit(WorldDataHandler worldDataHandler, SolarSystemShips solarSystemShips)
+        {
+            this.solarSystemShips = solarSystemShips;
+            this.worldDataHandler = worldDataHandler;
+            NamesHolder.Init();
+        }
+
         public ParticleSystem PlayWarp()
         {
             particles.Play();

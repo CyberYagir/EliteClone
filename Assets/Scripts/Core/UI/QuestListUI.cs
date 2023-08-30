@@ -94,12 +94,15 @@ namespace Core.UI
                 var questData = WorldDataItem.Quests.ByID(quests[i].questType);
                 if (questData.typeName == "Kill")
                 {
-                    var targetID = (int) quests[i].keyValues["BotTarget"];
-                    if (solarShips != null)
+                    if (quests[i].keyValues.ContainsKey("BotTarget"))
                     {
-                        if (solarShips.IsDead(targetID) && AppliedQuests.Instance.quests.Find(x=>x.questID == quests[i].questID) == null)
+                        var targetID = (int) quests[i].keyValues["BotTarget"];
+                        if (solarShips != null)
                         {
-                            questsToRemove.Add(quests[i]);
+                            if (solarShips.IsDead(targetID) && AppliedQuests.Instance.quests.Find(x => x.questID == quests[i].questID) == null)
+                            {
+                                questsToRemove.Add(quests[i]);
+                            }
                         }
                     }
                 }

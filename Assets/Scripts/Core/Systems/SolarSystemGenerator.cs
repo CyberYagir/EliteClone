@@ -38,10 +38,11 @@ namespace Core.Systems
 
         public override void Loop()
         {
-            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.SaveData.ExKey("system_start_on"))
+            var ship = worldHandler.ShipPlayer;
+            if (ship.SaveData.ExKey("system_start_on"))
             {
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.transform.position = GameObject.Find((string) PlayerDataManager.Instance.WorldHandler.ShipPlayer.SaveData.GetKeys()["system_start_on"]).transform.position;
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.SaveData.DelKey("system_start_on");
+               ship.transform.position = GameObject.Find((string) ship.SaveData.GetKeys()["system_start_on"]).transform.position;
+               ship.SaveData.DelKey("system_start_on");
             }
 
             enabled = false;

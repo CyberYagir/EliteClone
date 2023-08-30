@@ -30,7 +30,7 @@ namespace Core.UI
             }
             else
             {
-                if (WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation != null)
+                if (WorldDataHandler.CurrentLocationGenerator && WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation)
                 {
                     ChangeUI();
                 }
@@ -49,8 +49,8 @@ namespace Core.UI
 
         public void ChangeUI()
         {
-            nameText.text = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.transform.name;
-            UpdateCosts();
+                nameText.text = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation.transform.name;
+                UpdateCosts();
         }
 
         public override void OnUpdate()

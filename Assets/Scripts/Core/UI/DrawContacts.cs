@@ -26,10 +26,9 @@ namespace Core.UI
                 {
                     if (!objects[i].GetComponent<Player>())
                     {
-                        var b = Instantiate(item, holder.transform);
-                        var icon = b.transform.GetChild(1).GetComponent<Image>();
-                        var iconFraction = b.transform.GetChild(2).GetComponent<Image>();
-                        
+                        var b = Instantiate(item, holder.transform).GetComponent<DrawContactsItem>();
+                        var icon = b.Icon;
+                        var iconFraction = b.IconFraction;
                         
                         var navI = new NavItem();
                         navI.Button = b.GetComponent<ButtonEffect>();
@@ -37,12 +36,16 @@ namespace Core.UI
                         navI.Image = objects[i].GetComponent<Image>();
                         navI.Name = b.transform.GetComponentInChildren<TMP_Text>();
                         navI.Icon = icon;
+                        
+                        
                         var bot = objects[i].GetComponent<BotBuilder>();
-
                         if (bot)
                         {
                             iconFraction.gameObject.SetActive(true);
-                            iconFraction.sprite = WorldDataItem.GetData().fractions.IconByID(bot.Fraction);
+
+                            var sprite = WorldDataItem.GetData().fractions.IconByID(bot.Fraction);
+                            
+                            iconFraction.sprite = sprite;
                         }
                         else
                             iconFraction.gameObject.SetActive(false);
@@ -50,7 +53,7 @@ namespace Core.UI
 
                         navI.Icon.sprite = objects[i].icon;
                         navI.Name.text = objects[i].transform.name;
-                        b.SetActive(true);
+                        b.gameObject.SetActive(true);
                         items.Add(navI);
                     }
                 }

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using Core.TDS;
 using DG.Tweening;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Core.CommunistsBase.Intacts

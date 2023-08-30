@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using Core.Galaxy;
 using TMPro;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace Core.Init
 {
@@ -37,9 +38,8 @@ namespace Core.Init
         }
 
         public List<Version> versions;
-
-
-        [SerializeField] private TMP_Text text;
+        
+        [SerializeField] private InitChangeLogItem item;
 
 
         private void Start()
@@ -75,43 +75,24 @@ namespace Core.Init
             }
         }
 
+        private bool spawned = false;
         public void UpdateText()
         {
-            text.text = "";
+            if (!spawned)
+            {
+                item.gameObject.SetActive(true);
+                versions.Reverse();
+                foreach (var v in versions)
+                {
+                    var newItem = Instantiate(item, item.transform.parent);
+                    newItem.Init(v);
+                }
+
+                item.gameObject.SetActive(false);
+                spawned = true;
+            }
             
-            foreach (var v in versions)
-            {
-                var vers = "Version " + v.version + ": \n";
-
-                for (int i = 0; i < v.changes.Count; i++)
-                {
-                    vers += " -" + v.changes[i].type.ToString() + "\n";
-                    vers += DrawArray(v.changes[i].Gameplay, "Gameplay");
-                    vers += DrawArray(v.changes[i].Location, "Locations");
-                    vers += DrawArray(v.changes[i].Menu, "Menu");
-                    vers += DrawArray(v.changes[i].System, "Systems");
-                }
-
-                text.text += vers + "\n";
-            }
-        }
-
-        public string DrawArray(List<string> list, string mn)
-        {
-            if (list.Count == 0)
-            {
-                return "";
-            }
-            else
-            {
-                var str = "  + " + mn + "\n";
-                for (int i = 0; i < list.Count; i++)
-                {
-                    str += "    " +  list[i] + "\n";
-                }
-
-                return str;
-            }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInParent<Canvas>().GetComponent<RectTransform>());
         }
     }
 }
