@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Core.Core;
 using Core.Galaxy;
 using Core.Game;
 using Core.Map;
@@ -10,6 +12,7 @@ using Core.Systems;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
+
 
 namespace Core.Location
 {
@@ -107,71 +110,71 @@ namespace Core.Location
             WorldStationQuests.Instance.GetEventByID(questType)?.Execute(this, WorldStationQuests.QuestFunction.ExecuteType.IsCompleteCheck);
         }
 
+
         public QuestPath GenerateRandomPath(Random rnd, string stationName, string solarName, int minJumps = 4)
         {
-            List<List<string>> paths = new List<List<string>>();
-            List<string> targets = new List<string>();
-            foreach (var pathStart in GalaxyGenerator.systems[solarName].sibligs)
+            var startStation = GalaxyGenerator.systems[solarName];
+            List<string> findedPath = null;
+            for (int i = 0; i < startStation.sibligs.Count; i++)
             {
-                var path = new List<string>();
-                path.Add(pathStart.solarName);
-                var targetSystem = GalaxyGenerator.systems[pathStart.solarName];
-                var targetStation = "";
-                while (path.Count < minJumps || targetSystem.stations.Count == 0)
+                var path = BuildPathRecursive(GalaxyGenerator.systems[startStation.sibligs[i].solarName], new List<string>(), minJumps, rnd);
+                if (path != null)
                 {
-                    if (targetSystem.sibligs.Count == 0) break;
-                    var next = targetSystem.sibligs[rnd.Next(0, targetSystem.sibligs.Count)].solarName;
-
-                    path.Add(next);
-                    targetSystem = GalaxyGenerator.systems[next];
-
-                    if (targetSystem.stations.Count != 0)
-                    {
-                        targetStation = targetSystem.stations[rnd.Next(0, targetSystem.stations.Count)].name;
-                    }
-                }
-
-                paths.Add(path);
-                targets.Add(targetStation);
-
-                if (path.Count > minJumps && !string.IsNullOrEmpty(targetStation))
-                {
+                    findedPath = path;
                     break;
                 }
             }
 
-            for (int i = 0; i < paths.Count; i++)
+            if (findedPath == null || findedPath.Count == 0)
             {
-                if (paths[i].Count > minJumps && !string.IsNullOrEmpty(targets[i]))
-                {
-                    QuestPath start = new QuestPath()
-                    {
-                        solarName = solarName,
-                        targetName = stationName,
-                    };
-
-                    var last = start;
-
-                    for (int j = 0; j < paths[i].Count; j++)
-                    {
-                        var next = new QuestPath()
-                        {
-                            solarName = paths[i][j],
-                            targetName = ""
-                        };
-
-                        last.nextPath = next;
-
-                        last = next;
-                    }
-
-                    last.GetLastQuestPath().targetName = targets[i];
-                    
-                    return start;
-                }
+                return GenerateRandomPath(rnd, stationName, solarName, minJumps - 1);
             }
 
-            return null;
+
+
+            QuestPath start = new QuestPath()
+            {
+                solarName = solarName,
+                targetName = stationName,
+            };
+            var last = start;
+            for (int j = 0; j < findedPath.Count; j++)
+            {
+                var next = new QuestPath()
+                {
+                    solarName = findedPath[j],
+                    targetName = "",
+                };
+                last.nextPath = next;
+                last = next;
+            }
+
+            var system = GalaxyGenerator.systems[last.GetLastQuestPath().solarName];
+            last.GetLastQuestPath().targetName = system.stations[rnd.Next(0, system.stations.Count)].name;
+
+            return start;
+        }
+
+
+        public List<string> BuildPathRecursive(SolarSystem target, List<string> path, int minJumpsCount, Random rnd)
+        {
+            if (target.sibligs.Count <= 1) return null;
+            var shuffled = rnd.Shuffle(target.sibligs);
+
+            SolarSystem solar = null;
+            do
+            {
+                solar = GalaxyGenerator.systems[shuffled[rnd.Next(0, shuffled.Count)].solarName];
+            } while (solar == null || path.Contains(solar.name));
+
+            path.Add(solar.name);
+
+            if (path.Count > minJumpsCount && solar.stations.Count != 0)
+            {
+                return path;
+            }
+            
+            return BuildPathRecursive(solar, path, minJumpsCount, rnd);
         }
 
 

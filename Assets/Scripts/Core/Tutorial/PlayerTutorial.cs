@@ -211,8 +211,12 @@ namespace Core.Core.Tutorial
             var quest = GetEmptyQuest();
             quest.appliedSolar = worldDataHandler.CurrentSolarSystem.name;
             var path = quest.GenerateRandomPath(new System.Random(int.MaxValue), "Communists Base", quest.appliedSolar, 2);
+            
             quest.targetSolar = path.GetLastQuestPath().solarName;
             quest.targetStructure = "Communists Base";
+            
+            
+            
             quest.keyValues.Add("Text", "Transfer to the system with the base, then select it in the Navigation Tab, and jump into it.");
             return quest;
         }

@@ -2,126 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28d1471d-6fb6-4144-9459-c3b0f63c89e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Init/InitChangeLogSubItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Init/InitChangeLogSubItem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Extensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Extensions.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EliteClone/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packs/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packs/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packs/Yagir.inc/HierarchyIcons/Scripts/Folder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packs/Yagir.inc/HierarchyIcons/Scripts/Folder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Cabine/InfoCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Cabine/InfoCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/[DATAMANAGER].prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/[DATAMANAGER].prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Galaxy/Galaxy.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Galaxy/Galaxy.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Galaxy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Galaxy.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Init.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Init.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Volumes/MainVolume.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Volumes/MainVolume.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Bot/BotBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/CommunitsBase/InteractPoints/InteactPointDialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/CommunitsBase/InteractPoints/InteactPointDialog.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/CoreDef.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/CoreDef.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/DialogSystem/ExtendedDialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/DialogSystem/ExtendedDialog.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Init/InitChangelog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Init/InitChangelog.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Location/QuestsStandardMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Location/QuestsStandardMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/AppliedQuests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/AppliedQuests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipShield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Player/ShipShield.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Volumes/GalaxyVolume.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Volumes/GalaxyVolume.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Galaxy/GalaxyGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Galaxy/GalaxyGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Quest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/Quest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Systems/SolarSystemGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Tutorial/PlayerTutorial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Tutorial/PlayerTutorial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/BaseWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/BaseWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawContacts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/DrawContacts.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestInfoUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestInfoUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestListUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/UI/QuestListUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys1.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys1.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys2.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys2.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys3.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Demo/Comunisys3.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Demo/MarsLandskape.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Demo/MarsLandskape.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Demo/MarsPanoramaa.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Demo/MarsPanoramaa.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S-1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S-1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S1-1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S1-1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S2-1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S2-1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S5-1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S5-1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/S5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/S5.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/smoke.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/smoke.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Galaxy/smoke1.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Galaxy/smoke1.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Jupiter.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Jupiter.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Mars.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Mars.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Moon.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Moon.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Neptune.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Neptune.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P3.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P3.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P4.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P4.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P5.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P5.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P6.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P6.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/P7.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/P7.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Sun.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Sun.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Sun8K.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Sun8K.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Uran.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Uran.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Venus.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Venus.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/Planets/Venus1.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Planets/Venus1.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal2.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal2.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal2_Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal2_Normal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal3.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal3.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal3_Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal3_Normal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Metal_Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Metal_Normal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Meteor.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Meteor.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Plate.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Plate.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/PlateNormal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/PlateNormal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Protub1.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Protub1.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/Track.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/Track.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/System/tires.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/System/tires.jpg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Demo/Death.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Demo/Death.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Demo/Enter.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Demo/Enter.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Anarchy.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Anarchy.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Comunisys.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Comunisys.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/CrimeGroup.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/CrimeGroup.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Liberty.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Liberty.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Pirates.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Fractions/Pirates.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Fuel.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Fuel.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Health.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Health.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Pitch.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Pitch.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/ReplaceIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/ReplaceIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Roll.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Roll.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Speed.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Speed.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/SpeedUp.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/SpeedUp.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Temperature.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Temperature.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Tons.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Tons.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Yaw.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Garage/Yaw.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/DirectX.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/DirectX.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Folder.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Folder.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Gamejolt.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Gamejolt.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Git.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Git.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Pause.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Pause.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Play.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Play.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Init/Youtube.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Init/Youtube.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/Bolt.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/Bolt.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/Cooler.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/Cooler.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/CreditsIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/CreditsIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/Minerals.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/Minerals.psd.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/Rifle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/Rifle.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/WeaponIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/WeaponIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/armorIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/armorIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/generatorIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/generatorIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/itemIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/itemIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/machinegun.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/machinegun.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/miningLaserIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/miningLaserIcon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/rocket.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/rocket.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/shield.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/shield.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Items/shieldfull.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Items/shieldfull.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Kill.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Kill.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Mine.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Mine.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Player.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Player.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Transfer.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/QuestTypes/Transfer.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saves/Player/Global/galaxy.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/galaxy.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/player.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/player.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/structures.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/structures.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/system.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/system.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saves/Player/Global/tutorials.config" beforeDir="false" afterPath="$PROJECT_DIR$/Saves/Player/Global/tutorials.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saves/Player/Locations/Fortia 0704684.[-5470,34,4684,07,-73682,96].solar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saves/Player/Locations/Ierant 0161532.[-8303,86,3620,46,-70643,95].solar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saves/Player/Locations/Ita 0803629.[-3417,72,1523,39,-59387,61].solar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -660,6 +558,11 @@
       <workItem from="1692790754075" duration="4345000" />
       <workItem from="1692796007503" duration="636000" />
       <workItem from="1693420444552" duration="8243000" />
+      <workItem from="1693428828276" duration="35000" />
+      <workItem from="1693428945383" duration="851000" />
+      <workItem from="1693825540206" duration="94000" />
+      <workItem from="1693829737157" duration="2092000" />
+      <workItem from="1693837041833" duration="3795000" />
     </task>
     <servers />
   </component>

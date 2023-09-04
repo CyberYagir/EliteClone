@@ -191,16 +191,17 @@ namespace Core.Galaxy
             }
         }
 
-        public static List<OrbitStation> GetStaions(SolarSystem system)
+        public static List<OrbitStation> GetStations(SolarSystem system)
         {
-            var pos = system.position;
-            var rnd = new Random((int) (pos.x + pos.y + pos.z));
+            var stations = new List<OrbitStation>();
 
-            var starsCount = rnd.Next(1, 4);
-            var planetsCount = rnd.Next(1, World.maxPlanetsCount * starsCount);
-            var basesCount = rnd.Next(0, planetsCount);
 
-            return SolarStaticBuilder.GenerateOrbitStations(basesCount, system.name, pos);
+            foreach (var pl in system.planets)
+            {
+                stations.AddRange(pl.stations);
+            }
+
+            return stations;
         }
         public static IEnumerator GenerateGalaxy(int seed)
         {
@@ -218,7 +219,14 @@ namespace Core.Galaxy
                 var system = GetBaseSystem(rnd);
                 system.stars.Add(SolarStaticBuilder.GenStars(1, system.name, system.position)[0]);
                 system.SetName();
-                system.stations = GetStaions(system);
+                
+                system = SolarStaticBuilder.Generate(system);
+                system.stations = GetStations(system);
+
+                system.belts = new List<Belt>();
+                system.planets = new List<Planet>();
+                system.stars = new List<Star>(new[] {system.stars[0]});
+                
                 GetSiblings(system);
                 AddToGalaxy(system);
             
