@@ -16,7 +16,6 @@ namespace Core.PlayerScripts
 
     public class Player : MonoBehaviour, IDamagable
     {
-        [SerializeField] private GalacticPathfinder pathfinder;
         public ShipController Control { get; private set; }
         public WarpManager WarpManager { get; private set; }
         public SaveLoadData SaveData { get; private set; }
@@ -30,7 +29,6 @@ namespace Core.PlayerScripts
         public TargetManager TargetsManager { get; private set; }
         public ReputationManager ReputationManager { get; private set; }
 
-        public GalacticPathfinder GalaxyFinder => pathfinder;
 
         public static Event OnSceneChanged = new Event();
         public static Event OnPreSceneChanged = new Event();

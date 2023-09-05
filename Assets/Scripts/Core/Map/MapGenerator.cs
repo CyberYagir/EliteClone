@@ -9,6 +9,7 @@ using Core.Systems;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ namespace Core.Map
         [SerializeField] private MapSelect selector;
         [SerializeField] private GameObject dataManager;
         [SerializeField] private GameObject volume, exitCanvas;
-        
+        [SerializeField] private EventSystem eventSystem;
         private List<GameObject> spawned = new List<GameObject>();
         private List<GameObject> names = new List<GameObject>();
         private List<TMP_Text> texts = new List<TMP_Text>();
@@ -88,7 +89,7 @@ namespace Core.Map
         public void FrameInit()
         {
             StartCoroutine(WaitForDisableCamera());
-            
+            eventSystem.gameObject.SetActive(false);
             Destroy(volume.gameObject);
         }
         

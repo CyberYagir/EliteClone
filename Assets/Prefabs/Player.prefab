@@ -173,8 +173,8 @@ MonoBehaviour:
   exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
-      data1: 72196702400479233
-      data2: 13763000466612879384
+      data1: 72196702400512001
+      data2: 13763000465809735704
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 7522447789560591360}
   - component: {fileID: 6953371045097959843}
   - component: {fileID: 7795781997053926706}
-  - component: {fileID: 3280075868255398785}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -379,7 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015b6a8ec9f4ea6458902b1eab3efaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfinder: {fileID: 3280075868255398785}
 --- !u!54 &594618446116798296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -636,19 +634,6 @@ MonoBehaviour:
   knight: {fileID: 11400000, guid: c0559a1a34bab2245a0877835dc6f976, type: 2}
   transmitterItem: {fileID: 11400000, guid: 5f6a83716963b074baa72cf1a14df3be, type: 2}
   zincItem: {fileID: 11400000, guid: b17208816d3c1d049a14f7d84be89a2d, type: 2}
---- !u!114 &3280075868255398785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594618446116798275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ce870debbc466f83de4606b7e6a3cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: []
 --- !u!1 &594618446833332335
 GameObject:
   m_ObjectHideFlags: 0

@@ -93,5 +93,11 @@ namespace Core
 
             return system.Structures.Find(x => x.Structure == type) != null;
         }
+
+        public (SystemStructure, WorldStructure) GetAnyStructureByType(StructureNames type)
+        {
+            var system = systemsData.Find(x => x.Structures.Find(y => y.Structure == type) != null);
+            return (system, system?.Structures.Find(x => x.Structure == type));
+        }
     }
 }

@@ -36,7 +36,6 @@ namespace Core.PlayerScripts
 
         private void UpdateQuestPaths()
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.GalaxyFinder.ClearTargets();
             for (int i = 0; i < quests.Count; i++)
             {
                 quests[i].RegeneratePathFromPlayer();

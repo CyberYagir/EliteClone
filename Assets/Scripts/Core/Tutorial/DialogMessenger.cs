@@ -34,7 +34,7 @@ namespace Core.Dialogs.Visuals
             {
                 var messge = Instantiate(message, holder);
                 messge.Init(dialog.replicas[i].text, dialog.replicas[i].character);
-                if (dialog.replicas[i].character == Dialog.DialogPart.Character.Player)
+                if (dialog.replicas[i].character != Dialog.DialogPart.Character.Player)
                 {
                     messge.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
                 }
@@ -42,6 +42,8 @@ namespace Core.Dialogs.Visuals
             }
 
             buttonText.text = "Receive";
+
+            NextReplica();
         }
 
         private void Update()
@@ -67,8 +69,8 @@ namespace Core.Dialogs.Visuals
             {
                 replicas[replica].gameObject.SetActive(true);
                 replicas[replica].gameObject.transform.localScale = Vector3.zero;
-                replicas[replica].gameObject.transform.DOScale(Vector3.one, 0.5f);
-                holder.DOAnchorPosY(holder.sizeDelta.y/2f, 0.2f);
+                replicas[replica].gameObject.transform.DOScale(Vector3.one, 0.1f);
+                holder.DOAnchorPosY(holder.sizeDelta.y/2f, 0.1f);
             }
             if (replica + 1 >= replicas.Count)
             {

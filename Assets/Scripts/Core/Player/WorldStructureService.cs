@@ -105,5 +105,10 @@ namespace Core
         {
             return scriptable.IsHaveStructure(systemName, type);
         }
+
+        public (WorldStructuresSO.SystemStructure, WorldStructuresSO.WorldStructure) GetStructure(StructureNames type)
+        {
+            return scriptable.GetAnyStructureByType(type);
+        }
     }
 }

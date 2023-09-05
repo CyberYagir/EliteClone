@@ -232,26 +232,25 @@ namespace Core.Core.Tutorial
         }
         private void M1GenerateQuest(bool notify)
         {
-            var activeQuest = worldDataHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue);
+            var (system, structure) = PlayerDataManager.Instance.Services.WorldStructuresManager.GetStructure(StructureNames.ComunistsBase);
+            // var activeQuest = worldDataHandler.ShipPlayer.AppliedQuests.quests.Find(x => x.questID == int.MaxValue);
 
-            if (activeQuest == null)
+            CancelBaseQuests();
+            
+            if (structure == null)
             {
                 var quest = M1GenerateQuest();
                 worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
-                print("ADD NEW QUEST");
             }
             else
             {
                 var newQuest = M1GenerateQuest();
-                
-                newQuest.appliedSolar = activeQuest.appliedSolar;
-                newQuest.appliedStation = activeQuest.appliedStation;
-                
-                newQuest.targetStructure = activeQuest.targetStructure;
-                newQuest.targetSolar = activeQuest.targetSolar;
 
-                CancelBaseQuests();
-                
+
+                newQuest.targetStructure = "Communists Base";
+                newQuest.targetSolar = system.SystemName;
+
+
                 worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(newQuest, false);
                 print("CHANGE EXISTING QUEST");
             }

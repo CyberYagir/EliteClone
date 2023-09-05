@@ -7,22 +7,35 @@ using UnityEngine;
 
 namespace Core.Map
 {
-    public class GalacticPathfinder : MonoBehaviour
+    public class GalacticPathfinder
     {
         [SerializeField] private List<string> findedTargets = new List<string>();
-        public void FindPathFrom(List<string> path, SolarSystem system, string target, Action<List<string>> OnComplete)
+        private IEnumerator ienumerator;
+        private List<IEnumerator> list = new List<IEnumerator>();
+        private MonoBehaviour starter;
+        private bool isCompleted = false;
+        public GalacticPathfinder(MonoBehaviour beh ,List<string> path, SolarSystem system, string target, Action<List<string>> OnComplete)
         {
-            StartCoroutine(Find(path, system, target, OnComplete));
+            starter = beh;
+            ienumerator = Find(path, system, target, OnComplete);
+            beh.StartCoroutine(ienumerator);
         }
 
         public void ClearTargets()
         {
             findedTargets.Clear();
-            StopAllCoroutines();
+            starter.StopCoroutine(ienumerator);
+            foreach (var l in list)
+            {
+                starter.StopCoroutine(l);
+            }
+            isCompleted = false;
         }
         
         private IEnumerator Find(List<string> path, SolarSystem system, string target, Action<List<string>> OnComplete)
         {
+            if (isCompleted) yield break;
+            
             var from = system.name;
             path.Add(system.name);
 
@@ -34,7 +47,9 @@ namespace Core.Map
                     if (from != sorted[i].solarName &&
                         !path.Contains(sorted[i].solarName))
                     {
-                        StartCoroutine(Find(new List<string>(path), GalaxyGenerator.systems[sorted[i].solarName], target, OnComplete));
+                        var ienum = Find(new List<string>(path), GalaxyGenerator.systems[sorted[i].solarName], target, OnComplete);
+                        list.Add(ienum);
+                        starter.StartCoroutine(ienum);
                     }
 
                     yield return null;
@@ -46,6 +61,7 @@ namespace Core.Map
                 {
                     findedTargets.Add(target);
                     OnComplete.Invoke(path);
+                    isCompleted = true;
                 }
             }
         }

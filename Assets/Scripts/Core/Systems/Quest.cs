@@ -180,17 +180,20 @@ namespace Core.Location
 
         public void RegeneratePathFromPlayer()
         {
-            if (currentPath.Contains(PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem.name)) return;
+            var worldHandler = PlayerDataManager.Instance.WorldHandler;
+            if (currentPath.Contains(worldHandler.CurrentSolarSystem.name)) return;
+
 
             if (IsEmptyQuest()) return;
 
             isOnLoading = true;
             var path = new List<string>();
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.GalaxyFinder.FindPathFrom(path, PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem, targetSolar, delegate(List<string> list)
+
+            new GalacticPathfinder(worldHandler.ShipPlayer, path, PlayerDataManager.Instance.WorldHandler.CurrentSolarSystem, targetSolar, delegate(List<string> list)
             {
                 currentPath = list;
                 isOnLoading = false;
-                PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
+                worldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
             });
         }
 
@@ -220,7 +223,7 @@ namespace Core.Location
             
             targetSolar = lastNode.solarName;
             targetStructure = lastNode.targetName;
-
+            
             RegeneratePathFromPlayer();
         }
     }
