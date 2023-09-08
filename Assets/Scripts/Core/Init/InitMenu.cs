@@ -28,6 +28,7 @@ namespace Core.Init
             
             playerDataManager = PlayerDataManager.Instance;
             playerDataManager.WorldHandler.ClarSolarSystem();
+            playerDataManager.RunHandler.SetPause(false);
             
             options.Awake();
         }

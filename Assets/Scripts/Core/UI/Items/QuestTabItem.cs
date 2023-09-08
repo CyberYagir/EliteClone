@@ -13,7 +13,7 @@ namespace Core.UI
         [SerializeField] private Image icon;
         [SerializeField] private TMP_Text targetT, jumpToT, QuestTextT;
         [SerializeField] private Transform rewardHolder, rewardItem;
-        [SerializeField] private Transform requireHolder, requireItemList, rewardItemList, questTextHolder, rewardText;
+        [SerializeField] private Transform requireHolder, requireItemList, rewardItemList, questTextHolder, rewardText, targetHeader;
 
 
         private WorldDataHandler worldHandler;
@@ -30,7 +30,7 @@ namespace Core.UI
             icon.sprite = questIcon;
 
             targetT.text = questsQuest.targetStructure;
-
+            targetHeader.gameObject.SetActive(!string.IsNullOrEmpty(questsQuest.targetStructure));
 
 
 

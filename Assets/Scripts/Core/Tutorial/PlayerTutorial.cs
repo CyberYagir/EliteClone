@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Core.Dialogs;
 using Core.Dialogs.Visuals;
 using Core.Game;
+using Core.Garage;
 using Core.Location;
 using Core.PlayerScripts;
 using Core.Systems;
@@ -21,7 +22,7 @@ namespace Core.Core.Tutorial
         [SerializeField] private ItemShip knight;
         [SerializeField] private Item transmitterItem;
         [SerializeField] private Item zincItem;
-
+        [SerializeField] private FaderMultiScenes fader;
 
 
         private GameObject station;
@@ -33,6 +34,7 @@ namespace Core.Core.Tutorial
         
         private TutorialSO TutorialData => tutorialsManager.TutorialData;
 
+        
         public void Init()
         {
             Single(this);
@@ -101,7 +103,7 @@ namespace Core.Core.Tutorial
 
             if (questID == 6)
             {
-                CreateMessenger(activator.transform, m3_3,
+                CreateMessenger(activator.transform, m3_2,
                     null,
                     () =>
                     {
@@ -114,7 +116,40 @@ namespace Core.Core.Tutorial
             {
                 M3GenerateQuest(false);
             }
+
+            if (questID == 8)
+            {
+                CreateMessenger(activator.transform, m3_2,
+                    null,
+                    () =>
+                    {
+                        M4GenerateQuest(true);
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
+                    });
+            }
+            if (questID == 9)
+            {
+                M4GenerateQuest(false);
+            }
+
+            if (questID == 10)
+            {
+                CreateMessenger(activator.transform, m3_3,
+                    null,
+                    () =>
+                    {
+                        M4GenerateQuest(true);
+                        TutorialData.TutorialQuestsData.NextTutorialQuest();
+                    });
+            }
+
+            if (questID == 11)
+            {
+                M4GenerateQuest(false);
+            }
         }
+
+
 
         public void CancelBaseQuests()
         {
@@ -138,50 +173,7 @@ namespace Core.Core.Tutorial
                return (rnd.Next(-5, 5) <= 0 ? 1 : -1);
             }
         }
-
-        // private void OldQuestsSystem(LocationUIActivator activator)
-        // {
-        //     PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.CancelQuest(PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue));
-        //     if (TutorialData.CommunitsBaseStats == null)
-        //     {
-        //         if (!TutorialData.m1_Dialog1)
-        //         {
-        //             CreateMessenger(activator.transform, m1, () => { TutorialData.startSystemName = worldDataHandler.CurrentSolarSystem.name; });
-        //         }
-        //         else if (TutorialData.startSystemName != "")
-        //         {
-        //             M1GenerateQuest(false);
-        //         }
-        //     }
-        //     else if (TutorialData.CommunitsBaseStats.isSeeDemo && !TutorialData.seeTranslatorDemo && !TutorialData.m3_Dialog3)
-        //     {
-        //         if (!TutorialData.m2_Dialog2)
-        //         {
-        //             CreateMessenger(activator.transform, m2, null);
-        //         }
-        //         else
-        //         {
-        //             M2GenerateQuest(true);
-        //             M2Events();
-        //         }
-        //
-        //         AddStation();
-        //     }
-        //     else if (TutorialData.CommunitsBaseStats.isSeeDemo && TutorialData.seeTranslatorDemo)
-        //     {
-        //         if (!TutorialData.m3_Dialog3)
-        //         {
-        //             CreateMessenger(activator.transform, m3, null);
-        //         }
-        //         else
-        //         {
-        //             M3GenerateQuest(true);
-        //         }
-        //
-        //         AddStation();
-        //     }
-        // }
-
+        
         public void CreateMessenger(Transform activator, Dialog dialog, Action beforeOpen, Action onClose)
         {
             var messenger = Instantiate(dialogue, activator.transform.position, activator.transform.rotation, activator.transform.parent).GetComponent<DialogMessenger>();
@@ -193,17 +185,6 @@ namespace Core.Core.Tutorial
         }
     
         #region M1
-
-        // public void M1AddStation()
-        // {
-        //     var quest = PlayerDataManager.Instance.WorldHandler.ShipPlayer.quests.quests.Find(x => x.questID == int.MaxValue);
-        //     if ((quest != null && quest.GetLastQuestPath().solarName == worldDataHandler.CurrentSolarSystem.name) ||
-        //         TutorialData.MainBaseData.BaseSystemName == worldDataHandler.CurrentSolarSystem.name)
-        //     {
-        //         TutorialData.MainBaseData.SetBase(worldDataHandler.CurrentSolarSystem.name);
-        //         tutorialsManager.Save();
-        //     }
-        // }
 
 
         public Quest M1GenerateQuest()
@@ -256,11 +237,6 @@ namespace Core.Core.Tutorial
             }
         }
         
-
-        public void DestroyStation()
-        {
-            Destroy(station.gameObject);
-        }
         #endregion
 
         #region M2
@@ -269,22 +245,27 @@ namespace Core.Core.Tutorial
 
         public void M2Events()
         {
+            worldDataHandler.ShipPlayer.Cargo.OnChangeInventory -= HaveTranslator;
             worldDataHandler.ShipPlayer.Cargo.OnChangeInventory += HaveTranslator;
             HaveTranslator();
         }
     
         public void M3Events()
         {
+            worldDataHandler.ShipPlayer.Cargo.OnChangeInventory -= HaveZincVoid;
             worldDataHandler.ShipPlayer.Cargo.OnChangeInventory += HaveZincVoid;
-            HaveZinc();
+            if (HaveZinc())
+            {
+                NextDialog();
+            }
         }
 
         public void HaveTranslator()
         {
-            if (PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.ContainItem(transmitterItem.id.id))
+            if (worldDataHandler.ShipPlayer.Cargo.ContainItem(transmitterItem.id.id))
             {
                 PlayerPrefs.SetInt("last_level", (int) World.Scene);
-                World.LoadLevel(Scenes.ActivatorDemo);
+                Instantiate(fader).LoadScene(Scenes.ActivatorDemo);
             }
         }
 
@@ -313,9 +294,7 @@ namespace Core.Core.Tutorial
 
             if (bindedWeapon != null)
             {
-                TutorialData.TutorialQuestsData.NextTutorialQuest();
-                CheckTutorialQuests(activator);
-                return;
+                M2Events();
             }
             
             var quest = GetEmptyQuest();
@@ -342,26 +321,17 @@ namespace Core.Core.Tutorial
             }
             else
             {
-                var activator = FindObjectOfType<LocationUIActivator>();
-
-
-                TutorialData.TutorialQuestsData.NextTutorialQuest();
-                CheckTutorialQuests(activator);
-
-
-                if (!HaveZinc())
-                {
-                    quest.keyValues.Add("Text", getZinc);
-                }
-                else
-                {
-                    PlayerDataManager.Instance.WorldHandler.ShipPlayer.Cargo.OnChangeInventory -= HaveZincVoid;
-                }
-
-                M3Events();
+                NextDialog();
             }
 
             PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
+        }
+
+        private void NextDialog()
+        {
+            var activator = FindObjectOfType<LocationUIActivator>();
+            TutorialData.TutorialQuestsData.NextTutorialQuest();
+            CheckTutorialQuests(activator);
         }
 
         private bool haveZinc;
@@ -384,7 +354,8 @@ namespace Core.Core.Tutorial
 
                     return isFull;
                 }
-                else if (haveZinc)
+                
+                if (haveZinc)
                 {
                     quest.keyValues["Text"] = getZinc;
                     PlayerDataManager.Instance.WorldHandler.ShipPlayer.AppliedQuests.OnChangeQuests.Run();
@@ -402,11 +373,25 @@ namespace Core.Core.Tutorial
         public void HaveZincVoid() => HaveZinc();
     
         #endregion
+        
+        private void M4GenerateQuest(bool notify)
+        {
+            CancelBaseQuests();
+            
+            var quest = GetEmptyQuest();
 
+
+            worldDataHandler.ShipPlayer.AppliedQuests.ApplyQuest(quest, notify);
+            
+            M3Events();
+        }
+        
+        
         public static void EnablePlayer(bool enable)
         {
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.LandManager.enabled = enable;
-            PlayerDataManager.Instance.WorldHandler.ShipPlayer.Control.enabled = enable;
+            var player = PlayerDataManager.Instance.WorldHandler.ShipPlayer;
+            player.LandManager.enabled = enable;
+            player.Control.enabled = enable;
             WorldSpaceObjectCanvas.Instance.gameObject.SetActive(enable);
 
         }

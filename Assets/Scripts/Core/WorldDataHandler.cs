@@ -14,6 +14,7 @@ namespace Core
         [SerializeField] private Player shipPlayer;
         [SerializeField] private LocationGenerator currentLocationGenerator;
         [SerializeField] private SolarSystemGenerator currentSolarGenerator;
+        [SerializeField] private SolarSystemShips currentShipsData;
         
         [Space(50)]
         [SerializeField] private int galaxySeed = -1;
@@ -26,6 +27,8 @@ namespace Core
 
         public LocationGenerator CurrentLocationGenerator => currentLocationGenerator;
         public SolarSystemGenerator CurrentSolarGenerator => currentSolarGenerator;
+
+        public SolarSystemShips CurrentShipsData => currentShipsData;
 
         public Event OnChangeLocation = new Event();
 
@@ -64,6 +67,11 @@ namespace Core
         {
             currentSolarGenerator = generator;
             OnChangeLocation.Run();
+        }
+
+        public void SetSystemShips(SolarSystemShips solarSystemShips)
+        {
+            currentShipsData = solarSystemShips;
         }
     }
 }

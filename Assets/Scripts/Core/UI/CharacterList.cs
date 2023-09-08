@@ -110,25 +110,28 @@ namespace Core.UI
             items = new List<ButtonEffect>();
 
             var orbitStation = WorldDataHandler.CurrentLocationGenerator.CurrentLocationData.OrbitStation;
-            orbitStation.RemoveCharactersWithoutQuests();
-            int id = 0;
-            foreach (var character in orbitStation.characters)
+            if (orbitStation != null)
             {
-                var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
-                it.InitQuesterItem(character.fraction, WorldDataItem.Fractions.IconByID(character.fraction), character.firstName + " " + character.lastName, character, id);
-                it.gameObject.SetActive(true);
-                var bEffect = it.GetComponent<ButtonEffect>();
-                items.Add(bEffect);
-                if (orbitStation.additionalCharacters.Contains(character.characterID))
+                orbitStation.RemoveCharactersWithoutQuests();
+                int id = 0;
+                foreach (var character in orbitStation.characters)
                 {
-                    bEffect.SetNoneColor(Color.green);
+                    var it = Instantiate(item.gameObject, holder).GetComponent<QuesterItemUI>();
+                    it.InitQuesterItem(character.fraction, WorldDataItem.Fractions.IconByID(character.fraction), character.firstName + " " + character.lastName, character, id);
+                    it.gameObject.SetActive(true);
+                    var bEffect = it.GetComponent<ButtonEffect>();
+                    items.Add(bEffect);
+                    if (orbitStation.additionalCharacters.Contains(character.characterID))
+                    {
+                        bEffect.SetNoneColor(Color.green);
+                    }
+
+                    id++;
                 }
 
-                id++;
+                upDownUI.itemsCount = orbitStation.characters.Count;
+                ChangeSelected();
             }
-            upDownUI.itemsCount = orbitStation.characters.Count;
-
-            ChangeSelected();
         }
     }
 }

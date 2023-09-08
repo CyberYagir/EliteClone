@@ -47,6 +47,8 @@ namespace Core.Location
                     }
                 }
             }
+            
+            Debug.LogError("Init Bots On Pits");
             StartCoroutine(BotWaiter());
         }
 
@@ -59,9 +61,9 @@ namespace Core.Location
             }
         }
 
-        public ref List<LandPoint> GetLandPoint()
+        public List<LandPoint> GetLandPoint()
         {
-            return ref landPoints;
+            return landPoints.FindAll(x=>x.isFilled == false);
         }
 
         public IEnumerator SpawnNewBot()

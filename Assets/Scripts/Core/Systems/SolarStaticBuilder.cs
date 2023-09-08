@@ -391,8 +391,8 @@ namespace Core.Systems
             startPoint = center + Vector3.one * (masses[0].radius * _scale * 4);
             if (setPos)
             {
-                Object.FindObjectOfType<Player>().transform.position = StartPoint;
-                Object.FindObjectOfType<Player>().transform.LookAt(Objects[0].transform);
+                worldDataHandler.ShipPlayer.transform.position = StartPoint;
+                worldDataHandler.ShipPlayer.transform.LookAt(Objects[0].transform);
             }
 
 

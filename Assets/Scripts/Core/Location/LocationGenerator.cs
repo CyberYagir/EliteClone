@@ -101,14 +101,19 @@ namespace Core.Location
             World.SetScene(Scenes.Location);
 
             
-            worldHandler.TryCreatePlayerShip().Init();
+            DeserializeSystem();
 
+            
+            
+            worldHandler.TryCreatePlayerShip().Init();
 
             InitLocation(playerDataManager);
 
             
             
             worldHandler.SetLocation(this);
+            
+            
         }
         
         private void InitLocation(PlayerDataManager playerDataManager)
@@ -122,6 +127,7 @@ namespace Core.Location
             }
 
 
+            
             LoadLocation();
             SetSystemToLocation();
             InitFirstFrame(playerDataManager);
@@ -134,10 +140,15 @@ namespace Core.Location
 
         public void LoadLocation()
         {
+            DeserializeSystem();
+            SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, SolarStaticBuilder.GalaxyScale, false);
+        }
+
+        private void DeserializeSystem()
+        {
             CurrentSave = JsonConvert.DeserializeObject<Location>(File.ReadAllText(filesSystemHandler.CurrentLocationFile));
             var system = JsonConvert.DeserializeObject<SolarSystem>(File.ReadAllText(filesSystemHandler.CacheSystemsFolder + CurrentSave.systemName + ".solar"));
             worldHandler.ChangeSolarSystem(system);
-            SolarStaticBuilder.DrawAll(worldHandler.CurrentSolarSystem, transform, sunPrefab, planet, station, systemPoint, beltPoint, SolarStaticBuilder.GalaxyScale, false);
         }
 
         public void SetSystemToLocation()
@@ -193,7 +204,7 @@ namespace Core.Location
                 worldHandler.ShipPlayer.transform.position = locationObject.SpawnPoint.position;
                 worldHandler.ShipPlayer.transform.rotation = locationObject.SpawnPoint.rotation;
             }
-            else if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit"))
+            else if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit") || worldHandler.ShipPlayer.LandManager.isLanded)
             {
                 var allPoints = CurrentLocationData.OrbitStation.Points.GetLandPoint();
                 var point = allPoints[Random.Range(0, allPoints.Count)];
@@ -204,20 +215,21 @@ namespace Core.Location
                 worldHandler.ShipPlayer.LandManager.SetLand(true, point.point.position, point.point.rotation);
 
                 point.isFilled = true;
-                point.isFilled = true;
+                
+                Debug.LogError("Place Player");
             }
 
             SetSpaceObjectDistance();
         }
-        
+
 
         public void SetSpaceObjectDistance()
         {
             if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start"))
-            {   
+            {
                 worldHandler.ShipPlayer.SaveData.DelKey("loc_start");
-            }else
-            if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit"))
+            }
+            else if (worldHandler.ShipPlayer.SaveData.ExKey("loc_start_on_pit"))
             {
                 worldHandler.ShipPlayer.SaveData.DelKey("loc_start_on_pit");
             }
@@ -226,10 +238,10 @@ namespace Core.Location
                 foreach (Transform spaceObject in transform)
                 {
                     spaceObject.transform.position += worldHandler.ShipPlayer.transform.position;
-                } 
+                }
             }
         }
-    
+
         public GameObject MoveWorld()
         {
             var location = GameObject.Find(CurrentSave.locationName);

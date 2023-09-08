@@ -13,7 +13,7 @@ namespace Core.PlayerScripts
         {
             this.path = path;
         }
-        public void Reload()
+        public  void Reload()
         {
             Clear();
             Load();

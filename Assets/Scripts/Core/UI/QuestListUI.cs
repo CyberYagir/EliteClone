@@ -87,7 +87,7 @@ namespace Core.UI
             questsList = quests;
         
             UITweaks.ClearHolder(holder);
-            var solarShips = FindObjectOfType<SolarSystemShips>();
+            var solarShips = WorldDataHandler.CurrentShipsData;
             List<Quest> questsToRemove = new List<Quest>();
             for (int i = 0; i < quests.Count; i++)
             {
@@ -118,7 +118,7 @@ namespace Core.UI
             for (int i = 0; i < quests.Count; i++)
             {
                 var findQuest = AppliedQuests.Instance.quests.Find(x => x.questID == quests[i].questID);
-                if (findQuest == null || findQuest.questState != Quest.QuestCompleted.Completed)
+                if (findQuest == null || findQuest.questState != Quest.QuestCompleted.Rewarded)
                 {
                     var questItem = Instantiate(item, holder);
                     var questData = WorldDataItem.Quests.ByID(quests[i].questType);

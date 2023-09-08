@@ -20,7 +20,7 @@ namespace Core.Location
         public class LocationHolder
         {
             public string locationName;
-            public List<SolarSystemShips.HumanShip> humans = new List<SolarSystemShips.HumanShip>();
+            public List<HumanShip> humans = new List<HumanShip>();
 
             public LocationHolder(string name)
             {
@@ -44,7 +44,7 @@ namespace Core.Location
                 lastName = NamesHolder.GetLastName(rnd);
                 uniqID = uid;
                 fraction = rnd.Next(0, WorldDataItem.Fractions.Count);
-                this.builder = builder;
+                builder = builder;
             }
         }
 
@@ -58,18 +58,18 @@ namespace Core.Location
         
         public class ShipsData
         {
-            public List<SolarSystemShips.HumanShip> allships = new List<SolarSystemShips.HumanShip>();
-            public List<SolarSystemShips.HumanShip> ships = new List<SolarSystemShips.HumanShip>();
-            public List<SolarSystemShips.LocationHolder> locations = new List<SolarSystemShips.LocationHolder>();
+            public List<HumanShip> allships = new List<HumanShip>();
+            public List<HumanShip> ships = new List<HumanShip>();
+            public List<LocationHolder> locations = new List<LocationHolder>();
 
         }
         
     
         [SerializeField] private GameObject botPrefab, botLocation, garbageContact;
         [SerializeField] private BotVisual botPrefabVisuals;
-        [SerializeField] private List<SolarSystemShips.LocationHolder> locations = new List<SolarSystemShips.LocationHolder>();
-        [SerializeField] private List<SolarSystemShips.HumanShip> ships = new List<SolarSystemShips.HumanShip>();
-        [SerializeField] private List<SolarSystemShips.HumanShip> allships = new List<SolarSystemShips.HumanShip>();
+        [SerializeField] private List<LocationHolder> locations = new List<LocationHolder>();
+        [SerializeField] private List<HumanShip> ships = new List<HumanShip>();
+        [SerializeField] private List<HumanShip> allships = new List<HumanShip>();
         private bool spawnEnviroment;
 
 
@@ -82,7 +82,7 @@ namespace Core.Location
             base.Init(playerDataManager);
             worldHandler = playerDataManager.WorldHandler;
             filesSystemHandler = playerDataManager.FSHandler;
-            
+            worldHandler.SetSystemShips(this);
             if (worldHandler.CurrentSolarSystem != null)
             {
                 InitPre();
@@ -100,10 +100,10 @@ namespace Core.Location
             var system = worldHandler.CurrentSolarSystem;
             if (!SolarSystemShipsStaticBuilder.deadList.ContainsKey(system.name))
             {
-                SolarSystemShipsStaticBuilder.deadList.Add(system.name, new List<SolarSystemShips.HumanShipDead>());
+                SolarSystemShipsStaticBuilder.deadList.Add(system.name, new List<HumanShipDead>());
             }
 
-            SolarSystemShipsStaticBuilder.deadList[system.name].Add(new SolarSystemShips.HumanShipDead {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
+            SolarSystemShipsStaticBuilder.deadList[system.name].Add(new HumanShipDead {botFullName = builder.transform.name, locationName = LocationGenerator.CurrentSave.locationName, uniqID = builder.uniqID, deadPos = DVector.FromVector3(builder.transform.position)});
 
             ExplodeShip(builder);
         
@@ -180,7 +180,7 @@ namespace Core.Location
             }
         }
 
-        public ref List<SolarSystemShips.HumanShip> GetShips()
+        public ref List<HumanShip> GetShips()
         {
             return ref ships;
         }
@@ -229,7 +229,7 @@ namespace Core.Location
             return dead;
         }
 
-        public BotBuilder CreateBot(SolarSystemShips.HumanShip ship, BotBuilder.BotState state = BotBuilder.BotState.Moving)
+        public BotBuilder CreateBot(HumanShip ship, BotBuilder.BotState state = BotBuilder.BotState.Moving)
         {
             var pos = UnityEngine.Random.insideUnitSphere * 1000;
             var bot = Instantiate(botPrefab.gameObject, pos, Quaternion.Euler(-pos)).GetComponent<BotBuilder>();

@@ -152,7 +152,7 @@ namespace Core.UI
             if (currentQuest.IsTypeQuest("Transfer"))
             {
                 jumpsCount.enabled = true;
-                jumpsCount.text = "Jumps count: " + quest.JumpsCount() + "\n\nPath:\n";
+                jumpsCount.text = "Path:\n";
             }
             else
             {
@@ -189,9 +189,9 @@ namespace Core.UI
             
             if (AppliedQuests.Instance.IsQuestApplied(quest.questID))
             {
+                Debug.LogError(quest.questState);
                 if (quest.questState == Quest.QuestCompleted.None)
                 {
-                    buttonText.text = "";
                     quest.GetButtonText();
                     buttonText.text = quest.buttonText;
                 }

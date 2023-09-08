@@ -9,7 +9,8 @@ namespace Core.Game
     public class WorldDataItem : ScriptableObject
     {
         private static WorldDataItem Instance;
-
+        
+        
         [Serializable]
         public class Data
         {

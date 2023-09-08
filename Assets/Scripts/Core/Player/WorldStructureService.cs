@@ -29,8 +29,13 @@ namespace Core
             base.Init(path);
             worldDataHandler = PlayerDataManager.Instance.WorldHandler;
         }
-        
-        
+
+        public override void Clear()
+        {
+            base.Clear();
+            spawnedStructures.Clear();
+        }
+
         public List<WorldStructuresSO.WorldStructure> GetSystemStructures(string system)
         {
             return scriptable.GetBySystem(system);
